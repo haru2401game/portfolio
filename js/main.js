@@ -1,29 +1,80 @@
 /* ========================================
+   Scroll Animation Common
+======================================== */
+
+function observeShow(elements, callback = null){
+
+    if(elements.length === 0) return;
+
+
+    const observer = new IntersectionObserver(
+        (entries)=>{
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add("show");
+
+
+                    if(callback){
+                        callback(entry.target);
+                    }
+
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold:0.2
+        }
+    );
+
+
+    elements.forEach(element=>{
+
+        observer.observe(element);
+
+    });
+
+}
+
+
+
+/* ========================================
    Hero Animation
 ======================================== */
 
 
-window.addEventListener("load", () => {
+window.addEventListener("load",()=>{
 
 
-    const heroText = document.querySelector(".hero-content");
+    const heroText =
+        document.querySelector(".hero-content");
 
 
     if(heroText){
 
-        heroText.style.opacity = "0";
+
+        heroText.style.opacity="0";
+
         heroText.style.transform =
             "translate(-50%, calc(-50% + 30px))";
 
 
-        setTimeout(() => {
+        setTimeout(()=>{
 
 
             heroText.style.transition =
                 "opacity 1.2s ease, transform 1.2s ease";
 
 
-            heroText.style.opacity = "1";
+            heroText.style.opacity="1";
+
 
             heroText.style.transform =
                 "translate(-50%, -50%)";
@@ -37,331 +88,160 @@ window.addEventListener("load", () => {
 
 });
 
+
+
+
+
 /* ========================================
-   About Scroll Animation
+   About Animation
 ======================================== */
 
 
-const aboutSection = document.querySelector(".about-container");
+observeShow(
+    document.querySelectorAll(".about-container")
+);
 
 
-if(aboutSection){
 
 
-    const aboutObserver = new IntersectionObserver(
-        (entries)=>{
-
-
-            entries.forEach((entry)=>{
-
-
-                if(entry.isIntersecting){
-
-
-                    aboutSection.classList.add("show");
-
-
-                    aboutObserver.unobserve(entry.target);
-
-
-                }
-
-
-            });
-
-
-        },
-        {
-            threshold:0.2
-        }
-
-
-    );
-
-
-    aboutObserver.observe(aboutSection);
-
-
-}
 
 /* ========================================
-   Skills Scroll Animation
+   Skills Animation
 ======================================== */
 
 
-const skillBoxes = document.querySelectorAll(".skill-box");
+observeShow(
+    document.querySelectorAll(".skill-box"),
+    (box)=>{
 
 
-if(skillBoxes.length > 0){
+        const bar =
+            box.querySelector(".skill-level-bar");
 
 
-    const skillObserver = new IntersectionObserver(
+        if(bar){
 
-        (entries)=>{
-
-
-            entries.forEach((entry)=>{
+            setTimeout(()=>{
 
 
-                if(entry.isIntersecting){
+                bar.style.width =
+                    bar.dataset.level + "%";
 
 
-                    const box = entry.target;
+            },500);
 
 
-                    box.classList.add("show");
-
-
-                    const bar =
-                        box.querySelector(".skill-level-bar");
-
-
-                    if(bar){
-
-                        setTimeout(()=>{
-
-                            const level = bar.dataset.level;
-
-                            bar.style.width = level + "%";
-
-                            bar.querySelector("span").textContent =
-                                level + "%";
-
-                        },500);
-
-                    }
-
-                    skillObserver.unobserve(entry.target);
-
-
-                }
-
-
-            });
-
-
-        },
-
-        {
-            threshold:0.2
         }
 
 
-    );
+    }
+);
 
 
 
-    skillBoxes.forEach((box)=>{
 
-
-        skillObserver.observe(box);
-
-
-    });
-
-    const skillBars = document.querySelectorAll(".skill-level-bar");
-
-    skillBars.forEach(bar => {
-
-        const level = bar.dataset.level;
-
-        bar.style.width = level + "%";
-
-        bar.querySelector("span").textContent = level + "%";
-
-    });
-
-
-}
 
 /* ========================================
    Featured Works Animation
 ======================================== */
 
 
-const featuredElements = document.querySelectorAll(
-    ".featured-video, .featured-container"
+observeShow(
+    document.querySelectorAll(
+        ".featured-video, .featured-container"
+    )
 );
 
 
 
-if(featuredElements.length > 0){
 
-
-    const featuredObserver = new IntersectionObserver(
-
-        (entries)=>{
-
-
-            entries.forEach((entry)=>{
-
-
-                if(entry.isIntersecting){
-
-
-                    entry.target.classList.add("show");
-
-
-                    featuredObserver.unobserve(entry.target);
-
-
-                }
-
-
-            });
-
-
-        },
-
-        {
-            threshold:0.2
-        }
-
-    );
-
-
-
-    featuredElements.forEach((element)=>{
-
-
-        element.classList.add("hidden");
-
-
-        featuredObserver.observe(element);
-
-
-    });
-
-
-}
 
 /* ========================================
    Other Works Animation
 ======================================== */
 
 
-const workCards = document.querySelectorAll(".work-card");
+const workCards =
+    document.querySelectorAll(".work-card");
 
 
+workCards.forEach((card,index)=>{
 
-if(workCards.length > 0){
+    card.style.transitionDelay =
+        `${index * 0.15}s`;
 
-
-    const workObserver = new IntersectionObserver(
-
-
-        (entries)=>{
+});
 
 
-            entries.forEach((entry)=>{
-
-
-                if(entry.isIntersecting){
-
-
-                    const card = entry.target;
-
-
-
-                    card.classList.add("show");
-
-
-
-                    workObserver.unobserve(card);
-
-
-                }
-
-
-            });
-
-
-        },
-
-
-        {
-            threshold:0.2
-        }
-
-
-    );
+observeShow(workCards);
 
 
 
 
-    workCards.forEach((card,index)=>{
-
-
-        card.style.transitionDelay = `${index * 0.15}s`;
-
-        card.classList.add("hidden");
-
-
-        workObserver.observe(card);
-
-
-    });
-
-
-}
 
 /* ========================================
    Blog Animation
 ======================================== */
 
-const blogIntro = document.querySelector(".blog-introduction");
 
-const blogObserver = new IntersectionObserver((entries) => {
+const blogObserverElements =
+    document.querySelectorAll(
+        ".blog-introduction, .article-card"
+    );
 
-    entries.forEach(entry => {
 
-        if (entry.isIntersecting) {
+blogObserverElements.forEach((element,index)=>{
 
-            entry.target.classList.add("show");
+    element.style.transitionDelay =
+        `${index * 0.15}s`;
 
-        }
-
-    });
-
-}, {
-    threshold: 0.2
 });
 
-if (blogIntro) {
 
-    blogObserver.observe(blogIntro);
+observeShow(blogObserverElements);
 
-}
+
 
 
 
 /* ========================================
-   Blog
+   Blog Data
 ======================================== */
 
-const articleCounter = document.getElementById("article-count");
+
+const articleCounter =
+    document.getElementById("article-count");
+
+
 
 fetch("data/blog.json")
 
-.then(response => {
+.then(response=>{
 
-    if (!response.ok) {
 
-        throw new Error("blog.json の読み込みに失敗しました。");
+    if(!response.ok){
+
+        throw new Error(
+            "blog.json の読み込みに失敗しました。"
+        );
 
     }
 
+
     return response.json();
+
 
 })
 
-.then(data => {
+
+.then(data=>{
+
 
     //-----------------------------------
     // 記事数
     //-----------------------------------
 
-    if (articleCounter) {
+    if(articleCounter){
 
         articleCounter.textContent =
             data.articleCount + "+";
@@ -371,27 +251,38 @@ fetch("data/blog.json")
 
 
     //-----------------------------------
-    // 最新記事
+    // 最新記事生成
     //-----------------------------------
 
     const container =
-        document.getElementById("latestArticles");
+        document.getElementById(
+            "latestArticles"
+        );
 
-    container.innerHTML = "";
+
+    if(!container) return;
 
 
 
-    data.articles.forEach(article => {
+    container.innerHTML="";
+
+
+
+    data.articles.forEach(article=>{
+
 
         container.innerHTML += `
 
         <article class="article-card">
 
+
             <img
                 src="${article.thumbnail}"
                 alt="${article.title}">
 
+
             <div class="article-content">
+
 
                 <p class="article-date">
 
@@ -399,17 +290,20 @@ fetch("data/blog.json")
 
                 </p>
 
+
                 <h3>
 
                     ${article.title}
 
                 </h3>
 
+
                 <p class="article-summary">
 
                     ${article.summary}
 
                 </p>
+
 
                 <a
                     href="${article.url}"
@@ -419,36 +313,51 @@ fetch("data/blog.json")
 
                 </a>
 
+
             </div>
+
 
         </article>
 
         `;
 
+
     });
 
 
 
     //-----------------------------------
-    // カードをアニメーション対象に追加
+    // 生成後カードを監視
     //-----------------------------------
 
+
     const cards =
-        document.querySelectorAll(".article-card");
+        document.querySelectorAll(
+            ".article-card"
+        );
 
-    cards.forEach((card, index) => {
 
-        blogObserver.observe(card);
+    cards.forEach((card,index)=>{
+
 
         card.style.transitionDelay =
             `${index * 0.15}s`;
 
+
     });
+
+
+    observeShow(cards);
+
+
 
 })
 
-.catch(error => {
+
+.catch(error=>{
+
 
     console.error(error);
+
 
 });
