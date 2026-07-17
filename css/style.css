@@ -68,6 +68,9 @@ body{
 
     letter-spacing:2px;
 
+    text-decoration: none;
+    
+    color: inherit;
 }
 
 
