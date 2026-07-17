@@ -201,7 +201,26 @@ blogObserverElements.forEach((element,index)=>{
 observeShow(blogObserverElements);
 
 
+/* ========================================
+   Timeline Animation
+======================================== */
 
+
+const timelineItems =
+    document.querySelectorAll(
+        ".timeline-item"
+    );
+
+
+timelineItems.forEach((item,index)=>{
+
+    item.style.transitionDelay =
+        `${index * 0.1}s`;
+
+});
+
+
+observeShow(timelineItems);
 
 
 /* ========================================
@@ -361,3 +380,28 @@ fetch("data/blog.json")
 
 
 });
+
+/* ========================================
+   Contact Animation
+======================================== */
+
+
+const contactElements =
+    document.querySelectorAll(
+        ".contact-container, .sns-card"
+    );
+
+
+
+contactElements.forEach((element,index)=>{
+
+
+    element.style.transitionDelay =
+        `${index * 0.1}s`;
+
+
+});
+
+
+
+observeShow(contactElements);

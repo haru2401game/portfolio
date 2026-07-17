@@ -1848,3 +1848,416 @@ footer{
     transform:translateY(0);
 
 }
+
+/* ========================================
+   Timeline
+======================================== */
+
+
+.timeline{
+
+    background:#f8f8f8;
+
+}
+
+
+
+/* Container
+======================================== */
+
+
+.timeline-container{
+
+    position:relative;
+
+    max-width:1000px;
+
+    margin:0 auto;
+
+    padding:40px 0;
+
+}
+
+
+
+/* Center Line
+======================================== */
+
+
+.timeline-container::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:50%;
+
+    width:4px;
+
+    height:100%;
+
+    background:#111;
+
+    transform:translateX(-50%);
+
+}
+
+
+
+/* Item
+======================================== */
+
+
+.timeline-item{
+
+    position:relative;
+
+    width:50%;
+
+    padding:20px 50px;
+
+}
+
+
+
+/* Dot
+======================================== */
+
+
+.timeline-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:45px;
+
+    width:18px;
+
+    height:18px;
+
+    background:#111;
+
+    border-radius:50%;
+
+    z-index:2;
+
+}
+
+
+
+/* Left Item
+======================================== */
+
+
+.timeline-item:nth-child(odd){
+
+    left:0;
+
+    text-align:right;
+
+}
+
+
+
+.timeline-item:nth-child(odd)::before{
+
+    right:-9px;
+
+}
+
+
+
+/* Right Item
+======================================== */
+
+
+.timeline-item:nth-child(even){
+
+    left:50%;
+
+}
+
+
+
+.timeline-item:nth-child(even)::before{
+
+    left:-9px;
+
+}
+
+
+
+/* Card
+======================================== */
+
+
+.timeline-content{
+
+    background:#fff;
+
+    padding:35px;
+
+    border-radius:20px;
+
+    box-shadow:
+
+        0 15px 40px rgba(0,0,0,0.08);
+
+}
+
+
+
+.timeline-date{
+
+    display:inline-block;
+
+    font-size:1.2rem;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+    color:#777;
+
+}
+
+
+
+.timeline-content h3{
+
+    font-size:1.4rem;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.timeline-content p{
+
+    color:#444;
+
+    line-height:1.8;
+
+}
+
+
+
+
+/* ========================================
+   Timeline Responsive
+======================================== */
+
+
+@media(max-width:768px){
+
+
+    .timeline-container::before{
+
+        left:20px;
+
+    }
+
+
+
+    .timeline-item,
+    .timeline-item:nth-child(even){
+
+        width:100%;
+
+        left:0;
+
+        padding-left:60px;
+
+        padding-right:20px;
+
+        text-align:left;
+
+    }
+
+
+
+    .timeline-item::before,
+    .timeline-item:nth-child(even)::before{
+
+        left:11px;
+
+        right:auto;
+
+    }
+
+
+
+    .timeline-content{
+
+        padding:25px;
+
+    }
+
+
+}
+
+/* ========================================
+   Timeline Animation
+======================================== */
+
+
+.timeline-item{
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+
+}
+
+
+
+.timeline-item.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+/* ========================================
+   Contact
+======================================== */
+
+
+.contact{
+
+    padding:120px 10%;
+
+}
+
+
+
+.contact-container{
+
+    max-width:1000px;
+    margin:auto;
+    text-align:center;
+
+}
+
+
+
+.contact-message{
+
+    margin-bottom:50px;
+    font-size:18px;
+
+}
+
+
+
+.sns-list{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+
+
+.sns-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:25px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+    text-decoration:none;
+
+    color:#111;
+
+    transition:0.3s;
+
+}
+
+
+
+.sns-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+
+
+.sns-card img{
+
+    width:50px;
+    height:50px;
+
+}
+
+
+
+.sns-card h3{
+
+    margin-bottom:5px;
+
+}
+
+
+
+.sns-card p{
+
+    font-size:14px;
+    color:#666;
+
+}
+
+/* ========================================
+   Contact Animation
+======================================== */
+
+
+.contact-container,
+.sns-card{
+
+    opacity:0;
+
+    transform:
+        translateY(40px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+
+}
+
+
+
+.contact-container.show,
+.sns-card.show{
+
+    opacity:1;
+
+    transform:
+        translateY(0);
+
+}
