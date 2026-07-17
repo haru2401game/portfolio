@@ -208,6 +208,18 @@ if(skillBoxes.length > 0){
 
     });
 
+    const skillBars = document.querySelectorAll(".skill-level-bar");
+
+    skillBars.forEach(bar => {
+
+        const level = bar.dataset.level;
+
+        bar.style.width = level + "%";
+
+        bar.querySelector("span").textContent = level + "%";
+
+    });
+
 
 }
 

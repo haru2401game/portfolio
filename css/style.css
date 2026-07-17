@@ -659,7 +659,6 @@ footer{
 .skill-level-bar{
 
     height:100%;
-
     width:0;
 
     background:#111;
@@ -667,20 +666,14 @@ footer{
     border-radius:20px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:flex-end;
 
     padding-right:8px;
 
     color:white;
-
     font-size:0.75rem;
-
     font-weight:bold;
-
-    white-space:nowrap;
 
 }
 
@@ -700,42 +693,6 @@ footer{
 
 }
 
-/* Skill Percentage 
-======================================== */
-
-.cpp{
-    width:80%;
-}
-
-
-.csharp{
-    width:70%;
-}
-
-
-.unity{
-    width:70%;
-}
-
-
-.directxtk{
-    width:50%;
-}
-
-
-.dxlib{
-    width:80%;
-}
-
-
-.visualstudio{
-    width:85%;
-}
-
-
-.vscode{
-    width:75%;
-}
 
 /* Experience Year
 ======================================== */
