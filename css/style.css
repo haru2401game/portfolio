@@ -737,7 +737,20 @@ footer{
     width:75%;
 }
 
+/* Experience Year
+======================================== */
 
+.skill-experience{
+
+    margin-bottom:20px;
+
+    font-size:0.9rem;
+
+    color:#777;
+
+    font-weight:500;
+
+}
 
 
 
@@ -1124,24 +1137,23 @@ footer{
 .featured-video,
 .featured-container{
 
-    opacity:1;
+    opacity:0;
 
     transform:translateY(50px);
 
     transition:
-
         opacity 0.8s ease,
-
         transform 0.8s ease;
 
 }
-
 
 
 .featured-video.show,
 .featured-container.show{
 
     opacity:1;
+
+    transform:translateY(0);
 
 }
 
