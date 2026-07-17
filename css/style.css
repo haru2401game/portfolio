@@ -704,37 +704,37 @@ footer{
 ======================================== */
 
 .cpp{
-    width:85%;
+    width:80%;
 }
 
 
 .csharp{
-    width:90%;
-}
-
-
-.unity{
-    width:90%;
-}
-
-
-.directxtk{
     width:70%;
 }
 
 
+.unity{
+    width:70%;
+}
+
+
+.directxtk{
+    width:50%;
+}
+
+
 .dxlib{
-    width:75%;
+    width:80%;
 }
 
 
 .visualstudio{
-    width:80%;
+    width:85%;
 }
 
 
 .vscode{
-    width:80%;
+    width:75%;
 }
 
 
