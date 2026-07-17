@@ -666,11 +666,23 @@ footer{
 
     border-radius:20px;
 
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    padding-right:8px;
+
+    color:white;
+
+    font-size:0.75rem;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
 }
-
-
-
-
 
 /* Skill Description
 ======================================== */
@@ -686,6 +698,43 @@ footer{
 
     color:#444;
 
+}
+
+/* Skill Percentage 
+======================================== */
+
+.cpp{
+    width:85%;
+}
+
+
+.csharp{
+    width:90%;
+}
+
+
+.unity{
+    width:90%;
+}
+
+
+.directxtk{
+    width:70%;
+}
+
+
+.dxlib{
+    width:75%;
+}
+
+
+.visualstudio{
+    width:80%;
+}
+
+
+.vscode{
+    width:80%;
 }
 
 
