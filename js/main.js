@@ -112,73 +112,24 @@ if(skillBoxes.length > 0){
                     box.classList.add("show");
 
 
-
                     const bar =
                         box.querySelector(".skill-level-bar");
 
 
-
                     if(bar){
-
 
                         setTimeout(()=>{
 
+                            const level = bar.dataset.level;
 
-                            if(bar.classList.contains("cpp")){
+                            bar.style.width = level + "%";
 
-                                bar.style.width="85%";
-
-                            }
-
-
-                            else if(bar.classList.contains("csharp")){
-
-                                bar.style.width="90%";
-
-                            }
-
-
-                            else if(bar.classList.contains("unity")){
-
-                                bar.style.width="90%";
-
-                            }
-
-
-                            else if(bar.classList.contains("directxtk")){
-
-                                bar.style.width="75%";
-
-                            }
-
-
-                            else if(bar.classList.contains("dxlib")){
-
-                                bar.style.width="70%";
-
-                            }
-
-
-                            else if(bar.classList.contains("visualstudio")){
-
-                                bar.style.width="85%";
-
-                            }
-
-
-                            else if(bar.classList.contains("vscode")){
-
-                                bar.style.width="75%";
-
-                            }
-
+                            bar.querySelector("span").textContent =
+                                level + "%";
 
                         },500);
 
-
                     }
-
-
 
                     skillObserver.unobserve(entry.target);
 
