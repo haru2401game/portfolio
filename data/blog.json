@@ -1,6 +1,13 @@
 {
-    "articleCount": 183,
+    "articleCount": 184,
     "articles": [
+        {
+            "title": "「学生チーム対抗ゲームジャム2026 最終日」 はる日記#184",
+            "date": "2026.07.21",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/296193177/rectangle_large_type_2_2930db74d39771a2660fc0e27624edf1.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n9106ce33a35f"
+        },
         {
             "title": "「学生チーム対抗ゲームジャム2026 2日目」 はる日記#183",
             "date": "2026.07.19",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/295579159/rectangle_large_type_2_8ff3243de81bc83173f92cf2a878fc41.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n9dd5afcd1bb9"
-        },
-        {
-            "title": "「ポートフォリオをリニューアルしました。ゲーム風デザインから白基調のシンプルなデザインへ」 はる日記#181",
-            "date": "2026.07.17",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/295137685/rectangle_large_type_2_1c520bb29c965d7b4cf5a4f71d2d83e0.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n358d196345ab"
         }
     ]
 }
