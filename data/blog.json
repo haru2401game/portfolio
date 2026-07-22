@@ -1,6 +1,13 @@
 {
-    "articleCount": 184,
+    "articleCount": 185,
     "articles": [
+        {
+            "title": "「ししとう ゲームジャム作品」 はる日記#185",
+            "date": "2026.07.21",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/296199461/rectangle_large_type_2_57999e3b57b9c210f793996d5ec03ef7.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n205b09ee1b0e"
+        },
         {
             "title": "「学生チーム対抗ゲームジャム2026 最終日」 はる日記#184",
             "date": "2026.07.21",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/295714886/rectangle_large_type_2_07ac8dba56f5975a0ece00402b7be0bc.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n403490f6feaf"
-        },
-        {
-            "title": "「学生チーム対抗ゲームジャム2026 1日目のまとめ」 はる日記#182",
-            "date": "2026.07.19",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/295579159/rectangle_large_type_2_8ff3243de81bc83173f92cf2a878fc41.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n9dd5afcd1bb9"
         }
     ]
 }
