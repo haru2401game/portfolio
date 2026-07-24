@@ -8,14 +8,11 @@
     box-sizing:border-box;
 }
 
-
 html{
     scroll-behavior:smooth;
 }
 
-
 body{
-
     font-family:
         "Inter",
         "Noto Sans JP",
@@ -23,23 +20,29 @@ body{
 
     color:#111;
     background:#fff;
-
     line-height:1.8;
+}
+
+/* =========================
+   Body
+========================= */
+
+body.menu-open{
+
+    overflow:hidden;
 
 }
 
-/* ================================
+/* ========================================
    Header
-================================ */
+======================================== */
 
-.header
-{
-    position: fixed;
+.header{
+    position:fixed;
     top:0;
     left:0;
 
     width:100%;
-
     height:80px;
 
     display:flex;
@@ -50,127 +53,138 @@ body{
 
     z-index:1000;
 
-    color:white;
+    color:#fff;
 
-    background:rgba(0,0,0,0.25);
-
+    background:rgba(0,0,0,.25);
     backdrop-filter:blur(10px);
 
+    transition: background .3s;
 }
 
-
-
-.header-logo
-{
-    font-size:24px;
-
-    font-weight:bold;
-
-    letter-spacing:2px;
-
-    text-decoration: none;
-    
-    color: inherit;
-}
-
-
-
-.header-nav
-{
-    display:flex;
-
-    gap:40px;
-
-}
-
-
-
-.header-nav a
-{
-    color:white;
-
+.header-logo{
+    color:inherit;
     text-decoration:none;
 
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+/* =========================
+   Hamburger
+========================= */
+
+.hamburger{
+
+    display:none;
+
+    width:42px;
+    height:42px;
+
+    background:none;
+    border:none;
+
+    cursor:pointer;
+
+    z-index:1100;
+
+}
+
+.hamburger span{
+
+    display:block;
+
+    width:30px;
+    height:3px;
+
+    margin:6px auto;
+
+    background:white;
+
+    transition:.3s;
+
+}
+
+.header-nav{
+    display:flex;
+    gap:40px;
+}
+
+.header-nav a{
+    color:#fff;
+    text-decoration:none;
     font-size:16px;
 
-    transition:0.3s;
+    transition:opacity .3s;
 }
 
-
-
-.header-nav a:hover
-{
-    opacity:0.6;
+.header-nav a:hover{
+    opacity:.6;
 }
 
+/* =========================
+   Hamburger Animation
+========================= */
 
+.hamburger.active span:nth-child(1){
+
+    transform:translateY(9px) rotate(45deg);
+
+}
+
+.hamburger.active span:nth-child(2){
+
+    opacity:0;
+
+}
+
+.hamburger.active span:nth-child(3){
+
+    transform:translateY(-9px) rotate(-45deg);
+
+}
 
 /* ========================================
    Hero
 ======================================== */
 
 .hero{
-
     position:relative;
 
     width:100%;
     height:100vh;
 
     overflow:hidden;
-
 }
 
-
-
-/* Background Movie
-======================================== */
+/* Movie */
 
 .hero-video{
-
     position:absolute;
-
-    top:0;
-    left:0;
+    inset:0;
 
     width:100%;
     height:100%;
 
     object-fit:cover;
-
     z-index:0;
-
 }
 
-
-
-/* Black Overlay
-======================================== */
+/* Overlay */
 
 .hero-overlay{
-
     position:absolute;
+    inset:0;
 
-    top:0;
-    left:0;
-
-    width:100%;
-    height:100%;
-
-    background:rgba(0,0,0,0.55);
+    background:rgba(0,0,0,.55);
 
     z-index:1;
-
 }
 
-
-
-/* Catch Copy
-======================================== */
+/* Catch Copy */
 
 .hero-content{
-
     position:absolute;
-
     top:50%;
     left:50%;
 
@@ -178,116 +192,61 @@ body{
 
     width:100%;
 
+    padding:0 20px;
+
     text-align:center;
 
     z-index:2;
-
-    padding:0 20px;
-
 }
 
-
-
 .hero-content h1{
-
     color:#fff;
 
     font-size:clamp(2rem,5vw,4.5rem);
 
     font-weight:700;
 
-    letter-spacing:0.08em;
+    letter-spacing:.08em;
 
     line-height:1.4;
-
 }
 
-
-
 /* ========================================
-   Section Base
+   Common Section
 ======================================== */
 
 section:not(.hero){
-
     min-height:600px;
-
     padding:100px 8%;
-
 }
-
-
 
 /* ========================================
    Footer
 ======================================== */
 
 footer{
+    padding:30px;
 
     text-align:center;
 
-    padding:30px;
-
     font-size:14px;
-
-}
-
-
-
-
-
-/* ========================================
-   Responsive
-======================================== */
-
-@media(max-width:768px){
-
-
-    .hero-content h1{
-
-        font-size:2rem;
-
-        letter-spacing:0.05em;
-
-    }
-
-
-    section:not(.hero){
-
-        padding:70px 5%;
-
-    }
-
-
 }
 
 /* ========================================
    About
 ======================================== */
 
-
 .about{
-
     background:#fff;
-
 }
 
-
-
-/* About Container Layout
-======================================== */
-
-
 .about-container{
-
     width:min(100%,1000px);
 
     margin:0 auto;
 
     display:flex;
-
     align-items:center;
-
     gap:60px;
 
     padding:60px;
@@ -297,112 +256,93 @@ footer{
     border-radius:24px;
 
     box-shadow:
-        0 20px 50px rgba(0,0,0,0.08);
+        0 20px 50px rgba(0,0,0,.08);
 
+    opacity:0;
+    transform:translateY(40px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
 }
 
+.about-container.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
-
-/* Profile Image
-======================================== */
-
+/* Image */
 
 .about-image{
-
     flex-shrink:0;
-
 }
 
-
-
 .about-image img{
-
     width:260px;
-
     height:260px;
 
     object-fit:cover;
 
     border-radius:20px;
-
 }
 
-
-
-/* Profile Content
-======================================== */
-
+/* Content */
 
 .about-content{
-
     flex:1;
-
 }
-
-
-
-/* Name
-======================================== */
-
 
 .about-name{
-
-    font-size:2.5rem;
-
-    font-weight:700;
-
-    line-height:1.3;
-
     margin-bottom:30px;
 
+    font-size:2.5rem;
+    font-weight:700;
+    line-height:1.3;
 }
 
-
-
 .about-name span{
-
     display:block;
 
     margin-top:8px;
 
     font-size:1rem;
-
     font-weight:400;
 
     color:#777;
 
-    letter-spacing:0.1em;
-
+    letter-spacing:.1em;
 }
-
-
-
-/* Introduction Text
-======================================== */
-
 
 .about-text{
-
     font-size:1rem;
-
     line-height:2;
-
     color:#333;
-
 }
 
-
-
 /* ========================================
-   About Responsive
+   Responsive
 ======================================== */
-
 
 @media(max-width:768px){
 
+    .header{
+        padding:0 25px;
+    }
+
+    .header-nav{
+        gap:20px;
+    }
+
+    .hero-content h1{
+        font-size:2rem;
+        letter-spacing:.05em;
+    }
+
+    section:not(.hero){
+        padding:70px 5%;
+    }
 
     .about-container{
-
         flex-direction:column;
 
         gap:30px;
@@ -410,63 +350,81 @@ footer{
         padding:40px 25px;
 
         text-align:center;
-
     }
-
-
 
     .about-image img{
-
         width:180px;
-
         height:180px;
-
     }
-
-
 
     .about-name{
-
         font-size:2rem;
-
     }
-
-
 
     .about-text{
-
         text-align:left;
+        font-size:.95rem;
+    }
+}
 
-        font-size:0.95rem;
+/* =========================
+   Mobile Navigation
+========================= */
+
+@media (max-width:768px){
+
+    .header{
+
+        padding:0 20px;
 
     }
 
+    .hamburger{
 
-}
+        display:block;
 
-/* About Animation
-======================================== */
+    }
 
+    .header-nav{
 
-.about-container{
+        position:fixed;
 
-    opacity:0;
+        top:80px;
+        left:0;
 
-    transform:translateY(40px);
+        width:100%;
 
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
+        background:rgba(20,20,20,.96);
 
-}
+        backdrop-filter:blur(12px);
 
+        display:flex;
 
+        flex-direction:column;
 
-.about-container.show{
+        align-items:center;
 
-    opacity:1;
+        gap:30px;
 
-    transform:translateY(0);
+        padding:40px 0;
+
+        transform:translateY(-120%);
+
+        transition:.35s ease;
+
+    }
+
+    .header-nav.active{
+
+        transform:translateY(0);
+
+    }
+
+    .header-nav a{
+
+        font-size:20px;
+
+    }
 
 }
 
@@ -474,389 +432,176 @@ footer{
    Skills
 ======================================== */
 
-
 .skills{
-
     background:#f8f8f8;
-
 }
 
-
-
-/* Section Title
-======================================== */
-
+/* Section Title */
 
 .section-title{
-
     text-align:center;
-
     margin-bottom:80px;
-
 }
-
 
 .section-title h2{
-
     font-size:3rem;
-
-    letter-spacing:0.1em;
-
+    letter-spacing:.1em;
     margin-bottom:15px;
-
 }
-
 
 .section-title p{
-
     color:#777;
-
 }
 
-
-
-
-/* Skill Category
-======================================== */
-
+/* Category */
 
 .skill-category{
-
     max-width:1200px;
-
     margin:0 auto 100px;
-
 }
-
-
 
 .skill-category h3{
-
     font-size:2rem;
-
     margin-bottom:40px;
-
     padding-left:15px;
-
     border-left:5px solid #111;
-
 }
 
-
-
-
-/* Skill List
-======================================== */
-
+/* Grid */
 
 .skill-list{
-
     display:grid;
-
     grid-template-columns:repeat(3,1fr);
-
     gap:30px;
-
 }
 
-
-
-
-
-/* Skill Box
-======================================== */
-
+/* Card */
 
 .skill-box{
-
     background:#fff;
-
     border-radius:20px;
-
     padding:35px;
-
     text-align:center;
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.08);
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+    opacity:0;
+    transform:translateY(40px);
 
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-
+        opacity .8s ease,
+        transform .8s ease,
+        box-shadow .3s ease;
 }
 
-
+.skill-box.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
 .skill-box:hover{
-
     transform:translateY(-8px);
-
-    box-shadow:
-        0 25px 50px rgba(0,0,0,0.12);
-
+    box-shadow:0 25px 50px rgba(0,0,0,.12);
 }
-
-
-
-
-
-/* Skill Image
-======================================== */
-
 
 .skill-box img{
-
     width:80px;
-
     height:80px;
-
     object-fit:contain;
-
     margin-bottom:20px;
-
 }
-
-
-
-
-
-/* Skill Name
-======================================== */
-
 
 .skill-box h4{
-
     font-size:1.5rem;
-
-    margin-bottom:25px;
-
+    margin-bottom:20px;
 }
 
-
-
-
-
-/* Level Bar
-======================================== */
-
+.skill-experience{
+    margin-bottom:20px;
+    font-size:.9rem;
+    color:#777;
+}
 
 .skill-level{
-
     width:100%;
-
     height:12px;
 
     background:#e5e5e5;
 
     border-radius:20px;
-
     overflow:hidden;
 
     margin-bottom:25px;
-
 }
 
-
-
 .skill-level-bar{
-
-    height:100%;
     width:0;
+    height:100%;
 
     background:#111;
 
     border-radius:20px;
 
     display:flex;
-    align-items:center;
     justify-content:flex-end;
+    align-items:center;
 
     padding-right:8px;
 
-    color:white;
-    font-size:0.75rem;
+    color:#fff;
+    font-size:.75rem;
     font-weight:bold;
 
+    transition:width 1.2s ease;
 }
-
-/* Skill Description
-======================================== */
-
 
 .skill-box p{
-
     text-align:left;
-
-    font-size:0.95rem;
-
-    line-height:1.8;
-
     color:#444;
-
-}
-
-
-/* Experience Year
-======================================== */
-
-.skill-experience{
-
-    margin-bottom:20px;
-
-    font-size:0.9rem;
-
-    color:#777;
-
-    font-weight:500;
-
-}
-
-
-
-/* ========================================
-   Skill Responsive
-======================================== */
-
-
-@media(max-width:1000px){
-
-
-    .skill-list{
-
-        grid-template-columns:repeat(2,1fr);
-
-    }
-
-
-}
-
-
-
-@media(max-width:768px){
-
-
-    .section-title h2{
-
-        font-size:2.2rem;
-
-    }
-
-
-
-    .skill-category h3{
-
-        font-size:1.6rem;
-
-    }
-
-
-
-    .skill-list{
-
-        grid-template-columns:1fr;
-
-    }
-
-
-
-    .skill-box{
-
-        padding:30px 25px;
-
-    }
-
-
-}
-
-/* Skills Animation
-======================================== */
-
-
-.skill-box{
-
-    opacity:0;
-
-    transform:translateY(40px);
-
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease,
-        box-shadow 0.3s ease;
-
-}
-
-
-
-.skill-box.show{
-
-    opacity:1;
-
-    transform:translateY(0);
-
-}
-
-
-
-.skill-level-bar{
-
-    transition:
-        width 1.2s ease;
-
+    line-height:1.8;
+    font-size:.95rem;
 }
 
 /* ========================================
    Featured Works
 ======================================== */
 
-
 .featured-works{
-
     background:#fff;
-
 }
 
+.featured-video,
+.featured-container{
+    opacity:0;
+    transform:translateY(50px);
 
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
 
-/* Work Movie
-======================================== */
-
+.featured-video.show,
+.featured-container.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
 .featured-video{
-
     width:min(100%,900px);
-
     margin:0 auto 70px;
-
 }
 
-
-
 .featured-video video{
-
     width:100%;
-
     display:block;
 
     border-radius:24px;
 
-    box-shadow:
-        0 20px 50px rgba(0,0,0,0.12);
-
+    box-shadow:0 20px 50px rgba(0,0,0,.12);
 }
 
-
-
-
-
-/* Work Container
-======================================== */
-
-
 .featured-container{
-
     width:min(100%,1000px);
-
     margin:0 auto;
 
     padding:60px;
@@ -865,594 +610,280 @@ footer{
 
     border-radius:24px;
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.08);
-
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 }
-
-
-
-
-
-/* Title
-======================================== */
-
 
 .featured-title{
-
     text-align:center;
-
     font-size:3rem;
-
-    letter-spacing:0.08em;
-
     margin-bottom:50px;
-
+    letter-spacing:.08em;
 }
 
-
-
-
-
-/* Information
-======================================== */
-
-
 .featured-info{
-
     display:grid;
-
     grid-template-columns:repeat(3,1fr);
-
     gap:30px;
 
     margin-bottom:50px;
-
 }
 
-
+.info-item,
+.featured-point{
+    background:#fff;
+    border-radius:16px;
+}
 
 .info-item{
-
-    background:#fff;
-
     padding:30px;
-
-    border-radius:16px;
-
 }
 
+.info-item h4,
+.featured-point h4{
+    margin-bottom:20px;
+    padding-left:10px;
 
+    border-left:4px solid #111;
+}
 
 .info-item h4{
-
     font-size:1.2rem;
-
-    margin-bottom:15px;
-
-    border-left:4px solid #111;
-
-    padding-left:10px;
-
 }
-
-
 
 .info-item p{
-
     color:#444;
-
     line-height:1.8;
-
 }
-
-
-
-
-
-/* Appeal Point
-======================================== */
-
 
 .featured-point{
-
-    background:#fff;
-
     padding:35px;
-
-    border-radius:16px;
-
 }
-
-
 
 .featured-point h4{
-
     font-size:1.4rem;
-
-    margin-bottom:20px;
-
-    border-left:4px solid #111;
-
-    padding-left:10px;
-
 }
-
-
 
 .featured-point ul{
-
     list-style:none;
-
 }
-
-
 
 .featured-point li{
-
     position:relative;
-
     padding-left:25px;
-
     margin-bottom:15px;
-
     color:#333;
-
 }
 
-
-
 .featured-point li::before{
-
     content:"";
 
     position:absolute;
-
     left:0;
-
-    top:0.8em;
+    top:.8em;
 
     width:8px;
-
     height:8px;
 
     background:#111;
-
     border-radius:50%;
-
-}
-
-
-
-
-
-/* ========================================
-   Featured Responsive
-======================================== */
-
-
-@media(max-width:900px){
-
-
-    .featured-container{
-
-        padding:40px 30px;
-
-    }
-
-
-
-    .featured-info{
-
-        grid-template-columns:1fr;
-
-    }
-
-
-}
-
-
-
-@media(max-width:768px){
-
-
-    .featured-video video{
-
-        border-radius:16px;
-
-    }
-
-
-
-    .featured-title{
-
-        font-size:2.2rem;
-
-    }
-
-
-
-    .featured-container{
-
-        padding:35px 20px;
-
-    }
-
-
-
-    .info-item{
-
-        padding:25px;
-
-    }
-
-
-}
-
-/* ========================================
-   Featured Animation
-======================================== */
-
-
-.featured-video,
-.featured-container{
-
-    opacity:0;
-
-    transform:translateY(50px);
-
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
-
-}
-
-
-.featured-video.show,
-.featured-container.show{
-
-    opacity:1;
-
-    transform:translateY(0);
-
 }
 
 /* ========================================
    Other Works
 ======================================== */
 
-
 .other-works{
-
     background:#f8f8f8;
-
 }
 
-
-
-
-
-/* Works List
-======================================== */
-
-
 .works-list{
-
     width:min(100%,1200px);
 
     margin:0 auto;
 
     display:grid;
-
     grid-template-columns:repeat(3,1fr);
-
     gap:35px;
-
 }
 
-
-
-
-
-/* Work Card
-======================================== */
-
-
 .work-card{
-
     background:#fff;
 
     border-radius:24px;
 
     overflow:hidden;
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.08);
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 
     transition:
+        transform .3s ease,
+        box-shadow .3s ease;
 
-        transform 0.3s ease,
-
-        box-shadow 0.3s ease;
-
-
+    opacity:0;
+    transform:translateY(40px);
 }
 
-
+.work-card.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
 .work-card:hover{
-
     transform:translateY(-10px);
-
-    box-shadow:
-
-        0 25px 50px rgba(0,0,0,0.15);
-
+    box-shadow:0 25px 50px rgba(0,0,0,.15);
 }
-
-
-
-
-
-/* Thumbnail
-======================================== */
-
 
 .work-card img{
-
     width:100%;
-
     height:220px;
 
+    display:block;
     object-fit:cover;
 
-    display:block;
-
-    transition:
-
-        transform 0.5s ease;
-
+    transition:transform .5s ease;
 }
-
-
 
 .work-card:hover img{
-
     transform:scale(1.05);
-
 }
-
-
-
-
-
-/* Work Content
-======================================== */
-
 
 .work-content{
-
     padding:30px;
-
 }
-
-
-
-
 
 .work-content h3{
-
     font-size:1.5rem;
-
     margin-bottom:15px;
-
 }
-
-
-
-
-
-/* Technology
-======================================== */
-
-
-.work-tech{
-
-    display:inline-block;
-
-    font-size:0.9rem;
-
-    color:#555;
-
-    background:#eee;
-
-    padding:5px 15px;
-
-    border-radius:20px;
-
-    margin-bottom:20px;
-
-}
-
-
-
-
-
-/* Description
-======================================== */
-
-
-.work-description{
-
-    color:#444;
-
-    font-size:0.95rem;
-
-    line-height:1.8;
-
-    margin-bottom:25px;
-
-}
-
-
-
-
-
-/* Link
-======================================== */
-
-
-.work-link{
-
-    display:inline-block;
-
-    color:#111;
-
-    font-weight:bold;
-
-    text-decoration:none;
-
-    border-bottom:2px solid #111;
-
-    padding-bottom:3px;
-
-    transition:
-
-        opacity 0.3s ease;
-
-}
-
-
-
-.work-link:hover{
-
-    opacity:0.6;
-
-}
-
-/* Period
-======================================== */
-
-
-.work-period{
-
-    font-size:0.9rem;
-
-    color:#666;
-
-    margin-bottom:20px;
-
-}
-
-/* Work Information
-======================================== */
-
 
 .work-genre,
 .work-tech,
 .work-period,
 .work-member,
 .work-role{
-
-    font-size:0.9rem;
-
-    color:#555;
-
     margin-bottom:10px;
-
+    font-size:.9rem;
+    color:#555;
 }
-
-
-
-
-/* Label Style */
 
 .work-genre::before{
-
     content:"Genre : ";
-
     font-weight:bold;
-
 }
-
-
 
 .work-tech::before{
-
     content:"Tech : ";
-
     font-weight:bold;
-
 }
-
-
 
 .work-period::before{
-
     content:"Period : ";
-
     font-weight:bold;
-
 }
-
-
 
 .work-member::before{
-
     content:"Member : ";
-
     font-weight:bold;
-
 }
-
-
 
 .work-role::before{
-
     content:"Role : ";
+    font-weight:bold;
+}
+
+.work-description{
+    margin:25px 0;
+    color:#444;
+    line-height:1.8;
+    font-size:.95rem;
+}
+
+.work-link{
+    display:inline-block;
+
+    color:#111;
+
+    text-decoration:none;
 
     font-weight:bold;
 
+    border-bottom:2px solid #111;
+
+    padding-bottom:3px;
+
+    transition:opacity .3s;
 }
 
-
+.work-link:hover{
+    opacity:.6;
+}
 
 /* ========================================
-   Other Works Responsive
+   Responsive
 ======================================== */
-
 
 @media(max-width:1000px){
 
-
-    .works-list{
-
+    .skill-list{
         grid-template-columns:repeat(2,1fr);
-
     }
 
+    .works-list{
+        grid-template-columns:repeat(2,1fr);
+    }
 
 }
 
+@media(max-width:900px){
 
+    .featured-container{
+        padding:40px 30px;
+    }
+
+    .featured-info{
+        grid-template-columns:1fr;
+    }
+
+}
 
 @media(max-width:768px){
 
-
-    .works-list{
-
-        grid-template-columns:1fr;
-
+    .section-title h2{
+        font-size:2.2rem;
     }
 
+    .skill-category h3{
+        font-size:1.6rem;
+    }
 
+    .skill-list,
+    .works-list{
+        grid-template-columns:1fr;
+    }
+
+    .skill-box{
+        padding:30px 25px;
+    }
+
+    .featured-title{
+        font-size:2.2rem;
+    }
+
+    .featured-container{
+        padding:35px 20px;
+    }
+
+    .featured-video video{
+        border-radius:16px;
+    }
+
+    .info-item{
+        padding:25px;
+    }
 
     .work-card img{
-
         height:200px;
-
     }
-
 
 }
 
@@ -1461,416 +892,202 @@ footer{
 ======================================== */
 
 .blog{
-
     background:#fff;
-
 }
 
-
-
-/* Blog Introduction
-======================================== */
+/* Introduction */
 
 .blog-introduction{
-
     max-width:1200px;
-
     margin:0 auto 80px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     gap:60px;
-
-    background:#fff;
 
     padding:50px;
 
+    background:#fff;
     border-radius:24px;
 
-    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 
+    opacity:0;
+    transform:translateY(40px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
 }
 
+.blog-introduction.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
-
-/* Logo
-======================================== */
+/* Logo */
 
 .blog-logo{
-
     flex-shrink:0;
-
 }
-
-
 
 .blog-logo img{
-
     width:180px;
-
     object-fit:contain;
-
 }
 
-
-
-/* Introduction
-======================================== */
+/* Content */
 
 .blog-intro-content{
-
     flex:1;
-
 }
-
-
 
 .blog-intro-content h3{
-
     font-size:2rem;
-
     margin-bottom:20px;
-
 }
-
-
 
 .blog-intro-content p{
-
     color:#555;
-
     line-height:2;
-
 }
 
-
-
-/* Stats
-======================================== */
+/* Stats */
 
 .blog-stats{
-
     display:flex;
-
     gap:40px;
-
     margin:35px 0;
-
 }
-
-
 
 .blog-stat span{
-
     display:block;
-
     font-size:3rem;
-
     font-weight:700;
-
     color:#111;
-
 }
-
-
 
 .blog-stat p{
-
     color:#777;
-
 }
 
-
-
-/* Button
-======================================== */
+/* Button */
 
 .blog-button{
-
     display:inline-block;
 
     padding:14px 34px;
 
     background:#111;
-
     color:#fff;
 
     text-decoration:none;
 
     border-radius:50px;
 
-    transition:0.3s;
-
+    transition:
+        background .3s,
+        transform .3s;
 }
-
-
 
 .blog-button:hover{
-
     background:#333;
-
     transform:translateY(-3px);
-
 }
 
-
-
-
-
-/* ========================================
-   Latest Articles
-======================================== */
+/* Latest Articles */
 
 .latest-articles{
-
     max-width:1200px;
-
     margin:0 auto;
 
     display:grid;
-
     grid-template-columns:repeat(3,1fr);
 
     gap:30px;
-
 }
 
-
-
-
-
-/* Article Card
-======================================== */
-
 .article-card{
-
     background:#fff;
 
     border-radius:20px;
 
     overflow:hidden;
 
-    box-shadow:0 15px 40px rgba(0,0,0,0.08);
-
-    transition:
-        transform .3s,
-        box-shadow .3s;
-
-}
-
-
-
-.article-card:hover{
-
-    transform:translateY(-8px);
-
-    box-shadow:0 25px 50px rgba(0,0,0,.12);
-
-}
-
-
-
-
-
-/* Thumbnail
-======================================== */
-
-.article-card img{
-
-    width:100%;
-
-    height:220px;
-
-    object-fit:cover;
-
-    display:block;
-
-}
-
-
-
-
-
-/* Content
-======================================== */
-
-.article-content{
-
-    padding:25px;
-
-}
-
-
-
-.article-date{
-
-    color:#888;
-
-    font-size:0.9rem;
-
-    margin-bottom:10px;
-
-}
-
-
-
-.article-content h3{
-
-    font-size:1.3rem;
-
-    margin-bottom:15px;
-
-    line-height:1.5;
-
-}
-
-
-
-.article-summary{
-
-    color:#555;
-
-    margin-bottom:25px;
-
-    line-height:1.8;
-
-}
-
-
-
-.article-content a{
-
-    color:#111;
-
-    font-weight:600;
-
-    text-decoration:none;
-
-    transition:.3s;
-
-}
-
-
-
-.article-content a:hover{
-
-    padding-left:8px;
-
-}
-
-
-
-
-
-/* ========================================
-   Blog Responsive
-======================================== */
-
-@media(max-width:900px){
-
-    .blog-introduction{
-
-        flex-direction:column;
-
-        text-align:center;
-
-        gap:40px;
-
-    }
-
-    .blog-stats{
-
-        justify-content:center;
-
-    }
-
-    .latest-articles{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-
-
-
-@media(max-width:768px){
-
-    .blog-introduction{
-
-        padding:35px 25px;
-
-    }
-
-    .blog-logo img{
-
-        width:140px;
-
-    }
-
-    .blog-intro-content h3{
-
-        font-size:1.7rem;
-
-    }
-
-    .blog-stat span{
-
-        font-size:2.5rem;
-
-    }
-
-}
-
-/* ========================================
-   Blog Animation
-======================================== */
-
-.blog-introduction,
-.article-card{
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 
     opacity:0;
-
     transform:translateY(40px);
 
     transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
-
+        opacity .8s ease,
+        transform .8s ease,
+        box-shadow .3s ease;
 }
 
-.blog-introduction.show,
 .article-card.show{
-
     opacity:1;
-
     transform:translateY(0);
+}
 
+.article-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 25px 50px rgba(0,0,0,.12);
+}
+
+.article-card img{
+    width:100%;
+    height:220px;
+
+    display:block;
+    object-fit:cover;
+}
+
+.article-content{
+    padding:25px;
+}
+
+.article-date{
+    margin-bottom:10px;
+    color:#888;
+    font-size:.9rem;
+}
+
+.article-content h3{
+    margin-bottom:15px;
+    font-size:1.3rem;
+    line-height:1.5;
+}
+
+.article-summary{
+    margin-bottom:25px;
+    color:#555;
+    line-height:1.8;
+}
+
+.article-content a{
+    color:#111;
+
+    text-decoration:none;
+    font-weight:600;
+
+    transition:padding-left .3s;
+}
+
+.article-content a:hover{
+    padding-left:8px;
 }
 
 /* ========================================
    Timeline
 ======================================== */
 
-
 .timeline{
-
     background:#f8f8f8;
-
 }
 
-
-
-/* Container
-======================================== */
-
-
 .timeline-container{
-
     position:relative;
 
     max-width:1000px;
@@ -1878,59 +1095,45 @@ footer{
     margin:0 auto;
 
     padding:40px 0;
-
 }
 
-
-
-/* Center Line
-======================================== */
-
-
 .timeline-container::before{
-
     content:"";
 
     position:absolute;
 
     top:0;
-
     left:50%;
 
     width:4px;
-
     height:100%;
 
     background:#111;
 
     transform:translateX(-50%);
-
 }
 
-
-
-/* Item
-======================================== */
-
-
 .timeline-item{
-
     position:relative;
 
     width:50%;
 
     padding:20px 50px;
 
+    opacity:0;
+    transform:translateY(40px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
 }
 
-
-
-/* Dot
-======================================== */
-
+.timeline-item.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
 .timeline-item::before{
-
     content:"";
 
     position:absolute;
@@ -1938,244 +1141,83 @@ footer{
     top:45px;
 
     width:18px;
-
     height:18px;
 
     background:#111;
 
     border-radius:50%;
-
-    z-index:2;
-
 }
-
-
-
-/* Left Item
-======================================== */
-
 
 .timeline-item:nth-child(odd){
-
     left:0;
-
     text-align:right;
-
 }
-
-
 
 .timeline-item:nth-child(odd)::before{
-
     right:-9px;
-
 }
-
-
-
-/* Right Item
-======================================== */
-
 
 .timeline-item:nth-child(even){
-
     left:50%;
-
 }
-
-
 
 .timeline-item:nth-child(even)::before{
-
     left:-9px;
-
 }
 
-
-
-/* Card
-======================================== */
-
-
 .timeline-content{
-
     background:#fff;
 
     padding:35px;
 
     border-radius:20px;
 
-    box-shadow:
-
-        0 15px 40px rgba(0,0,0,0.08);
-
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 }
 
-
-
 .timeline-date{
-
     display:inline-block;
-
-    font-size:1.2rem;
-
-    font-weight:bold;
 
     margin-bottom:15px;
 
     color:#777;
 
+    font-size:1.2rem;
+    font-weight:bold;
 }
-
-
 
 .timeline-content h3{
-
-    font-size:1.4rem;
-
     margin-bottom:15px;
-
+    font-size:1.4rem;
 }
-
-
 
 .timeline-content p{
-
     color:#444;
-
     line-height:1.8;
-
-}
-
-
-
-
-/* ========================================
-   Timeline Responsive
-======================================== */
-
-
-@media(max-width:768px){
-
-
-    .timeline-container::before{
-
-        left:20px;
-
-    }
-
-
-
-    .timeline-item,
-    .timeline-item:nth-child(even){
-
-        width:100%;
-
-        left:0;
-
-        padding-left:60px;
-
-        padding-right:20px;
-
-        text-align:left;
-
-    }
-
-
-
-    .timeline-item::before,
-    .timeline-item:nth-child(even)::before{
-
-        left:11px;
-
-        right:auto;
-
-    }
-
-
-
-    .timeline-content{
-
-        padding:25px;
-
-    }
-
-
-}
-
-/* ========================================
-   Timeline Animation
-======================================== */
-
-
-.timeline-item{
-
-    opacity:0;
-
-    transform:translateY(40px);
-
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
-
-}
-
-
-
-.timeline-item.show{
-
-    opacity:1;
-
-    transform:translateY(0);
-
 }
 
 /* ========================================
    Play Games
 ======================================== */
 
-
 .play-games{
-
     background:#fff;
-
 }
 
-
-
-/* Container
-======================================== */
-
-
 .play-container{
-
     width:min(100%,1000px);
 
     margin:0 auto;
 
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
 
     gap:30px;
-
 }
 
-
-
-
-
-/* Play Card
-======================================== */
-
-
 .play-card{
-
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
 
     text-align:center;
@@ -2186,211 +1228,154 @@ footer{
 
     border-radius:24px;
 
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.08);
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 
     text-decoration:none;
-
     color:#111;
 
+    opacity:0;
+    transform:translateY(40px);
+
     transition:
-
-        transform 0.3s ease,
-
-        box-shadow 0.3s ease;
-
+        opacity .8s ease,
+        transform .8s ease,
+        box-shadow .3s ease;
 }
 
-
+.play-card.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
 .play-card:hover{
-
     transform:translateY(-10px);
-
-    box-shadow:
-
-        0 25px 50px rgba(0,0,0,0.15);
-
+    box-shadow:0 25px 50px rgba(0,0,0,.15);
 }
 
-
-
-
-
-/* Logo
-======================================== */
-
-
 .play-card img{
-
     width:100px;
-
     height:100px;
 
     object-fit:contain;
 
     margin-bottom:25px;
-
 }
-
-
-
-
-
-/* Title
-======================================== */
-
 
 .play-card h3{
-
-    font-size:1.5rem;
-
     margin-bottom:15px;
-
+    font-size:1.5rem;
 }
 
-
-
-
-
-/* Description
-======================================== */
-
-
 .play-card p{
+    margin-bottom:25px;
 
     color:#555;
 
-    font-size:0.95rem;
-
+    font-size:.95rem;
     line-height:1.8;
-
-    margin-bottom:25px;
-
 }
 
-
-
-
-
-/* Link Text
-======================================== */
-
-
 .play-card span{
-
     font-weight:bold;
 
     color:#111;
 
-    border-bottom:
-
-        2px solid #111;
+    border-bottom:2px solid #111;
 
     padding-bottom:3px;
 
-    transition:
-
-        opacity 0.3s ease;
-
+    transition:opacity .3s;
 }
-
-
 
 .play-card:hover span{
-
-    opacity:0.6;
-
+    opacity:.6;
 }
 
-
-
-
-
 /* ========================================
-   Play Games Responsive
+   Responsive
 ======================================== */
-
 
 @media(max-width:1000px){
 
-
     .play-container{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
+        grid-template-columns:repeat(2,1fr);
     }
-
 
 }
 
+@media(max-width:900px){
 
+    .blog-introduction{
+        flex-direction:column;
+        text-align:center;
+        gap:40px;
+    }
+
+    .blog-stats{
+        justify-content:center;
+    }
+
+    .latest-articles{
+        grid-template-columns:1fr;
+    }
+
+}
 
 @media(max-width:768px){
 
+    .blog-introduction{
+        padding:35px 25px;
+    }
+
+    .blog-logo img{
+        width:140px;
+    }
+
+    .blog-intro-content h3{
+        font-size:1.7rem;
+    }
+
+    .blog-stat span{
+        font-size:2.5rem;
+    }
+
+    .timeline-container::before{
+        left:20px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even){
+        width:100%;
+        left:0;
+
+        padding-left:60px;
+        padding-right:20px;
+
+        text-align:left;
+    }
+
+    .timeline-item::before,
+    .timeline-item:nth-child(even)::before{
+        left:11px;
+        right:auto;
+    }
+
+    .timeline-content{
+        padding:25px;
+    }
 
     .play-container{
-
         grid-template-columns:1fr;
-
     }
-
-
 
     .play-card{
-
         padding:35px 25px;
-
     }
-
-
 
     .play-card img{
-
         width:80px;
-
         height:80px;
-
     }
-
-
-}
-
-
-
-/* ========================================
-   Play Games Animation
-======================================== */
-
-
-.play-card{
-
-    opacity:0;
-
-    transform:
-
-        translateY(40px);
-
-    transition:
-
-        opacity 0.8s ease,
-
-        transform 0.8s ease,
-
-        box-shadow 0.3s ease;
-
-}
-
-
-
-.play-card.show{
-
-    opacity:1;
-
-    transform:
-
-        translateY(0);
 
 }
 
@@ -2398,103 +1383,91 @@ footer{
    Contact
 ======================================== */
 
-
 .contact{
-
-    padding:120px 10%;
-
+    background:#f8f8f8;
 }
-
-
 
 .contact-container{
-
     max-width:1000px;
-    margin:auto;
+    margin:0 auto;
     text-align:center;
-
 }
-
-
 
 .contact-message{
-
-    margin-bottom:50px;
-    font-size:18px;
-
+    margin:0 auto 60px;
+    max-width:700px;
+    font-size:1.05rem;
+    color:#555;
+    line-height:2;
 }
 
-
+/* SNS List
+======================================== */
 
 .sns-list{
-
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(3,1fr);
     gap:30px;
-
 }
 
-
+/* Card
+======================================== */
 
 .sns-card{
-
     display:flex;
-
     align-items:center;
-
     gap:20px;
 
-    padding:25px;
+    padding:30px;
 
     background:#fff;
 
     border-radius:20px;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.08);
-
     text-decoration:none;
 
     color:#111;
 
-    transition:0.3s;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.08);
 
+    transition:
+        transform .3s,
+        box-shadow .3s;
 }
-
-
 
 .sns-card:hover{
 
     transform:translateY(-8px);
 
+    box-shadow:
+        0 25px 50px rgba(0,0,0,.12);
+
 }
-
-
 
 .sns-card img{
 
-    width:50px;
-    height:50px;
+    width:56px;
+    height:56px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
 
 }
-
-
 
 .sns-card h3{
 
-    margin-bottom:5px;
+    margin-bottom:6px;
+
+    font-size:1.2rem;
 
 }
 
-
-
 .sns-card p{
 
-    font-size:14px;
     color:#666;
+    font-size:.95rem;
 
 }
 
@@ -2502,29 +1475,179 @@ footer{
    Contact Animation
 ======================================== */
 
-
 .contact-container,
 .sns-card{
 
     opacity:0;
 
-    transform:
-        translateY(40px);
+    transform:translateY(40px);
 
     transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
+        opacity .8s ease,
+        transform .8s ease;
 
 }
-
-
 
 .contact-container.show,
 .sns-card.show{
 
     opacity:1;
 
-    transform:
-        translateY(0);
+    transform:translateY(0);
+
+}
+
+/* ========================================
+   Footer
+======================================== */
+
+footer{
+
+    background:#111;
+
+    color:#aaa;
+
+    text-align:center;
+
+    padding:40px 20px;
+
+    font-size:.9rem;
+
+    letter-spacing:.05em;
+
+}
+
+/* ========================================
+   Common Section Width
+======================================== */
+
+.about-container,
+.featured-container,
+.blog-introduction,
+.timeline-container,
+.play-container,
+.contact-container{
+
+    width:min(100%,1100px);
+
+}
+
+/* ========================================
+   Smooth Card Radius
+======================================== */
+
+.skill-box,
+.work-card,
+.article-card,
+.play-card,
+.sns-card,
+.timeline-content,
+.featured-container,
+.about-container{
+
+    border-radius:22px;
+
+}
+
+/* ========================================
+   Image Responsive
+======================================== */
+
+img{
+
+    max-width:100%;
+
+    height:auto;
+
+}
+
+/* ========================================
+   Selection Color
+======================================== */
+
+::selection{
+
+    background:#111;
+
+    color:#fff;
+
+}
+
+/* ========================================
+   Scroll Margin
+======================================== */
+
+section{
+
+    scroll-margin-top:90px;
+
+}
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media(max-width:900px){
+
+    .sns-list{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .header{
+
+        padding:0 20px;
+        height:70px;
+
+    }
+
+    .header-nav{
+
+        gap:20px;
+
+    }
+
+    .header-logo{
+
+        font-size:20px;
+
+    }
+
+    .header-nav a{
+
+        font-size:14px;
+
+    }
+
+    .contact{
+
+        padding:90px 5%;
+
+    }
+
+    .contact-message{
+
+        font-size:.95rem;
+
+    }
+
+    .sns-card{
+
+        padding:24px;
+
+    }
+
+    footer{
+
+        font-size:.8rem;
+
+        padding:30px 20px;
+
+    }
 
 }

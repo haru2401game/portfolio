@@ -426,3 +426,51 @@ playCards.forEach((card,index)=>{
 
 
 observeShow(playCards);
+
+/* ========================================
+   Hamburger Menu
+======================================== */
+
+const hamburger = document.querySelector(".hamburger");
+const headerNav = document.querySelector(".header-nav");
+
+hamburger.addEventListener("click", () => {
+
+    hamburger.classList.toggle("active");
+    headerNav.classList.toggle("active");
+
+});
+
+const navLinks = document.querySelectorAll(".header-nav a");
+
+navLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        hamburger.classList.remove("active");
+        headerNav.classList.remove("active");
+
+    });
+
+});
+
+hamburger.addEventListener("click", () => {
+
+    hamburger.classList.toggle("active");
+    headerNav.classList.toggle("active");
+
+    document.body.classList.toggle("menu-open");
+
+});
+
+navLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        hamburger.classList.remove("active");
+        headerNav.classList.remove("active");
+        document.body.classList.remove("menu-open");
+
+    });
+
+});
