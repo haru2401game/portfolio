@@ -1,6 +1,13 @@
 {
-    "articleCount": 186,
+    "articleCount": 187,
     "articles": [
+        {
+            "title": "「ただの村人ですが、魔王倒します。」 はる日記#187",
+            "date": "2026.07.23",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/296843176/rectangle_large_type_2_4d4105a25bfe1994c077fd057e1183a5.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n8e6cd286cfa8"
+        },
         {
             "title": "「A Game About Feeding A Black Hole 全実績解除」 はる日記#186",
             "date": "2026.07.23",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/296199461/rectangle_large_type_2_57999e3b57b9c210f793996d5ec03ef7.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n205b09ee1b0e"
-        },
-        {
-            "title": "「学生チーム対抗ゲームジャム2026 最終日」 はる日記#184",
-            "date": "2026.07.21",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/296193177/rectangle_large_type_2_2930db74d39771a2660fc0e27624edf1.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n9106ce33a35f"
         }
     ]
 }
