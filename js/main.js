@@ -405,3 +405,24 @@ contactElements.forEach((element,index)=>{
 
 
 observeShow(contactElements);
+
+/* ========================================
+   Play Games Animation
+======================================== */
+
+
+const playCards =
+    document.querySelectorAll(
+        ".play-card"
+    );
+
+
+playCards.forEach((card,index)=>{
+
+    card.style.transitionDelay =
+        `${index * 0.15}s`;
+
+});
+
+
+observeShow(playCards);
