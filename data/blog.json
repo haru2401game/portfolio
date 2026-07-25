@@ -1,6 +1,13 @@
 {
-    "articleCount": 187,
+    "articleCount": 188,
     "articles": [
+        {
+            "title": "「ゲームジャムにおいて大切なのは\"削る\"こと」 はる日記#188",
+            "date": "2026.07.24",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/296461746/rectangle_large_type_2_a7c9bdfc4bbabde1fa9e97acf2ece332.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n57a6b930d380"
+        },
         {
             "title": "「ただの村人ですが、魔王倒します。」 はる日記#187",
             "date": "2026.07.23",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/293962745/rectangle_large_type_2_299704bd33d66455301fd8cf9284ff0c.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n40f1c957e3db"
-        },
-        {
-            "title": "「ししとう ゲームジャム作品」 はる日記#185",
-            "date": "2026.07.21",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/296199461/rectangle_large_type_2_57999e3b57b9c210f793996d5ec03ef7.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n205b09ee1b0e"
         }
     ]
 }
