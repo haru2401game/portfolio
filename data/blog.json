@@ -1,6 +1,13 @@
 {
-    "articleCount": 190,
+    "articleCount": 191,
     "articles": [
+        {
+            "title": "「ゲーム開発は\"作る\"より\"直す\"時間のほうが長い」 はる日記#191",
+            "date": "2026.07.28",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/296460745/rectangle_large_type_2_4e8494a3283e59882790bb5f207469cd.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n737ec6be978d"
+        },
         {
             "title": "「unity1week\"しろ\"に参加します！」 はる日記#190",
             "date": "2026.07.26",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/296521082/rectangle_large_type_2_4611abb4e116596534bf293ba051b386.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n756abe76a753"
-        },
-        {
-            "title": "「ゲームジャムにおいて大切なのは\"削る\"こと」 はる日記#188",
-            "date": "2026.07.24",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/296461746/rectangle_large_type_2_a7c9bdfc4bbabde1fa9e97acf2ece332.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n57a6b930d380"
         }
     ]
 }
