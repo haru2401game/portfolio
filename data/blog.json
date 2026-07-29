@@ -1,6 +1,13 @@
 {
-    "articleCount": 191,
+    "articleCount": 192,
     "articles": [
+        {
+            "title": "「unity1week 2日目進捗」 はる日記#192",
+            "date": "2026.07.28",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/298334755/rectangle_large_type_2_459c57974b3cd0888c388467ed6d9e82.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n3f1b6a658e30"
+        },
         {
             "title": "「ゲーム開発は\"作る\"より\"直す\"時間のほうが長い」 はる日記#191",
             "date": "2026.07.28",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/297870447/rectangle_large_type_2_6e7dcd0d1dd3fc34775957f0a939e3e0.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n48df44d573c5"
-        },
-        {
-            "title": "「ゲーム業界を目指す学生が、開発で本当に意識すべきこと」 はる日記#189",
-            "date": "2026.07.26",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/296521082/rectangle_large_type_2_4611abb4e116596534bf293ba051b386.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n756abe76a753"
         }
     ]
 }
