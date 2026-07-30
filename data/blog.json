@@ -1,6 +1,13 @@
 {
-    "articleCount": 192,
+    "articleCount": 193,
     "articles": [
+        {
+            "title": "「就職作品 HOOK SHIFT の進捗報告3」 はる日記#193",
+            "date": "2026.07.30",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/298477246/rectangle_large_type_2_73dfdd46dd5855d749e39883a06085aa.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nc707a412117b"
+        },
         {
             "title": "「unity1week 2日目進捗」 はる日記#192",
             "date": "2026.07.28",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/296460745/rectangle_large_type_2_4e8494a3283e59882790bb5f207469cd.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n737ec6be978d"
-        },
-        {
-            "title": "「unity1week\"しろ\"に参加します！」 はる日記#190",
-            "date": "2026.07.26",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/297870447/rectangle_large_type_2_6e7dcd0d1dd3fc34775957f0a939e3e0.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n48df44d573c5"
         }
     ]
 }
