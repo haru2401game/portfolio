@@ -1,6 +1,13 @@
 {
-    "articleCount": 193,
+    "articleCount": 194,
     "articles": [
+        {
+            "title": "「\"ししとう\"継続開発報告｜AI対戦・新キャラクター追加！」 はる日記#194",
+            "date": "2026.07.30",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/298980081/rectangle_large_type_2_ad4ff1db782f17aa6280f18f135b1635.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n9fc4bb2c28e7"
+        },
         {
             "title": "「就職作品 HOOK SHIFT の進捗報告3」 はる日記#193",
             "date": "2026.07.30",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/298334755/rectangle_large_type_2_459c57974b3cd0888c388467ed6d9e82.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n3f1b6a658e30"
-        },
-        {
-            "title": "「ゲーム開発は\"作る\"より\"直す\"時間のほうが長い」 はる日記#191",
-            "date": "2026.07.28",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/296460745/rectangle_large_type_2_4e8494a3283e59882790bb5f207469cd.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n737ec6be978d"
         }
     ]
 }
