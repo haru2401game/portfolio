@@ -1,6 +1,13 @@
 {
-    "articleCount": 195,
+    "articleCount": 196,
     "articles": [
+        {
+            "title": "「スノーぱくぱく unity1week作品」 はる日記#196",
+            "date": "2026.08.02",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/298902285/rectangle_large_type_2_313aada4e63ac8eee3a3143f42a90fa9.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n7bfc5f61a7a6"
+        },
         {
             "title": "「能力は持っているだけでは意味がない。大切なのは\"使う場所\"と\"組み合わせ\"」 はる日記#195",
             "date": "2026.07.31",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/298980081/rectangle_large_type_2_ad4ff1db782f17aa6280f18f135b1635.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n9fc4bb2c28e7"
-        },
-        {
-            "title": "「就職作品 HOOK SHIFT の進捗報告3」 はる日記#193",
-            "date": "2026.07.30",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/298477246/rectangle_large_type_2_73dfdd46dd5855d749e39883a06085aa.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nc707a412117b"
         }
     ]
 }
