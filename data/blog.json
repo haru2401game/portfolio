@@ -1,6 +1,13 @@
 {
-    "articleCount": 196,
+    "articleCount": 197,
     "articles": [
+        {
+            "title": "「インディーゲーム開発者こそ知っておきたい\"狩野モデル\"という考え方」 はる日記#197",
+            "date": "2026.08.03",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/299735889/rectangle_large_type_2_80126a4c2b9985ffc1ee0d5874b0d91b.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n2df99d97e785"
+        },
         {
             "title": "「スノーぱくぱく unity1week作品」 はる日記#196",
             "date": "2026.08.02",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/298987473/rectangle_large_type_2_ab8fb60e18183cb3c7190874fd7d4e3c.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n35f4d9e64065"
-        },
-        {
-            "title": "「\"ししとう\"継続開発報告｜AI対戦・新キャラクター追加！」 はる日記#194",
-            "date": "2026.07.30",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/298980081/rectangle_large_type_2_ad4ff1db782f17aa6280f18f135b1635.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n9fc4bb2c28e7"
         }
     ]
 }
