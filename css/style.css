@@ -404,7 +404,89 @@ section:not(.hero){
     color:var(--color-text);
 }
 
+/* ========================================
+   Achievements
+======================================== */
 
+.achievements{
+
+    padding:120px 10%;
+    background:#f7f7f7;
+
+}
+
+.achievement-list{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+    margin-top:70px;
+
+}
+
+.achievement-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:40px 20px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.achievement-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.achievement-card h3{
+
+    font-size:54px;
+
+    color:#111;
+
+    margin-bottom:10px;
+
+    font-weight:700;
+
+}
+
+.achievement-card p{
+
+    font-size:18px;
+
+    color:#666;
+
+    letter-spacing:.05em;
+
+}
+
+@media(max-width:900px){
+
+    .achievement-list{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .achievement-list{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
 
 /* ========================================
    SKILLS

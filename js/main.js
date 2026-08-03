@@ -102,7 +102,35 @@ observeShow(
 );
 
 
+/* ========================================
+   Achievements
+======================================== */
 
+const achievements = {
+
+    gameCount: document.querySelectorAll(".work-card").length,
+
+    awardCount: 4,
+
+    eventCount: 9,
+
+    internCount: 1,
+
+    careerCount: 2
+
+};
+
+Object.keys(achievements).forEach(id=>{
+
+    const element = document.getElementById(id);
+
+    if(element){
+
+        element.textContent = achievements[id];
+
+    }
+
+});
 
 
 /* ========================================
@@ -267,7 +295,19 @@ fetch("data/blog.json")
 
     }
 
+    //-----------------------------------
+    // Achievements のブログ数
+    //-----------------------------------
 
+    const blogCount =
+        document.getElementById("blogCount");
+
+    if(blogCount){
+
+        blogCount.textContent =
+            data.articleCount;
+
+    }
 
     //-----------------------------------
     // 最新記事生成
