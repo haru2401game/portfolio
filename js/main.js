@@ -300,7 +300,7 @@ fetch("data/blog.json")
     .then(data=>{
 
         document.getElementById("gameCount").textContent =
-            data.gameCount;
+            document.querySelectorAll(".work-card").length;
 
         document.getElementById("awardCount").textContent =
             data.awardCount;
