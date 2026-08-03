@@ -468,6 +468,23 @@ section:not(.hero){
 
 }
 
+.achievement-card i{
+
+    font-size:40px;
+    color:#4ea1ff;
+
+    margin-bottom:18px;
+
+    transition:.3s;
+
+}
+
+.achievement-card:hover i{
+
+    transform:scale(1.15);
+
+}
+
 @media(max-width:900px){
 
     .achievement-list{
