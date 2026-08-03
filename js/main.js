@@ -101,38 +101,6 @@ observeShow(
     document.querySelectorAll(".about-container")
 );
 
-
-/* ========================================
-   Achievements
-======================================== */
-
-const achievements = {
-
-    gameCount: document.querySelectorAll(".work-card").length,
-
-    awardCount: 4,
-
-    eventCount: 9,
-
-    internCount: 1,
-
-    careerCount: 2
-
-};
-
-Object.keys(achievements).forEach(id=>{
-
-    const element = document.getElementById(id);
-
-    if(element){
-
-        element.textContent = achievements[id];
-
-    }
-
-});
-
-
 /* ========================================
    Skills Animation
 ======================================== */
@@ -308,6 +276,51 @@ fetch("data/blog.json")
             data.articleCount;
 
     }
+
+    /* ========================================
+    Profile Data
+    ======================================== */
+
+    fetch("data/profile.json")
+
+    .then(response=>{
+
+        if(!response.ok){
+
+            throw new Error(
+                "profile.json の読み込みに失敗しました。"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(data=>{
+
+        document.getElementById("gameCount").textContent =
+            data.gameCount;
+
+        document.getElementById("awardCount").textContent =
+            data.awardCount;
+
+        document.getElementById("eventCount").textContent =
+            data.eventCount;
+
+        document.getElementById("internCount").textContent =
+            data.internCount;
+
+        document.getElementById("careerCount").textContent =
+            data.careerCount;
+
+    })
+
+    .catch(error=>{
+
+        console.error(error);
+
+    });
 
     //-----------------------------------
     // 最新記事生成
