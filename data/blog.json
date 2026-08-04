@@ -1,6 +1,13 @@
 {
-    "articleCount": 197,
+    "articleCount": 198,
     "articles": [
+        {
+            "title": "「個人ゲーム開発って本当にそんなにお金がかかるのか？」 はる日記#198",
+            "date": "2026.08.03",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/298987619/rectangle_large_type_2_2ed3dbc3437075e437d0f031e928c4a1.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n60b38e2989c6"
+        },
         {
             "title": "「インディーゲーム開発者こそ知っておきたい\"狩野モデル\"という考え方」 はる日記#197",
             "date": "2026.08.03",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/298902285/rectangle_large_type_2_313aada4e63ac8eee3a3143f42a90fa9.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n7bfc5f61a7a6"
-        },
-        {
-            "title": "「能力は持っているだけでは意味がない。大切なのは\"使う場所\"と\"組み合わせ\"」 はる日記#195",
-            "date": "2026.07.31",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/298987473/rectangle_large_type_2_ab8fb60e18183cb3c7190874fd7d4e3c.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n35f4d9e64065"
         }
     ]
 }
