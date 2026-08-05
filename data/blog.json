@@ -1,6 +1,13 @@
 {
-    "articleCount": 198,
+    "articleCount": 199,
     "articles": [
+        {
+            "title": "「【ししとう開発】キャラクターの個性を強化！全キャラトレイル演出追加＆タイトル演出をアップデート！」 はる日記#199",
+            "date": "2026.08.04",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/299433789/rectangle_large_type_2_4f6f0ad36da77a0653e6065295596c0c.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n7cb8e6619480"
+        },
         {
             "title": "「個人ゲーム開発って本当にそんなにお金がかかるのか？」 はる日記#198",
             "date": "2026.08.03",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/299735889/rectangle_large_type_2_80126a4c2b9985ffc1ee0d5874b0d91b.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n2df99d97e785"
-        },
-        {
-            "title": "「スノーぱくぱく unity1week作品」 はる日記#196",
-            "date": "2026.08.02",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/298902285/rectangle_large_type_2_313aada4e63ac8eee3a3143f42a90fa9.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n7bfc5f61a7a6"
         }
     ]
 }
