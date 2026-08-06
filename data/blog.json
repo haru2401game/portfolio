@@ -1,6 +1,13 @@
 {
-    "articleCount": 199,
+    "articleCount": 200,
     "articles": [
+        {
+            "title": "「ししとう 紹介動画が公開されます！」 はる日記#200 ",
+            "date": "2026.08.05",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/300845488/rectangle_large_type_2_14fedc1353ab5b375da13a069bd81ca7.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/ne8ab4fb0198c"
+        },
         {
             "title": "「【ししとう開発】キャラクターの個性を強化！全キャラトレイル演出追加＆タイトル演出をアップデート！」 はる日記#199",
             "date": "2026.08.04",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/298987619/rectangle_large_type_2_2ed3dbc3437075e437d0f031e928c4a1.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n60b38e2989c6"
-        },
-        {
-            "title": "「インディーゲーム開発者こそ知っておきたい\"狩野モデル\"という考え方」 はる日記#197",
-            "date": "2026.08.03",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/299735889/rectangle_large_type_2_80126a4c2b9985ffc1ee0d5874b0d91b.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n2df99d97e785"
         }
     ]
 }
