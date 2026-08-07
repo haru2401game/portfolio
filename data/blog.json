@@ -1,6 +1,13 @@
 {
-    "articleCount": 200,
+    "articleCount": 201,
     "articles": [
+        {
+            "title": "「ゲーム制作のモチベーションはどう保っていますか？20本以上ゲームを完成させて気づいたこと」 はる日記#201",
+            "date": "2026.08.06",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/300281754/rectangle_large_type_2_53d94927f72917084c3ffa7be341ed88.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n909e62571a52"
+        },
         {
             "title": "「ししとう 紹介動画が公開されます！」 はる日記#200 ",
             "date": "2026.08.05",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/299433789/rectangle_large_type_2_4f6f0ad36da77a0653e6065295596c0c.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n7cb8e6619480"
-        },
-        {
-            "title": "「個人ゲーム開発って本当にそんなにお金がかかるのか？」 はる日記#198",
-            "date": "2026.08.03",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/298987619/rectangle_large_type_2_2ed3dbc3437075e437d0f031e928c4a1.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n60b38e2989c6"
         }
     ]
 }
