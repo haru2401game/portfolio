@@ -1,6 +1,13 @@
 {
-    "articleCount": 201,
+    "articleCount": 202,
     "articles": [
+        {
+            "title": "「【ししとう開発進捗】AIレートランキング・新キャラ・UI改善を実装！」 はる日記#202",
+            "date": "2026.08.07",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/300358951/rectangle_large_type_2_515a3268805400e47d9268a210c683da.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n7ec79a80c3af"
+        },
         {
             "title": "「ゲーム制作のモチベーションはどう保っていますか？20本以上ゲームを完成させて気づいたこと」 はる日記#201",
             "date": "2026.08.06",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/300845488/rectangle_large_type_2_14fedc1353ab5b375da13a069bd81ca7.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/ne8ab4fb0198c"
-        },
-        {
-            "title": "「【ししとう開発】キャラクターの個性を強化！全キャラトレイル演出追加＆タイトル演出をアップデート！」 はる日記#199",
-            "date": "2026.08.04",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/299433789/rectangle_large_type_2_4f6f0ad36da77a0653e6065295596c0c.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n7cb8e6619480"
         }
     ]
 }
