@@ -1,6 +1,13 @@
 {
-    "articleCount": 202,
+    "articleCount": 203,
     "articles": [
+        {
+            "title": "「unity1week\"しろ\" おすすめ作品まとめ！実際に遊んで面白かったゲームを紹介」 はる日記#203",
+            "date": "2026.08.08",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/299994816/rectangle_large_type_2_395e275a46e08e2d7e450ea8488b4330.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n4335c0b7782d"
+        },
         {
             "title": "「【ししとう開発進捗】AIレートランキング・新キャラ・UI改善を実装！」 はる日記#202",
             "date": "2026.08.07",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/300281754/rectangle_large_type_2_53d94927f72917084c3ffa7be341ed88.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n909e62571a52"
-        },
-        {
-            "title": "「ししとう 紹介動画が公開されます！」 はる日記#200 ",
-            "date": "2026.08.05",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/300845488/rectangle_large_type_2_14fedc1353ab5b375da13a069bd81ca7.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/ne8ab4fb0198c"
         }
     ]
 }
