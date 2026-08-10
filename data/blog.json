@@ -1,6 +1,13 @@
 {
-    "articleCount": 203,
+    "articleCount": 204,
     "articles": [
+        {
+            "title": "「なぜAIの作ったものはAIっぽいのか？」 はる日記#204",
+            "date": "2026.08.09",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/298476132/rectangle_large_type_2_0faae9c13285f538e84d30e170a79ad0.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 最近、画像や文章を見て「これAIっぽいな」と感じることが増えてきました。 でも、よく考えてみると不思議ですよね。 AI...",
+            "url": "https://note.com/ha_03ru_01/n/n98ef6b077cdd"
+        },
         {
             "title": "「unity1week\"しろ\" おすすめ作品まとめ！実際に遊んで面白かったゲームを紹介」 はる日記#203",
             "date": "2026.08.08",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/300358951/rectangle_large_type_2_515a3268805400e47d9268a210c683da.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n7ec79a80c3af"
-        },
-        {
-            "title": "「ゲーム制作のモチベーションはどう保っていますか？20本以上ゲームを完成させて気づいたこと」 はる日記#201",
-            "date": "2026.08.06",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/300281754/rectangle_large_type_2_53d94927f72917084c3ffa7be341ed88.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n909e62571a52"
         }
     ]
 }
