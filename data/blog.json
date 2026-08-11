@@ -1,6 +1,13 @@
 {
-    "articleCount": 204,
+    "articleCount": 205,
     "articles": [
+        {
+            "title": "「ししとう開発進捗 : 新キャラ追加・AI対戦のアップデート・オンライン実装への挑戦」 はる日記#205",
+            "date": "2026.08.11",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/301736158/rectangle_large_type_2_895849287147658a9d4c355da9026b4e.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n38cc5b6b649e"
+        },
         {
             "title": "「なぜAIの作ったものはAIっぽいのか？」 はる日記#204",
             "date": "2026.08.09",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/299994816/rectangle_large_type_2_395e275a46e08e2d7e450ea8488b4330.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n4335c0b7782d"
-        },
-        {
-            "title": "「【ししとう開発進捗】AIレートランキング・新キャラ・UI改善を実装！」 はる日記#202",
-            "date": "2026.08.07",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/300358951/rectangle_large_type_2_515a3268805400e47d9268a210c683da.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n7ec79a80c3af"
         }
     ]
 }
