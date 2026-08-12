@@ -1,6 +1,13 @@
 {
-    "articleCount": 205,
+    "articleCount": 206,
     "articles": [
+        {
+            "title": "「なぜ人は行動できないのか？行動力が強みだと自負する私の考え方」 はる日記#206",
+            "date": "2026.08.12",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/301731748/rectangle_large_type_2_bb8a4681dda9d720adac1ba6828da894.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n60d0d4f4c548"
+        },
         {
             "title": "「ししとう開発進捗 : 新キャラ追加・AI対戦のアップデート・オンライン実装への挑戦」 はる日記#205",
             "date": "2026.08.11",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/298476132/rectangle_large_type_2_0faae9c13285f538e84d30e170a79ad0.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 最近、画像や文章を見て「これAIっぽいな」と感じることが増えてきました。 でも、よく考えてみると不思議ですよね。 AI...",
             "url": "https://note.com/ha_03ru_01/n/n98ef6b077cdd"
-        },
-        {
-            "title": "「unity1week\"しろ\" おすすめ作品まとめ！実際に遊んで面白かったゲームを紹介」 はる日記#203",
-            "date": "2026.08.08",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/299994816/rectangle_large_type_2_395e275a46e08e2d7e450ea8488b4330.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n4335c0b7782d"
         }
     ]
 }
