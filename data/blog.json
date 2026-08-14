@@ -1,26 +1,26 @@
 {
-    "articleCount": 206,
+    "articleCount": 208,
     "articles": [
+        {
+            "title": "「\"やりたいこと\" と \"できること\" ｜ ゲーム開発をする専門学生の嘆き」 はる日記#208",
+            "date": "2026.08.13",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/303080031/rectangle_large_type_2_9ca5145727b39c6842f1b591fe938b32.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです。 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nac3c7db15931"
+        },
+        {
+            "title": "「トップに立つ人は、何が違うのか？ゲーム開発を続けてきた私が考える『リーダーに必要な力』とは」 はる日記#207",
+            "date": "2026.08.13",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/302774033/rectangle_large_type_2_f1a104af055dc9371f8986c2694e721f.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 最近、ゲーム開発を続けている中で、「トップに立つ人には何が必要なんだろう？」と考えることがあります。 私は将来、ゲーム...",
+            "url": "https://note.com/ha_03ru_01/n/n920d323b78b4"
+        },
         {
             "title": "「なぜ人は行動できないのか？行動力が強みだと自負する私の考え方」 はる日記#206",
             "date": "2026.08.12",
             "thumbnail": "https://assets.st-note.com/production/uploads/images/301731748/rectangle_large_type_2_bb8a4681dda9d720adac1ba6828da894.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n60d0d4f4c548"
-        },
-        {
-            "title": "「ししとう開発進捗 : 新キャラ追加・AI対戦のアップデート・オンライン実装への挑戦」 はる日記#205",
-            "date": "2026.08.11",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/301736158/rectangle_large_type_2_895849287147658a9d4c355da9026b4e.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n38cc5b6b649e"
-        },
-        {
-            "title": "「なぜAIの作ったものはAIっぽいのか？」 はる日記#204",
-            "date": "2026.08.09",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/298476132/rectangle_large_type_2_0faae9c13285f538e84d30e170a79ad0.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 最近、画像や文章を見て「これAIっぽいな」と感じることが増えてきました。 でも、よく考えてみると不思議ですよね。 AI...",
-            "url": "https://note.com/ha_03ru_01/n/n98ef6b077cdd"
         }
     ]
 }
