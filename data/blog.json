@@ -1,26 +1,26 @@
 {
-    "articleCount": 209,
+    "articleCount": 211,
     "articles": [
+        {
+            "title": "「ゲーム開発者に論理思考力は必要なのか？｜私が考える『考える力』の重要性」 はる日記#211",
+            "date": "2026.08.16",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/304222677/rectangle_large_type_2_b6aa95b5297440eec18b1eacdb5bb566.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n8047e557c4b3"
+        },
+        {
+            "title": "「ビジネスを学ぶとは？ゲーム開発者にも必要だと思う4つの力」 はる日記#210",
+            "date": "2026.08.16",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/303869045/rectangle_large_type_2_920091af0dfd7bad0f0fa31f82d2bcb7.jpg?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n31141ac33bc9"
+        },
         {
             "title": "「将来ゲーム会社を起業したい私が、サイバーコネクトツー松山社長の\"軸のある生き方\"に憧れる理由」 はる日記#209",
             "date": "2026.08.14",
             "thumbnail": "https://assets.st-note.com/production/uploads/images/303074450/rectangle_large_type_2_d5954a740ef12a4b8bd00ca8d93563fa.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n9392f718c7e5"
-        },
-        {
-            "title": "「\"やりたいこと\" と \"できること\" ｜ ゲーム開発をする専門学生の嘆き」 はる日記#208",
-            "date": "2026.08.13",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/303080031/rectangle_large_type_2_9ca5145727b39c6842f1b591fe938b32.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです。 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nac3c7db15931"
-        },
-        {
-            "title": "「トップに立つ人は、何が違うのか？ゲーム開発を続けてきた私が考える『リーダーに必要な力』とは」 はる日記#207",
-            "date": "2026.08.13",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/302774033/rectangle_large_type_2_f1a104af055dc9371f8986c2694e721f.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 最近、ゲーム開発を続けている中で、「トップに立つ人には何が必要なんだろう？」と考えることがあります。 私は将来、ゲーム...",
-            "url": "https://note.com/ha_03ru_01/n/n920d323b78b4"
         }
     ]
 }
