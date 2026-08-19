@@ -1,6 +1,13 @@
 {
-    "articleCount": 211,
+    "articleCount": 212,
     "articles": [
+        {
+            "title": "「コロプラのインターンに行ってきました！」 はる日記#212",
+            "date": "2026.08.19",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/304829557/rectangle_large_type_2_cf68d0b0f133876516671c200bbbb307.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n1d54bc186cbe"
+        },
         {
             "title": "「ゲーム開発者に論理思考力は必要なのか？｜私が考える『考える力』の重要性」 はる日記#211",
             "date": "2026.08.16",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/303869045/rectangle_large_type_2_920091af0dfd7bad0f0fa31f82d2bcb7.jpg?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n31141ac33bc9"
-        },
-        {
-            "title": "「将来ゲーム会社を起業したい私が、サイバーコネクトツー松山社長の\"軸のある生き方\"に憧れる理由」 はる日記#209",
-            "date": "2026.08.14",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/303074450/rectangle_large_type_2_d5954a740ef12a4b8bd00ca8d93563fa.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n9392f718c7e5"
         }
     ]
 }
