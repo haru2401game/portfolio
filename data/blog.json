@@ -1,6 +1,13 @@
 {
-    "articleCount": 212,
+    "articleCount": 213,
     "articles": [
+        {
+            "title": "「ゲームプログラマーとして、もっと技術力を伸ばしたいと思った話」 はる日記#213",
+            "date": "2026.08.20",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/305146296/rectangle_large_type_2_a5aa635876f9f583eafbf8188afd896f.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n0c6d9ec984ab"
+        },
         {
             "title": "「コロプラのインターンに行ってきました！」 はる日記#212",
             "date": "2026.08.19",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/304222677/rectangle_large_type_2_b6aa95b5297440eec18b1eacdb5bb566.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n8047e557c4b3"
-        },
-        {
-            "title": "「ビジネスを学ぶとは？ゲーム開発者にも必要だと思う4つの力」 はる日記#210",
-            "date": "2026.08.16",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/303869045/rectangle_large_type_2_920091af0dfd7bad0f0fa31f82d2bcb7.jpg?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n31141ac33bc9"
         }
     ]
 }
