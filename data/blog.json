@@ -1,6 +1,13 @@
 {
-    "articleCount": 213,
+    "articleCount": 214,
     "articles": [
+        {
+            "title": "「ゲームプログラマーは、何を作るかまで考えるべきなのか？｜「作る」だけではないプログラマーの役割」 はる日記#214",
+            "date": "2026.08.21",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/305242492/rectangle_large_type_2_953189881b8bafef342c352502f5a78b.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/ndcfe76cab569"
+        },
         {
             "title": "「ゲームプログラマーとして、もっと技術力を伸ばしたいと思った話」 はる日記#213",
             "date": "2026.08.20",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/304829557/rectangle_large_type_2_cf68d0b0f133876516671c200bbbb307.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n1d54bc186cbe"
-        },
-        {
-            "title": "「ゲーム開発者に論理思考力は必要なのか？｜私が考える『考える力』の重要性」 はる日記#211",
-            "date": "2026.08.16",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/304222677/rectangle_large_type_2_b6aa95b5297440eec18b1eacdb5bb566.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n8047e557c4b3"
         }
     ]
 }
