@@ -1,26 +1,26 @@
 {
-    "articleCount": 214,
+    "articleCount": 216,
     "articles": [
+        {
+            "title": "「ゲームを作るだけでは会社は作れない｜起業を目指す私が学びたいこと」 はる日記#216",
+            "date": "2026.08.22",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/304430545/rectangle_large_type_2_88e07a7dde682949e8e61c1c2515779b.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n0afd187e3908"
+        },
+        {
+            "title": "「ゲーム開発者にマーケティング能力は必要なのか？｜作るだけではゲームは届かない」 はる日記#215",
+            "date": "2026.08.22",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/304223103/rectangle_large_type_2_626c5eab07f039e62718f3cf741ff4dc.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nc45717ebf981"
+        },
         {
             "title": "「ゲームプログラマーは、何を作るかまで考えるべきなのか？｜「作る」だけではないプログラマーの役割」 はる日記#214",
             "date": "2026.08.21",
             "thumbnail": "https://assets.st-note.com/production/uploads/images/305242492/rectangle_large_type_2_953189881b8bafef342c352502f5a78b.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/ndcfe76cab569"
-        },
-        {
-            "title": "「ゲームプログラマーとして、もっと技術力を伸ばしたいと思った話」 はる日記#213",
-            "date": "2026.08.20",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/305146296/rectangle_large_type_2_a5aa635876f9f583eafbf8188afd896f.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n0c6d9ec984ab"
-        },
-        {
-            "title": "「コロプラのインターンに行ってきました！」 はる日記#212",
-            "date": "2026.08.19",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/304829557/rectangle_large_type_2_cf68d0b0f133876516671c200bbbb307.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n1d54bc186cbe"
         }
     ]
 }
