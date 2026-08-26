@@ -1,6 +1,13 @@
 {
-    "articleCount": 218,
+    "articleCount": 219,
     "articles": [
+        {
+            "title": "「ゲームプログラマーにコミュニケーション能力は必要なのか？」 はる日記#219",
+            "date": "2026.08.25",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/306713573/rectangle_large_type_2_0adcaa67d7f436f3b749149dba5fe1c9.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n331cae7054ec"
+        },
         {
             "title": "「『やりたい』と言える人になる。インターンで改めて感じた行動することの大切さ」 はる日記#218",
             "date": "2026.08.24",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/306540907/rectangle_large_type_2_b796db1dbe2383db87f21575ebdb7111.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n7d1d04f68af0"
-        },
-        {
-            "title": "「ゲームを作るだけでは会社は作れない｜起業を目指す私が学びたいこと」 はる日記#216",
-            "date": "2026.08.22",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/304430545/rectangle_large_type_2_88e07a7dde682949e8e61c1c2515779b.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n0afd187e3908"
         }
     ]
 }
