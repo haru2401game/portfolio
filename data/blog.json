@@ -1,6 +1,13 @@
 {
-    "articleCount": 219,
+    "articleCount": 220,
     "articles": [
+        {
+            "title": "「やる気、モチベーション、体力って言い訳なんだろうか」 はる日記#220",
+            "date": "2026.08.27",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/306717696/rectangle_large_type_2_58e99ec1dace163264246b5e88738c2c.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n6b3f8cdfb1ef"
+        },
         {
             "title": "「ゲームプログラマーにコミュニケーション能力は必要なのか？」 はる日記#219",
             "date": "2026.08.25",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/306712533/rectangle_large_type_2_ffbb34c86564dc9ffe069e5a72546e0f.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n3dc2f0444b8c"
-        },
-        {
-            "title": "「\"ゲームが好き\" を武器にする。ゲームプログラマーとして自分の強みを作る方法」 はる日記#217",
-            "date": "2026.08.24",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/306540907/rectangle_large_type_2_b796db1dbe2383db87f21575ebdb7111.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n7d1d04f68af0"
         }
     ]
 }
