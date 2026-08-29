@@ -1,6 +1,13 @@
 {
-    "articleCount": 221,
+    "articleCount": 222,
     "articles": [
+        {
+            "title": "「ゲームをたくさん作ることに意味はあるのか？」 はる日記#222",
+            "date": "2026.08.28",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/307982232/rectangle_large_type_2_0b984b7e5d4099f0ea9ce23dd99f368f.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n344a86c4da7c"
+        },
         {
             "title": "ゲーム開発者は、ゲームを作るだけでは足りないと思う｜はる日記#221",
             "date": "2026.08.27",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/306717696/rectangle_large_type_2_58e99ec1dace163264246b5e88738c2c.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n6b3f8cdfb1ef"
-        },
-        {
-            "title": "「ゲームプログラマーにコミュニケーション能力は必要なのか？」 はる日記#219",
-            "date": "2026.08.25",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/306713573/rectangle_large_type_2_0adcaa67d7f436f3b749149dba5fe1c9.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n331cae7054ec"
         }
     ]
 }
