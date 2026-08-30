@@ -1,6 +1,13 @@
 {
-    "articleCount": 222,
+    "articleCount": 223,
     "articles": [
+        {
+            "title": "「ゲーム開発で一番難しいのは、プログラミングではない」 はる日記#223",
+            "date": "2026.08.30",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/307983410/rectangle_large_type_2_8113d47fb1f36a5efc85cb64796468b9.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n2ba11af700fb"
+        },
         {
             "title": "「ゲームをたくさん作ることに意味はあるのか？」 はる日記#222",
             "date": "2026.08.28",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/307565983/rectangle_large_type_2_8eb3a2310e8ba405c7ade0b48b454203.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nfa6b821d7ede"
-        },
-        {
-            "title": "「やる気、モチベーション、体力って言い訳なんだろうか」 はる日記#220",
-            "date": "2026.08.27",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/306717696/rectangle_large_type_2_58e99ec1dace163264246b5e88738c2c.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n6b3f8cdfb1ef"
         }
     ]
 }
