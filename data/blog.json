@@ -1,6 +1,13 @@
 {
-    "articleCount": 223,
+    "articleCount": 224,
     "articles": [
+        {
+            "title": "「行動力がある人ほど、休むことを覚えたほうがいい」 はる日記#224",
+            "date": "2026.08.30",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/308667096/rectangle_large_type_2_c0a0b032ed561f3243a3140e6e9a44ea.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n8ea9e7acc5ec"
+        },
         {
             "title": "「ゲーム開発で一番難しいのは、プログラミングではない」 はる日記#223",
             "date": "2026.08.30",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/307982232/rectangle_large_type_2_0b984b7e5d4099f0ea9ce23dd99f368f.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n344a86c4da7c"
-        },
-        {
-            "title": "ゲーム開発者は、ゲームを作るだけでは足りないと思う｜はる日記#221",
-            "date": "2026.08.27",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/307565983/rectangle_large_type_2_8eb3a2310e8ba405c7ade0b48b454203.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nfa6b821d7ede"
         }
     ]
 }
