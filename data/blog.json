@@ -1,6 +1,13 @@
 {
-    "articleCount": 224,
+    "articleCount": 225,
     "articles": [
+        {
+            "title": "「面白いゲーム」と「売れるゲーム」は何が違うのか？｜はる日記#225",
+            "date": "2026.09.01",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/308668348/rectangle_large_type_2_91feffe6d59cab37f59d0372fc0b48ba.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n68d80ed7f9eb"
+        },
         {
             "title": "「行動力がある人ほど、休むことを覚えたほうがいい」 はる日記#224",
             "date": "2026.08.30",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/307983410/rectangle_large_type_2_8113d47fb1f36a5efc85cb64796468b9.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n2ba11af700fb"
-        },
-        {
-            "title": "「ゲームをたくさん作ることに意味はあるのか？」 はる日記#222",
-            "date": "2026.08.28",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/307982232/rectangle_large_type_2_0b984b7e5d4099f0ea9ce23dd99f368f.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n344a86c4da7c"
         }
     ]
 }
