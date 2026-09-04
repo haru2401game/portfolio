@@ -1,6 +1,13 @@
 {
-    "articleCount": 227,
+    "articleCount": 228,
     "articles": [
+        {
+            "title": "「人は一人の時に成長するのでは？」 はる日記#228",
+            "date": "2026.09.03",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/309611645/rectangle_large_type_2_36b8b1def56bbe85fd65d3b400a5e72a.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nf54d278a548b"
+        },
         {
             "title": "「ゲームを作る人ほど、ゲームを素直に遊べなくなる」 はる日記#227",
             "date": "2026.09.03",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/308671275/rectangle_large_type_2_abea9bf622853611421bb2aee00cddd8.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nc646b3572b6f"
-        },
-        {
-            "title": "「面白いゲーム」と「売れるゲーム」は何が違うのか？｜はる日記#225",
-            "date": "2026.09.01",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/308668348/rectangle_large_type_2_91feffe6d59cab37f59d0372fc0b48ba.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n68d80ed7f9eb"
         }
     ]
 }
