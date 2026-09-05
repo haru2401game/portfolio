@@ -1,6 +1,13 @@
 {
-    "articleCount": 228,
+    "articleCount": 229,
     "articles": [
+        {
+            "title": "「東京ゲームショウ2026に「ししとう」を展示します！」 はる日記#229",
+            "date": "2026.09.04",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/309684252/rectangle_large_type_2_b1775e3bf50affae4290feee2919103e.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nb210580aa760"
+        },
         {
             "title": "「人は一人の時に成長するのでは？」 はる日記#228",
             "date": "2026.09.03",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/308988360/rectangle_large_type_2_26bb6b436755ea9f3edbd65578aa91f1.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/ncf3440a78a91"
-        },
-        {
-            "title": "「ゲームの「面白さ」は、どうやって作るのか？」 はる日記#226",
-            "date": "2026.09.02",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/308671275/rectangle_large_type_2_abea9bf622853611421bb2aee00cddd8.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nc646b3572b6f"
         }
     ]
 }
