@@ -1,6 +1,13 @@
 {
-    "articleCount": 229,
+    "articleCount": 230,
     "articles": [
+        {
+            "title": "「夏休み、振り返ってみた」 はる日記#230",
+            "date": "2026.09.05",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/310187331/rectangle_large_type_2_fbb9edc743b13fc2ef0d2c40540331c8.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nf1549fafd48e"
+        },
         {
             "title": "「東京ゲームショウ2026に「ししとう」を展示します！」 はる日記#229",
             "date": "2026.09.04",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/309611645/rectangle_large_type_2_36b8b1def56bbe85fd65d3b400a5e72a.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nf54d278a548b"
-        },
-        {
-            "title": "「ゲームを作る人ほど、ゲームを素直に遊べなくなる」 はる日記#227",
-            "date": "2026.09.03",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/308988360/rectangle_large_type_2_26bb6b436755ea9f3edbd65578aa91f1.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/ncf3440a78a91"
         }
     ]
 }
