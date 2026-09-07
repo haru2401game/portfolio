@@ -1,6 +1,13 @@
 {
-    "articleCount": 230,
+    "articleCount": 231,
     "articles": [
+        {
+            "title": "「今日から学校再開！これから始まる4つの挑戦」 はる日記#231",
+            "date": "2026.09.06",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/311035788/rectangle_large_type_2_7cdd1db8d71b4124811c7ab9c7a913dc.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n3a862c00df70"
+        },
         {
             "title": "「夏休み、振り返ってみた」 はる日記#230",
             "date": "2026.09.05",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/309684252/rectangle_large_type_2_b1775e3bf50affae4290feee2919103e.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nb210580aa760"
-        },
-        {
-            "title": "「人は一人の時に成長するのでは？」 はる日記#228",
-            "date": "2026.09.03",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/309611645/rectangle_large_type_2_36b8b1def56bbe85fd65d3b400a5e72a.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nf54d278a548b"
         }
     ]
 }
