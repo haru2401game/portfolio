@@ -1,6 +1,13 @@
 {
-    "articleCount": 231,
+    "articleCount": 232,
     "articles": [
+        {
+            "title": "「IGCC 1日目 | 企画決め」 はる日記#232",
+            "date": "2026.09.08",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/311496864/rectangle_large_type_2_bc8d6dbba439dddaff197bb03c0bf0c9.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/ne1fcc5004070"
+        },
         {
             "title": "「今日から学校再開！これから始まる4つの挑戦」 はる日記#231",
             "date": "2026.09.06",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/310187331/rectangle_large_type_2_fbb9edc743b13fc2ef0d2c40540331c8.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nf1549fafd48e"
-        },
-        {
-            "title": "「東京ゲームショウ2026に「ししとう」を展示します！」 はる日記#229",
-            "date": "2026.09.04",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/309684252/rectangle_large_type_2_b1775e3bf50affae4290feee2919103e.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nb210580aa760"
         }
     ]
 }
