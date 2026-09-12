@@ -1,6 +1,13 @@
 {
-    "articleCount": 233,
+    "articleCount": 234,
     "articles": [
+        {
+            "title": "「IGCC 3日目 | ステージ&ギミック決め」 はる日記#234",
+            "date": "2026.09.11",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/312479420/rectangle_large_type_2_519afd8ed8e3fc0bb61297e80771f4f6.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n02565cd98d5c"
+        },
         {
             "title": "「IGCC 2日目 | レイアウト構想とプロトタイプ」 はる日記#233",
             "date": "2026.09.10",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/311496864/rectangle_large_type_2_bc8d6dbba439dddaff197bb03c0bf0c9.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/ne1fcc5004070"
-        },
-        {
-            "title": "「今日から学校再開！これから始まる4つの挑戦」 はる日記#231",
-            "date": "2026.09.06",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/311035788/rectangle_large_type_2_7cdd1db8d71b4124811c7ab9c7a913dc.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n3a862c00df70"
         }
     ]
 }
