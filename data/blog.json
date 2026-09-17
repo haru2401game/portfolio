@@ -1,6 +1,13 @@
 {
-    "articleCount": 235,
+    "articleCount": 236,
     "articles": [
+        {
+            "title": "「IGCC 最終日 | ゲームジャム終了」 はる日記#236",
+            "date": "2026.09.16",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/314408039/rectangle_large_type_2_ff7d38fe95842240ad7736cfe3a846c1.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n51a0e1aabdbe"
+        },
         {
             "title": "「IGCC 5日目 | プロジェクト統合」 はる日記#235",
             "date": "2026.09.15",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/312479420/rectangle_large_type_2_519afd8ed8e3fc0bb61297e80771f4f6.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n02565cd98d5c"
-        },
-        {
-            "title": "「IGCC 2日目 | レイアウト構想とプロトタイプ」 はる日記#233",
-            "date": "2026.09.10",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/312422935/rectangle_large_type_2_789be739a6e68a1e4dc27c708fa1b215.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/ne13deebb546a"
         }
     ]
 }
