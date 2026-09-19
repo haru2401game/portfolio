@@ -1,26 +1,26 @@
 {
-    "articleCount": 235,
+    "articleCount": 237,
     "articles": [
+        {
+            "title": "「東京ゲームショウ1日目 | 初のビジネスデイ」 はる日記#237",
+            "date": "2026.09.17",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/314734198/rectangle_large_type_2_d94e80574b2efba3f043b5b5a58ccd6e.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 本日から東京ゲームショウ2026が始まりました！ 今年はご縁もあり、憧れの東京ゲームショウへ私がチーム制作にて開発を行...",
+            "url": "https://note.com/ha_03ru_01/n/n999f38630861"
+        },
+        {
+            "title": "「IGCC 最終日 | ゲームジャム終了」 はる日記#236",
+            "date": "2026.09.16",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/314408039/rectangle_large_type_2_ff7d38fe95842240ad7736cfe3a846c1.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n51a0e1aabdbe"
+        },
         {
             "title": "「IGCC 5日目 | プロジェクト統合」 はる日記#235",
             "date": "2026.09.15",
             "thumbnail": "https://assets.st-note.com/production/uploads/images/313994370/rectangle_large_type_2_12d3e0c66a939dba5f7c5e9397f42867.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n6581f6f43d45"
-        },
-        {
-            "title": "「IGCC 3日目 | ステージ&ギミック決め」 はる日記#234",
-            "date": "2026.09.11",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/312479420/rectangle_large_type_2_519afd8ed8e3fc0bb61297e80771f4f6.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n02565cd98d5c"
-        },
-        {
-            "title": "「IGCC 2日目 | レイアウト構想とプロトタイプ」 はる日記#233",
-            "date": "2026.09.10",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/312422935/rectangle_large_type_2_789be739a6e68a1e4dc27c708fa1b215.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/ne13deebb546a"
         }
     ]
 }
