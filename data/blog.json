@@ -1,26 +1,26 @@
 {
-    "articleCount": 239,
+    "articleCount": 241,
     "articles": [
+        {
+            "title": "「Falien IGCC作品」 はる日記#241",
+            "date": "2026.09.21",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/314277216/rectangle_large_type_2_b75bca7e420f6cdc6eac76d1f7d58480.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n1d6635baefdb"
+        },
+        {
+            "title": "「東京ゲームショウ最終日 | TGS初展示の感想」 はる日記#240",
+            "date": "2026.09.21",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/315604300/rectangle_large_type_2_de6800a249d49f3755ab13fa7657f689.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nad1ce72393da"
+        },
         {
             "title": "「東京ゲームショウ3日目 | 一般公開日の始まり」 はる日記#239",
             "date": "2026.09.19",
             "thumbnail": "https://assets.st-note.com/production/uploads/images/315364288/rectangle_large_type_2_80d3b6c9808a6e7c70e6c6b1a2df68ff.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nb3630811666d"
-        },
-        {
-            "title": "「東京ゲームショウ2日目 | ブース展示」 はる日記#238",
-            "date": "2026.09.19",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/315353739/rectangle_large_type_2_74d7d1dd681fae3c4cb9bf0758a17be7.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/na3bb5d3c2c2e"
-        },
-        {
-            "title": "「東京ゲームショウ1日目 | 初のビジネスデイ」 はる日記#237",
-            "date": "2026.09.17",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/314734198/rectangle_large_type_2_d94e80574b2efba3f043b5b5a58ccd6e.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 本日から東京ゲームショウ2026が始まりました！ 今年はご縁もあり、憧れの東京ゲームショウへ私がチーム制作にて開発を行...",
-            "url": "https://note.com/ha_03ru_01/n/n999f38630861"
         }
     ]
 }
