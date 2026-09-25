@@ -1,6 +1,13 @@
 {
-    "articleCount": 243,
+    "articleCount": 244,
     "articles": [
+        {
+            "title": "「集中授業1日目 進捗報告」 はる日記#244",
+            "date": "2026.09.24",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/316998391/rectangle_large_type_2_c27c549142fa6440cabc657be2cfda91.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n119ee87ffca7"
+        },
         {
             "title": "「誰に見せるかで、受けるゲームは変わる」 はる日記#243",
             "date": "2026.09.23",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/316479301/rectangle_large_type_2_658457ccd38d3653a7601cab3e4ea291.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nd2bf747bbff1"
-        },
-        {
-            "title": "「Falien IGCC作品」 はる日記#241",
-            "date": "2026.09.21",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/314277216/rectangle_large_type_2_b75bca7e420f6cdc6eac76d1f7d58480.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n1d6635baefdb"
         }
     ]
 }
