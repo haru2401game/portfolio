@@ -1,6 +1,13 @@
 {
-    "articleCount": 247,
+    "articleCount": 248,
     "articles": [
+        {
+            "title": "「集中授業3日目 進捗報告」 はる日記#248",
+            "date": "2026.09.29",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/318412414/rectangle_large_type_2_9d11bebff5d86904099251252654340a.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n393d202b7ebb"
+        },
         {
             "title": "「ゲームクリエイターを目指す専門学生。学生のうちにやってみたいこと」 はる日記#247",
             "date": "2026.09.27",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/317933212/rectangle_large_type_2_9a1e24cf3603cac7f19796e449e66719.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n92e6a4224400"
-        },
-        {
-            "title": "「集中授業2日目 進捗報告」 はる日記#245",
-            "date": "2026.09.26",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/317297839/rectangle_large_type_2_4bff50b3d23e99f7fd7bdd5d518d7fce.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n07eda4dc33fa"
         }
     ]
 }
