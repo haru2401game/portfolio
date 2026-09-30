@@ -2,145 +2,112 @@
    Scroll Animation Common
 ======================================== */
 
-function observeShow(elements, callback = null){
+function observeShow(elements, callback = null) {
 
-    if(elements.length === 0) return;
-
+    if (!elements || elements.length === 0) {
+        return;
+    }
 
     const observer = new IntersectionObserver(
-        (entries)=>{
+        (entries) => {
 
-            entries.forEach(entry=>{
+            entries.forEach((entry) => {
 
-                if(entry.isIntersecting){
-
-                    entry.target.classList.add("show");
-
-
-                    if(callback){
-                        callback(entry.target);
-                    }
-
-
-                    observer.unobserve(entry.target);
-
+                if (!entry.isIntersecting) {
+                    return;
                 }
+
+                entry.target.classList.add("show");
+
+                if (callback) {
+                    callback(entry.target);
+                }
+
+                observer.unobserve(entry.target);
 
             });
 
         },
         {
-            threshold:0.2
+            threshold: 0.2
         }
     );
 
+    elements.forEach((element) => {
 
-    elements.forEach(element=>{
-
-        observer.observe(element);
+        if (element) {
+            observer.observe(element);
+        }
 
     });
 
 }
 
 
-
 /* ========================================
    Hero Animation
 ======================================== */
 
-
-window.addEventListener("load",()=>{
-
+window.addEventListener("load", () => {
 
     const heroText =
         document.querySelector(".hero-content");
 
-
-    if(heroText){
-
-
-        heroText.style.opacity="0";
-
-        heroText.style.transform =
-            "translate(-50%, calc(-50% + 30px))";
-
-
-        setTimeout(()=>{
-
-
-            heroText.style.transition =
-                "opacity 1.2s ease, transform 1.2s ease";
-
-
-            heroText.style.opacity="1";
-
-
-            heroText.style.transform =
-                "translate(-50%, -50%)";
-
-
-        },300);
-
-
+    if (!heroText) {
+        return;
     }
 
+    heroText.style.opacity = "0";
+
+    heroText.style.transform =
+        "translate(-50%, calc(-50% + 30px))";
+
+    setTimeout(() => {
+
+        heroText.style.transition =
+            "opacity 1.2s ease, transform 1.2s ease";
+
+        heroText.style.opacity = "1";
+
+        heroText.style.transform =
+            "translate(-50%, -50%)";
+
+    }, 300);
 
 });
-
-
-
 
 
 /* ========================================
    About Animation
 ======================================== */
 
-
 observeShow(
     document.querySelectorAll(".about-container")
 );
 
+
 /* ========================================
-   Skills Animation
+   What I Can Do Animation
 ======================================== */
 
-
-observeShow(
-    document.querySelectorAll(".skill-box"),
-    (box)=>{
+const whatCanBoxes =
+    document.querySelectorAll(".what-can-box");
 
 
-        const bar =
-            box.querySelector(".skill-level-bar");
+whatCanBoxes.forEach((box, index) => {
+
+    box.style.transitionDelay =
+        `${index * 0.1}s`;
+
+});
 
 
-        if(bar){
-
-            setTimeout(()=>{
-
-
-                bar.style.width =
-                    bar.dataset.level + "%";
-
-
-            },500);
-
-
-        }
-
-
-    }
-);
-
-
-
+observeShow(whatCanBoxes);
 
 
 /* ========================================
    Featured Works Animation
 ======================================== */
-
 
 observeShow(
     document.querySelectorAll(
@@ -149,19 +116,15 @@ observeShow(
 );
 
 
-
-
-
 /* ========================================
    Other Works Animation
 ======================================== */
-
 
 const workCards =
     document.querySelectorAll(".work-card");
 
 
-workCards.forEach((card,index)=>{
+workCards.forEach((card, index) => {
 
     card.style.transitionDelay =
         `${index * 0.15}s`;
@@ -172,43 +135,28 @@ workCards.forEach((card,index)=>{
 observeShow(workCards);
 
 
-
-
-
 /* ========================================
-   Blog Animation
+   Blog Introduction Animation
 ======================================== */
 
-
-const blogObserverElements =
-    document.querySelectorAll(
-        ".blog-introduction, .article-card"
-    );
+const blogIntroduction =
+    document.querySelector(".blog-introduction");
 
 
-blogObserverElements.forEach((element,index)=>{
-
-    element.style.transitionDelay =
-        `${index * 0.15}s`;
-
-});
-
-
-observeShow(blogObserverElements);
+observeShow(
+    document.querySelectorAll(".blog-introduction")
+);
 
 
 /* ========================================
    Timeline Animation
 ======================================== */
 
-
 const timelineItems =
-    document.querySelectorAll(
-        ".timeline-item"
-    );
+    document.querySelectorAll(".timeline-item");
 
 
-timelineItems.forEach((item,index)=>{
+timelineItems.forEach((item, index) => {
 
     item.style.transitionDelay =
         `${index * 0.1}s`;
@@ -220,72 +168,252 @@ observeShow(timelineItems);
 
 
 /* ========================================
-   Blog Data
+   Play Games Animation
 ======================================== */
 
+const playCards =
+    document.querySelectorAll(".play-card");
+
+
+playCards.forEach((card, index) => {
+
+    card.style.transitionDelay =
+        `${index * 0.15}s`;
+
+});
+
+
+observeShow(playCards);
+
+
+/* ========================================
+   Contact Animation
+======================================== */
+
+const contactContainer =
+    document.querySelector(".contact-container");
+
+
+if (contactContainer) {
+
+    observeShow(
+        document.querySelectorAll(".contact-container")
+    );
+
+}
+
+
+const snsCards =
+    document.querySelectorAll(".sns-card");
+
+
+snsCards.forEach((card, index) => {
+
+    card.style.transitionDelay =
+        `${index * 0.1}s`;
+
+});
+
+
+observeShow(snsCards);
+
+
+/* ========================================
+   Blog Data
+======================================== */
 
 const articleCounter =
     document.getElementById("article-count");
 
 
+const blogCount =
+    document.getElementById("blogCount");
+
+
+const latestArticles =
+    document.getElementById("latestArticles");
+
 
 fetch("data/blog.json")
 
-.then(response=>{
+    .then((response) => {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "blog.json の読み込みに失敗しました。"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then((data) => {
+
+        /* --------------------------------
+           Article Count
+        -------------------------------- */
+
+        if (articleCounter) {
+
+            articleCounter.textContent =
+                `${data.articleCount}+`;
+
+        }
 
 
-    if(!response.ok){
+        /* --------------------------------
+           Achievements Blog Count
+        -------------------------------- */
 
-        throw new Error(
-            "blog.json の読み込みに失敗しました。"
+        if (blogCount) {
+
+            blogCount.textContent =
+                data.articleCount;
+
+        }
+
+
+        /* --------------------------------
+           Latest Articles
+        -------------------------------- */
+
+        if (!latestArticles) {
+            return;
+        }
+
+
+        latestArticles.innerHTML = "";
+
+
+        if (
+            !data.articles ||
+            !Array.isArray(data.articles)
+        ) {
+
+            console.warn(
+                "blog.json に articles が存在しません。"
+            );
+
+            return;
+
+        }
+
+
+        data.articles.forEach((article) => {
+
+            const articleCard =
+                document.createElement("article");
+
+            articleCard.className =
+                "article-card";
+
+
+            articleCard.innerHTML = `
+
+                <img
+                    src="${article.thumbnail}"
+                    alt="${article.title}"
+                    loading="lazy">
+
+                <div class="article-content">
+
+                    <p class="article-date">
+                        ${article.date}
+                    </p>
+
+                    <h3>
+                        ${article.title}
+                    </h3>
+
+                    <p class="article-summary">
+                        ${article.summary}
+                    </p>
+
+                    <a
+                        href="${article.url}"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
+                        記事を読む →
+
+                    </a>
+
+                </div>
+
+            `;
+
+
+            latestArticles.appendChild(
+                articleCard
+            );
+
+        });
+
+
+        /* --------------------------------
+           Generated Article Animation
+        -------------------------------- */
+
+        const articleCards =
+            latestArticles.querySelectorAll(
+                ".article-card"
+            );
+
+
+        articleCards.forEach((card, index) => {
+
+            card.style.transitionDelay =
+                `${index * 0.15}s`;
+
+        });
+
+
+        observeShow(articleCards);
+
+    })
+
+    .catch((error) => {
+
+        console.error(
+            "Blog Data Error:",
+            error
         );
 
-    }
+    });
 
 
-    return response.json();
+/* ========================================
+   Profile Data
+======================================== */
+
+const gameCount =
+    document.getElementById("gameCount");
 
 
-})
+const awardCount =
+    document.getElementById("awardCount");
 
 
-.then(data=>{
+const eventCount =
+    document.getElementById("eventCount");
 
 
-    //-----------------------------------
-    // 記事数
-    //-----------------------------------
+const internCount =
+    document.getElementById("internCount");
 
-    if(articleCounter){
 
-        articleCounter.textContent =
-            data.articleCount + "+";
+const careerCount =
+    document.getElementById("careerCount");
 
-    }
 
-    //-----------------------------------
-    // Achievements のブログ数
-    //-----------------------------------
+fetch("data/profile.json")
 
-    const blogCount =
-        document.getElementById("blogCount");
+    .then((response) => {
 
-    if(blogCount){
-
-        blogCount.textContent =
-            data.articleCount;
-
-    }
-
-    /* ========================================
-    Profile Data
-    ======================================== */
-
-    fetch("data/profile.json")
-
-    .then(response=>{
-
-        if(!response.ok){
+        if (!response.ok) {
 
             throw new Error(
                 "profile.json の読み込みに失敗しました。"
@@ -297,213 +425,192 @@ fetch("data/blog.json")
 
     })
 
-    .then(data=>{
+    .then((data) => {
 
-        document.getElementById("gameCount").textContent =
-            document.querySelectorAll(".work-card").length;
+        /* --------------------------------
+           Game Works
+        -------------------------------- */
 
-        document.getElementById("awardCount").textContent =
-            data.awardCount;
+        if (gameCount) {
 
-        document.getElementById("eventCount").textContent =
-            data.eventCount;
+            gameCount.textContent =
+                document.querySelectorAll(
+                    ".work-card"
+                ).length;
 
-        document.getElementById("internCount").textContent =
-            data.internCount;
+        }
 
-        document.getElementById("careerCount").textContent =
-            data.careerCount;
+
+        /* --------------------------------
+           Awards
+        -------------------------------- */
+
+        if (awardCount) {
+
+            awardCount.textContent =
+                data.awardCount;
+
+        }
+
+
+        /* --------------------------------
+           Events
+        -------------------------------- */
+
+        if (eventCount) {
+
+            eventCount.textContent =
+                data.eventCount;
+
+        }
+
+
+        /* --------------------------------
+           Internship
+        -------------------------------- */
+
+        if (internCount) {
+
+            internCount.textContent =
+                data.internCount;
+
+        }
+
+
+        /* --------------------------------
+           Years Developing
+        -------------------------------- */
+
+        if (careerCount) {
+
+            careerCount.textContent =
+                data.careerCount;
+
+        }
 
     })
 
-    .catch(error=>{
+    .catch((error) => {
 
-        console.error(error);
-
-    });
-
-    //-----------------------------------
-    // 最新記事生成
-    //-----------------------------------
-
-    const container =
-        document.getElementById(
-            "latestArticles"
+        console.error(
+            "Profile Data Error:",
+            error
         );
 
-
-    if(!container) return;
-
-
-
-    container.innerHTML="";
-
-
-
-    data.articles.forEach(article=>{
-
-
-        container.innerHTML += `
-
-        <article class="article-card">
-
-
-            <img
-                src="${article.thumbnail}"
-                alt="${article.title}">
-
-
-            <div class="article-content">
-
-
-                <p class="article-date">
-
-                    ${article.date}
-
-                </p>
-
-
-                <h3>
-
-                    ${article.title}
-
-                </h3>
-
-
-                <p class="article-summary">
-
-                    ${article.summary}
-
-                </p>
-
-
-                <a
-                    href="${article.url}"
-                    target="_blank">
-
-                    記事を読む →
-
-                </a>
-
-
-            </div>
-
-
-        </article>
-
-        `;
-
-
     });
 
-
-
-    //-----------------------------------
-    // 生成後カードを監視
-    //-----------------------------------
-
-
-    const cards =
-        document.querySelectorAll(
-            ".article-card"
-        );
-
-
-    cards.forEach((card,index)=>{
-
-
-        card.style.transitionDelay =
-            `${index * 0.15}s`;
-
-
-    });
-
-
-    observeShow(cards);
-
-
-
-})
-
-
-.catch(error=>{
-
-
-    console.error(error);
-
-
-});
-
-/* ========================================
-   Contact Animation
-======================================== */
-
-
-const contactElements =
-    document.querySelectorAll(
-        ".contact-container, .sns-card"
-    );
-
-
-
-contactElements.forEach((element,index)=>{
-
-
-    element.style.transitionDelay =
-        `${index * 0.1}s`;
-
-
-});
-
-
-
-observeShow(contactElements);
-
-/* ========================================
-   Play Games Animation
-======================================== */
-
-
-const playCards =
-    document.querySelectorAll(
-        ".play-card"
-    );
-
-
-playCards.forEach((card,index)=>{
-
-    card.style.transitionDelay =
-        `${index * 0.15}s`;
-
-});
-
-
-observeShow(playCards);
 
 /* ========================================
    Hamburger Menu
 ======================================== */
 
-const hamburger = document.querySelector(".hamburger");
-const headerNav = document.querySelector(".header-nav");
-const navLinks = document.querySelectorAll(".header-nav a");
+const hamburger =
+    document.querySelector(".hamburger");
 
-hamburger.addEventListener("click", () => {
 
-    hamburger.classList.toggle("active");
-    headerNav.classList.toggle("active");
-    document.body.classList.toggle("menu-open");
+const headerNav =
+    document.querySelector(".header-nav");
+
+
+const navLinks =
+    document.querySelectorAll(".header-nav a");
+
+
+if (hamburger && headerNav) {
+
+    hamburger.addEventListener(
+        "click",
+        () => {
+
+            hamburger.classList.toggle(
+                "active"
+            );
+
+            headerNav.classList.toggle(
+                "active"
+            );
+
+            document.body.classList.toggle(
+                "menu-open"
+            );
+
+        }
+    );
+
+}
+
+
+/* ========================================
+   Header Navigation
+======================================== */
+
+navLinks.forEach((link) => {
+
+    link.addEventListener(
+        "click",
+        () => {
+
+            if (hamburger) {
+
+                hamburger.classList.remove(
+                    "active"
+                );
+
+            }
+
+            if (headerNav) {
+
+                headerNav.classList.remove(
+                    "active"
+                );
+
+            }
+
+            document.body.classList.remove(
+                "menu-open"
+            );
+
+        }
+    );
 
 });
 
-navLinks.forEach(link => {
 
-    link.addEventListener("click", () => {
+/* ========================================
+   Header Logo
+======================================== */
 
-        hamburger.classList.remove("active");
-        headerNav.classList.remove("active");
-        document.body.classList.remove("menu-open");
+const headerLogo =
+    document.querySelector(".header-logo");
 
-    });
 
-});
+if (headerLogo) {
+
+    headerLogo.addEventListener(
+        "click",
+        () => {
+
+            if (hamburger) {
+
+                hamburger.classList.remove(
+                    "active"
+                );
+
+            }
+
+            if (headerNav) {
+
+                headerNav.classList.remove(
+                    "active"
+                );
+
+            }
+
+            document.body.classList.remove(
+                "menu-open"
+            );
+
+        }
+    );
+
+}
