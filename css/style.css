@@ -1491,6 +1491,12 @@ footer {
         right: auto;
     }
 
+    /* 日時だけ中央揃え */
+    .timeline-date {
+        display: block;
+        text-align: center;
+    }
+
 
     /* Play */
 

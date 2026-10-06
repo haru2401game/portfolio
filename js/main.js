@@ -29,7 +29,7 @@ function observeShow(elements, callback = null) {
 
         },
         {
-            threshold: 0.2
+            threshold: 0.05
         }
     );
 
@@ -97,7 +97,7 @@ const whatCanBoxes =
 whatCanBoxes.forEach((box, index) => {
 
     box.style.transitionDelay =
-        `${index * 0.1}s`;
+        `${index * 0.05}s`;
 
 });
 
@@ -127,7 +127,7 @@ const workCards =
 workCards.forEach((card, index) => {
 
     card.style.transitionDelay =
-        `${index * 0.15}s`;
+        `${index * 0.01}s`;
 
 });
 
@@ -159,7 +159,7 @@ const timelineItems =
 timelineItems.forEach((item, index) => {
 
     item.style.transitionDelay =
-        `${index * 0.1}s`;
+        `${index * 0.05}s`;
 
 });
 
@@ -178,7 +178,7 @@ const playCards =
 playCards.forEach((card, index) => {
 
     card.style.transitionDelay =
-        `${index * 0.15}s`;
+        `${index * 0.05}s`;
 
 });
 
@@ -210,7 +210,7 @@ const snsCards =
 snsCards.forEach((card, index) => {
 
     card.style.transitionDelay =
-        `${index * 0.1}s`;
+        `${index * 0.05}s`;
 
 });
 
@@ -366,7 +366,7 @@ fetch("data/blog.json")
         articleCards.forEach((card, index) => {
 
             card.style.transitionDelay =
-                `${index * 0.15}s`;
+                `${index * 0.05}s`;
 
         });
 
