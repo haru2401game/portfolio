@@ -112,16 +112,17 @@ section:not(.hero) {
    Scroll Animation
 ======================================== */
 
-.about-container,
-.featured-video,
-.featured-container,
-.work-card,
-.blog-introduction,
-.article-card,
-.timeline-item,
-.play-card,
-.contact-container,
-.sns-card {
+html.js-enabled .about-container,
+html.js-enabled .can-do-card,
+html.js-enabled .featured-video,
+html.js-enabled .featured-container,
+html.js-enabled .work-card,
+html.js-enabled .blog-introduction,
+html.js-enabled .article-card,
+html.js-enabled .timeline-item,
+html.js-enabled .play-card,
+html.js-enabled .contact-container,
+html.js-enabled .sns-card {
     opacity: 0;
     transform: translateY(40px);
     transition:
@@ -130,16 +131,17 @@ section:not(.hero) {
         box-shadow .3s;
 }
 
-.about-container.show,
-.featured-video.show,
-.featured-container.show,
-.work-card.show,
-.blog-introduction.show,
-.article-card.show,
-.timeline-item.show,
-.play-card.show,
-.contact-container.show,
-.sns-card.show {
+html.js-enabled .about-container.show,
+html.js-enabled .can-do-card.show,
+html.js-enabled .featured-video.show,
+html.js-enabled .featured-container.show,
+html.js-enabled .work-card.show,
+html.js-enabled .blog-introduction.show,
+html.js-enabled .article-card.show,
+html.js-enabled .timeline-item.show,
+html.js-enabled .play-card.show,
+html.js-enabled .contact-container.show,
+html.js-enabled .sns-card.show {
     opacity: 1;
     transform: translateY(0);
 }
@@ -487,6 +489,7 @@ section:not(.hero) {
     border-radius: var(--radius-md);
     overflow: hidden;
     transition:
+        opacity var(--transition),
         transform .3s ease,
         background .3s ease,
         border-color .3s ease,
@@ -682,8 +685,8 @@ section:not(.hero) {
     background: var(--bg-white);
 }
 
-.featured-video,
-.featured-container {
+html.js-enabled .featured-video,
+html.js-enabled .featured-container {
     opacity: 0;
     transform: translateY(50px);
     transition:
@@ -691,8 +694,8 @@ section:not(.hero) {
         transform var(--transition);
 }
 
-.featured-video.show,
-.featured-container.show {
+html.js-enabled .featured-video.show,
+html.js-enabled .featured-container.show {
     opacity: 1;
     transform: translateY(0);
 }
@@ -1335,11 +1338,14 @@ footer {
         gap: 25px;
         background: rgba(20, 20, 20, .96);
         transform: translateY(-120%);
-        transition: transform .35s ease;
+        visibility: hidden;
+        transition: transform .35s ease, visibility 0s linear .35s;
     }
 
     .header-nav.active {
         transform: translateY(0);
+        visibility: visible;
+        transition: transform .35s ease, visibility 0s;
     }
 
     .header-nav a {
@@ -1536,5 +1542,20 @@ footer {
 @media (max-width: 600px) {
     .achievement-list {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
     }
 }

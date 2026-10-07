@@ -66,13 +66,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         Haruta Nagaya
     </a>
 
-    <button class="hamburger" aria-label="Menu">
+    <button
+        class="hamburger"
+        type="button"
+        aria-label="メニューを開く"
+        aria-controls="header-navigation"
+        aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
     </button>
 
-    <nav class="header-nav">
+    <nav id="header-navigation" class="header-nav" aria-label="メインナビゲーション">
         <a href="#about">自己紹介</a>
         <a href="#achievements">制作実績</a>
         <a href="#what-i-can-do">スキル</a>
@@ -93,10 +98,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         class="hero-video"
         poster="images/index/Hero/poster.png"
         src="videos/index/Hero/Shishito.mp4"
-        autoplay
         muted
         loop
-        playsinline>
+        playsinline
+        preload="none">
     </video>
 
     <!-- Black Overlay -->
@@ -657,10 +662,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <div class="featured-video">
         <video
             src="videos/index/FeaturedWorks/Shishito.mp4"
-            autoplay
             muted
             loop
-            playsinline>
+            playsinline
+            preload="none"
+            poster="images/index/Hero/poster.png">
         </video>
     </div>
 
@@ -773,7 +779,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     様々な種類の足を切り替えてゴールを目指そう！
                 </p>
                 <a
-                    href=""
+                    href="https://note.com/ha_03ru_01/n/n1d6635baefdb?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -813,7 +819,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     リズムに合わせて雪だるまが投げてくるものをぱくぱくしよう！
                 </p>
                 <a
-                    href="https://unityroom.com/games/snowpakupaku"
+                    href="https://note.com/ha_03ru_01/n/n7bfc5f61a7a6?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -895,7 +901,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     魔王によって町中危険だが、魔王を倒さなければならないのだ。
                 </p>
                 <a
-                    href="https://unityroom.com/games/bakarpg"
+                    href="https://note.com/ha_03ru_01/n/n8e6cd286cfa8?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -935,7 +941,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     制限時間内に出てきた文字をタイピングし続けて打ち切れ！
                 </p>
                 <a
-                    href="https://unityroom.com/games/connetype"
+                    href="https://note.com/ha_03ru_01/n/n47b5ed59d663?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -975,7 +981,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     世界の管理人となりコンソール(コマンド)を用いて世界に干渉していく
                 </p>
                 <a
-                    href="https://unityroom.com/games/null_world"
+                    href="https://note.com/ha_03ru_01/n/n58070ab2bba9?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1015,7 +1021,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     爆弾を連鎖させ、大量爆破で高得点を狙う爽快2Dアクションゲーム。
                 </p>
                 <a
-                    href="https://unityroom.com/games/datonator"
+                    href="https://note.com/ha_03ru_01/n/n6a656458dd0b?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1055,7 +1061,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     弾幕を支配し、敵を殲滅せよ。
                 </p>
                 <a
-                    href="https://unityroom.com/games/parryfield"
+                    href="https://note.com/ha_03ru_01/n/nc176f2e49dfd?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1174,7 +1180,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     あなたのガーデンを華やかにしていこう！
                 </p>
                 <a
-                    href="https://unityroom.com/games/pocketgarden"
+                    href="https://note.com/ha_03ru_01/n/n80febf736af3?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1214,7 +1220,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     「おもて」と「うら」の世界を切り替えてゴールを目指せ！
                 </p>
                 <a
-                    href="https://unityroom.com/games/flipmaze"
+                    href="https://note.com/ha_03ru_01/n/nff3f1333e39e?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1254,7 +1260,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     表示されたコマンドを素早く入力して高得点を狙おう！
                 </p>
                 <a
-                    href="https://unityroom.com/games/figure_sequence"
+                    href="https://note.com/ha_03ru_01/n/n7b288af74c72?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1294,7 +1300,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     自分だけの薬を研究せよ。
                 </p>
                 <a
-                    href="https://unityroom.com/games/potionberserker"
+                    href="https://note.com/ha_03ru_01/n/n4d445c76c48d?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1374,7 +1380,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     連打で敵を倒せ！稼いだGoldでステータスやその他諸々を強化しよう！
                 </p>
                 <a
-                    href="https://unityroom.com/games/clickhero"
+                    href="https://note.com/ha_03ru_01/n/neaa4a2950aa8?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1414,7 +1420,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     猫を操作してゴールまで辿り着こう！
                 </p>
                 <a
-                    href="https://unityroom.com/games/nyanjump"
+                    href="https://note.com/ha_03ru_01/n/n50c07166d03d?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1455,7 +1461,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     体のパーツをもとに戻してあげよう!
                 </p>
                 <a
-                    href="https://unityroom.com/games/nyanjump"
+                    href="https://note.com/ha_03ru_01/n/n742d34cb5a6d?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1536,7 +1542,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     危険な海を泳いでより深い海を目指せ！
                 </p>
                 <a
-                    href="https://unityroom.com/games/aqualeap"
+                    href="https://note.com/ha_03ru_01/n/n63a8a306dfa0?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1576,7 +1582,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     連打でエネルギーをためて遠くまで走り抜けろ！
                 </p>
                 <a
-                    href="https://unityroom.com/games/penoverkill"
+                    href="https://note.com/ha_03ru_01/n/n7dbf4a5e937c?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1616,7 +1622,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     敵を倒し、稼ぎ、強くなるローグライク。
                 </p>
                 <a
-                    href="https://unityroom.com/games/penoverkill"
+                    href="https://note.com/ha_03ru_01/n/nfeb962afd5e9?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1657,7 +1663,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     このゲームの主人公は、『ぺんさんど』という名前のペンギンです。 ぺんさんどの目標は、“皇帝ペンギン様に褒められること”。 それ以外、何もいりません。 
                 </p>
                 <a
-                    href="https://unityroom.com/games/penkoutei"
+                    href="https://note.com/ha_03ru_01/n/n13d809da18bd?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る
@@ -1697,7 +1703,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     このゲームは、見習い天使の「クレア」が相棒の「ぺんさんど」とともに大天使を目指していくゲームとなっています。
                 </p>
                 <a
-                    href="https://unityroom.com/games/ganbareangel"
+                    href="https://note.com/ha_03ru_01/n/n94d8500da7e4?magazine_key=md93091202e8f"
                     class="work-link">
 
                     詳細を見る

@@ -80,9 +80,23 @@ function formatDate(dateString)
 {
     const date = new Date(dateString);
 
-    return `${date.getFullYear()}.` +
-           `${String(date.getMonth()+1).padStart(2,"0")}.` +
-           `${String(date.getDate()).padStart(2,"0")}`;
+    if (Number.isNaN(date.getTime()))
+    {
+        return "";
+    }
+
+    const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).formatToParts(date);
+
+    const dateParts = Object.fromEntries(
+        parts.map((part) => [part.type, part.value])
+    );
+
+    return `${dateParts.year}.${dateParts.month}.${dateParts.day}`;
 }
 
 
@@ -112,16 +126,17 @@ async function main()
     // 最新記事タイトルから記事数取得
     let articleCount = 0;
 
-    const match = feed.items[0].title.match(/#(\d+)/);
+    const feedItems = Array.isArray(feed.items) ? feed.items : [];
+    const latestTitle = feedItems[0]?.title || "";
+    const match = latestTitle.match(/#(\d+)/);
 
-    if (match)
-    {
-        articleCount = Number(match[1]);
-    }
+    articleCount = match
+        ? Number(match[1])
+        : await getArticleCount();
 
     const articles = [];
 
-    for(const item of feed.items.slice(0,3))
+    for(const item of feedItems.slice(0,3))
     {
         const thumbnail = await getThumbnail(item.link);
 

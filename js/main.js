@@ -2,9 +2,21 @@
    Scroll Animation Common
 ======================================== */
 
+document.documentElement.classList.add("js-enabled");
+
 function observeShow(elements, callback = null) {
 
     if (!elements || elements.length === 0) {
+        return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+        elements.forEach((element) => {
+            if (element) {
+                element.classList.add("show");
+                if (callback) callback(element);
+            }
+        });
         return;
     }
 
@@ -47,6 +59,14 @@ function observeShow(elements, callback = null) {
 /* ========================================
    Hero Animation
 ======================================== */
+
+const prefersReducedMotion =
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || false;
+
+const heroVideo = document.querySelector(".hero-video");
+if (heroVideo && !prefersReducedMotion) {
+    heroVideo.play().catch(() => {});
+}
 
 window.addEventListener("load", () => {
 
@@ -91,7 +111,7 @@ observeShow(
 ======================================== */
 
 const whatCanBoxes =
-    document.querySelectorAll(".what-can-box");
+    document.querySelectorAll(".can-do-card");
 
 
 whatCanBoxes.forEach((box, index) => {
@@ -103,6 +123,32 @@ whatCanBoxes.forEach((box, index) => {
 
 
 observeShow(whatCanBoxes);
+
+
+/* ========================================
+   Featured Video Playback
+======================================== */
+
+const featuredVideo =
+    document.querySelector(".featured-video video");
+
+if (featuredVideo && !prefersReducedMotion) {
+    if ("IntersectionObserver" in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    featuredVideo.play().catch(() => {});
+                } else {
+                    featuredVideo.pause();
+                }
+            });
+        }, { rootMargin: "200px 0px" });
+
+        videoObserver.observe(featuredVideo);
+    } else {
+        featuredVideo.play().catch(() => {});
+    }
+}
 
 
 /* ========================================
@@ -233,6 +279,17 @@ const blogCount =
 const latestArticles =
     document.getElementById("latestArticles");
 
+function safeWebUrl(value) {
+    try {
+        const url = new URL(value);
+        return url.protocol === "https:" || url.protocol === "http:"
+            ? url.href
+            : "";
+    } catch {
+        return "";
+    }
+}
+
 
 fetch("data/blog.json")
 
@@ -285,7 +342,7 @@ fetch("data/blog.json")
         }
 
 
-        latestArticles.innerHTML = "";
+        latestArticles.replaceChildren();
 
 
         if (
@@ -311,39 +368,41 @@ fetch("data/blog.json")
                 "article-card";
 
 
-            articleCard.innerHTML = `
+            const title = String(article.title || "");
+            const imageUrl = safeWebUrl(article.thumbnail);
+            const articleUrl = safeWebUrl(article.url);
 
-                <img
-                    src="${article.thumbnail}"
-                    alt="${article.title}"
-                    loading="lazy">
+            const image = document.createElement("img");
+            if (imageUrl) image.src = imageUrl;
+            image.alt = title;
+            image.loading = "lazy";
 
-                <div class="article-content">
+            const content = document.createElement("div");
+            content.className = "article-content";
 
-                    <p class="article-date">
-                        ${article.date}
-                    </p>
+            const date = document.createElement("p");
+            date.className = "article-date";
+            date.textContent = String(article.date || "");
 
-                    <h3>
-                        ${article.title}
-                    </h3>
+            const heading = document.createElement("h3");
+            heading.textContent = title;
 
-                    <p class="article-summary">
-                        ${article.summary}
-                    </p>
+            const summary = document.createElement("p");
+            summary.className = "article-summary";
+            summary.textContent = String(article.summary || "");
 
-                    <a
-                        href="${article.url}"
-                        target="_blank"
-                        rel="noopener noreferrer">
+            content.append(date, heading, summary);
 
-                        記事を読む →
+            if (articleUrl) {
+                const link = document.createElement("a");
+                link.href = articleUrl;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = "記事を読む →";
+                content.append(link);
+            }
 
-                    </a>
-
-                </div>
-
-            `;
+            articleCard.append(image, content);
 
 
             latestArticles.appendChild(
@@ -518,99 +577,38 @@ const navLinks =
 
 if (hamburger && headerNav) {
 
+    const setMenuOpen = (isOpen) => {
+        hamburger.classList.toggle("active", isOpen);
+        headerNav.classList.toggle("active", isOpen);
+        document.body.classList.toggle("menu-open", isOpen);
+        hamburger.setAttribute("aria-expanded", String(isOpen));
+        hamburger.setAttribute(
+            "aria-label",
+            isOpen ? "メニューを閉じる" : "メニューを開く"
+        );
+    };
+
     hamburger.addEventListener(
         "click",
         () => {
-
-            hamburger.classList.toggle(
-                "active"
-            );
-
-            headerNav.classList.toggle(
-                "active"
-            );
-
-            document.body.classList.toggle(
-                "menu-open"
-            );
-
+            setMenuOpen(!headerNav.classList.contains("active"));
         }
     );
 
-}
-
-
-/* ========================================
-   Header Navigation
-======================================== */
-
-navLinks.forEach((link) => {
-
-    link.addEventListener(
-        "click",
-        () => {
-
-            if (hamburger) {
-
-                hamburger.classList.remove(
-                    "active"
-                );
-
-            }
-
-            if (headerNav) {
-
-                headerNav.classList.remove(
-                    "active"
-                );
-
-            }
-
-            document.body.classList.remove(
-                "menu-open"
-            );
-
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && headerNav.classList.contains("active")) {
+            setMenuOpen(false);
+            hamburger.focus();
         }
-    );
+    });
 
-});
+    navLinks.forEach((link) => {
+        link.addEventListener("click", () => setMenuOpen(false));
+    });
 
-
-/* ========================================
-   Header Logo
-======================================== */
-
-const headerLogo =
-    document.querySelector(".header-logo");
-
-
-if (headerLogo) {
-
-    headerLogo.addEventListener(
-        "click",
-        () => {
-
-            if (hamburger) {
-
-                hamburger.classList.remove(
-                    "active"
-                );
-
-            }
-
-            if (headerNav) {
-
-                headerNav.classList.remove(
-                    "active"
-                );
-
-            }
-
-            document.body.classList.remove(
-                "menu-open"
-            );
-
-        }
-    );
+    const headerLogo = document.querySelector(".header-logo");
+    if (headerLogo) {
+        headerLogo.addEventListener("click", () => setMenuOpen(false));
+    }
 
 }
