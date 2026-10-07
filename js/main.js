@@ -68,7 +68,7 @@ if (heroVideo && !prefersReducedMotion) {
     heroVideo.play().catch(() => {});
 }
 
-window.addEventListener("load", () => {
+window.addEventListener("DOMContentLoaded", () => {
 
     const heroText =
         document.querySelector(".hero-content");
@@ -77,24 +77,25 @@ window.addEventListener("load", () => {
         return;
     }
 
-    heroText.style.opacity = "0";
-
-    heroText.style.transform =
-        "translate(-50%, calc(-50% + 30px))";
-
     setTimeout(() => {
-
-        heroText.style.transition =
-            "opacity 1.2s ease, transform 1.2s ease";
-
-        heroText.style.opacity = "1";
-
-        heroText.style.transform =
-            "translate(-50%, -50%)";
-
+        heroText.classList.add("is-visible");
     }, 300);
 
 });
+
+
+/* ========================================
+   Achievements Animation
+======================================== */
+
+const achievementCards =
+    document.querySelectorAll(".achievement-card");
+
+achievementCards.forEach((card, index) => {
+    card.style.transitionDelay = `${index * 0.08}s`;
+});
+
+observeShow(achievementCards);
 
 
 /* ========================================

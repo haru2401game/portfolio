@@ -56,14 +56,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 </head>
 
-<body>
+<body id="top">
 <!-- ================================
      Header
 ================================ -->
 <header class="header">
 
-    <a href="#" class="header-logo">
-        Haruta Nagaya
+    <a href="#top" class="header-logo" aria-label="長屋晴太 ポートフォリオ ホーム">
+        <img class="brand-mark" src="images/favicon.png" alt="" aria-hidden="true">
+        <span class="brand-name">
+            HARUTA NAGAYA
+            <small>GAME CREATOR PORTFOLIO</small>
+        </span>
     </a>
 
     <button
@@ -109,9 +113,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <!-- Catch Copy -->
     <div class="hero-content">
-        <h1>
-            ゲームを作り、魅力を届ける。
-        </h1>
+        <p class="hero-eyebrow">INDEPENDENT GAME CREATOR / JAPAN</p>
+        <h1>遊びの発見を、<br>心に残る体験へ。</h1>
+        <p class="hero-lead">
+            企画からプログラムまで。<br>
+            アイデアを、遊べるかたちにしています。
+        </p>
+        <div class="hero-actions">
+            <a class="hero-button" href="#featured-works">注目作品を見る <span aria-hidden="true">↗</span></a>
+            <a class="hero-text-link" href="#other-works">すべての作品 <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="hero-index"><span>01</span> / GAME PORTFOLIO</p>
     </div>
 </section>
 
@@ -135,17 +147,22 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <img 
                 src="images/index/About/profile.jpg"
                 alt="長屋晴太 プロフィール画像">
-
+            <span class="about-image-caption">CREATOR PROFILE <b>01</b></span>
         </div>
 
         <!-- Profile Text -->
         <div class="about-content">
+            <p class="about-kicker">GAME CREATOR / AICHI, JAPAN</p>
             <h2 class="about-name">
                 長屋 晴太
                 <span>
-                    Nagaya Haruta
+                    NAGAYA HARUTA
                 </span>
             </h2>
+            <p class="about-statement">
+                ゲームをつくり、<br>
+                心に残る体験を届ける。
+            </p>
             <p class="about-text">
                 愛知県豊橋市出身。<br>
                 名古屋のトライデントコンピュータ専門学校
@@ -158,6 +175,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                 制作を通してさまざまな役割を経験し、
                 チームでより良いゲームを作ることを大切にしています。
             </p>
+            <div class="about-meta">
+                <div>
+                    <span>BASE</span>
+                    <strong>TOYOHASHI, AICHI</strong>
+                </div>
+                <div>
+                    <span>FOCUS</span>
+                    <strong>GAME DESIGN / PROGRAMMING</strong>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -2391,9 +2418,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
      Footer
 ================================ -->
 <footer>
-<p>
-    © Nagaya Haruta All Rights Reserved.
-</p>
+    <div class="footer-inner">
+        <a href="#top" class="footer-brand">HN <span>HARUTA NAGAYA</span></a>
+        <p class="footer-motto">GAMES MADE WITH CURIOSITY.</p>
+        <a href="#top" class="footer-top">BACK TO TOP <span aria-hidden="true">↑</span></a>
+    </div>
+    <p class="footer-copyright">© 2026 HARUTA NAGAYA / ALL RIGHTS RESERVED.</p>
 </footer>
 
 <script src="js/main.js"></script>
