@@ -1,6 +1,13 @@
 {
-    "articleCount": 257,
+    "articleCount": 258,
     "articles": [
+        {
+            "title": "「就職作品に向けて3Dゲームを10本作る｜1本目はプレイヤー操作と敵AIに挑戦」 はる日記#258",
+            "date": "2026.10.09",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/321748740/rectangle_large_type_2_efcf2062975e39f5cc95095c427f98cd.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n63dea3e2ef11"
+        },
         {
             "title": "「ゲームジャムは何のため？主催したい私が、運営経験者に教わった『挑戦の場』という考え方」 はる日記#257",
             "date": "2026.10.08",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/321574770/rectangle_large_type_2_b29606b866c8a80a6da714e8db2556b4.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nbfa424b0813d"
-        },
-        {
-            "title": "「ゲーム業界の就活で自分を伝えるには？専門学生が考えるゲーム制作と発信」 はる日記#255",
-            "date": "2026.10.06",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/320076492/rectangle_large_type_2_d5be48cb9e898c8b3b27b493afeb7eb5.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n2a5052ecbe1c"
         }
     ]
 }
