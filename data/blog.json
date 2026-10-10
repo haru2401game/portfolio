@@ -1,6 +1,13 @@
 {
-    "articleCount": 258,
+    "articleCount": 259,
     "articles": [
+        {
+            "title": "「3Dゲーム制作2本目 | パルクールアクションに挑戦」 はる日記#259",
+            "date": "2026.10.10",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/322117112/rectangle_large_type_2_6e91699eed1b58a4022508c5c5062aea.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nae25602d44ca"
+        },
         {
             "title": "「就職作品に向けて3Dゲームを10本作る｜1本目はプレイヤー操作と敵AIに挑戦」 はる日記#258",
             "date": "2026.10.09",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/321581661/rectangle_large_type_2_a58cc88daf459bc24144a15bada2bc02.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 こんにちは！ゲームクリエイターを目指している専門学生のはるです。 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n7833f350e967"
-        },
-        {
-            "title": "「ゲーム業界を目指す専門学生の自己分析｜20作品の制作から見つけた「行動力」という強み」 はる日記#256",
-            "date": "2026.10.07",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/321574770/rectangle_large_type_2_b29606b866c8a80a6da714e8db2556b4.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nbfa424b0813d"
         }
     ]
 }
