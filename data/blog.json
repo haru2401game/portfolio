@@ -1,26 +1,26 @@
 {
-    "articleCount": 259,
+    "articleCount": 261,
     "articles": [
+        {
+            "title": "「ゲームプログラマーに技術だけでは足りない？ビジネスマナーの授業で学んだ3つの力」 はる日記#261",
+            "date": "2026.10.11",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/322801843/rectangle_large_type_2_ef0ecd5cc6acc03388e4689976609a0d.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです。 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n8b32c5d362e9"
+        },
+        {
+            "title": "「3Dゲーム制作3本目 | 3Dアクションシューティングゲームの制作」 はる日記#260",
+            "date": "2026.10.10",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/322446772/rectangle_large_type_2_37315bf3a394bc5b5e7f9375318d3fb5.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nb949db0e85d2"
+        },
         {
             "title": "「3Dゲーム制作2本目 | パルクールアクションに挑戦」 はる日記#259",
             "date": "2026.10.10",
             "thumbnail": "https://assets.st-note.com/production/uploads/images/322117112/rectangle_large_type_2_6e91699eed1b58a4022508c5c5062aea.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nae25602d44ca"
-        },
-        {
-            "title": "「就職作品に向けて3Dゲームを10本作る｜1本目はプレイヤー操作と敵AIに挑戦」 はる日記#258",
-            "date": "2026.10.09",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/321748740/rectangle_large_type_2_efcf2062975e39f5cc95095c427f98cd.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n63dea3e2ef11"
-        },
-        {
-            "title": "「ゲームジャムは何のため？主催したい私が、運営経験者に教わった『挑戦の場』という考え方」 はる日記#257",
-            "date": "2026.10.08",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/321581661/rectangle_large_type_2_a58cc88daf459bc24144a15bada2bc02.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 こんにちは！ゲームクリエイターを目指している専門学生のはるです。 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n7833f350e967"
         }
     ]
 }
