@@ -1,6 +1,13 @@
 {
-    "articleCount": 261,
+    "articleCount": 262,
     "articles": [
+        {
+            "title": "「正解を探すのをやめてみる| ゲーム業界で働く方との対話で気づいたこと」 はる日記#262",
+            "date": "2026.10.12",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/322702372/rectangle_large_type_2_fd572bf210db0d6a070656d44e59b82c.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n196711e9c4b4"
+        },
         {
             "title": "「ゲームプログラマーに技術だけでは足りない？ビジネスマナーの授業で学んだ3つの力」 はる日記#261",
             "date": "2026.10.11",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/322446772/rectangle_large_type_2_37315bf3a394bc5b5e7f9375318d3fb5.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nb949db0e85d2"
-        },
-        {
-            "title": "「3Dゲーム制作2本目 | パルクールアクションに挑戦」 はる日記#259",
-            "date": "2026.10.10",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/322117112/rectangle_large_type_2_6e91699eed1b58a4022508c5c5062aea.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nae25602d44ca"
         }
     ]
 }
