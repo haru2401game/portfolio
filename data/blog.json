@@ -1,26 +1,26 @@
 {
-    "articleCount": 262,
+    "articleCount": 263,
     "articles": [
+        {
+            "title": "「【3Dゲーム10本制作チャレンジ】第4作目ホラー風散策ゲームを制作しました！」 はる日記#263",
+            "date": "2026.10.13",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/322976061/rectangle_large_type_2_6224c9b770e1dd80fca8432fcd7a3416.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/naa18b31fa392"
+        },
+        {
+            "title": "コロプラの企業研究｜ゲームプログラマー志望者向け",
+            "date": "2026.10.12",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/323625502/rectangle_large_type_2_abece7f51ae91bf66bd564fd61069a10.png?fit=bounds&quality=85&width=1280",
+            "summary": "「目次」 今回は、スマートフォンゲーム『白猫プロジェクト』や『クイズRPG 魔法使いと黒猫のウィズ』などで知られる、株式会社コロプラを企業研究します。 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nd1e9b1f820a1"
+        },
         {
             "title": "「正解を探すのをやめてみる| ゲーム業界で働く方との対話で気づいたこと」 はる日記#262",
             "date": "2026.10.12",
             "thumbnail": "https://assets.st-note.com/production/uploads/images/322702372/rectangle_large_type_2_fd572bf210db0d6a070656d44e59b82c.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n196711e9c4b4"
-        },
-        {
-            "title": "「ゲームプログラマーに技術だけでは足りない？ビジネスマナーの授業で学んだ3つの力」 はる日記#261",
-            "date": "2026.10.11",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/322801843/rectangle_large_type_2_ef0ecd5cc6acc03388e4689976609a0d.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです。 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n8b32c5d362e9"
-        },
-        {
-            "title": "「3Dゲーム制作3本目 | 3Dアクションシューティングゲームの制作」 はる日記#260",
-            "date": "2026.10.10",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/322446772/rectangle_large_type_2_37315bf3a394bc5b5e7f9375318d3fb5.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nb949db0e85d2"
         }
     ]
 }
