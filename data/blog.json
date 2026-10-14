@@ -1,6 +1,13 @@
 {
-    "articleCount": 263,
+    "articleCount": 264,
     "articles": [
+        {
+            "title": "「【3Dゲーム制作5本目】過去の自分と協力するパズルアクションを作って学んだこと」 はる日記#264",
+            "date": "2026.10.14",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/323488312/rectangle_large_type_2_f551fccc2fce289df4079996261c4ca8.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n4856ae56b137"
+        },
         {
             "title": "「【3Dゲーム10本制作チャレンジ】第4作目ホラー風散策ゲームを制作しました！」 はる日記#263",
             "date": "2026.10.13",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/323625502/rectangle_large_type_2_abece7f51ae91bf66bd564fd61069a10.png?fit=bounds&quality=85&width=1280",
             "summary": "「目次」 今回は、スマートフォンゲーム『白猫プロジェクト』や『クイズRPG 魔法使いと黒猫のウィズ』などで知られる、株式会社コロプラを企業研究します。 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/nd1e9b1f820a1"
-        },
-        {
-            "title": "「正解を探すのをやめてみる| ゲーム業界で働く方との対話で気づいたこと」 はる日記#262",
-            "date": "2026.10.12",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/322702372/rectangle_large_type_2_fd572bf210db0d6a070656d44e59b82c.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n196711e9c4b4"
         }
     ]
 }
