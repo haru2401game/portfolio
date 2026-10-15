@@ -1,6 +1,13 @@
 {
-    "articleCount": 264,
+    "articleCount": 265,
     "articles": [
+        {
+            "title": "「Unityで3DアクションRPGを制作開始！6本目のゲーム制作に挑戦」 はる日記#265",
+            "date": "2026.10.15",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/324220631/rectangle_large_type_2_be3eb8df29404f43b900cad99aa5710c.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n19dec73264c5"
+        },
         {
             "title": "「【3Dゲーム制作5本目】過去の自分と協力するパズルアクションを作って学んだこと」 はる日記#264",
             "date": "2026.10.14",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/322976061/rectangle_large_type_2_6224c9b770e1dd80fca8432fcd7a3416.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/naa18b31fa392"
-        },
-        {
-            "title": "コロプラの企業研究｜ゲームプログラマー志望者向け",
-            "date": "2026.10.12",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/323625502/rectangle_large_type_2_abece7f51ae91bf66bd564fd61069a10.png?fit=bounds&quality=85&width=1280",
-            "summary": "「目次」 今回は、スマートフォンゲーム『白猫プロジェクト』や『クイズRPG 魔法使いと黒猫のウィズ』などで知られる、株式会社コロプラを企業研究します。 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/nd1e9b1f820a1"
         }
     ]
 }
