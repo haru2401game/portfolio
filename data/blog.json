@@ -1,6 +1,13 @@
 {
-    "articleCount": 265,
+    "articleCount": 266,
     "articles": [
+        {
+            "title": "「Unityで3DアクションRPG制作ver2.0 | プレイヤーのアニメーション実装」 はる日記#266",
+            "date": "2026.10.16",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/324325793/rectangle_large_type_2_430ae61a32108350a137d2b286720fa4.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n81efbd7b3879"
+        },
         {
             "title": "「Unityで3DアクションRPGを制作開始！6本目のゲーム制作に挑戦」 はる日記#265",
             "date": "2026.10.15",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/323488312/rectangle_large_type_2_f551fccc2fce289df4079996261c4ca8.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n4856ae56b137"
-        },
-        {
-            "title": "「【3Dゲーム10本制作チャレンジ】第4作目ホラー風散策ゲームを制作しました！」 はる日記#263",
-            "date": "2026.10.13",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/322976061/rectangle_large_type_2_6224c9b770e1dd80fca8432fcd7a3416.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/naa18b31fa392"
         }
     ]
 }
