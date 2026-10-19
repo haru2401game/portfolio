@@ -1,6 +1,13 @@
 {
-    "articleCount": 267,
+    "articleCount": 268,
     "articles": [
+        {
+            "title": "「ゲームを途中でやめた人は、つまらなかったから？ 約88万回表示された投稿から考えたこと」 はる日記#268",
+            "date": "2026.10.19",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/324318994/rectangle_large_type_2_1ef0e47049c2d6ed2ece81f583af521f.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 こんにちは！ ゲームクリエイターを目指している専門学生のはるです。 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/ncc00ee02dc4e"
+        },
         {
             "title": "「3DアクションRPG制作ver3.0 | 敵が現れた。」 はる日記#267",
             "date": "2026.10.17",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/324325793/rectangle_large_type_2_430ae61a32108350a137d2b286720fa4.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n81efbd7b3879"
-        },
-        {
-            "title": "「Unityで3DアクションRPGを制作開始！6本目のゲーム制作に挑戦」 はる日記#265",
-            "date": "2026.10.15",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/324220631/rectangle_large_type_2_be3eb8df29404f43b900cad99aa5710c.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 はじめまして！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n19dec73264c5"
         }
     ]
 }
