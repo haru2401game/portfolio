@@ -194,7 +194,12 @@ const blogIntroduction =
 
 
 observeShow(
-    document.querySelectorAll(".blog-introduction")
+    document.querySelectorAll(".blog-introduction"),
+    (intro) => {
+        const counter = intro.querySelector("#article-count[data-value]");
+        if (counter) animateCount(counter);
+        startTypewriter(intro.querySelector(".blog-message"));
+    }
 );
 
 
@@ -319,8 +324,7 @@ fetch("data/blog.json")
 
         if (articleCounter) {
 
-            articleCounter.textContent =
-                `${data.articleCount}+`;
+            setBlogCount(articleCounter, data.articleCount);
 
         }
 
@@ -345,7 +349,7 @@ fetch("data/blog.json")
         }
 
 
-        latestArticles.replaceChildren();
+        latestArticles.querySelectorAll(".article-card").forEach((card) => card.remove());
 
 
         if (
@@ -362,7 +366,7 @@ fetch("data/blog.json")
         }
 
 
-        data.articles.forEach((article) => {
+        data.articles.forEach((article, index) => {
 
             const articleCard =
                 document.createElement("article");
@@ -405,7 +409,25 @@ fetch("data/blog.json")
                 content.append(link);
             }
 
-            articleCard.append(image, content);
+            const badges = document.createElement("div");
+            badges.className = "article-badges";
+            badges.setAttribute("aria-hidden", "true");
+
+            if (index === 0) {
+                const fresh = document.createElement("span");
+                fresh.className = "is-new";
+                fresh.textContent = "NEW!";
+                badges.append(fresh);
+            }
+
+            const issue = title.match(/#(\d+)/);
+            if (issue) {
+                const log = document.createElement("span");
+                log.textContent = `LOG #${issue[1]}`;
+                badges.append(log);
+            }
+
+            articleCard.append(image, badges, content);
 
 
             latestArticles.appendChild(
@@ -629,7 +651,7 @@ function animateCount(element) {
     if (!Number.isFinite(target)) return;
 
     if (prefersReducedMotion || target === 0) {
-        element.textContent = target;
+        element.textContent = target + (element.dataset.suffix || "");
         return;
     }
 
@@ -639,7 +661,8 @@ function animateCount(element) {
     const step = (now) => {
         const progress = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        element.textContent = Math.round(target * eased);
+        element.textContent = Math.round(target * eased) + (element.dataset.suffix || "");
+        if (progress >= 1) element.classList.add("is-counted");
         if (progress < 1) requestAnimationFrame(step);
     };
 
@@ -854,4 +877,280 @@ const workCount = document.getElementById("workCount");
 
 if (workCount) {
     workCount.textContent = document.querySelectorAll(".work-card").length;
+}
+
+
+/* ========================================
+   Game UI: Blog (message window + EXP)
+======================================== */
+
+function setBlogCount(element, value) {
+    const number = Number(value);
+    if (!element || !Number.isFinite(number)) return;
+
+    element.dataset.value = number;
+    element.dataset.suffix = "+";
+
+    const stat = element.closest(".blog-stat");
+    if (stat && !stat.querySelector(".blog-exp")) {
+        const milestone = nextMilestone(number);
+        const meter = document.createElement("div");
+        meter.className = "blog-exp";
+        meter.setAttribute("aria-hidden", "true");
+        meter.style.setProperty("--fill", (number / milestone).toFixed(3));
+
+        const gauge = document.createElement("div");
+        gauge.className = "stat-gauge";
+        gauge.append(document.createElement("span"));
+
+        const next = document.createElement("span");
+        next.className = "blog-exp-next";
+        next.textContent = `NEXT ${milestone}`;
+
+        meter.append(gauge, next);
+        stat.append(meter);
+    }
+
+    const intro = element.closest(".blog-introduction");
+    if (!intro || intro.classList.contains("show")) {
+        animateCount(element);
+    } else {
+        element.textContent = "0+";
+    }
+}
+
+/* RPG-style message window: the description types itself out */
+const blogMessage = document.querySelector(".blog-intro-content > p");
+
+if (blogMessage) {
+    const fullText = blogMessage.textContent.replace(/\s+/g, " ").trim();
+    blogMessage.classList.add("blog-message");
+    blogMessage.replaceChildren();
+
+    const srText = document.createElement("span");
+    srText.className = "sr-only";
+    srText.textContent = fullText;
+
+    const typed = document.createElement("span");
+    typed.className = "blog-message-text";
+    typed.setAttribute("aria-hidden", "true");
+
+    const cursor = document.createElement("span");
+    cursor.className = "blog-message-cursor";
+    cursor.setAttribute("aria-hidden", "true");
+    cursor.textContent = "▼";
+
+    blogMessage.append(srText, typed, cursor);
+    blogMessage.dataset.text = fullText;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        typed.textContent = fullText;
+        blogMessage.classList.add("is-done");
+    }
+}
+
+function startTypewriter(message) {
+    if (!message || message.dataset.started) return;
+    message.dataset.started = "1";
+
+    const typed = message.querySelector(".blog-message-text");
+    const text = message.dataset.text || "";
+
+    if (prefersReducedMotion) {
+        typed.textContent = text;
+        message.classList.add("is-done");
+        return;
+    }
+
+    let index = 0;
+    const timer = setInterval(() => {
+        index += 1;
+        typed.textContent = text.slice(0, index);
+        if (index >= text.length) {
+            clearInterval(timer);
+            message.classList.add("is-done");
+        }
+    }, 38);
+}
+
+
+/* ========================================
+   Ambient Motion: the page is always alive
+======================================== */
+
+/* Floating game motifs drifting behind every section */
+const ambientShapes = ["✦", "●", "▲", "■", "✚", "◆", "★", "●"];
+const ambientColors = ["#00a3e0", "#ff5a5f", "#ffb300", "#22c55e", "#8b5cf6", "#ff7a1a"];
+const ambientSpots = [
+    [4, 14], [93, 10], [7, 82], [90, 76], [48, 4], [97, 44], [2, 48], [62, 94]
+];
+
+document.querySelectorAll("section").forEach((section, sectionIndex) => {
+    const layer = document.createElement("div");
+    layer.className = "ambient";
+    layer.setAttribute("aria-hidden", "true");
+
+    const count = section.classList.contains("hero") ? 8 : 6;
+
+    for (let i = 0; i < count; i += 1) {
+        const shape = document.createElement("i");
+        const [x, y] = ambientSpots[i];
+        const seed = (sectionIndex * 7 + i * 3) % 10;
+
+        shape.textContent = ambientShapes[(sectionIndex + i) % ambientShapes.length];
+        shape.style.left = `${x}%`;
+        shape.style.top = `${y}%`;
+        shape.style.setProperty("--c", ambientColors[(sectionIndex + i) % ambientColors.length]);
+        shape.style.setProperty("--s", `${14 + seed * 2}px`);
+        shape.style.setProperty("--d", `${6 + seed * 0.7}s`);
+        shape.style.setProperty("--delay", `${-seed * 0.9}s`);
+        shape.style.setProperty("--r", `${seed % 2 ? 24 : -24}deg`);
+
+        layer.append(shape);
+    }
+
+    section.append(layer);
+});
+
+/* Stagger idle motion so repeated items never move in lockstep */
+[".achievement-list", ".can-do-list", ".play-container", ".sns-list", ".latest-articles"].forEach((selector) => {
+    document.querySelectorAll(selector).forEach((list) => {
+        Array.from(list.children).forEach((item, index) => {
+            item.style.setProperty("--idle-delay", `${-index * 0.45}s`);
+        });
+    });
+});
+
+const latestArticlesList = document.getElementById("latestArticles");
+if (latestArticlesList && "MutationObserver" in window) {
+    new MutationObserver(() => {
+        Array.from(latestArticlesList.querySelectorAll(".article-card")).forEach((item, index) => {
+            item.style.setProperty("--idle-delay", `${-index * 0.45}s`);
+        });
+    }).observe(latestArticlesList, { childList: true });
+}
+
+/* Pause idle motion for sections that are off screen */
+if ("IntersectionObserver" in window) {
+    const idleObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            entry.target.classList.toggle("is-offscreen", !entry.isIntersecting);
+        });
+    }, { rootMargin: "120px 0px" });
+
+    document.querySelectorAll("section, footer").forEach((section) => {
+        idleObserver.observe(section);
+    });
+}
+
+
+/* ========================================
+   Characters: peek, drift and pop
+======================================== */
+
+const CHARACTER_PATH = "images/character/";
+
+function makeSprite(file, className) {
+    const img = document.createElement("img");
+    img.src = CHARACTER_PATH + file;
+    img.alt = "";
+    img.className = className;
+    img.decoding = "async";
+    img.loading = "lazy";
+    img.setAttribute("aria-hidden", "true");
+    img.draggable = false;
+    return img;
+}
+
+/* 1. Peek: a character rises from behind a box edge now and then */
+const peekers = [
+    { host: ".hero-screen", file: "Koutei.png", x: "72%", w: 84, delay: 2 },
+    { host: ".about-container", file: "Pensand.png", x: "8%", w: 92, delay: 1 },
+    { host: ".status-header", file: "Penko.png", x: "38%", w: 72, delay: 4 },
+    { host: ".can-do-category:nth-child(3) .can-do-card:nth-child(2)", file: "Openji.png", x: "62%", w: 56, delay: 5.5 },
+    { host: ".featured-info", file: "Ojisand.png", x: "82%", w: 76, delay: 3 },
+    { host: ".works-list", file: "Penzou.png", x: "90%", w: 72, delay: 6.5 },
+    { host: ".latest-articles", file: "Penny.png", x: "84%", w: 80, delay: 2.5 },
+    { host: '.timeline-item[data-quest="now"] .timeline-content', file: "Chrono_0.png", side: true, y: "18%", w: 64, delay: 0.5 },
+    { host: ".play-container", file: "Machopen.png", x: "6%", w: 80, delay: 6 },
+    { host: ".sns-list", file: "Player.png", x: "88%", w: 64, delay: 3.5 },
+    { host: "footer", file: "Clone_0.png", x: "46%", w: 64, delay: 7.5 }
+];
+
+peekers.forEach((config) => {
+    const host = document.querySelector(config.host);
+    if (!host) return;
+
+    const window_ = document.createElement("div");
+    window_.className = "peeker";
+    window_.setAttribute("aria-hidden", "true");
+    window_.style.setProperty("--peek-x", config.x);
+    window_.style.setProperty("--peek-w", `${config.w}px`);
+    window_.style.setProperty("--peek-delay", `${config.delay}s`);
+    if (config.side) {
+        window_.classList.add("is-side");
+        window_.style.setProperty("--peek-y", config.y);
+    }
+
+    window_.append(makeSprite(config.file, "peeker-sprite"));
+    host.classList.add("has-peeker");
+    host.append(window_);
+});
+
+/* 2. Drift: characters float across the background like they're in space */
+const drifters = [
+    { section: ".hero", file: "Fish.png", y: "72%", w: 64, d: 34, delay: -6 },
+    { section: ".hero", file: "Openji.png", y: "14%", w: 60, d: 52, delay: -36, reverse: true },
+    { section: ".about", file: "RedFish.png", y: "82%", w: 56, d: 40, delay: -12, reverse: true },
+    { section: ".achievements", file: "Clone_0.png", y: "18%", w: 70, d: 42, delay: -20, reverse: true },
+    { section: ".what-i-can-do", file: "Penzou.png", y: "46%", w: 64, d: 48, delay: -8 },
+    { section: ".featured-works", file: "Boss.png", y: "62%", w: 120, d: 58, delay: -14 },
+    { section: ".other-works", file: "RedFish.png", y: "36%", w: 60, d: 38, delay: -4, reverse: true },
+    { section: ".other-works", file: "Fish.png", y: "78%", w: 52, d: 46, delay: -28 },
+    { section: ".other-works", file: "Koutei.png", y: "56%", w: 66, d: 60, delay: -44 },
+    { section: ".blog", file: "Penko.png", y: "12%", w: 64, d: 50, delay: -30 },
+    { section: ".timeline", file: "Clone_0.png", y: "40%", w: 64, d: 44, delay: -10, reverse: true },
+    { section: ".timeline", file: "Pensand.png", y: "76%", w: 60, d: 54, delay: -32 },
+    { section: ".play-games", file: "Ojisand.png", y: "70%", w: 60, d: 40, delay: -16, reverse: true },
+    { section: ".contact", file: "RedFish.png", y: "70%", w: 56, d: 36, delay: -18 }
+];
+
+drifters.forEach((config) => {
+    const layer = document.querySelector(`${config.section} > .ambient`);
+    if (!layer) return;
+
+    const sprite = makeSprite(config.file, "drifter");
+    sprite.style.top = config.y;
+    sprite.style.setProperty("--drift-w", `${config.w}px`);
+    sprite.style.setProperty("--drift-d", `${config.d}s`);
+    sprite.style.setProperty("--drift-delay", `${config.delay}s`);
+    if (config.reverse) sprite.classList.add("is-reverse");
+
+    layer.append(sprite);
+});
+
+/* 3. Pop: hovering a card makes a character jump out of it */
+const popCast = {
+    ".play-card": ["Pensand.png", "Penko.png", "Machopen.png"],
+    ".sns-card": ["Koutei.png", "RedFish.png", "Chrono_0.png", "Ojisand.png", "Fish.png"]
+};
+
+Object.entries(popCast).forEach(([selector, cast]) => {
+    document.querySelectorAll(selector).forEach((card, index) => {
+        card.append(makeSprite(cast[index % cast.length], "card-pop"));
+    });
+});
+
+
+/* Blog article cards are created after blog.json loads, so give them pops when they arrive */
+const articlePopCast = ["Openji.png", "Penzou.png", "Clone_0.png"];
+const articleList = document.getElementById("latestArticles");
+
+if (articleList && "MutationObserver" in window) {
+    new MutationObserver(() => {
+        articleList.querySelectorAll(".article-card").forEach((card, index) => {
+            if (card.querySelector(".card-pop")) return;
+            card.append(makeSprite(articlePopCast[index % articlePopCast.length], "card-pop"));
+        });
+    }).observe(articleList, { childList: true });
 }
