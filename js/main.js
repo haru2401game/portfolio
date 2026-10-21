@@ -844,3 +844,14 @@ if (worksList) {
 
     worksList.before(bar);
 }
+
+
+/* ========================================
+   Other Works Count
+======================================== */
+
+const workCount = document.getElementById("workCount");
+
+if (workCount) {
+    workCount.textContent = document.querySelectorAll(".work-card").length;
+}

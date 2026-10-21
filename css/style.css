@@ -6418,3 +6418,21 @@ footer {
         inset: 0 0 18px 18px;
     }
 }
+
+
+/* Hero: blinking "PRESS START" cursor */
+.hero-index span {
+    display: inline-block;
+    margin-right: 4px;
+    animation: press-start-blink 1.1s steps(2, jump-none) infinite;
+}
+
+@keyframes press-start-blink {
+    50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-index span {
+        animation: none;
+    }
+}
