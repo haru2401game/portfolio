@@ -7233,3 +7233,68 @@ footer.has-peeker {
         animation: none;
     }
 }
+
+
+/* ========================================
+   Mobile polish: legibility, tap targets, landscape menu
+======================================== */
+
+/* Keep small labels at a readable 10px minimum */
+.brand-name small,
+.about-image-caption,
+.about-meta span,
+.blog-stat > p,
+.article-date,
+.footer-motto,
+.footer-copyright {
+    font-size: 10px;
+}
+
+/* Comfortable tap targets */
+.article-content a {
+    min-height: 40px;
+}
+
+.footer-brand {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .hero-eyebrow,
+    .hero-index {
+        font-size: 10px;
+        letter-spacing: .1em;
+    }
+
+    .hero-eyebrow {
+        flex-wrap: nowrap;
+        max-width: 100%;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-eyebrow {
+        gap: 8px;
+        padding: 7px 12px;
+        letter-spacing: .05em;
+    }
+}
+
+/* Short screens (phones in landscape): show the whole menu at once in two columns */
+@media (max-width: 768px) and (max-height: 500px) {
+    .header-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-items: center;
+        column-gap: 16px;
+        padding-top: 8px;
+        padding-bottom: 12px;
+    }
+
+    .header-nav a {
+        padding: 9px 4px;
+    }
+}
