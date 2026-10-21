@@ -63,8 +63,26 @@ function observeShow(elements, callback = null) {
 const prefersReducedMotion =
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || false;
 
+/* Motion switch: remembers the visitor's choice, defaults to OFF for reduced-motion users */
+const MOTION_STORAGE_KEY = "portfolio-motion";
+
+function motionOff() {
+    return document.documentElement.classList.contains("motion-off");
+}
+
+(() => {
+    let saved = null;
+    try {
+        saved = localStorage.getItem(MOTION_STORAGE_KEY);
+    } catch {
+        saved = null;
+    }
+    const off = saved ? saved === "off" : prefersReducedMotion;
+    document.documentElement.classList.toggle("motion-off", off);
+})();
+
 const heroVideo = document.querySelector(".hero-video");
-if (heroVideo && !prefersReducedMotion) {
+if (heroVideo && !motionOff()) {
     heroVideo.play().catch(() => {});
 }
 
@@ -136,11 +154,11 @@ observeShow(whatCanBoxes);
 const featuredVideo =
     document.querySelector(".featured-video video");
 
-if (featuredVideo && !prefersReducedMotion) {
+if (featuredVideo && !motionOff()) {
     if ("IntersectionObserver" in window) {
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) {
+                if (entry.isIntersecting && !motionOff()) {
                     featuredVideo.play().catch(() => {});
                 } else {
                     featuredVideo.pause();
@@ -650,7 +668,7 @@ function animateCount(element) {
     const target = Number(element.dataset.value);
     if (!Number.isFinite(target)) return;
 
-    if (prefersReducedMotion || target === 0) {
+    if (motionOff() || target === 0) {
         element.textContent = target + (element.dataset.suffix || "");
         return;
     }
@@ -1036,7 +1054,7 @@ if (blogMessage) {
     blogMessage.append(srText, typed, cursor);
     blogMessage.dataset.text = fullText;
 
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    if (motionOff() || !("IntersectionObserver" in window)) {
         typed.textContent = fullText;
         blogMessage.classList.add("is-done");
     }
@@ -1049,7 +1067,7 @@ function startTypewriter(message) {
     const typed = message.querySelector(".blog-message-text");
     const text = message.dataset.text || "";
 
-    if (prefersReducedMotion) {
+    if (motionOff()) {
         typed.textContent = text;
         message.classList.add("is-done");
         return;
@@ -1166,7 +1184,7 @@ const peekers = [
     { host: ".latest-articles", file: "Penny.png", x: "84%", w: 80, delay: 2.5 },
     { host: '.timeline-item[data-quest="now"] .timeline-content', file: "Chrono_0.png", side: true, y: "18%", w: 64, delay: 0.5 },
     { host: ".play-container", file: "Machopen.png", x: "6%", w: 80, delay: 6 },
-    { host: ".sns-list", file: "Player.png", x: "88%", w: 64, delay: 3.5 },
+    { host: ".mail-card", file: "Player.png", x: "88%", w: 64, delay: 3.5 },
     { host: "footer", file: "Clone_0.png", x: "46%", w: 64, delay: 7.5 }
 ];
 
@@ -1247,3 +1265,90 @@ if (articleList && "MutationObserver" in window) {
         });
     }).observe(articleList, { childList: true });
 }
+
+
+/* ========================================
+   Motion Switch (header)
+======================================== */
+
+const motionToggle = document.querySelector(".motion-toggle");
+
+function syncMotionToggle() {
+    if (!motionToggle) return;
+    const on = !motionOff();
+    motionToggle.setAttribute("aria-checked", String(on));
+    const state = motionToggle.querySelector(".motion-toggle-state");
+    if (state) state.textContent = on ? "ON" : "OFF";
+}
+
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return rect.bottom > 0 && rect.top < window.innerHeight;
+}
+
+if (motionToggle) {
+    syncMotionToggle();
+
+    motionToggle.addEventListener("click", () => {
+        const turnOff = !motionOff();
+        document.documentElement.classList.toggle("motion-off", turnOff);
+
+        try {
+            localStorage.setItem(MOTION_STORAGE_KEY, turnOff ? "off" : "on");
+        } catch {
+            /* storage unavailable: the switch still works for this visit */
+        }
+
+        [heroVideo, featuredVideo].forEach((video) => {
+            if (!video) return;
+            if (turnOff) {
+                video.pause();
+            } else if (isInViewport(video)) {
+                video.play().catch(() => {});
+            }
+        });
+
+        syncMotionToggle();
+    });
+}
+
+/* ========================================
+   Mail: copy address
+======================================== */
+
+document.querySelectorAll(".mail-copy").forEach((button) => {
+    const label = button.querySelector("span");
+    const original = label ? label.textContent : "";
+
+    button.addEventListener("click", async () => {
+        const text = button.dataset.copy || "";
+        let copied = false;
+
+        try {
+            await navigator.clipboard.writeText(text);
+            copied = true;
+        } catch {
+            const field = document.createElement("textarea");
+            field.value = text;
+            field.setAttribute("readonly", "");
+            field.style.position = "fixed";
+            field.style.opacity = "0";
+            document.body.append(field);
+            field.select();
+            try {
+                copied = document.execCommand("copy");
+            } catch {
+                copied = false;
+            }
+            field.remove();
+        }
+
+        if (label) label.textContent = copied ? "コピーしました！" : "コピーできませんでした";
+        button.classList.toggle("is-copied", copied);
+
+        setTimeout(() => {
+            if (label) label.textContent = original;
+            button.classList.remove("is-copied");
+        }, 2000);
+    });
+});
