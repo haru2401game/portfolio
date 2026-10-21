@@ -5822,3 +5822,599 @@ footer {
         animation: none;
     }
 }
+
+
+/* ========================================
+   Game UI: Hero (bright title screen)
+======================================== */
+
+.hero {
+    --accent: #00a3e0;
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+    height: auto;
+    min-height: min(860px, 100svh);
+    padding: 130px 8% 90px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 78% 30%, rgba(0, 163, 224, .16), transparent 34%),
+        radial-gradient(circle at 12% 86%, rgba(255, 179, 0, .16), transparent 30%),
+        radial-gradient(circle at 96% 96%, rgba(255, 90, 95, .1), transparent 26%),
+        var(--ui-dots),
+        #f5f8fc;
+}
+
+.hero-screen {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+    transform: rotate(1.2deg);
+    transition: transform .5s cubic-bezier(.2, .9, .3, 1.3);
+}
+
+.hero-screen:hover {
+    transform: rotate(0deg) scale(1.01);
+}
+
+.hero-video {
+    position: relative;
+    inset: auto;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    border: 6px solid #fff;
+    border-radius: 24px;
+    background: #dfe9f3;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 0 0 0 2px var(--ui-line), 0 12px 0 #c9eefc, 0 34px 60px rgba(30, 45, 70, .16);
+}
+
+/* The overlay element becomes the "NOW PLAYING" badge on the game screen */
+.hero-overlay {
+    position: absolute;
+    inset: auto;
+    top: -14px;
+    left: 24px;
+    z-index: 2;
+    display: block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #ff5a5f;
+    box-shadow: 0 4px 0 #c8323a;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: .16em;
+    pointer-events: none;
+}
+
+.hero-overlay::before {
+    content: "● NOW PLAYING — ししとう";
+}
+
+.hero-content {
+    position: relative;
+    top: auto;
+    left: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    transform: none;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    margin-bottom: 26px;
+    padding: 8px 16px;
+    border: 2px solid var(--ui-line);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 3px 0 var(--ui-line);
+    color: var(--ui-sub);
+}
+
+.hero-eyebrow::before {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, .22);
+}
+
+.hero-content h1 {
+    color: var(--ui-ink);
+    font-size: clamp(2.5rem, 4.6vw, 4.8rem);
+    letter-spacing: -.06em;
+    line-height: 1.2;
+    white-space: normal;
+}
+
+.hero-mark {
+    background: linear-gradient(transparent 62%, #ffe07a 62%, #ffe07a 92%, transparent 92%);
+}
+
+.hero-lead {
+    color: var(--color-text);
+}
+
+.hero-button {
+    gap: 18px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 16px;
+    background: #00a3e0;
+    box-shadow: 0 5px 0 #00739e;
+    color: #fff;
+    font-weight: 750;
+    transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+}
+
+.hero-button span,
+.hero-button:hover span {
+    color: #fff;
+}
+
+.hero-button:hover {
+    transform: translateY(-2px);
+    border: 0;
+    background: #12b2ee;
+    box-shadow: 0 7px 0 #00739e;
+    color: #fff;
+}
+
+.hero-button:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #00739e;
+}
+
+.hero-text-link {
+    display: inline-flex;
+    min-height: 54px;
+    align-items: center;
+    padding: 0 22px;
+    border: 2px solid var(--ui-line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 5px 0 var(--ui-line);
+    color: var(--ui-ink);
+    transition: transform .15s ease, box-shadow .15s ease, border-color .2s ease;
+}
+
+.hero-text-link:hover {
+    transform: translateY(-2px);
+    border-color: #9fdff8;
+    box-shadow: 0 7px 0 #c9eefc;
+    opacity: 1;
+}
+
+.hero-text-link span {
+    color: #00a3e0;
+}
+
+.hero-index {
+    position: static;
+    margin-top: 40px;
+    color: var(--ui-sub);
+}
+
+.hero-index span {
+    color: #00a3e0;
+}
+
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 36px;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        padding: 112px 6% 64px;
+    }
+
+    .hero-content {
+        top: auto;
+        left: auto;
+        width: auto;
+        max-width: none;
+        transform: none;
+    }
+
+    .hero-screen {
+        grid-column: 1;
+        grid-row: 2;
+        transform: none;
+    }
+
+    .hero-video {
+        border-width: 4px;
+        border-radius: 18px;
+    }
+
+    .hero-overlay {
+        top: -12px;
+        left: 16px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2rem, 8.4vw, 3.2rem);
+    }
+
+    .hero-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .hero-button,
+    .hero-text-link {
+        min-height: 48px;
+    }
+
+    .hero-index {
+        margin-top: 26px;
+    }
+}
+
+/* ========================================
+   Game UI: What I Can Do (skill sets)
+======================================== */
+
+.what-i-can-do {
+    background:
+        radial-gradient(circle at 92% 6%, rgba(139, 92, 246, .1), transparent 28%),
+        radial-gradient(circle at 4% 70%, rgba(0, 163, 224, .1), transparent 28%),
+        var(--ui-dots),
+        var(--ui-panel);
+}
+
+.what-i-can-do .section-title::before {
+    color: #006ea8;
+    content: "03 / CAPABILITIES";
+}
+
+.what-i-can-do .section-title h2::after {
+    margin: 14px 0 0;
+}
+
+.can-do-category:nth-child(2) { --cat: #00a3e0; --cat-soft: #c9eefc; --cat-ink: #00739e; }
+.can-do-category:nth-child(3) { --cat: #22c55e; --cat-soft: #c8f2d8; --cat-ink: #15803d; }
+.can-do-category:nth-child(4) { --cat: #8b5cf6; --cat-soft: #e2d8fd; --cat-ink: #6d3fd8; }
+
+.can-do-category {
+    border: 2px solid var(--ui-line);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 0 var(--cat-soft), 0 20px 40px rgba(30, 45, 70, .06);
+}
+
+.can-do-category::before {
+    display: none;
+}
+
+.can-do-category:hover {
+    box-shadow: 0 10px 0 var(--cat-soft), 0 24px 44px rgba(30, 45, 70, .08);
+}
+
+.can-do-category-title > span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: var(--cat) !important;
+    box-shadow: 0 4px 0 var(--cat-ink);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 750;
+    letter-spacing: .08em;
+}
+
+.can-do-category-title > span::before {
+    content: "SKILL SET";
+    font-size: 10px;
+    letter-spacing: .16em;
+    opacity: .85;
+}
+
+.can-do-category-title h3 {
+    color: var(--ui-ink);
+}
+
+.can-do-category-title p {
+    color: var(--ui-sub);
+}
+
+.can-do-card {
+    border: 2px solid var(--ui-line);
+    border-radius: 14px;
+    background: var(--ui-panel);
+    transition:
+        opacity var(--transition),
+        transform .3s cubic-bezier(.2, .9, .3, 1.3),
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .3s ease;
+}
+
+.can-do-card::before {
+    display: none;
+}
+
+.can-do-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cat);
+    background: #fff;
+    box-shadow: 0 7px 0 var(--cat-soft);
+}
+
+.can-do-icon {
+    border: 0;
+    border-radius: 12px;
+    background: var(--cat) !important;
+    box-shadow: 0 4px 0 var(--cat-ink);
+    color: #fff;
+    transition: transform .3s cubic-bezier(.2, .9, .3, 1.3);
+}
+
+.can-do-card:hover .can-do-icon {
+    transform: rotate(-8deg) scale(1.1);
+}
+
+.can-do-content h4 {
+    color: var(--ui-ink);
+}
+
+.can-do-content p {
+    color: var(--color-text);
+}
+
+.can-do-tags span {
+    padding: 4px 10px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--cat-soft);
+    color: var(--cat-ink);
+    font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+    .can-do-category-title > span {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .can-do-category-title > span {
+        font-size: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-screen,
+    .hero-button,
+    .hero-text-link {
+        transition: none;
+    }
+}
+
+
+/* ========================================
+   Game UI: About (player profile card)
+======================================== */
+
+.about {
+    background:
+        radial-gradient(circle at 6% 10%, rgba(255, 90, 95, .14), transparent 28%),
+        radial-gradient(circle at 94% 90%, rgba(255, 90, 95, .08), transparent 28%),
+        var(--ui-dots),
+        #fff7f7;
+}
+
+.about .section-title h2::before {
+    display: block;
+    margin-bottom: 12px;
+    color: #006ea8;
+    content: "01 / PLAYER PROFILE";
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+}
+
+.about .section-title h2::after {
+    margin: 14px 0 0;
+}
+
+.about .section-title p {
+    color: var(--color-text);
+}
+
+.about-container {
+    padding: clamp(24px, 4vw, 52px);
+    border: 2px solid var(--ui-line);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 8px 0 #ffd6d7, 0 24px 50px rgba(30, 45, 70, .07);
+}
+
+.about-image::before {
+    border-radius: 20px;
+    background: #ff5a5f;
+}
+
+.about-image::after {
+    border-radius: 18px;
+    background: linear-gradient(0deg, rgba(17, 23, 19, .4), transparent 34%);
+}
+
+.about-image img {
+    border-radius: 18px;
+}
+
+.about-image-caption {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 3px 0 rgba(17, 23, 19, .2);
+    color: var(--ui-ink);
+}
+
+.about-image-caption b {
+    color: #e0434b;
+}
+
+.about-kicker {
+    display: inline-flex;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--ui-panel);
+    color: var(--ui-sub);
+}
+
+.about-kicker::before {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff5a5f;
+    box-shadow: 0 0 0 3px rgba(255, 90, 95, .25);
+}
+
+.about-name {
+    color: var(--ui-ink);
+}
+
+.about-name span {
+    color: var(--ui-sub);
+}
+
+.about-text {
+    color: var(--color-text);
+}
+
+.about-meta {
+    gap: 12px;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.about-meta div {
+    padding: 14px 16px;
+    border: 2px solid var(--ui-line);
+    border-radius: 14px;
+    background: var(--ui-panel);
+}
+
+.about-meta div { --stat-soft: #ffd6d7; --stat-ink: #c8323a; }
+
+.about-meta span {
+    width: fit-content;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--stat-soft);
+    color: var(--stat-ink);
+}
+
+.about-meta strong {
+    color: var(--ui-ink);
+}
+
+/* ========================================
+   Game UI: Play Games (platform launchers)
+======================================== */
+
+.play-games {
+    background:
+        radial-gradient(circle at 92% 8%, rgba(30, 136, 229, .1), transparent 28%),
+        radial-gradient(circle at 6% 94%, rgba(250, 92, 92, .1), transparent 28%),
+        var(--ui-dots),
+        #fff;
+}
+
+.play-card:nth-child(1) { --pc: #1e88e5; --pc-soft: #cfe5fb; --pc-ink: #1565c0; }
+.play-card:nth-child(2) { --pc: #fa5c5c; --pc-soft: #ffd6d6; --pc-ink: #c8323a; }
+.play-card:nth-child(3) { --pc: #22c55e; --pc-soft: #c8f2d8; --pc-ink: #15803d; }
+
+.play-card {
+    border: 2px solid var(--ui-line);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 6px 0 var(--ui-line);
+    transition:
+        opacity var(--transition),
+        transform .3s cubic-bezier(.2, .9, .3, 1.3),
+        border-color .25s ease,
+        box-shadow .3s ease;
+}
+
+.play-card::after {
+    display: none;
+}
+
+.play-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--pc);
+    background: #fff;
+    box-shadow: 0 10px 0 var(--pc-soft), 0 22px 36px rgba(30, 45, 70, .1);
+}
+
+.play-card img {
+    border: 2px solid var(--ui-line);
+    border-radius: 16px;
+    background: var(--ui-panel);
+}
+
+.play-card h3 {
+    color: var(--ui-ink);
+}
+
+.play-card p {
+    color: var(--color-text);
+}
+
+.play-card span {
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--pc);
+    box-shadow: 0 4px 0 var(--pc-ink);
+    color: #fff;
+    font-weight: 750;
+    transition: gap .25s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.play-card span::before {
+    content: "▶";
+    font-size: .6rem;
+}
+
+.play-card:hover span {
+    gap: 12px;
+    color: #fff;
+}
+
+.play-card:active span {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--pc-ink);
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .about-image {
+        padding: 0 0 18px 18px;
+    }
+
+    .about-image::after {
+        inset: 0 0 18px 18px;
+    }
+}

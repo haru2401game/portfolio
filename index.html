@@ -101,24 +101,24 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 ================================ -->
 <section class="hero">
 
-    <!-- Background Movie -->
-    <video
-        class="hero-video"
-        poster="images/index/Hero/poster.png"
-        src="videos/index/Hero/Shishito.mp4"
-        muted
-        loop
-        playsinline
-        preload="none">
-    </video>
-
-    <!-- Black Overlay -->
-    <div class="hero-overlay"></div>
+    <!-- Game Screen (movie + NOW PLAYING badge) -->
+    <div class="hero-screen">
+        <video
+            class="hero-video"
+            poster="images/index/Hero/poster.png"
+            src="videos/index/Hero/Shishito.mp4"
+            muted
+            loop
+            playsinline
+            preload="none">
+        </video>
+        <div class="hero-overlay" aria-hidden="true"></div>
+    </div>
 
     <!-- Catch Copy -->
     <div class="hero-content">
         <p class="hero-eyebrow">INDEPENDENT GAME CREATOR / JAPAN</p>
-        <h1>遊びの発見を、<br>心に残る体験へ。</h1>
+        <h1><span class="hero-mark">遊びの発見</span>を、<br>心に残る体験へ。</h1>
         <p class="hero-lead">
             企画からプログラムまで。<br>
             アイデアを、遊べるかたちにしています。
