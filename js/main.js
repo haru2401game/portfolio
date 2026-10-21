@@ -866,6 +866,99 @@ if (worksList) {
     });
 
     worksList.before(bar);
+
+    /* Collapsible drawer: closed by default, opened with a big stage-select button */
+    const worksSection = document.getElementById("other-works");
+
+    const drawer = document.createElement("div");
+    drawer.className = "works-drawer";
+    drawer.id = "works-drawer";
+
+    const drawerInner = document.createElement("div");
+    drawerInner.className = "works-drawer-inner";
+
+    bar.before(drawer);
+    drawer.append(drawerInner);
+    drawerInner.append(bar, worksList);
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "works-toggle";
+    toggle.setAttribute("aria-controls", "works-drawer");
+
+    const toggleLabel = document.createElement("span");
+    toggleLabel.className = "works-toggle-label";
+    toggleLabel.textContent = "SELECT STAGE";
+
+    const toggleText = document.createElement("span");
+    toggleText.className = "works-toggle-text";
+
+    const thumbs = document.createElement("span");
+    thumbs.className = "works-toggle-thumbs";
+    thumbs.setAttribute("aria-hidden", "true");
+    [0, 1, 2, 3].map((i) => cards[Math.floor((i * total) / 4)]).filter(Boolean).forEach((card) => {
+        const source = card.querySelector("img");
+        if (!source) return;
+        const thumb = document.createElement("img");
+        thumb.src = source.getAttribute("src");
+        thumb.alt = "";
+        thumb.loading = "lazy";
+        thumbs.append(thumb);
+    });
+
+    const toggleIcon = document.createElement("span");
+    toggleIcon.className = "works-toggle-icon";
+    toggleIcon.setAttribute("aria-hidden", "true");
+    toggleIcon.textContent = "▼";
+
+    toggle.append(toggleLabel, toggleText, thumbs, toggleIcon);
+    drawer.before(toggle);
+
+    const closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "works-close";
+    closeButton.textContent = "▲ 作品一覧を閉じる";
+    drawerInner.append(closeButton);
+
+    const setWorksOpen = (open, { scroll = false } = {}) => {
+        drawer.classList.toggle("is-open", open);
+        drawer.classList.remove("is-settled");
+        toggle.setAttribute("aria-expanded", String(open));
+        toggleText.textContent = open ? "作品一覧を閉じる" : `全${total}作品を見る`;
+        drawer.inert = !open;
+
+        if (open && prefersReducedMotion) {
+            drawer.classList.add("is-settled");
+        }
+
+        if (!open && scroll && worksSection) {
+            worksSection.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+        }
+    };
+
+    drawer.addEventListener("transitionend", (event) => {
+        if (event.target === drawer && drawer.classList.contains("is-open")) {
+            drawer.classList.add("is-settled");
+        }
+    });
+
+    toggle.addEventListener("click", () => {
+        setWorksOpen(!drawer.classList.contains("is-open"));
+    });
+
+    closeButton.addEventListener("click", () => {
+        setWorksOpen(false, { scroll: true });
+    });
+
+    /* Links that point at the works section (e.g. the hero's "すべての作品") open the drawer */
+    document.querySelectorAll('a[href="#other-works"]').forEach((link) => {
+        link.addEventListener("click", () => {
+            if (buttons[0].getAttribute("aria-pressed") !== "true") buttons[0].click();
+            setWorksOpen(true);
+        });
+    });
+
+    setWorksOpen(location.hash === "#other-works");
 }
 
 
@@ -1069,7 +1162,7 @@ const peekers = [
     { host: ".status-header", file: "Penko.png", x: "38%", w: 72, delay: 4 },
     { host: ".can-do-category:nth-child(3) .can-do-card:nth-child(2)", file: "Openji.png", x: "62%", w: 56, delay: 5.5 },
     { host: ".featured-info", file: "Ojisand.png", x: "82%", w: 76, delay: 3 },
-    { host: ".works-list", file: "Penzou.png", x: "90%", w: 72, delay: 6.5 },
+    { host: ".works-toggle", file: "Penzou.png", x: "84%", w: 72, delay: 6.5 },
     { host: ".latest-articles", file: "Penny.png", x: "84%", w: 80, delay: 2.5 },
     { host: '.timeline-item[data-quest="now"] .timeline-content', file: "Chrono_0.png", side: true, y: "18%", w: 64, delay: 0.5 },
     { host: ".play-container", file: "Machopen.png", x: "6%", w: 80, delay: 6 },
