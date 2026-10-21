@@ -95,7 +95,10 @@ achievementCards.forEach((card, index) => {
     card.style.transitionDelay = `${index * 0.08}s`;
 });
 
-observeShow(achievementCards);
+observeShow(achievementCards, (card) => {
+    const value = card.querySelector("h3[data-value]");
+    if (value) animateCount(value);
+});
 
 
 /* ========================================
@@ -328,8 +331,7 @@ fetch("data/blog.json")
 
         if (blogCount) {
 
-            blogCount.textContent =
-                data.articleCount;
+            setStat(blogCount, data.articleCount);
 
         }
 
@@ -493,10 +495,9 @@ fetch("data/profile.json")
 
         if (gameCount) {
 
-            gameCount.textContent =
-                document.querySelectorAll(
+            setStat(gameCount, document.querySelectorAll(
                     ".work-card"
-                ).length;
+                ).length);
 
         }
 
@@ -507,8 +508,7 @@ fetch("data/profile.json")
 
         if (awardCount) {
 
-            awardCount.textContent =
-                data.awardCount;
+            setStat(awardCount, data.awardCount);
 
         }
 
@@ -519,8 +519,7 @@ fetch("data/profile.json")
 
         if (eventCount) {
 
-            eventCount.textContent =
-                data.eventCount;
+            setStat(eventCount, data.eventCount);
 
         }
 
@@ -531,8 +530,7 @@ fetch("data/profile.json")
 
         if (internCount) {
 
-            internCount.textContent =
-                data.internCount;
+            setStat(internCount, data.internCount);
 
         }
 
@@ -543,8 +541,7 @@ fetch("data/profile.json")
 
         if (careerCount) {
 
-            careerCount.textContent =
-                data.careerCount;
+            setStat(careerCount, data.careerCount);
 
         }
 
@@ -612,4 +609,238 @@ if (hamburger && headerNav) {
         headerLogo.addEventListener("click", () => setMenuOpen(false));
     }
 
+}
+
+
+/* ========================================
+   Game UI: Achievements Status Screen
+======================================== */
+
+function nextMilestone(value) {
+    if (value < 5) return 5;
+    if (value < 10) return 10;
+    if (value < 50) return (Math.floor(value / 10) + 1) * 10;
+    if (value < 100) return (Math.floor(value / 25) + 1) * 25;
+    return (Math.floor(value / 50) + 1) * 50;
+}
+
+function animateCount(element) {
+    const target = Number(element.dataset.value);
+    if (!Number.isFinite(target)) return;
+
+    if (prefersReducedMotion || target === 0) {
+        element.textContent = target;
+        return;
+    }
+
+    const duration = 1200;
+    const start = performance.now();
+
+    const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        element.textContent = Math.round(target * eased);
+        if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+}
+
+function setStat(element, value) {
+    if (!element) return;
+
+    const number = Number(value);
+    if (!Number.isFinite(number)) return;
+
+    element.dataset.value = number;
+
+    const card = element.closest(".achievement-card");
+
+    if (card) {
+        let meter = card.querySelector(".stat-meter");
+
+        if (!meter) {
+            meter = document.createElement("div");
+            meter.className = "stat-meter";
+            meter.setAttribute("aria-hidden", "true");
+
+            const gauge = document.createElement("div");
+            gauge.className = "stat-gauge";
+            gauge.append(document.createElement("span"));
+
+            const next = document.createElement("span");
+            next.className = "stat-next";
+
+            meter.append(gauge, next);
+            card.append(meter);
+        }
+
+        const milestone = nextMilestone(number);
+        meter.style.setProperty("--fill", (number / milestone).toFixed(3));
+        meter.querySelector(".stat-next").textContent = `NEXT ${milestone}`;
+    }
+
+    if (!card || card.classList.contains("show")) {
+        animateCount(element);
+    } else {
+        element.textContent = "0";
+    }
+}
+
+function showAchievementToast() {
+    try {
+        if (sessionStorage.getItem("achievement-toast") === "1") return;
+        sessionStorage.setItem("achievement-toast", "1");
+    } catch {
+        /* storage unavailable: show the toast anyway */
+    }
+
+    const toast = document.createElement("div");
+    toast.className = "achievement-toast";
+    toast.setAttribute("role", "status");
+
+    const icon = document.createElement("span");
+    icon.className = "toast-icon";
+    icon.innerHTML = '<i class="fa-solid fa-trophy" aria-hidden="true"></i>';
+
+    const text = document.createElement("span");
+    text.className = "toast-text";
+    const label = document.createElement("small");
+    label.textContent = "ACHIEVEMENT UNLOCKED";
+    const message = document.createElement("strong");
+    message.textContent = "制作実績をチェックした";
+    text.append(label, message);
+
+    toast.append(icon, text);
+    document.body.append(toast);
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => toast.classList.add("is-visible"));
+    });
+
+    setTimeout(() => {
+        toast.classList.remove("is-visible");
+        setTimeout(() => toast.remove(), 600);
+    }, 4200);
+}
+
+const achievementsSection = document.getElementById("achievements");
+
+if (achievementsSection && "IntersectionObserver" in window) {
+    const toastObserver = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+            toastObserver.disconnect();
+            setTimeout(showAchievementToast, 900);
+        }
+    }, { threshold: 0.45 });
+
+    toastObserver.observe(achievementsSection);
+}
+
+
+/* ========================================
+   Game UI: Other Works Stage Select
+======================================== */
+
+const worksList = document.querySelector(".works-list");
+
+if (worksList) {
+    const cards = Array.from(worksList.querySelectorAll(".work-card"));
+    const total = cards.length;
+
+    const readText = (card, selector) =>
+        (card.querySelector(selector)?.textContent || "").trim();
+
+    cards.forEach((card, index) => {
+        const tech = readText(card, ".work-tech");
+        const genre = readText(card, ".work-genre");
+        const member = parseInt(readText(card, ".work-member"), 10) || 1;
+        const role = readText(card, ".work-role");
+
+        card.dataset.unity = String(/unity/i.test(tech));
+        card.dataset.cpp = String(/directx|dxlib/i.test(tech));
+        card.dataset.threeD = String(/3D/.test(genre));
+        card.dataset.team = String(member > 1);
+
+        const badges = document.createElement("div");
+        badges.className = "stage-badges";
+        badges.setAttribute("aria-hidden", "true");
+
+        const stage = document.createElement("span");
+        stage.textContent = `STAGE ${String(total - index).padStart(2, "0")}`;
+        badges.append(stage);
+
+        if (member > 1) {
+            const team = document.createElement("span");
+            team.className = "is-team";
+            team.textContent = `TEAM ×${member}`;
+            badges.append(team);
+        }
+
+        if (role.includes("未完成")) {
+            const wip = document.createElement("span");
+            wip.className = "is-wip";
+            wip.textContent = "WIP";
+            badges.append(wip);
+        }
+
+        card.append(badges);
+    });
+
+    const filters = [
+        { label: "すべて", test: () => true },
+        { label: "Unity", test: (card) => card.dataset.unity === "true" },
+        { label: "C++ / DirectX・DxLib", test: (card) => card.dataset.cpp === "true" },
+        { label: "3D", test: (card) => card.dataset.threeD === "true" },
+        { label: "チーム制作", test: (card) => card.dataset.team === "true" },
+        { label: "個人制作", test: (card) => card.dataset.team !== "true" }
+    ];
+
+    const bar = document.createElement("div");
+    bar.className = "stage-filter";
+    bar.setAttribute("role", "group");
+    bar.setAttribute("aria-label", "作品の絞り込み");
+
+    const barLabel = document.createElement("span");
+    barLabel.className = "stage-filter-label";
+    barLabel.textContent = "SELECT STAGE";
+    bar.append(barLabel);
+
+    const buttons = filters.map((filter, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.setAttribute("aria-pressed", String(index === 0));
+
+        const name = document.createElement("span");
+        name.textContent = filter.label;
+
+        const count = document.createElement("b");
+        count.textContent = cards.filter(filter.test).length;
+
+        button.append(name, count);
+
+        button.addEventListener("click", () => {
+            buttons.forEach((other) =>
+                other.setAttribute("aria-pressed", String(other === button))
+            );
+
+            worksList.classList.toggle("is-filtered", index !== 0);
+
+            cards.forEach((card) => {
+                const match = filter.test(card);
+                card.hidden = !match;
+                card.classList.remove("stage-pop");
+
+                if (match && !prefersReducedMotion) {
+                    void card.offsetWidth;
+                    card.classList.add("stage-pop");
+                }
+            });
+        });
+
+        bar.append(button);
+        return button;
+    });
+
+    worksList.before(bar);
 }
