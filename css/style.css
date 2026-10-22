@@ -7611,3 +7611,107 @@ footer.has-peeker {
         animation: none !important;
     }
 }
+
+/* ========================================
+   Main Works: second title (Falien)
+======================================== */
+
+.featured-container + .featured-video {
+    margin-top: clamp(48px, 7vw, 80px);
+}
+
+.featured-video.is-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.1s cubic-bezier(.2, .7, .2, 1), filter .6s ease;
+}
+
+.featured-video.is-image:hover img {
+    transform: scale(1.025);
+    filter: saturate(1.08);
+}
+
+.featured-video.is-grandprix::before {
+    background: linear-gradient(135deg, #ffe066, #f2b705);
+    box-shadow: 0 4px 0 #c98f00;
+    color: #4a3300;
+    content: "★ IGCC GRAND PRIX";
+}
+
+.tech-highlight + .tech-highlight {
+    margin-top: 16px;
+}
+
+.tech-awards:has(> li:nth-child(2):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tech-review {
+    position: relative;
+    margin: 16px 0 0;
+    padding: 22px 24px 20px;
+    border: 2px solid #f2d27a;
+    border-radius: 18px;
+    background: #fffaf0;
+    box-shadow: 0 6px 0 #ffe8a8;
+}
+
+.tech-review .tech-panel-label {
+    background: #f2b705;
+    box-shadow: 0 3px 0 #c98f00;
+    color: #4a3300;
+}
+
+.tech-review blockquote {
+    position: relative;
+    margin: 14px 0 10px;
+    padding-left: 34px;
+}
+
+.tech-review blockquote::before {
+    position: absolute;
+    top: -14px;
+    left: 0;
+    color: #f2b705;
+    content: "“";
+    font-family: Georgia, serif;
+    font-size: 56px;
+    line-height: 1;
+}
+
+.tech-review blockquote p {
+    margin: 0;
+    color: var(--ui-ink);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-weight: 800;
+    line-height: 1.75;
+}
+
+.tech-review figcaption {
+    color: #6b4a00;
+    font-size: .78rem;
+    font-weight: 700;
+    text-align: right;
+}
+
+@media (max-width: 600px) {
+    .tech-awards:has(> li:nth-child(2):last-child) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .tech-review {
+        padding: 18px 16px 16px;
+    }
+
+    .tech-review blockquote {
+        padding-left: 26px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .featured-video.is-image img {
+        transition: none;
+    }
+}
