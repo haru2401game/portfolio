@@ -1,0 +1,13 @@
+# Line endings: store LF in the repository, check out CRLF on every machine.
+# This stops files from showing as "modified" when only their line endings differ
+# (e.g. data/blog.json, which GitHub Actions writes with LF every day).
+* text=auto eol=crlf
+
+# Binary assets: never touch their bytes
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.mp4 binary
+*.ico binary

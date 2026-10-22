@@ -548,7 +548,13 @@ fetch("data/profile.json")
 
         if (awardCount) {
 
-            setStat(awardCount, data.awardCount);
+            /* Awards are counted from the timeline (quests marked data-quest="award"),
+               so adding an award there updates this number automatically.
+               profile.json is only used if the timeline has no award entries. */
+            const awardQuests =
+                document.querySelectorAll('.timeline-item[data-quest="award"]').length;
+
+            setStat(awardCount, awardQuests || data.awardCount);
 
         }
 
