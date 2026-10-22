@@ -364,6 +364,25 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         </p>
     </div>
 
+    <!-- Title select (tabs) -->
+    <div class="main-tabs" role="tablist" aria-label="メイン作品の切り替え">
+        <button class="main-tab" id="tab-shishito" type="button" role="tab" aria-selected="true" aria-controls="main-shishito">
+            <img src="images/index/Hero/poster.webp" width="160" height="90" alt="" loading="lazy">
+            <span class="main-tab-text">
+                <small>TITLE 01 ／ TGS 2026 出展</small>
+                <b>ししとう</b>
+            </span>
+        </button>
+        <button class="main-tab" id="tab-falien" type="button" role="tab" aria-selected="false" aria-controls="main-falien" tabindex="-1">
+            <img src="images/index/otherworks/Falien.webp" width="160" height="90" alt="" loading="lazy">
+            <span class="main-tab-text">
+                <small>TITLE 02 ／ IGCC グランプリ</small>
+                <b>Falien</b>
+            </span>
+        </button>
+    </div>
+
+    <div class="main-work" id="main-shishito" role="tabpanel" aria-labelledby="tab-shishito">
     <!-- Work Movie -->
     <div class="featured-video">
         <video
@@ -377,7 +396,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     </div>
 
     <!-- Work Information -->
-    <div class="featured-container">
+    <div class="featured-container" data-work="ししとう" data-tech="Unity C# Visual Studio GitHub" data-member="5" data-role="リードプログラマー プレイヤーシステム 統合">
 
         <!-- Title -->
         <h3 class="featured-title">
@@ -558,9 +577,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         </div>
     </div>
 
+    </div>
+
     <!-- ================================
          Main Work 02: Falien
     ================================ -->
+    <div class="main-work" id="main-falien" role="tabpanel" aria-labelledby="tab-falien" hidden>
     <div class="featured-video is-image is-grandprix">
         <img
             src="images/index/otherworks/Falien.webp"
@@ -570,7 +592,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             loading="lazy">
     </div>
 
-    <div class="featured-container">
+    <div class="featured-container" data-work="Falien" data-tech="Unity C# GitHub" data-member="7" data-role="ジェネラリスト(総合管理) タイトルシーン 統合 ローカライズ">
 
         <h3 class="featured-title">
             Falien
@@ -773,6 +795,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             </div>
 
         </div>
+    </div>
     </div>
 </section>
 
@@ -1005,50 +1028,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                 </p>
                 <a
                     href="https://note.com/ha_03ru_01/n/n63dea3e2ef11"
-                    class="work-link"
-                    target="_blank"
-                    rel="noopener noreferrer">
-
-                    詳細を見る
-                </a>
-            </div>
-        </div>
-
-        <!-- Work Card -->
-        <div class="work-card">
-
-            <!-- Thumbnail -->
-            <img
-                src="images/index/otherworks/Falien.webp"
-                width="1280"
-                height="720"
-                alt="Falienのタイトル画面"
-                loading="lazy">
-            <!-- Work Content -->
-            <div class="work-content">
-                <h3>
-                    Falien
-                </h3>
-                <p class="work-genre">
-                    2Dアクション
-                </p>
-                <p class="work-tech">
-                    Unity C# Github
-                </p>
-                <p class="work-period">
-                    2026/09
-                </p>
-                <p class="work-member">
-                    7人
-                </p>
-                <p class="work-role">
-                    ジェネラリスト(総合管理)
-                </p>
-                <p class="work-description">
-                    様々な種類の足を切り替えてゴールを目指そう！
-                </p>
-                <a
-                    href="https://note.com/ha_03ru_01/n/n1d6635baefdb?magazine_key=md93091202e8f"
                     class="work-link"
                     target="_blank"
                     rel="noopener noreferrer">

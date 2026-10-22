@@ -554,9 +554,10 @@ fetch("data/profile.json")
 
         if (gameCount) {
 
-            setStat(gameCount, document.querySelectorAll(
-                    ".work-card"
-                ).length);
+            /* Other Works cards + Main Works titles */
+            setStat(gameCount,
+                document.querySelectorAll(".work-card").length +
+                document.querySelectorAll(".featured-container[data-work]").length);
 
         }
 
@@ -853,6 +854,12 @@ if (worksList) {
         for (const [, name] of body.matchAll(/「([^」]+)」/g)) {
             awardsByTitle.set(normalizeTitle(name), { label, date });
         }
+    });
+
+    /* Main Works can be award winners too (used by the status screen) */
+    document.querySelectorAll(".featured-container[data-work]").forEach((work) => {
+        const award = awardsByTitle.get(normalizeTitle(work.dataset.work));
+        if (award) work.dataset.award = award.label;
     });
 
     cards.forEach((card, index) => {
@@ -1613,7 +1620,23 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     if (!host || !cards.length) return;
 
     const text = (card, selector) => (card.querySelector(selector)?.textContent || "").replace(/\s+/g, " ").trim();
-    const count = (test) => cards.filter(test).length;
+
+    /* All works = Other Works cards + Main Works titles (data-* on .featured-container) */
+    const works = [
+        ...cards.map((card) => ({
+            tech: text(card, ".work-tech"),
+            role: text(card, ".work-role"),
+            member: parseInt(text(card, ".work-member"), 10) || 1,
+            rare: card.classList.contains("is-rare"),
+        })),
+        ...Array.from(document.querySelectorAll(".featured-container[data-work]")).map((work) => ({
+            tech: work.dataset.tech || "",
+            role: work.dataset.role || "",
+            member: parseInt(work.dataset.member, 10) || 1,
+            rare: Boolean(work.dataset.award),
+        })),
+    ];
+    const count = (test) => works.filter(test).length;
 
     const tech = [
         ["Unity", /unity/i],
@@ -1622,19 +1645,19 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         ["GitHub", /github/i],
         ["DxLib", /dxlib/i],
         ["DirectX", /directx/i],
-    ].map(([label, re]) => ({ label, value: count((card) => re.test(text(card, ".work-tech"))) }));
+    ].map(([label, re]) => ({ label, value: count((work) => re.test(work.tech)) }));
 
     const role = [
-        ["企画", (card) => /企画/.test(text(card, ".work-role"))],
-        ["プログラム", (card) => /プログラム|システム/.test(text(card, ".work-role"))],
-        ["チーム制作", (card) => (parseInt(text(card, ".work-member"), 10) || 1) > 1],
-        ["プロジェクト統合", (card) => /統合|総合管理/.test(text(card, ".work-role"))],
-        ["デザイン", (card) => /デザイン/.test(text(card, ".work-role"))],
+        ["企画", (work) => /企画/.test(work.role)],
+        ["プログラム", (work) => /プログラム|システム/.test(work.role)],
+        ["チーム制作", (work) => work.member > 1],
+        ["プロジェクト統合", (work) => /統合|総合管理/.test(work.role)],
+        ["デザイン", (work) => /デザイン/.test(work.role)],
     ].map(([label, test]) => ({ label, value: count(test) }));
 
-    const solo = count((card) => (parseInt(text(card, ".work-member"), 10) || 1) === 1);
+    const solo = count((work) => work.member === 1);
     const awards = document.querySelectorAll('.timeline-item[data-quest="award"]').length;
-    const rare = cards.filter((card) => card.classList.contains("is-rare")).length;
+    const rare = count((work) => work.rare);
 
     const firstDate = Array.from(document.querySelectorAll(".timeline-date"))
         .map((date) => date.textContent.trim().match(/^(\d{4})\.(\d{1,2})/))
@@ -1661,9 +1684,9 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     const params = make("dl", "status-params");
     [
         ["LV", level, "開発歴（年目）"],
-        ["WORKS", cards.length, "制作した作品"],
+        ["WORKS", works.length, "制作した作品"],
         ["SOLO", solo, "個人制作"],
-        ["TEAM", cards.length - solo, "チーム制作"],
+        ["TEAM", works.length - solo, "チーム制作"],
         ["AWARDS", awards, "受賞"],
         ["RARE", rare, "受賞作品"],
     ].forEach(([key, value, note]) => {
@@ -1723,7 +1746,8 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     const stats = ending.querySelector("[data-ending-stats]");
 
     if (stats) {
-        const works = document.querySelectorAll(".work-card").length;
+        const works = document.querySelectorAll(".work-card").length +
+            document.querySelectorAll(".featured-container[data-work]").length;
         const awards = document.querySelectorAll('.timeline-item[data-quest="award"]').length;
         const quests = document.querySelectorAll(".timeline-item").length;
         stats.textContent = `WORKS ${works} ／ QUESTS ${quests} ／ AWARDS ${awards}`;
@@ -1748,4 +1772,48 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     }
 
     observeShow([ending]);
+})();
+
+/* ========================================
+   Main Works: title select (tabs)
+======================================== */
+
+(() => {
+    const tabs = Array.from(document.querySelectorAll(".main-tab"));
+    if (tabs.length < 2) return;
+
+    const select = (tab, focus = false) => {
+        tabs.forEach((other) => {
+            const selected = other === tab;
+            other.setAttribute("aria-selected", String(selected));
+            other.tabIndex = selected ? 0 : -1;
+            const panel = document.getElementById(other.getAttribute("aria-controls"));
+            if (panel) {
+                panel.hidden = !selected;
+                if (!selected) panel.querySelectorAll("video").forEach((video) => video.pause());
+            }
+        });
+        if (focus) tab.focus();
+
+        const panel = document.getElementById(tab.getAttribute("aria-controls"));
+        panel?.querySelectorAll(".featured-video, .featured-container").forEach((element) => element.classList.add("show"));
+        panel?.classList.remove("is-switching");
+        void panel?.offsetWidth;
+        panel?.classList.add("is-switching");
+    };
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => select(tab));
+        tab.addEventListener("keydown", (event) => {
+            let next = null;
+            if (event.key === "ArrowRight" || event.key === "ArrowDown") next = tabs[(index + 1) % tabs.length];
+            if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = tabs[(index - 1 + tabs.length) % tabs.length];
+            if (event.key === "Home") next = tabs[0];
+            if (event.key === "End") next = tabs[tabs.length - 1];
+            if (next) {
+                event.preventDefault();
+                select(next, true);
+            }
+        });
+    });
 })();

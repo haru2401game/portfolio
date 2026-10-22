@@ -169,6 +169,11 @@
             return;
         }
 
+        if (target.getAttribute("role") === "tab" && target.getAttribute("aria-selected") === "false") {
+            track("ui_open", `Main Works: ${textOf(target.querySelector("b")) || textOf(target)}`);
+            return;
+        }
+
         if (target.matches(".mail-copy")) {
             track("contact_click", "メールアドレスをコピー");
             return;
