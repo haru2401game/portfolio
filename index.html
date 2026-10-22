@@ -10,7 +10,7 @@
 
 <meta 
 name="description"
-content="ゲーム業界を目指す長屋晴太のポートフォリオサイト。ゲーム制作、企画、プログラミング、チーム制作などの経験や制作実績を紹介しています。">
+content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオサイト。ゲーム制作、プログラミング、企画、チーム制作などの経験や制作実績を紹介しています。">
 <meta name="author" content="Nagaya Haruta">
 <meta name="theme-color" content="#000000">
 
@@ -22,7 +22,7 @@ content="Nagaya Haruta | Game Creator Portfolio">
 content="website">
 
 <meta property="og:description"
-content="ゲーム業界を目指す長屋晴太のポートフォリオサイト">
+content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオサイト">
 
 <meta property="og:url"
 content="https://haru2401game.github.io/portfolio/">
@@ -42,7 +42,7 @@ content="summary_large_image">
 content="Nagaya Haruta | Game Creator Portfolio">
 
 <meta name="twitter:description"
-content="ゲーム業界を目指す長屋晴太のポートフォリオサイト">
+content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオサイト">
 
 <meta name="twitter:image"
 content="https://haru2401game.github.io/portfolio/images/ogp.png">
@@ -60,6 +60,32 @@ content="https://haru2401game.github.io/portfolio/images/ogp.png">
 rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "長屋晴太",
+    "alternateName": "Haruta Nagaya",
+    "url": "https://haru2401game.github.io/portfolio/",
+    "image": "https://haru2401game.github.io/portfolio/images/index/About/profile.webp",
+    "jobTitle": "ゲームプログラマー志望（2028年卒）",
+    "affiliation": {
+        "@type": "EducationalOrganization",
+        "name": "トライデントコンピュータ専門学校 ゲームサイエンス学科"
+    },
+    "knowsAbout": ["ゲームプログラミング", "Unity", "C#", "C++", "DirectX", "ゲーム企画"],
+    "sameAs": [
+        "https://github.com/haru2401game",
+        "https://note.com/ha_03ru_01",
+        "https://unityroom.com/users/haru2401game",
+        "https://haru2401game.itch.io/",
+        "https://www.youtube.com/@haru_game2401",
+        "https://x.com/haru2401game",
+        "https://www.tiktok.com/@haru2401game",
+        "https://www.facebook.com/profile.php?id=61573110660387"
+    ]
+}
+</script>
 </head>
 
 <body id="top">
@@ -69,7 +95,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <header class="header">
 
     <a href="#top" class="header-logo" aria-label="長屋晴太 ポートフォリオ ホーム">
-        <img class="brand-mark" src="images/favicon.webp" alt="" aria-hidden="true">
+        <img class="brand-mark" src="images/favicon.webp" width="128" height="128" alt="" aria-hidden="true">
         <span class="brand-name">
             HARUTA NAGAYA
             <small>GAME CREATOR PORTFOLIO</small>
@@ -130,7 +156,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <!-- Catch Copy -->
     <div class="hero-content">
-        <p class="hero-eyebrow">INDEPENDENT GAME CREATOR / JAPAN</p>
+        <p class="hero-eyebrow">ゲームプログラマー志望 / 2028年卒</p>
         <h1><span class="hero-mark">遊びの発見</span>を、<br>心に残る体験へ。</h1>
         <p class="hero-lead">
             企画からプログラムまで。<br>
@@ -163,6 +189,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         <div class="about-image">
             <img 
                 src="images/index/About/profile.webp"
+                width="1000"
+                height="945"
                 alt="長屋晴太 プロフィール画像">
             <span class="about-image-caption">CREATOR PROFILE <b>01</b></span>
         </div>
@@ -237,9 +265,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <i class="fa-solid fa-gamepad"></i>
 
-            <h3 id="gameCount">
+            <span class="achievement-value" id="gameCount">
                 0
-            </h3>
+            </span>
 
             <p>
                 Game Works
@@ -251,9 +279,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <i class="fa-solid fa-pen-nib"></i>
 
-            <h3 id="blogCount">
+            <span class="achievement-value" id="blogCount">
                 0
-            </h3>
+            </span>
 
             <p>
                 Blog Articles
@@ -265,9 +293,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <i class="fa-solid fa-trophy"></i>
 
-            <h3 id="awardCount">
+            <span class="achievement-value" id="awardCount">
                 0
-            </h3>
+            </span>
 
             <p>
                 Awards
@@ -279,9 +307,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <i class="fa-solid fa-calendar-days"></i>
 
-            <h3 id="eventCount">
+            <span class="achievement-value" id="eventCount">
                 0
-            </h3>
+            </span>
 
             <p>
                 Events
@@ -293,9 +321,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <i class="fa-solid fa-briefcase"></i>
 
-            <h3 id="internCount">
+            <span class="achievement-value" id="internCount">
                 0
-            </h3>
+            </span>
 
             <p>
                 Internship
@@ -307,9 +335,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <i class="fa-solid fa-code"></i>
             
-            <h3 id="careerCount">
+            <span class="achievement-value" id="careerCount">
                 0
-            </h3>
+            </span>
 
             <p>
                 Years Developing
@@ -555,6 +583,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/3DGame5.webp"
+                width="698"
+                height="389"
                 alt="3Dゲーム5本目のタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -597,6 +627,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/3DGame4.webp"
+                width="699"
+                height="390"
                 alt="3Dゲーム4本目のタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -639,6 +671,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/3DGame3.webp"
+                width="707"
+                height="395"
                 alt="3Dゲーム3本目のタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -681,6 +715,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/3DGame2.webp"
+                width="704"
+                height="394"
                 alt="3Dゲーム2本目のタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -723,6 +759,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/3DGame1.webp"
+                width="1280"
+                height="660"
                 alt="3Dゲーム1本目のタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -765,6 +803,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/Falien.webp"
+                width="1280"
+                height="720"
                 alt="Falienのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -807,6 +847,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/snowpakupaku.webp"
+                width="1280"
+                height="720"
                 alt="スノーぱくぱくのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -849,6 +891,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/HookShift.webp"
+                width="1280"
+                height="659"
                 alt="HookShiftのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -892,6 +936,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/maou.webp"
+                width="1280"
+                height="719"
                 alt="ただの村人ですが、魔王倒します。のタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -935,6 +981,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/ConneType.webp"
+                width="1280"
+                height="720"
                 alt="ConneTypeのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -977,6 +1025,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/NULL.webp"
+                width="1919"
+                height="1079"
                 alt="NULLのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1019,6 +1069,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/DATONATOR.webp"
+                width="734"
+                height="410"
                 alt="DATONATORのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1061,6 +1113,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/PARRYFIELD.webp"
+                width="1280"
+                height="720"
                 alt="PARRY FIELDのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1103,6 +1157,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/CubeRunner.webp"
+                width="771"
+                height="429"
                 alt="Cube Runnerのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1145,6 +1201,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/DirectXPongGame.webp"
+                width="1280"
+                height="720"
                 alt="DirectX Pong Gameのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1187,6 +1245,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/PocketGarden.webp"
+                width="445"
+                height="262"
                 alt="Pocket Gardenのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1229,6 +1289,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/FlipMaze.webp"
+                width="892"
+                height="494"
                 alt="Flip Mazeのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1271,6 +1333,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/FIGURESEQUENCE.webp"
+                width="1280"
+                height="720"
                 alt="FIGURE SEQUENCEのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1313,6 +1377,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/PotionBerserker.webp"
+                width="899"
+                height="498"
                 alt="POTION BERSERKERのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1355,6 +1421,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/ReturnRecord.webp"
+                width="893"
+                height="501"
                 alt="RETURN RECORDのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1397,6 +1465,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/ClickHero.webp"
+                width="898"
+                height="506"
                 alt="Click Heroのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1439,6 +1509,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/nyanjump.webp"
+                width="1280"
+                height="720"
                 alt="にゃんかジャンプしたなってきた！のタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1481,6 +1553,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/penpuzzle.webp"
+                width="1280"
+                height="720"
                 alt="ぺんさんどパズルのタイトル画面"
                 loading="lazy">
 
@@ -1525,6 +1599,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/OverFish.webp"
+                width="899"
+                height="501"
                 alt="Over Fishのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1568,6 +1644,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/AquaLeap.webp"
+                width="1280"
+                height="720"
                 alt="Aqua Leapのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1610,6 +1688,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/penoverkill.webp"
+                width="1280"
+                height="720"
                 alt="ペンオーバーキルのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1652,6 +1732,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/DeepDungeon.webp"
+                width="906"
+                height="504"
                 alt="Deep Dungeonのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1694,6 +1776,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/Koutei.webp"
+                width="908"
+                height="509"
                 alt="コウテイぺんぎんのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1737,6 +1821,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/Angel.webp"
+                width="1280"
+                height="720"
                 alt="がんばれ！天使ちゃんのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1779,6 +1865,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/HookingBox.webp"
+                width="1280"
+                height="709"
                 alt="HOOKING BOXのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1821,6 +1909,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/DxlibPongGame.webp"
+                width="1280"
+                height="725"
                 alt="Dxlib Pong Gameのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1863,6 +1953,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/〇×ゲーム.webp"
+                width="771"
+                height="812"
                 alt="〇×ゲームのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1905,6 +1997,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/AIMMASTER.webp"
+                width="1280"
+                height="717"
                 alt="AIM MASTERのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -1970,6 +2064,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <img
                 src="images/index/PlayGames/unityroom.webp"
+                width="98"
+                height="110"
                 alt="Unityroom">
 
             <div>
@@ -1999,6 +2095,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <img
                 src="images/index/PlayGames/itchio.webp"
+                width="216"
+                height="215"
                 alt="itch.io">
 
             <div>
@@ -2028,6 +2126,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
             <img
                 src="images/index/PlayGames/mugen.webp"
+                width="100"
+                height="100"
                 alt="mugen">
 
             <div>
@@ -2523,7 +2623,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             </div>
             <div class="timeline-content">
                 <h3>
-                    [クラス内1位]
+                    [クラス内1位：Click Hero]
                 </h3>
                 <p>
                     「Click Hero」<br>
@@ -2538,7 +2638,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             </div>
             <div class="timeline-content">
                 <h3>
-                    [クラス内1位]
+                    [クラス内1位：POTION BERSERKER]
                 </h3>
                 <p>
                     「POTION BERSERKER」<br>
@@ -2704,6 +2804,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         <div class="blog-logo">
             <img
                 src="images/index/Blog/icon.webp"
+                width="240"
+                height="240"
                 alt="HARU GAMES ロゴ"
                 loading="lazy">
         </div>
@@ -2793,6 +2895,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             class="sns-card">
             <img
                 src="images/index/Contact/Github.webp"
+                width="128"
+                height="133"
                 alt="GitHub"
                 loading="lazy">
             <div>
@@ -2813,6 +2917,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             class="sns-card">
             <img
                 src="images/index/Contact/Youtube.webp"
+                width="128"
+                height="127"
                 alt="YouTube"
                 loading="lazy">
             <div>
@@ -2833,6 +2939,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             class="sns-card">
             <img
                 src="images/index/Contact/X.webp"
+                width="128"
+                height="124"
                 alt="X"
                 loading="lazy">
             <div>
@@ -2853,6 +2961,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             class="sns-card">
             <img
                 src="images/index/Contact/Tiktok.webp"
+                width="128"
+                height="127"
                 alt="TikTok"
                 loading="lazy">
             <div>
@@ -2873,6 +2983,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             class="sns-card">
             <img
                 src="images/index/Contact/Facebook.webp"
+                width="128"
+                height="125"
                 alt="Facebook"
                 loading="lazy">
             <div>

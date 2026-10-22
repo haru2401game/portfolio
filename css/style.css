@@ -1061,13 +1061,13 @@ section:not(.hero) {
     transition: transform .35s ease;
 }
 
-.achievements .achievement-card h3,
+.achievements .achievement-card .achievement-value,
 .achievements .achievement-card p {
     grid-column: 1 / -1;
     margin: 0;
 }
 
-.achievements .achievement-card h3 {
+.achievements .achievement-card .achievement-value {
     grid-row: 2;
     align-self: end;
     margin: 25px 0 10px;
@@ -2685,7 +2685,7 @@ footer {
         padding: 22px 18px;
     }
 
-    .achievements .achievement-card h3 {
+    .achievements .achievement-card .achievement-value {
         margin-top: 24px;
         font-size: clamp(2.7rem, 12vw, 4rem);
     }
@@ -3219,7 +3219,7 @@ footer {
     display: none;
 }
 
-.achievements .achievement-card h3 {
+.achievements .achievement-card .achievement-value {
     color: var(--color-main);
 }
 

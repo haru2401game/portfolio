@@ -114,7 +114,7 @@ achievementCards.forEach((card, index) => {
 });
 
 observeShow(achievementCards, (card) => {
-    const value = card.querySelector("h3[data-value]");
+    const value = card.querySelector(".achievement-value[data-value]");
     if (value) animateCount(value);
 });
 
@@ -537,6 +537,15 @@ fetch("data/profile.json")
 
     })
 
+    /* profile.json が読めないとき（ファイルを直接開いた場合など）も、
+       ページ内から数えられる数字は表示する */
+    .catch((error) => {
+
+        console.warn("Profile Data Error:", error);
+        return {};
+
+    })
+
     .then((data) => {
 
         /* --------------------------------
@@ -586,7 +595,12 @@ fetch("data/profile.json")
 
         if (internCount) {
 
-            setStat(internCount, data.internCount);
+            /* Counted from the timeline: quests whose title mentions an internship */
+            const internQuests = Array.from(
+                document.querySelectorAll(".timeline-item h3")
+            ).filter((title) => /インターン|intern/i.test(title.textContent)).length;
+
+            setStat(internCount, internQuests || data.internCount);
 
         }
 
@@ -597,7 +611,21 @@ fetch("data/profile.json")
 
         if (careerCount) {
 
-            setStat(careerCount, data.careerCount);
+            /* Counted from the first timeline date (e.g. 2025.04) to today, rounded up:
+               1年目, 2年目 ... と自動で増える */
+            const dates = Array.from(document.querySelectorAll(".timeline-date"))
+                .map((date) => date.textContent.trim().match(/^(\d{4})\.(\d{1,2})/))
+                .filter(Boolean)
+                .map(([, year, month]) => Number(year) * 12 + Number(month) - 1);
+
+            let years = data.careerCount;
+            if (dates.length) {
+                const now = new Date();
+                const months = now.getFullYear() * 12 + now.getMonth() - Math.min(...dates);
+                years = Math.max(1, Math.ceil((months + 1) / 12));
+            }
+
+            setStat(careerCount, years);
 
         }
 
