@@ -98,13 +98,22 @@
     }
     track("pageview", location.pathname, { r: referrer });
 
-    /* ---------- 読まれたセクション（画面の4割以上を占めたら1回） ---------- */
+    /* ---------- 読まれたセクション（画面の4割以上を占めたら1回・自動で検出） ---------- */
 
-    const sections = [
-        [document.querySelector(".hero"), "hero"],
-        ...["about", "achievements", "featured-works", "other-works", "play-games", "what-i-can-do", "timeline", "blog", "contact"]
-            .map((id) => [document.getElementById(id), id]),
-    ].filter(([element]) => element);
+    // ページ内のセクションを自動で見つける（トップ ＋ id の付いた <section>）。
+    // セクションを追加・並べ替え・削除しても、ここや分析ツールを直す必要はない
+    const headingOf = (element) => {
+        const heading = element.querySelector(".section-title h2, h2, h1");
+        return heading ? heading.textContent.replace(/\s+/g, " ").trim().slice(0, 40) : "";
+    };
+
+    const sections = Array.from(document.querySelectorAll(".hero, section[id]"))
+        .filter((element) => !element.parentElement?.closest(".hero, section[id]"))
+        .map((element, index) => {
+            const isHero = element.matches(".hero");
+            const name = (isHero ? "hero" : element.id).toLowerCase().replace(/[^a-z0-9_-]/g, "-").slice(0, 40);
+            return [element, name, isHero ? "トップ" : headingOf(element) || name, index];
+        });
 
     if ("IntersectionObserver" in window) {
         const observer = new IntersectionObserver((entries) => {
@@ -114,14 +123,16 @@
                 const visible = entry.intersectionRect.height;
                 const enough = Math.min(window.innerHeight * 0.4, entry.boundingClientRect.height * 0.6);
                 if (visible < enough) return;
-                const name = entry.target.dataset.paSection;
+                const { paSection: name, paLabel: label, paOrder: order } = entry.target.dataset;
                 observer.unobserve(entry.target);
-                if (remember(`section:${name}`)) track("section_view", name);
+                if (remember(`section:${name}`)) track("section_view", name, { l: label, o: Number(order) });
             });
         }, { threshold: Array.from({ length: 21 }, (_, i) => i / 20) });
 
-        sections.forEach(([element, name]) => {
+        sections.forEach(([element, name, label, order]) => {
             element.dataset.paSection = name;
+            element.dataset.paLabel = label;
+            element.dataset.paOrder = String(order);
             observer.observe(element);
         });
     }
