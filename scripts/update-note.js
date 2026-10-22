@@ -178,6 +178,24 @@ async function main()
 
     );
 
+    // Script copy of blog.json: lets index.html show the articles even when
+    // it is opened directly from the folder (file://), where fetch() is blocked.
+    fs.writeFileSync(
+
+        "data/blog.js",
+
+        "window.BLOG_DATA = " + JSON.stringify({
+
+            articleCount,
+
+            articles
+
+        },null,4) + ";\n",
+
+        "utf8"
+
+    );
+
     console.log("================================");
     console.log("blog.json 更新完了");
     console.log("記事数:",articleCount);

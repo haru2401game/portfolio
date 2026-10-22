@@ -318,6 +318,9 @@ function safeWebUrl(value) {
 }
 
 
+/* blog.json is the live source. When it cannot be fetched (e.g. index.html
+   opened directly from the folder via file://), fall back to data/blog.js,
+   a script copy of the same data (window.BLOG_DATA). */
 fetch("data/blog.json")
 
     .then((response) => {
@@ -331,6 +334,13 @@ fetch("data/blog.json")
         }
 
         return response.json();
+
+    })
+
+    .catch((error) => {
+
+        if (window.BLOG_DATA) return window.BLOG_DATA;
+        throw error;
 
     })
 
@@ -1474,4 +1484,49 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     viewer.addEventListener("click", (event) => {
         if (event.target === viewer) viewer.close();
     });
+})();
+
+/* ========================================
+   3D Challenge Progress
+======================================== */
+
+(() => {
+    const progress = document.querySelector(".challenge-progress");
+    if (!progress) return;
+
+    const total = Number(progress.dataset.challengeTotal) || 10;
+    const numbers = new Set();
+
+    document.querySelectorAll(".work-card h3").forEach((title) => {
+        const match = title.textContent.match(/3D\s*CHALLENGE\s*#\s*(\d+)/i);
+        if (match) numbers.add(Number(match[1]));
+    });
+
+    const done = Math.min(numbers.size, total);
+    const bar = progress.querySelector(".challenge-bar");
+    const count = progress.querySelector("[data-challenge-count]");
+    const next = progress.querySelector("[data-challenge-next]");
+
+    count.textContent = done;
+    bar.setAttribute("aria-valuenow", done);
+    bar.setAttribute("aria-valuetext", `${total}本中${done}本完成`);
+    bar.style.setProperty("--challenge-total", total);
+
+    for (let i = 1; i <= total; i += 1) {
+        const pip = document.createElement("span");
+        pip.className = "challenge-pip";
+        if (i <= done) pip.classList.add("is-done");
+        if (i === done + 1) pip.classList.add("is-next");
+        pip.style.setProperty("--i", i);
+        bar.append(pip);
+    }
+
+    if (done >= total) {
+        progress.classList.add("is-complete");
+        next.textContent = "COMPLETE! 10本制作達成";
+    } else {
+        next.textContent = `NEXT ▶ 3D CHALLENGE #${String(done + 1).padStart(2, "0")} 制作中`;
+    }
+
+    observeShow([progress]);
 })();
