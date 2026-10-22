@@ -6876,3 +6876,17 @@ footer.has-peeker {
         animation: none;
     }
 }
+
+/* ========================================
+   Footer: analytics notice
+======================================== */
+
+.footer-privacy {
+    max-width: 640px;
+    margin: 6px auto 0;
+    padding: 0 16px;
+    color: var(--color-sub);
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+}
