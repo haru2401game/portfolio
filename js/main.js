@@ -1275,7 +1275,7 @@ const peekers = [
     { host: ".can-do-category:nth-child(2 of .can-do-category) .can-do-card:nth-child(2)", file: "Openji.png", x: "62%", w: 56, delay: 5.5 },
     { host: ".featured-info", file: "Ojisand.png", x: "82%", w: 76, delay: 3 },
     { host: ".works-toggle", file: "Penzou.png", x: "84%", w: 72, delay: 6.5 },
-    { host: ".latest-articles", file: "Penny.png", x: "84%", w: 80, delay: 2.5 },
+    { host: ".latest-articles-wrap", file: "Penny.png", x: "84%", w: 80, delay: 2.5 },
     { host: '.timeline-item[data-quest="now"] .timeline-content', file: "Chrono_0.png", side: true, y: "18%", w: 64, delay: 0.5 },
     { host: ".play-container", file: "Machopen.png", x: "6%", w: 80, delay: 6 },
     { host: ".mail-card", file: "Player.png", x: "88%", w: 64, delay: 3.5 },
@@ -1817,3 +1817,326 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         });
     });
 })();
+
+/* ========================================
+   Mobile compact layout
+   - 横スワイプのリストに「いま何枚目か」のドットを付ける
+   - 技術の見どころは「課題」だけ見せて、解決・結果はタップで開く
+   （見た目の切り替えは CSS の @media (max-width: 768px) 側。PC では何も変わらない）
+======================================== */
+
+(() => {
+    const SWIPE_LISTS = ".can-do-list, .latest-articles, .tech-photos";
+    const smoothScroll = () => !document.documentElement.classList.contains("motion-off")
+        && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const itemsOf = (list) => Array.from(list.children).filter((child) => !child.classList.contains("peeker"));
+
+    const setupSwipe = (list) => {
+        const items = itemsOf(list);
+        let dots = list.nextElementSibling;
+        if (!dots || !dots.classList.contains("swipe-dots")) {
+            dots = document.createElement("div");
+            dots.className = "swipe-dots";
+            list.after(dots);
+            list.addEventListener("scroll", () => {
+                cancelAnimationFrame(list._swipeFrame);
+                list._swipeFrame = requestAnimationFrame(() => update(list));
+            }, { passive: true });
+        }
+        if (items.length < 2) {
+            dots.replaceChildren();
+            return;
+        }
+
+        const label = list.closest(".can-do-category")?.querySelector("h3")?.textContent.trim()
+            || (list.matches(".latest-articles") ? "最新記事" : "写真");
+        dots.setAttribute("role", "group");
+        dots.setAttribute("aria-label", `${label}（横にスワイプで切り替え）`);
+        dots.replaceChildren(...items.map((item, index) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "swipe-dot";
+            dot.setAttribute("aria-label", `${index + 1}枚目を表示（全${items.length}枚）`);
+            dot.addEventListener("click", () => {
+                const left = item.getBoundingClientRect().left - list.getBoundingClientRect().left + list.scrollLeft
+                    - parseFloat(getComputedStyle(list).scrollPaddingLeft || 0);
+                list.scrollTo({ left, behavior: smoothScroll() ? "smooth" : "auto" });
+            });
+            return dot;
+        }));
+        update(list);
+    };
+
+    const update = (list) => {
+        const dots = list.nextElementSibling;
+        if (!dots || !dots.classList.contains("swipe-dots")) return;
+        const items = itemsOf(list);
+        const start = list.getBoundingClientRect().left;
+        let current = 0;
+        let best = Infinity;
+        items.forEach((item, index) => {
+            const distance = Math.abs(item.getBoundingClientRect().left - start);
+            if (distance < best) {
+                best = distance;
+                current = index;
+            }
+        });
+        // 最後まで送ったら最後のドットを点ける
+        if (list.scrollLeft + list.clientWidth >= list.scrollWidth - 4) current = items.length - 1;
+        Array.from(dots.children).forEach((dot, index) => {
+            dot.classList.toggle("is-current", index === current);
+            dot.setAttribute("aria-current", index === current ? "true" : "false");
+        });
+    };
+
+    document.querySelectorAll(SWIPE_LISTS).forEach(setupSwipe);
+
+    // ブログの最新記事は読み込み後に追加されるので、そのたびにドットを作り直す
+    const articles = document.getElementById("latestArticles");
+    if (articles && "MutationObserver" in window) {
+        new MutationObserver(() => setupSwipe(articles)).observe(articles, { childList: true });
+    }
+
+    /* 技術の見どころ：解決・結果を折りたたむ */
+    document.querySelectorAll(".tech-steps").forEach((steps, index) => {
+        if (steps.children.length < 2) return;
+        steps.id ||= `tech-steps-${index + 1}`;
+        steps.classList.add("is-folded");
+
+        const rest = Array.from(steps.children).slice(1)
+            .map((step) => step.querySelector(".tech-step-label")?.textContent.trim())
+            .filter(Boolean)
+            .join("・") || "続き";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "tech-steps-toggle";
+        toggle.setAttribute("aria-controls", steps.id);
+        toggle.setAttribute("aria-expanded", "false");
+
+        const render = () => {
+            const open = !steps.classList.contains("is-folded");
+            toggle.setAttribute("aria-expanded", String(open));
+            toggle.innerHTML = open
+                ? '<span>閉じる</span><i class="fa-solid fa-chevron-up" aria-hidden="true"></i>'
+                : `<span>${rest}を読む</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>`;
+        };
+
+        toggle.addEventListener("click", () => {
+            steps.classList.toggle("is-folded");
+            render();
+            if (steps.classList.contains("is-folded")) {
+                steps.closest(".tech-highlight")?.scrollIntoView({ block: "nearest", behavior: smoothScroll() ? "smooth" : "auto" });
+            }
+        });
+
+        render();
+        steps.after(toggle);
+    });
+})();
+
+/* ========================================
+   Other Works: 作品の詳細ポップアップ
+   - カードの画像・タイトルなどを押すと開く（「詳細を見る」は今まで通り note へ）
+   - 中身はカードの内容をそのまま使うので、作品を追加しても書き足しは不要
+   - ◀ ▶ で前後の作品へ（絞り込み中は、表示中の作品だけを順番に）
+======================================== */
+
+(() => {
+    const list = document.querySelector(".works-list");
+    if (!list || typeof HTMLDialogElement !== "function") return;
+
+    const cards = Array.from(list.querySelectorAll(".work-card"));
+    if (!cards.length) return;
+
+    const text = (root, selector) => (root.querySelector(selector)?.textContent || "").replace(/\s+/g, " ").trim();
+    const smooth = () => !document.documentElement.classList.contains("motion-off")
+        && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* ---------- ポップアップの骨組み ---------- */
+
+    const viewer = document.createElement("dialog");
+    viewer.className = "work-viewer";
+    viewer.setAttribute("aria-labelledby", "work-viewer-title");
+    viewer.innerHTML = `
+        <div class="work-viewer-panel">
+            <div class="work-viewer-bar">
+                <span class="work-viewer-stage" data-wv="stage"></span>
+                <span class="work-viewer-count" data-wv="count"></span>
+                <button type="button" class="work-viewer-close" aria-label="閉じる">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="work-viewer-body">
+                <div class="work-viewer-media">
+                    <img data-wv="image" alt="">
+                    <div class="work-viewer-badges" data-wv="badges"></div>
+                </div>
+                <div class="work-viewer-info">
+                    <p class="work-viewer-award" data-wv="award" hidden>
+                        <i class="fa-solid fa-trophy" aria-hidden="true"></i><span></span>
+                    </p>
+                    <h3 id="work-viewer-title" data-wv="title"></h3>
+                    <p class="work-viewer-genre" data-wv="genre"></p>
+                    <p class="work-viewer-desc" data-wv="desc"></p>
+                    <dl class="work-viewer-stats">
+                        <div><dt>DATE</dt><dd data-wv="date"></dd></div>
+                        <div><dt>TEAM</dt><dd data-wv="team"></dd></div>
+                        <div class="is-wide"><dt>ROLE</dt><dd data-wv="role"></dd></div>
+                    </dl>
+                    <p class="work-viewer-label">TOOLS</p>
+                    <ul class="work-viewer-tools" data-wv="tools"></ul>
+                    <a class="work-viewer-link" data-wv="link" target="_blank" rel="noopener noreferrer">
+                        <span>noteで制作記録を読む</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="work-viewer-nav">
+                <button type="button" class="work-viewer-prev" data-step="-1">
+                    <i class="fa-solid fa-caret-left" aria-hidden="true"></i><span>前の作品</span>
+                </button>
+                <button type="button" class="work-viewer-next" data-step="1">
+                    <span>次の作品</span><i class="fa-solid fa-caret-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>`;
+    document.body.append(viewer);
+
+    const part = (name) => viewer.querySelector(`[data-wv="${name}"]`);
+    const panel = viewer.querySelector(".work-viewer-panel");
+    let current = null;
+
+    const visibleCards = () => cards.filter((card) => !card.hidden);
+
+    const render = (card) => {
+        current = card;
+        const image = card.querySelector("img:not(.card-pop)");
+        const stage = text(card, ".stage-badges span:not(.is-award):not(.is-team):not(.is-wip)");
+        const shown = visibleCards();
+        const position = shown.indexOf(card);
+
+        part("stage").textContent = stage || "STAGE";
+        part("count").textContent = shown.length > 1 ? `${position + 1} / ${shown.length}` : "";
+
+        const img = part("image");
+        img.src = image?.currentSrc || image?.src || "";
+        img.alt = image?.alt || "";
+        img.width = image?.width || 16;
+        img.height = image?.height || 9;
+
+        part("badges").replaceChildren(...Array.from(card.querySelectorAll(".stage-badges span"))
+            .filter((badge) => badge.textContent.trim() !== stage)
+            .map((badge) => badge.cloneNode(true)));
+
+        const award = part("award");
+        award.hidden = !card.dataset.award;
+        award.querySelector("span").textContent = card.dataset.award || "";
+
+        part("title").textContent = text(card, "h3");
+        part("genre").textContent = text(card, ".work-genre");
+        part("desc").textContent = text(card, ".work-description");
+        part("date").textContent = text(card, ".work-period");
+        part("team").textContent = text(card, ".work-member");
+        part("role").textContent = text(card, ".work-role");
+
+        part("tools").replaceChildren(...text(card, ".work-tech").split(/\s+/).filter(Boolean).map((tool) => {
+            const item = document.createElement("li");
+            item.textContent = tool;
+            return item;
+        }));
+
+        const source = card.querySelector("a.work-link, a[href]");
+        const link = part("link");
+        link.hidden = !source;
+        if (source) link.href = source.href;
+
+        viewer.querySelectorAll("[data-step]").forEach((button) => {
+            button.hidden = shown.length < 2;
+        });
+
+        viewer.classList.toggle("is-rare", card.classList.contains("is-rare"));
+        panel.scrollTop = 0;
+        panel.classList.remove("is-switching");
+        void panel.offsetWidth;
+        panel.classList.add("is-switching");
+    };
+
+    const open = (card) => {
+        render(card);
+        if (!viewer.open) viewer.showModal();
+        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: text(card, "h3") } }));
+    };
+
+    const step = (direction) => {
+        const shown = visibleCards();
+        if (shown.length < 2 || !current) return;
+        const index = shown.indexOf(current);
+        const next = shown[(index + direction + shown.length) % shown.length];
+        render(next);
+        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: text(next, "h3") } }));
+    };
+
+    /* ---------- 開く：カード（「詳細を見る」以外）を押したとき ---------- */
+
+    cards.forEach((card) => {
+        const image = card.querySelector("img");
+        if (image && !image.closest(".work-thumb")) {
+            const thumb = document.createElement("button");
+            thumb.type = "button";
+            thumb.className = "work-thumb";
+            thumb.setAttribute("aria-label", `${text(card, "h3")} の詳細を開く`);
+            image.before(thumb);
+            thumb.append(image);
+            const hint = document.createElement("span");
+            hint.className = "work-thumb-hint";
+            hint.setAttribute("aria-hidden", "true");
+            hint.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>くわしく見る';
+            thumb.append(hint);
+        }
+
+        card.classList.add("has-viewer");
+        card.addEventListener("click", (event) => {
+            if (event.target.closest("a")) return;
+            open(card);
+        });
+    });
+
+    /* ---------- 閉じる・前後へ ---------- */
+
+    viewer.querySelector(".work-viewer-close").addEventListener("click", () => viewer.close());
+    viewer.querySelectorAll("[data-step]").forEach((button) => {
+        button.addEventListener("click", () => step(Number(button.dataset.step)));
+    });
+    viewer.addEventListener("click", (event) => {
+        if (event.target === viewer) viewer.close();
+    });
+    viewer.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") step(-1);
+        if (event.key === "ArrowRight") step(1);
+    });
+
+    /* スマホ：左右にスワイプしても前後の作品へ */
+    let touchX = null;
+    let touchY = null;
+    viewer.addEventListener("touchstart", (event) => {
+        touchX = event.touches[0].clientX;
+        touchY = event.touches[0].clientY;
+    }, { passive: true });
+    viewer.addEventListener("touchend", (event) => {
+        if (touchX === null) return;
+        const dx = event.changedTouches[0].clientX - touchX;
+        const dy = event.changedTouches[0].clientY - touchY;
+        touchX = null;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    /* 閉じたら、元のカードが見える位置に戻す */
+    viewer.addEventListener("close", () => {
+        if (!current) return;
+        current.querySelector(".work-thumb")?.focus({ preventScroll: true });
+        current.scrollIntoView({ block: "nearest", behavior: smooth() ? "smooth" : "auto" });
+    });
+})();
+

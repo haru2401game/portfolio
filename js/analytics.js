@@ -145,6 +145,7 @@
         const target = event.target.closest("a, button");
         if (!target) return;
 
+        // 作品カードの「詳細を見る」（note へ直接）も作品クリックとして数える
         const workCard = target.closest(".work-card");
         if (workCard && target.matches("a")) {
             track("work_click", textOf(workCard.querySelector("h3")));
@@ -174,6 +175,12 @@
             return;
         }
 
+        if (target.matches(".tech-steps-toggle") && target.getAttribute("aria-expanded") === "false") {
+            const title = textOf(target.closest(".tech-highlight")?.querySelector("h5"));
+            track("ui_open", `技術の見どころ: ${title}`);
+            return;
+        }
+
         if (target.matches(".mail-copy")) {
             track("contact_click", "メールアドレスをコピー");
             return;
@@ -188,4 +195,10 @@
             track("outbound_click", target.hostname.replace(/^www\./, ""));
         }
     }, true);
+
+    // 作品の詳細ポップアップを開いた（前後の作品へ移ったときも1作品ずつ数える）
+    document.addEventListener("work-viewer:open", (event) => {
+        const title = event.detail?.title || "";
+        if (title && remember(`work:${title}`)) track("work_click", title);
+    });
 })();
