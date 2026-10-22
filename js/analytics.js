@@ -9,7 +9,7 @@
 
 (() => {
     // デプロイ後に表示される Worker のURL + /collect を入れる（空のあいだは何も送らない）
-    const ENDPOINT = "";
+    const ENDPOINT = "https://portfolio-analytics.haru2401game.workers.dev/collect";
 
     if (!ENDPOINT) return;
 
