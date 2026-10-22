@@ -1,6 +1,13 @@
 window.BLOG_DATA = {
-    "articleCount": 270,
+    "articleCount": 271,
     "articles": [
+        {
+            "title": "「無料ブラウザゲームサイトを作ってみた」 はる日記#271",
+            "date": "2026.10.22",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/326784433/rectangle_large_type_2_7fc79f1f1f74a3a63e57248abe6e5b41.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 こんにちは！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n68f4c852f886"
+        },
         {
             "title": "「【3Dゲーム制作】ゲームオーバーやセーブ機能を実装！戦闘報酬システムにも挑戦」 はる日記 #270",
             "date": "2026.10.21",
@@ -14,13 +21,6 @@ window.BLOG_DATA = {
             "thumbnail": "https://assets.st-note.com/production/uploads/images/325997308/rectangle_large_type_2_5dd5f4be62907394862a8c38606de5e4.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 こんにちは！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n7cc49151c940"
-        },
-        {
-            "title": "サイバーコネクトツーの企業研究 | ゲームプログラマー志望者向け",
-            "date": "2026.10.19",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/323821764/rectangle_large_type_2_b183d5254db3f82fe817ed83192270c6.png?fit=bounds&quality=85&width=1280",
-            "summary": "「目次」 今回は、『.hack』シリーズや『NARUTO－ナルト－ ナルティメット』シリーズ、『鬼滅の刃 ヒノカミ血風譚』などの開発で知られる、株式会社サイバーコネクトツー（CC2）を企業研究します。...",
-            "url": "https://note.com/ha_03ru_01/n/nc943bd1c8603"
         }
     ]
 };
