@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>GAME OVER | 長屋晴太 Portfolio</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/portfolio/images/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap">
+<style>
+    :root {
+        --ink: #111713;
+        --sub: #5b6560;
+        --line: #e1e7ef;
+        --panel: #f5f8fc;
+        --red: #d6363d;
+        --red-edge: #a8262c;
+        --dots: radial-gradient(rgba(17, 23, 19, .08) 1px, transparent 1.4px) 0 0 / 22px 22px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        display: grid;
+        min-height: 100vh;
+        min-height: 100dvh;
+        margin: 0;
+        place-items: center;
+        padding: 24px 16px;
+        background:
+            radial-gradient(circle at 50% 10%, rgba(214, 54, 61, .12), transparent 45%),
+            radial-gradient(circle at 90% 90%, rgba(0, 163, 224, .1), transparent 40%),
+            var(--dots),
+            var(--panel);
+        color: var(--ink);
+        font-family: "Inter", "Noto Sans JP", "Yu Gothic", sans-serif;
+        text-align: center;
+    }
+
+    main {
+        width: min(100%, 560px);
+    }
+
+    .stage {
+        display: inline-block;
+        margin: 0 0 14px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 3px 0 var(--line);
+        color: var(--sub);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .2em;
+    }
+
+    h1 {
+        margin: 0;
+        color: var(--red);
+        font-size: clamp(3.4rem, 15vw, 6.4rem);
+        font-weight: 900;
+        letter-spacing: -.04em;
+        line-height: .95;
+        text-shadow: 4px 4px 0 var(--ink);
+        animation: hit .55s cubic-bezier(.3, 1.6, .5, 1) both, wobble 4s ease-in-out 1s infinite;
+    }
+
+    .message {
+        margin: 22px 0 6px;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .sub {
+        margin: 0;
+        color: var(--sub);
+        font-size: .88rem;
+        line-height: 1.8;
+    }
+
+    .character {
+        display: block;
+        width: 84px;
+        height: 84px;
+        margin: 26px auto 0;
+        image-rendering: pixelated;
+        animation: fall 3s ease-in-out infinite;
+    }
+
+    .continue {
+        margin: 18px 0 0;
+        font-size: 1.3rem;
+        font-variant-numeric: tabular-nums;
+        font-weight: 900;
+        letter-spacing: .12em;
+    }
+
+    .continue b {
+        display: inline-block;
+        min-width: 1.4em;
+        color: var(--red);
+    }
+
+    .continue.is-stopped b {
+        display: none;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 22px;
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 5px 0 var(--line);
+        color: var(--ink);
+        font-weight: 800;
+        text-decoration: none;
+        transition: transform .15s ease;
+    }
+
+    .button.is-primary {
+        border-color: var(--red);
+        background: var(--red);
+        box-shadow: 0 5px 0 var(--red-edge);
+        color: #fff;
+    }
+
+    .button:hover {
+        transform: translateY(-2px);
+    }
+
+    .button:active {
+        transform: translateY(3px);
+    }
+
+    .button:focus-visible {
+        outline: 3px solid var(--ink);
+        outline-offset: 3px;
+    }
+
+    .blink {
+        animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes hit {
+        from { opacity: 0; transform: scale(1.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes wobble {
+        0%, 90%, 100% { transform: translateX(0); }
+        92% { transform: translateX(-6px); }
+        94% { transform: translateX(6px); }
+        96% { transform: translateX(-3px); }
+    }
+
+    @keyframes fall {
+        0%, 100% { transform: translateY(0) rotate(-8deg); }
+        50% { transform: translateY(-10px) rotate(8deg); }
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        h1,
+        .character,
+        .blink {
+            animation: none;
+        }
+    }
+</style>
+</head>
+<body>
+<main>
+    <p class="stage">ERROR 404 / PAGE NOT FOUND</p>
+    <h1>GAME<br>OVER</h1>
+    <p class="message">お探しのページは見つかりませんでした。</p>
+    <p class="sub">URLが間違っているか、ページが移動した可能性があります。</p>
+
+    <img class="character" src="/portfolio/images/character/Clone_0.png" alt="" width="84" height="84">
+
+    <p class="continue" id="continue">CONTINUE? <b id="count" aria-hidden="true">10</b></p>
+
+    <div class="actions">
+        <a class="button is-primary" href="/portfolio/"><span class="blink" aria-hidden="true">▶</span>&nbsp;CONTINUE（トップへ）</a>
+        <a class="button" href="/portfolio/#other-works">作品一覧を見る</a>
+    </div>
+</main>
+
+<script>
+    /* 10カウントで自動的にトップへ（ボタンに触れたらカウントを止める） */
+    (() => {
+        const label = document.getElementById("continue");
+        const count = document.getElementById("count");
+        let left = 10;
+        let timer = 0;
+
+        const stop = () => {
+            clearInterval(timer);
+            label.classList.add("is-stopped");
+        };
+
+        timer = setInterval(() => {
+            left -= 1;
+            count.textContent = String(left);
+            if (left <= 0) {
+                clearInterval(timer);
+                location.href = "/portfolio/";
+            }
+        }, 1000);
+
+        document.querySelectorAll(".button").forEach((button) => {
+            button.addEventListener("pointerenter", stop);
+            button.addEventListener("focus", stop);
+        });
+        document.addEventListener("keydown", stop, { once: true });
+    })();
+</script>
+</body>
+</html>

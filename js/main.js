@@ -836,6 +836,25 @@ if (worksList) {
     const readText = (card, selector) =>
         (card.querySelector(selector)?.textContent || "").trim();
 
+    /* Award-winning works are found automatically from the timeline:
+       an award quest (data-quest="award") that names a work in 「」 marks that card as RARE. */
+    const normalizeTitle = (text) => text.toLowerCase().replace(/[\s　]/g, "");
+    const awardsByTitle = new Map();
+
+    document.querySelectorAll('.timeline-item[data-quest="award"]').forEach((quest) => {
+        const title = (quest.querySelector("h3")?.textContent || "").replace(/[\[\]\s]/g, "");
+        const body = (quest.querySelector("p")?.textContent || "").replace(/\s+/g, "");
+        const pattern = /[A-Za-z0-9]*グランプリ|クラス内1位|総合1位|[一-龠ァ-ヶーA-Za-z0-9]{1,6}?賞/g;
+        const label = [...`${title} ${body}`.matchAll(pattern)]
+            .map((match) => match[0])
+            .find((text) => text !== "受賞") || "AWARD";
+        const date = (quest.querySelector(".timeline-date")?.textContent || "").trim();
+
+        for (const [, name] of body.matchAll(/「([^」]+)」/g)) {
+            awardsByTitle.set(normalizeTitle(name), { label, date });
+        }
+    });
+
     cards.forEach((card, index) => {
         const tech = readText(card, ".work-tech");
         const genre = readText(card, ".work-genre");
@@ -869,11 +888,35 @@ if (worksList) {
             badges.append(wip);
         }
 
+        const award = awardsByTitle.get(normalizeTitle(readText(card, "h3")));
+
+        if (award) {
+            card.classList.add("is-rare");
+            card.dataset.award = award.label;
+
+            const rare = document.createElement("span");
+            rare.className = "is-award";
+            rare.textContent = "★ RARE";
+            badges.prepend(rare);
+
+            const ribbon = document.createElement("p");
+            ribbon.className = "award-ribbon";
+            ribbon.innerHTML = '<i class="fa-solid fa-trophy" aria-hidden="true"></i>';
+            ribbon.append(document.createTextNode(award.label));
+            card.querySelector(".work-content")?.prepend(ribbon);
+
+            const shine = document.createElement("span");
+            shine.className = "rare-shine";
+            shine.setAttribute("aria-hidden", "true");
+            card.append(shine);
+        }
+
         card.append(badges);
     });
 
     const filters = [
         { label: "すべて", test: () => true },
+        { label: "★ 受賞作", test: (card) => card.classList.contains("is-rare") },
         { label: "Unity", test: (card) => card.dataset.unity === "true" },
         { label: "C++ / DirectX・DxLib", test: (card) => card.dataset.cpp === "true" },
         { label: "3D", test: (card) => card.dataset.threeD === "true" },
@@ -1222,7 +1265,7 @@ const peekers = [
     { host: ".hero-screen", file: "Koutei.png", x: "72%", w: 84, delay: 2 },
     { host: ".about-container", file: "Pensand.png", x: "8%", w: 92, delay: 1 },
     { host: ".status-header", file: "Penko.png", x: "38%", w: 72, delay: 4 },
-    { host: ".can-do-category:nth-child(3) .can-do-card:nth-child(2)", file: "Openji.png", x: "62%", w: 56, delay: 5.5 },
+    { host: ".can-do-category:nth-child(2 of .can-do-category) .can-do-card:nth-child(2)", file: "Openji.png", x: "62%", w: 56, delay: 5.5 },
     { host: ".featured-info", file: "Ojisand.png", x: "82%", w: 76, delay: 3 },
     { host: ".works-toggle", file: "Penzou.png", x: "84%", w: 72, delay: 6.5 },
     { host: ".latest-articles", file: "Penny.png", x: "84%", w: 80, delay: 2.5 },
@@ -1557,4 +1600,152 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     }
 
     observeShow([progress]);
+})();
+
+/* ========================================
+   Status screen (What I Can Do)
+   作品カードから自動で集計する：使った技術・担当した役割・制作人数
+======================================== */
+
+(() => {
+    const host = document.querySelector(".status-screen");
+    const cards = Array.from(document.querySelectorAll(".work-card"));
+    if (!host || !cards.length) return;
+
+    const text = (card, selector) => (card.querySelector(selector)?.textContent || "").replace(/\s+/g, " ").trim();
+    const count = (test) => cards.filter(test).length;
+
+    const tech = [
+        ["Unity", /unity/i],
+        ["C#", /c#/i],
+        ["C++", /c\+\+/i],
+        ["GitHub", /github/i],
+        ["DxLib", /dxlib/i],
+        ["DirectX", /directx/i],
+    ].map(([label, re]) => ({ label, value: count((card) => re.test(text(card, ".work-tech"))) }));
+
+    const role = [
+        ["企画", (card) => /企画/.test(text(card, ".work-role"))],
+        ["プログラム", (card) => /プログラム|システム/.test(text(card, ".work-role"))],
+        ["チーム制作", (card) => (parseInt(text(card, ".work-member"), 10) || 1) > 1],
+        ["プロジェクト統合", (card) => /統合|総合管理/.test(text(card, ".work-role"))],
+        ["デザイン", (card) => /デザイン/.test(text(card, ".work-role"))],
+    ].map(([label, test]) => ({ label, value: count(test) }));
+
+    const solo = count((card) => (parseInt(text(card, ".work-member"), 10) || 1) === 1);
+    const awards = document.querySelectorAll('.timeline-item[data-quest="award"]').length;
+    const rare = cards.filter((card) => card.classList.contains("is-rare")).length;
+
+    const firstDate = Array.from(document.querySelectorAll(".timeline-date"))
+        .map((date) => date.textContent.trim().match(/^(\d{4})\.(\d{1,2})/))
+        .filter(Boolean)
+        .map(([, y, m]) => Number(y) * 12 + Number(m) - 1)
+        .sort((a, b) => a - b)[0];
+    const now = new Date();
+    const level = firstDate === undefined ? 1 : Math.max(1, Math.ceil((now.getFullYear() * 12 + now.getMonth() - firstDate + 1) / 12));
+
+    const make = (tag, className, content) => {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        if (content !== undefined) element.textContent = content;
+        return element;
+    };
+
+    /* Profile panel */
+    const profile = make("div", "status-profile");
+    profile.append(
+        make("span", "status-tag", "STATUS"),
+        make("p", "status-name", "HARUTA NAGAYA"),
+        make("p", "status-class", "CLASS：ゲームプログラマー志望")
+    );
+    const params = make("dl", "status-params");
+    [
+        ["LV", level, "開発歴（年目）"],
+        ["WORKS", cards.length, "制作した作品"],
+        ["SOLO", solo, "個人制作"],
+        ["TEAM", cards.length - solo, "チーム制作"],
+        ["AWARDS", awards, "受賞"],
+        ["RARE", rare, "受賞作品"],
+    ].forEach(([key, value, note]) => {
+        const row = make("div", "status-param");
+        const dt = make("dt", "", key);
+        dt.title = note;
+        row.append(dt, make("dd", "", String(value)));
+        params.append(row);
+    });
+    profile.append(params);
+
+    /* EXP bars */
+    const expPanel = (title, note, items, tone) => {
+        const panel = make("div", `status-exp is-${tone}`);
+        const head = make("p", "status-exp-head");
+        head.append(make("span", "", title), make("small", "", note));
+        panel.append(head);
+        const list = make("ul", "exp-list");
+        const max = Math.max(...items.map((item) => item.value), 1);
+        items.filter((item) => item.value > 0).forEach((item, index) => {
+            const li = make("li");
+            li.style.setProperty("--fill", (item.value / max).toFixed(3));
+            li.style.setProperty("--i", index);
+            const label = make("span", "exp-label", item.label);
+            const bar = make("span", "exp-bar");
+            bar.append(make("span", "exp-fill"));
+            const value = make("span", "exp-value");
+            value.append(make("b", "", `Lv.${item.value}`));
+            li.append(label, bar, value);
+            li.setAttribute("aria-label", `${item.label}：${item.value}作品`);
+            list.append(li);
+        });
+        panel.append(list);
+        return panel;
+    };
+
+    host.append(
+        profile,
+        expPanel("SKILL EXP", "使った作品数", tech, "cyan"),
+        expPanel("ROLE EXP", "担当した作品数", role, "red")
+    );
+    host.hidden = false;
+
+    observeShow([host]);
+})();
+
+
+/* ========================================
+   Ending (credits)
+======================================== */
+
+(() => {
+    const ending = document.querySelector(".ending");
+    if (!ending) return;
+
+    const roll = ending.querySelector(".credits-roll");
+    const stats = ending.querySelector("[data-ending-stats]");
+
+    if (stats) {
+        const works = document.querySelectorAll(".work-card").length;
+        const awards = document.querySelectorAll('.timeline-item[data-quest="award"]').length;
+        const quests = document.querySelectorAll(".timeline-item").length;
+        stats.textContent = `WORKS ${works} ／ QUESTS ${quests} ／ AWARDS ${awards}`;
+    }
+
+    /* Cast: the characters that appeared on this page */
+    const cast = ending.querySelector("[data-ending-cast]");
+    if (cast) {
+        const names = new Set(
+            Array.from(document.querySelectorAll('img[src*="images/character/"]'))
+                .map((img) => (img.getAttribute("src") || "").split("/").pop().replace(/(_\d+)?\.png$/i, ""))
+        );
+        cast.textContent = names.size ? [...names].sort().join(" ／ ") : "Penny ／ Penko ／ Koutei";
+    }
+
+    /* Loop the credits once they come into view (static list when motion is off) */
+    if (roll && "IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => roll.classList.toggle("is-rolling", entry.isIntersecting));
+        }, { threshold: 0.2 });
+        observer.observe(ending);
+    }
+
+    observeShow([ending]);
 })();

@@ -2165,6 +2165,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         </p>
     </div>
 
+    <!-- Status screen: generated from the work cards (js/main.js) -->
+    <div class="status-screen" role="group" aria-label="ステータス（作品データから自動集計）" hidden></div>
+
 
     <!-- ================================
          Development
@@ -2998,6 +3001,35 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         </a>
         </div>
     </div>
+</section>
+
+<!-- ================================
+     Ending
+================================ -->
+<section id="ending" class="ending" aria-labelledby="ending-title">
+    <p class="ending-kicker"><span aria-hidden="true">★</span> ALL STAGES CLEAR <span aria-hidden="true">★</span></p>
+    <h2 id="ending-title" class="ending-title">THANK YOU <br>FOR PLAYING!</h2>
+    <p class="ending-lead">最後まで見てくださり、ありがとうございました。</p>
+    <p class="ending-stats" data-ending-stats></p>
+
+    <div class="credits-window">
+        <div class="credits-roll">
+            <dl class="credits-list">
+                <div><dt>GAME PROGRAMMER</dt><dd>長屋 晴太</dd></div>
+                <div><dt>GAME DESIGN / PLANNING</dt><dd>長屋 晴太</dd></div>
+                <div><dt>PORTFOLIO DESIGN &amp; CODE</dt><dd>長屋 晴太</dd></div>
+                <div><dt>CAST</dt><dd data-ending-cast></dd></div>
+                <div><dt>SPECIAL THANKS</dt><dd>チーム制作で一緒にゲームを作ったみなさん<br>作品を遊んでくれたすべてのプレイヤー</dd></div>
+                <div><dt>AND YOU</dt><dd>ここまで見てくれたあなた</dd></div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="ending-actions">
+        <a class="ending-button is-primary" href="#top">▶ もう一度はじめから</a>
+        <a class="ending-button" href="mailto:haru2401game@gmail.com">✉ 連絡する</a>
+    </div>
+    <p class="ending-hint">気に入ってもらえたら、右下の <span aria-hidden="true">❤</span> を押してもらえるとうれしいです</p>
 </section>
 
 </main>
