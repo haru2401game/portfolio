@@ -1438,7 +1438,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 ======================================== */
 
 (() => {
-    const photos = document.querySelectorAll(".tech-photo");
+    const photos = document.querySelectorAll(".tech-photo, .timeline-photo");
     if (!photos.length || typeof HTMLDialogElement !== "function") return;
 
     const viewer = document.createElement("dialog");
