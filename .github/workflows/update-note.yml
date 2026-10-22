@@ -28,7 +28,7 @@ jobs:
 
 
     - name: Install packages
-      run: npm install
+      run: npm ci
 
 
     - name: Update blog.json
