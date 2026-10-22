@@ -1915,12 +1915,17 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         toggle.setAttribute("aria-controls", steps.id);
         toggle.setAttribute("aria-expanded", "false");
 
+        const label = document.createElement("span");
+        const icon = document.createElement("i");
+        icon.setAttribute("aria-hidden", "true");
+        toggle.append(label, icon);
+
+        // ページ内の文章を使うので innerHTML ではなく textContent で入れる
         const render = () => {
             const open = !steps.classList.contains("is-folded");
             toggle.setAttribute("aria-expanded", String(open));
-            toggle.innerHTML = open
-                ? '<span>閉じる</span><i class="fa-solid fa-chevron-up" aria-hidden="true"></i>'
-                : `<span>${rest}を読む</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>`;
+            label.textContent = open ? "閉じる" : `${rest}を読む`;
+            icon.className = `fa-solid ${open ? "fa-chevron-up" : "fa-chevron-down"}`;
         };
 
         toggle.addEventListener("click", () => {
@@ -2137,6 +2142,36 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         if (!current) return;
         current.querySelector(".work-thumb")?.focus({ preventScroll: true });
         current.scrollIntoView({ block: "nearest", behavior: smooth() ? "smooth" : "auto" });
+    });
+})();
+
+/* ========================================
+   Quick Guide（30秒でわかる まとめ）
+   - 実績の数字は Achievements で計算した値をそのまま写す
+   - 代表作を押すと、Main Works の該当タブに切り替えてから移動する
+======================================== */
+
+(() => {
+    const summary = document.getElementById("summary");
+    if (!summary) return;
+
+    summary.querySelectorAll("[data-summary-stat]").forEach((target) => {
+        const source = document.getElementById(target.dataset.summaryStat);
+        if (!source) return;
+        const copy = () => {
+            if (source.dataset.value !== undefined) target.textContent = source.dataset.value;
+        };
+        copy();
+        if ("MutationObserver" in window) {
+            new MutationObserver(copy).observe(source, { attributes: true, attributeFilter: ["data-value"] });
+        }
+    });
+
+    summary.querySelectorAll("[data-summary-tab]").forEach((link) => {
+        link.addEventListener("click", () => {
+            const tab = document.getElementById(link.dataset.summaryTab);
+            if (tab && tab.getAttribute("aria-selected") !== "true") tab.click();
+        });
     });
 })();
 

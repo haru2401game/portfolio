@@ -6,6 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- セキュリティ：読み込んでよい場所を決める（自分のファイル・Google Fonts・Font Awesome・noteの画像・アクセス解析だけ）
+     新しく外部の画像やスクリプトを使うときは、ここに追加する -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://assets.st-note.com; media-src 'self'; connect-src 'self' https://portfolio-analytics.haru2401game.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
 <title>長屋晴太 | Game Creator Portfolio</title>
 
 <meta 
@@ -171,6 +176,85 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </section>
 
 <main>
+
+<!-- ================================
+     Quick Guide（30秒でわかるまとめ）
+     数字は Achievements と同じものを自動で表示する
+================================ -->
+<section id="summary" class="summary" aria-labelledby="summary-title">
+    <div class="summary-card">
+        <div class="summary-head">
+            <span class="summary-label">QUICK GUIDE</span>
+            <h2 id="summary-title">30秒でわかる 長屋晴太</h2>
+            <span class="summary-timer" aria-hidden="true"><i class="fa-solid fa-stopwatch"></i>0:30</span>
+        </div>
+
+        <dl class="summary-grid">
+            <div class="summary-item is-job">
+                <dt><span>01</span>目指す職種</dt>
+                <dd>
+                    <strong>ゲームプログラマー</strong>
+                    <p>2028年3月卒業予定<br>トライデントコンピュータ専門学校<br>ゲームサイエンス学科</p>
+                </dd>
+            </div>
+
+            <div class="summary-item is-skill">
+                <dt><span>02</span>得意な技術</dt>
+                <dd>
+                    <ul class="summary-tags">
+                        <li>Unity</li>
+                        <li>C#</li>
+                        <li>C++</li>
+                        <li>DxLib / DirectX</li>
+                        <li>GitHubでのチーム開発</li>
+                    </ul>
+                </dd>
+            </div>
+
+            <div class="summary-item is-works">
+                <dt><span>03</span>代表作</dt>
+                <dd>
+                    <ul class="summary-works">
+                        <li>
+                            <a href="#featured-works" data-summary-tab="tab-shishito">
+                                <b>ししとう</b>
+                                <span>リードプログラマー ／ 東京ゲームショウ2026出展</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#featured-works" data-summary-tab="tab-falien">
+                                <b>Falien</b>
+                                <span>ジェネラリスト ／ IGCCゲームジャム グランプリ</span>
+                            </a>
+                        </li>
+                    </ul>
+                </dd>
+            </div>
+
+            <div class="summary-item is-stats">
+                <dt><span>04</span>これまでの実績</dt>
+                <dd>
+                    <ul class="summary-stats">
+                        <li><b data-summary-stat="gameCount">34</b>作品</li>
+                        <li><b data-summary-stat="awardCount">5</b>受賞</li>
+                        <li><b data-summary-stat="eventCount">10</b>イベント</li>
+                        <li><b data-summary-stat="blogCount">270</b>ブログ</li>
+                    </ul>
+                </dd>
+            </div>
+        </dl>
+
+        <div class="summary-contact">
+            <p>お仕事・採用に関するご連絡は、メールでお気軽にどうぞ。</p>
+            <div class="summary-actions">
+                <a class="summary-mail" href="mailto:haru2401game@gmail.com">
+                    <i class="fa-solid fa-envelope" aria-hidden="true"></i>メールを送る
+                </a>
+                <a class="summary-more" href="#contact">連絡先・SNS <span aria-hidden="true">→</span></a>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- ================================
      About
 ================================ -->
