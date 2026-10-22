@@ -404,6 +404,130 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                 </li>
             </ul>
         </div>
+        <!-- Tech Highlights -->
+        <div class="tech-log">
+
+            <div class="tech-log-head">
+                <span class="tech-log-label">DEV LOG</span>
+                <h4>技術の見どころ</h4>
+                <p>リードプログラマー・チームリーダーとして、ゲームの中心になるプレイヤーシステムを担当しました。</p>
+            </div>
+
+            <!-- Highlight: player system -->
+            <article class="tech-highlight">
+                <div class="tech-highlight-title">
+                    <span>TECH HIGHLIGHT 01</span>
+                    <h5>四肢を回してキャラクターを操作するプレイヤーシステム</h5>
+                </div>
+
+                <ol class="tech-steps">
+                    <li class="tech-step is-problem">
+                        <span class="tech-step-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>課題</span>
+                        <p>
+                            実装初期は <code>Transform</code> の <code>Rotation</code> で四肢を回していましたが、
+                            地面を押す力が足りず、画面の動きが小さく、キャラクターの動きも激しくなりませんでした。
+                        </p>
+                    </li>
+                    <li class="tech-step is-solution">
+                        <span class="tech-step-label"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>解決</span>
+                        <p>
+                            回転の仕組みを <code>Rigidbody</code> の <code>AddForce</code> で特定の方向に力を加える方式に変更。
+                            回した手足で壁や床を強く押せるようになり、画面とキャラクターの激しい動きを表現できました。
+                        </p>
+                    </li>
+                    <li class="tech-step is-result">
+                        <span class="tech-step-label"><i class="fa-solid fa-face-laugh-squint" aria-hidden="true"></i>結果</span>
+                        <p>
+                            おもしろおかしいゲームの雰囲気を表現でき、
+                            遊ぶだけでなく見ていて面白いゲームになりました。
+                        </p>
+                    </li>
+                </ol>
+            </article>
+
+            <div class="tech-grid">
+
+                <!-- Party -->
+                <div class="tech-panel" role="group" aria-labelledby="tech-party-title">
+                    <span class="tech-panel-label">PARTY</span>
+                    <h5 id="tech-party-title">チーム構成と担当</h5>
+                    <ul class="tech-party">
+                        <li><b>3</b>プログラマー</li>
+                        <li><b>1</b>プランナー</li>
+                        <li><b>1</b>デザイナー</li>
+                    </ul>
+                    <p class="tech-note">※ 初期メンバー</p>
+                    <p class="tech-role">
+                        <span>ROLE</span>
+                        リードプログラマー / チームリーダー
+                    </p>
+                    <h6>自分で実装した部分</h6>
+                    <ul class="tech-tags">
+                        <li>プレイヤーシステム</li>
+                        <li>ロゴシーン</li>
+                        <li>タイトルシーン</li>
+                        <li>モードセレクト</li>
+                        <li>キャラクター選択</li>
+                        <li>リザルト</li>
+                        <li>プロジェクト統合</li>
+                    </ul>
+                </div>
+
+                <!-- Tools & flow -->
+                <div class="tech-panel" role="group" aria-labelledby="tech-flow-title">
+                    <span class="tech-panel-label">TOOLS &amp; FLOW</span>
+                    <h5 id="tech-flow-title">開発環境とチーム開発</h5>
+                    <ul class="tech-tags">
+                        <li>Unity 6000.3.17f1</li>
+                        <li>C#</li>
+                        <li>GitHub</li>
+                    </ul>
+                    <ol class="tech-flow">
+                        <li><span>01</span>メンバーごとにブランチを作成</li>
+                        <li><span>02</span>1つのタスクが完了した段階で main ブランチへコミット</li>
+                        <li><span>03</span>適宜プロジェクトを統合</li>
+                    </ol>
+                </div>
+
+            </div>
+
+            <!-- Results -->
+            <ul class="tech-awards" aria-label="成果">
+                <li><i class="fa-solid fa-face-grin-squint-tears" aria-hidden="true"></i>「学生チーム対抗ゲームジャム」で制作し、多くの方に笑ってもらえた</li>
+                <li><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>IGDA日本 スカラーシップ合格</li>
+                <li><i class="fa-solid fa-trophy" aria-hidden="true"></i>東京ゲームショウ2026 インディーゲームコーナーに出展</li>
+            </ul>
+            <!-- Photo gallery -->
+            <div class="tech-gallery">
+                <span class="tech-panel-label">PHOTOS</span>
+                <h5>活動の記録</h5>
+                <ul class="tech-photos">
+                    <li class="is-wide">
+                        <button class="tech-photo" type="button" data-caption="学生チーム対抗ゲームジャム：チームで「ししとう」を制作している様子">
+                            <img
+                                src="images/index/FeaturedWorks/gallery/gamejam.webp"
+                                alt="学生チーム対抗ゲームジャムで、チームで「ししとう」を制作している様子"
+                                width="1600"
+                                height="1067"
+                                loading="lazy">
+                            <span class="tech-photo-caption"><b>GAME JAM</b>学生チーム対抗ゲームジャムでの制作風景</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="tech-photo" type="button" data-caption="東京ゲームショウ2026：IGDA日本ブース（インディーゲームコーナー）での出展">
+                            <img
+                                src="images/index/FeaturedWorks/gallery/tgs2026.webp"
+                                alt="東京ゲームショウ2026のIGDA日本ブースで、「ししとう」のチラシを持つチームメンバー"
+                                width="1200"
+                                height="1600"
+                                loading="lazy">
+                            <span class="tech-photo-caption"><b>TGS 2026</b>IGDA日本ブースでの出展</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 </section>
 

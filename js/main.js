@@ -1431,3 +1431,47 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     toggle.addEventListener("click", () => setOpen(!drawer.classList.contains("is-open")));
     setOpen(false);
 })();
+
+
+/* ========================================
+   Photo viewer (Main Works gallery)
+======================================== */
+
+(() => {
+    const photos = document.querySelectorAll(".tech-photo");
+    if (!photos.length || typeof HTMLDialogElement !== "function") return;
+
+    const viewer = document.createElement("dialog");
+    viewer.className = "photo-viewer";
+    viewer.setAttribute("aria-label", "写真の拡大表示");
+
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+    const caption = document.createElement("figcaption");
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "photo-viewer-close";
+    close.setAttribute("aria-label", "閉じる");
+    close.textContent = "×";
+
+    figure.append(image, caption);
+    viewer.append(close, figure);
+    document.body.append(viewer);
+
+    photos.forEach((button) => {
+        button.addEventListener("click", () => {
+            const source = button.querySelector("img");
+            image.src = source.currentSrc || source.src;
+            image.alt = source.alt;
+            caption.textContent = button.dataset.caption || source.alt;
+            viewer.showModal();
+        });
+    });
+
+    close.addEventListener("click", () => viewer.close());
+
+    /* Clicking the dark backdrop (outside the photo) closes the viewer */
+    viewer.addEventListener("click", (event) => {
+        if (event.target === viewer) viewer.close();
+    });
+})();
