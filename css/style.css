@@ -6890,3 +6890,206 @@ footer.has-peeker {
     line-height: 1.7;
     text-align: center;
 }
+
+/* ========================================
+   Like button（サイト全体のいいね）
+======================================== */
+
+.like-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 900;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 6px 16px 6px 6px;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    background: var(--red-strong);
+    box-shadow: 0 5px 0 var(--red-edge), 0 12px 26px rgba(168, 38, 44, .28);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.like-button[hidden] {
+    display: none;
+}
+
+.like-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--red-edge), 0 16px 30px rgba(168, 38, 44, .32);
+}
+
+.like-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--red-edge), 0 8px 18px rgba(168, 38, 44, .28);
+}
+
+.like-button:focus-visible {
+    outline: 3px solid var(--ui-ink);
+    outline-offset: 3px;
+}
+
+.like-heart {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    animation: like-beat 2.8s ease-in-out infinite;
+}
+
+.like-heart svg {
+    fill: var(--red-strong);
+}
+
+.like-button.is-pop .like-heart {
+    animation: like-pop .35s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.like-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.05;
+}
+
+.like-count {
+    font-size: 17px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 900;
+}
+
+.like-label {
+    margin-top: 2px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    opacity: .9;
+}
+
+.like-combo {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 10px);
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--ui-ink);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.like-combo.is-show {
+    animation: like-combo .9s ease-out forwards;
+}
+
+.like-float {
+    position: absolute;
+    left: 25px;
+    top: 4px;
+    color: var(--red-strong);
+    font-size: 15px;
+    font-weight: 900;
+    pointer-events: none;
+    text-shadow: 0 0 0 #fff, 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    animation: like-float .8s ease-out forwards;
+}
+
+.like-particle {
+    position: absolute;
+    left: 20px;
+    top: 14px;
+    color: var(--red-strong);
+    font-size: 14px;
+    pointer-events: none;
+    animation: like-particle .7s ease-out forwards;
+}
+
+@keyframes like-beat {
+    0%, 70%, 100% { transform: scale(1); }
+    76% { transform: scale(1.16); }
+    82% { transform: scale(.96); }
+    88% { transform: scale(1.1); }
+}
+
+@keyframes like-pop {
+    0% { transform: scale(.7); }
+    60% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+@keyframes like-float {
+    0% { opacity: 0; transform: translate(0, 0) scale(.8); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--dx), -46px) scale(1.15); }
+}
+
+@keyframes like-particle {
+    0% { opacity: 1; transform: translate(0, 0) rotate(0) scale(.6); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.1); }
+}
+
+@keyframes like-combo {
+    0% { opacity: 0; transform: translateY(6px) scale(.9); }
+    15% { opacity: 1; transform: translateY(0) scale(1.08); }
+    30% { transform: scale(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ページの一番下の文字がいいねボタンに隠れないように */
+.has-like .footer-privacy {
+    padding-bottom: 72px;
+}
+
+/* 実績トーストはいいねボタンの上に出す */
+.has-like .achievement-toast {
+    bottom: 92px;
+}
+
+@media (max-width: 600px) {
+    .like-button {
+        right: 14px;
+        bottom: 14px;
+        min-height: 46px;
+        gap: 8px;
+        padding: 4px 13px 4px 4px;
+    }
+
+    .like-heart {
+        width: 34px;
+        height: 34px;
+    }
+
+    .like-count {
+        font-size: 15px;
+    }
+
+    .has-like .achievement-toast {
+        bottom: 76px;
+    }
+}
+
+.motion-off .like-combo.is-show {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .like-heart,
+    .like-button.is-pop .like-heart {
+        animation: none;
+    }
+}
