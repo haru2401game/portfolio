@@ -7822,3 +7822,260 @@ footer.has-peeker {
         display: none;
     }
 }
+
+
+/* ========================================
+   Accessibility: readable contrast (WCAG AA 4.5:1)
+   Bright accents stay for decoration; text sits on slightly deeper shades.
+======================================== */
+
+:root {
+    --color-sub: #5b6560;
+    --cyan-strong: #007caa;
+    --cyan-strong-hover: #00709a;
+    --cyan-edge: #005b7d;
+    --green-strong: #178640;
+    --green-edge: #0f6330;
+    --red-strong: #d6363d;
+    --red-edge: #a8262c;
+    --purple-strong: #7c4dea;
+    --purple-edge: #5b33c2;
+}
+
+/* Darker inks for small text on soft pastel chips */
+.achievement-card:nth-child(1) { --stat-ink: #006d96; }
+.achievement-card:nth-child(2) { --stat-ink: #b42d34; }
+.achievement-card:nth-child(3) { --stat-ink: #905c00; }
+.achievement-card:nth-child(4) { --stat-ink: #137538; }
+.achievement-card:nth-child(6) { --stat-ink: #a24909; }
+
+.featured-works .info-item:nth-child(1) { --stat-ink: #006d96; }
+.featured-works .info-item:nth-child(2) { --stat-ink: #137538; }
+.featured-works .featured-point { --stat-ink: #b42d34; }
+.about-meta div { --stat-ink: #b42d34; }
+
+.can-do-category:nth-child(2) { --cat-ink: #006d96; --cat-strong: var(--cyan-strong); --cat-edge: var(--cyan-edge); }
+.can-do-category:nth-child(3) { --cat-ink: #137538; --cat-strong: var(--green-strong); --cat-edge: var(--green-edge); }
+.can-do-category:nth-child(4) { --cat-strong: var(--purple-strong); --cat-edge: var(--purple-edge); }
+
+.article-card:nth-child(1 of .article-card) { --log-ink: #b42d34; --log-strong: var(--red-strong); }
+.article-card:nth-child(2 of .article-card) { --log-ink: #006d96; --log-strong: var(--cyan-strong); }
+.article-card:nth-child(3 of .article-card) { --log-strong: var(--purple-strong); }
+
+.play-card:nth-child(1) { --pc-strong: #1777ca; --pc-edge: #0f58a0; }
+.play-card:nth-child(2) { --pc-strong: #d23b3b; --pc-edge: #9e2a2a; }
+.play-card:nth-child(3) { --pc-strong: var(--green-strong); --pc-edge: var(--green-edge); }
+
+.timeline-item { --quest-ink: #137538; }
+.timeline-item[data-quest="award"] { --quest-ink: #905c00; }
+.timeline-item[data-quest="now"] { --quest-ink: #b42d34; }
+
+.mail-card-label { color: #b42d34; }
+.about-image-caption b { color: #c8323a; }
+.other-works .section-title p { color: var(--color-sub); }
+.footer-copyright { color: var(--color-sub); }
+
+/* Cyan buttons and labels with white text */
+.hero-button,
+.blog-button {
+    background: var(--cyan-strong);
+    box-shadow: 0 5px 0 var(--cyan-edge);
+}
+
+.hero-button:hover,
+.blog-button:hover {
+    background: var(--cyan-strong-hover);
+    box-shadow: 0 7px 0 var(--cyan-edge);
+}
+
+.hero-button:active,
+.blog-button:active {
+    box-shadow: 0 1px 0 var(--cyan-edge);
+}
+
+.works-toggle-label,
+.blog-message::before {
+    background: var(--cyan-strong);
+    box-shadow: 0 3px 0 var(--cyan-edge);
+}
+
+.blog-message::before {
+    box-shadow: none;
+}
+
+.stage-filter button[aria-pressed="true"] {
+    border-color: var(--cyan-strong);
+    background: var(--cyan-strong);
+    box-shadow: 0 4px 0 var(--cyan-edge);
+}
+
+.work-link:hover {
+    background: var(--cyan-strong);
+}
+
+/* Category badges, play buttons and article links */
+.can-do-category-title > span {
+    background: var(--cat-strong) !important;
+    box-shadow: 0 4px 0 var(--cat-edge);
+}
+
+.play-card span {
+    background: var(--pc-strong);
+    box-shadow: 0 4px 0 var(--pc-edge);
+}
+
+.play-card:active span {
+    box-shadow: 0 1px 0 var(--pc-edge);
+}
+
+.article-content a:hover {
+    background: var(--log-strong);
+}
+
+/* Red badges and buttons with white text */
+.hero-overlay,
+.featured-video::before,
+.article-badges .is-new,
+.mail-button {
+    background: var(--red-strong);
+    box-shadow: 0 4px 0 var(--red-edge);
+}
+
+.mail-button {
+    box-shadow: 0 5px 0 var(--red-edge);
+}
+
+.mail-button:hover {
+    box-shadow: 0 7px 0 var(--red-edge);
+}
+
+.mail-button:active {
+    box-shadow: 0 1px 0 var(--red-edge);
+}
+
+.stage-badges .is-team {
+    background: var(--purple-strong);
+}
+
+
+/* ========================================
+   New section order: renumbered labels
+======================================== */
+
+.featured-works .section-title h2::before { content: "03 / FEATURED TITLE"; }
+.other-works .section-title h2::before { content: "04 / PROJECT ARCHIVE"; }
+.play-games .section-title h2::before { content: "05 / PLAYABLE BUILDS"; }
+.what-i-can-do .section-title::before { content: "06 / CAPABILITIES"; }
+.timeline .section-title h2::before { content: "07 / DEVELOPMENT LOG"; }
+.blog .section-title h2::before { content: "08 / CREATOR JOURNAL"; }
+.contact .section-title h2::before { content: "09 / FIND THE CREATOR"; }
+
+/* ========================================
+   Timeline: folded older quests
+======================================== */
+
+.quest-toggle {
+    display: flex;
+    width: min(100%, 1040px);
+    align-items: center;
+    gap: 14px;
+    margin: 0 auto 18px;
+    padding: 14px 20px;
+    border: 2px dashed #c3ccd8;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .75);
+    color: var(--ui-ink);
+    cursor: pointer;
+    font: inherit;
+    font-size: .92rem;
+    font-weight: 750;
+    text-align: left;
+    transition: transform .2s cubic-bezier(.2, .9, .3, 1.3), border-color .2s ease, background .2s ease;
+}
+
+.quest-toggle:hover {
+    transform: translateY(-2px);
+    border-color: #22c55e;
+    background: #fff;
+}
+
+.quest-toggle:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 3px;
+}
+
+.quest-toggle-icon {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #137538;
+    font-size: 11px;
+    transition: rotate .4s cubic-bezier(.2, .9, .3, 1.3);
+    animation: idle-bob 1.6s ease-in-out infinite;
+}
+
+.quest-toggle[aria-expanded="true"] .quest-toggle-icon {
+    rotate: 180deg;
+    animation: none;
+}
+
+.quest-toggle-text {
+    flex: 1 1 auto;
+}
+
+.quest-toggle-count {
+    flex: 0 0 auto;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--ui-panel);
+    color: var(--ui-sub);
+    font-size: 10px;
+    letter-spacing: .14em;
+}
+
+.quest-drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .7s cubic-bezier(.2, .8, .2, 1);
+}
+
+.quest-drawer.is-open {
+    grid-template-rows: 1fr;
+}
+
+.quest-drawer-inner {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.quest-drawer.is-settled .quest-drawer-inner {
+    overflow: visible;
+}
+
+@media (max-width: 600px) {
+    .quest-toggle {
+        flex-wrap: wrap;
+        padding: 12px 14px;
+    }
+
+    .quest-toggle-text {
+        flex-basis: calc(100% - 50px);
+    }
+
+    .quest-toggle-count {
+        margin-left: 48px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quest-drawer,
+    .quest-toggle,
+    .quest-toggle-icon {
+        transition: none;
+        animation: none;
+    }
+}

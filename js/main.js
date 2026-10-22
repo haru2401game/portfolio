@@ -1352,3 +1352,76 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         }, 2000);
     });
 });
+
+
+/* ========================================
+   Timeline: show the latest 3 quests, fold the rest
+======================================== */
+
+(() => {
+    const container = document.querySelector(".timeline-container");
+    if (!container) return;
+
+    const items = Array.from(container.querySelectorAll(".timeline-item"));
+    const VISIBLE = 3;
+    if (items.length <= VISIBLE) return;
+
+    const older = items.slice(0, items.length - VISIBLE);
+
+    const drawer = document.createElement("div");
+    drawer.className = "quest-drawer";
+    drawer.id = "quest-drawer";
+
+    const inner = document.createElement("div");
+    inner.className = "quest-drawer-inner";
+
+    older[0].before(drawer);
+    drawer.append(inner);
+    inner.append(...older);
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "quest-toggle";
+    toggle.setAttribute("aria-controls", "quest-drawer");
+
+    const icon = document.createElement("span");
+    icon.className = "quest-toggle-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "▲";
+
+    const text = document.createElement("span");
+    text.className = "quest-toggle-text";
+
+    const count = document.createElement("span");
+    count.className = "quest-toggle-count";
+    count.textContent = `QUEST 01–${String(older.length).padStart(2, "0")}`;
+
+    toggle.append(icon, text, count);
+    container.before(toggle);
+
+    const timelineSection = document.getElementById("timeline");
+
+    const setOpen = (open) => {
+        drawer.classList.toggle("is-open", open);
+        drawer.classList.remove("is-settled");
+        drawer.inert = !open;
+        toggle.setAttribute("aria-expanded", String(open));
+        text.textContent = open
+            ? "これまでのクエストを閉じる"
+            : `これまでのクエストを見る（${older.length}件）`;
+
+        if (open && prefersReducedMotion) drawer.classList.add("is-settled");
+        if (!open && timelineSection && timelineSection.getBoundingClientRect().top < 0) {
+            timelineSection.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+        }
+    };
+
+    drawer.addEventListener("transitionend", (event) => {
+        if (event.target === drawer && drawer.classList.contains("is-open")) {
+            drawer.classList.add("is-settled");
+        }
+    });
+
+    toggle.addEventListener("click", () => setOpen(!drawer.classList.contains("is-open")));
+    setOpen(false);
+})();
