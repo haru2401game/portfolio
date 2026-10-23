@@ -1872,8 +1872,6 @@ button:focus-visible {
     min-height: 210px;
     display: grid;
     grid-template-columns: 72px minmax(0, 1fr);
-    align-content: center;
-    align-items: center;
     gap: 20px;
     padding: 28px;
     overflow: hidden;

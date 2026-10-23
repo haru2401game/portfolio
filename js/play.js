@@ -10,35 +10,8 @@
    記録（図鑑・前回の位置）は、見ている人のブラウザ（localStorage）にだけ残る
 ======================================== */
 
+// 共通の道具（root・reduceMotion・isSimple・localData・sessionData・emitPlayEvent）は main.js にある
 (() => {
-    const root = document.documentElement;
-    const reduceMotion = () =>
-        root.classList.contains("motion-off") ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // シンプル表示（採用担当者モード）のときは、遊びの演出を出さない
-    const simple = () => root.classList.contains("mode-simple");
-
-    const store = {
-        get(key, fallback) {
-            try {
-                const value = JSON.parse(localStorage.getItem(key));
-                return value ?? fallback;
-            } catch {
-                return fallback;
-            }
-        },
-        set(key, value) {
-            try {
-                localStorage.setItem(key, JSON.stringify(value));
-            } catch {
-                /* private mode etc. */
-            }
-        },
-    };
-
-    // アクセス解析に「隠し要素が見つかった」を送る（analytics.js が受け取る）
-    const report = (name) => document.dispatchEvent(new CustomEvent("play:event", { detail: { name } }));
-
     /* ---------- お知らせ（ヘッダーの下にゲーム風の通知） ---------- */
 
     const notices = [];
@@ -77,7 +50,7 @@
     };
 
     const notify = (notice) => {
-        if (simple()) return;
+        if (isSimple()) return;
         notices.push(notice);
         showNext();
     };
@@ -92,7 +65,7 @@
     // このページに登場するキャラ（顔を出す・漂う・飛び出すキャラすべて）
     const allCast = () => [...new Set(Array.from(document.querySelectorAll('img[src*="images/character/"]')).map(nameOf).filter(Boolean))].sort();
     const castTotal = allCast().length;
-    const found = new Set(store.get("pa-cast", []).filter((name) => typeof name === "string"));
+    const found = new Set(localData.get("pa-cast", []).filter((name) => typeof name === "string"));
 
     const bubble = (x, y, text) => {
         if (reduceMotion()) return;
@@ -160,7 +133,7 @@
         }
 
         found.add(name);
-        store.set("pa-cast", [...found]);
+        localData.set("pa-cast", [...found]);
         document.dispatchEvent(new CustomEvent("play:cast", { detail: { count: found.size, total: castTotal } }));
         bubble(event.clientX, event.clientY, "見つかった！");
         const count = found.size;
@@ -170,7 +143,7 @@
             image: img.currentSrc || img.src,
             tone: count >= castTotal ? "gold" : "",
         });
-        if (count >= castTotal) report("キャラ図鑑 コンプリート");
+        if (count >= castTotal) emitPlayEvent("キャラ図鑑 コンプリート");
         renderCredits();
     };
 
@@ -184,7 +157,7 @@
     });
 
     document.addEventListener("click", (event) => {
-        if (simple()) return;
+        if (isSimple()) return;
         let img = event.target.closest?.(".peeker-sprite, .drifter");
         if (!img && !event.target.closest?.(INTERACTIVE)) img = characterAt(event.clientX, event.clientY);
         if (img) catchCharacter(img, event);
@@ -201,9 +174,9 @@
     let parading = false;
 
     const parade = () => {
-        if (parading || simple()) return;
+        if (parading || isSimple()) return;
         parading = true;
-        report("隠しコマンド");
+        emitPlayEvent("隠しコマンド");
 
         const layer = document.createElement("div");
         layer.className = "play-parade";
@@ -331,7 +304,7 @@
     /* ---------- 3. つづきから ---------- */
 
     const SAVE_KEY = "pa-save";
-    const saved = store.get(SAVE_KEY, null);
+    const saved = localData.get(SAVE_KEY, null);
     let saveTimer = 0;
 
     const save = () => {
@@ -339,7 +312,7 @@
         saveTimer = setTimeout(() => {
             const section = currentSection();
             if (!section || section === ending) return;
-            store.set(SAVE_KEY, { id: section.id, label: labelOf(section), at: Date.now() });
+            localData.set(SAVE_KEY, { id: section.id, label: labelOf(section), at: Date.now() });
         }, 600);
     };
 
@@ -354,7 +327,7 @@
     const target = saved && typeof saved.id === "string" ? document.getElementById(saved.id) : null;
     const recent = saved && Date.now() - Number(saved.at || 0) < 30 * 24 * 60 * 60 * 1000;
 
-    if (!simple() && firstView && target && recent && stageSections.includes(target) && !location.hash && window.scrollY < 200) {
+    if (!isSimple() && firstView && target && recent && stageSections.includes(target) && !location.hash && window.scrollY < 200) {
         const card = document.createElement("div");
         card.className = "play-continue";
         card.setAttribute("role", "dialog");
@@ -382,8 +355,8 @@
 
         go.addEventListener("click", () => {
             dismiss();
-            report("つづきから");
-            target.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "start" });
+            emitPlayEvent("つづきから");
+            target.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
         });
         close.addEventListener("click", dismiss);
 
@@ -433,29 +406,6 @@
 ======================================== */
 
 (() => {
-    const root = document.documentElement;
-    const reduceMotion = () =>
-        root.classList.contains("motion-off") ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const simple = () => root.classList.contains("mode-simple");
-
-    const local = {
-        get(key, fallback) {
-            try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
-        },
-        set(key, value) {
-            try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
-        },
-    };
-    const session = {
-        get(key, fallback) {
-            try { return JSON.parse(sessionStorage.getItem(key)) ?? fallback; } catch { return fallback; }
-        },
-        set(key, value) {
-            try { sessionStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
-        },
-    };
-
     /* ========================================
        トロフィー
     ======================================== */
@@ -475,7 +425,7 @@
         { id: "continue", icon: "💾", title: "セーブデータ", text: "「つづきから」で再開した", hint: "また遊びに来てね" },
     ];
 
-    let unlocked = local.get("pa-trophy", {});
+    let unlocked = localData.get("pa-trophy", {});
     if (!unlocked || typeof unlocked !== "object" || Array.isArray(unlocked)) unlocked = {};
     const count = () => TROPHIES.filter((t) => unlocked[t.id]).length;
 
@@ -484,7 +434,7 @@
     let showing = false;
     const showNext = () => {
         if (showing || !queue.length) return;
-        if (simple()) {
+        if (isSimple()) {
             queue.length = 0;
             return;
         }
@@ -523,12 +473,12 @@
         const trophy = TROPHIES.find((t) => t.id === id);
         if (!trophy || unlocked[id]) return;
         unlocked[id] = Date.now();
-        local.set("pa-trophy", unlocked);
+        localData.set("pa-trophy", unlocked);
         queue.push({ trophy, n: count() });
         showNext();
         renderOpener();
         if (room?.open) renderRoom();
-        if (count() === TROPHIES.length) document.dispatchEvent(new CustomEvent("play:event", { detail: { name: "トロフィー コンプリート" } }));
+        if (count() === TROPHIES.length) emitPlayEvent("トロフィー コンプリート");
     };
     window.PlayTrophy = { unlock };
 
@@ -589,7 +539,7 @@
         }
         renderRoom();
         if (typeof room.showModal === "function") room.showModal();
-        document.dispatchEvent(new CustomEvent("play:event", { detail: { name: "トロフィー一覧" } }));
+        emitPlayEvent("トロフィー一覧");
     };
 
     const renderOpener = () => {
@@ -623,25 +573,25 @@
     unlock("start");
 
     // 作品の詳細（ポップアップ）を5作品
-    const seenWorks = new Set(session.get("pa-works", []));
+    const seenWorks = new Set(sessionData.get("pa-works", []));
     document.addEventListener("work-viewer:open", (event) => {
         if (event.detail?.title) seenWorks.add(event.detail.title);
-        session.set("pa-works", [...seenWorks]);
+        sessionData.set("pa-works", [...seenWorks]);
         if (seenWorks.size >= 5) unlock("works5");
     });
 
-    let photos = session.get("pa-photos", 0);
-    let likes = local.get("pa-likes", 0);
+    let photos = sessionData.get("pa-photos", 0);
+    let likes = localData.get("pa-likes", 0);
     document.addEventListener("click", (event) => {
         if (event.target.closest?.(".tech-photo, .timeline-photo")) {
             photos += 1;
-            session.set("pa-photos", photos);
+            sessionData.set("pa-photos", photos);
             unlock("photo");
         }
         if (event.target.closest?.(".play-card")) unlock("play");
         if (event.target.closest?.(".like-button")) {
             likes += 1;
-            local.set("pa-likes", likes);
+            localData.set("pa-likes", likes);
             if (likes >= 100) unlock("like100");
         }
     }, true);
@@ -656,7 +606,7 @@
         if (name === "つづきから") unlock("continue");
     });
     // 以前に見つけていた分も反映
-    const castFound = local.get("pa-cast", []).length;
+    const castFound = localData.get("pa-cast", []).length;
     const castTotal = document.querySelectorAll(".cast-name").length;
     if (castFound >= 5) unlock("cast5");
     if (castTotal && castFound >= castTotal) unlock("castAll");
@@ -664,7 +614,7 @@
     /* 読んだステージ（この訪問で） */
     const stages = Array.from(document.querySelectorAll("main > section[id]"))
         .filter((section) => section.querySelector(":scope > .section-title h2"));
-    const reached = new Set(session.get("pa-reached", []));
+    const reached = new Set(sessionData.get("pa-reached", []));
     const ending = document.getElementById("ending");
 
     if ("IntersectionObserver" in window) {
@@ -677,7 +627,7 @@
                     return;
                 }
                 reached.add(entry.target.id);
-                session.set("pa-reached", [...reached]);
+                sessionData.set("pa-reached", [...reached]);
                 if (stages.every((stage) => reached.has(stage.id))) unlock("allStages");
             });
         }, { threshold: 0.25 });
@@ -689,11 +639,11 @@
        プレイタイムとランク（エンディング）
     ======================================== */
 
-    let playTime = Number(session.get("pa-playtime", 0)) || 0;
+    let playTime = Number(sessionData.get("pa-playtime", 0)) || 0;
     setInterval(() => {
         if (document.visibilityState !== "visible") return;
         playTime += 1;
-        if (playTime % 5 === 0) session.set("pa-playtime", playTime);
+        if (playTime % 5 === 0) sessionData.set("pa-playtime", playTime);
     }, 1000);
 
     const RANKS = [
@@ -705,7 +655,7 @@
 
     const score = () => {
         const sections = stages.filter((stage) => reached.has(stage.id)).length;
-        const cast = local.get("pa-cast", []).length;
+        const cast = localData.get("pa-cast", []).length;
         const points =
             sections * 8 +                       // 最大 72
             Math.min(seenWorks.size, 5) * 4 +    // 最大 20
@@ -839,10 +789,6 @@
     const items = Array.from(document.querySelectorAll(".timeline-item"));
     if (!container || items.length < 2) return;
 
-    const reduce = () =>
-        document.documentElement.classList.contains("motion-off") ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const clean = (text) => (text || "").replace(/\s+/g, " ").trim();
     const stages = items.map((item) => {
         const date = clean(item.querySelector(".timeline-date")?.textContent);
@@ -944,7 +890,7 @@
         const hidden = drawer && drawer.contains(stage.item) && !drawer.classList.contains("is-open");
         if (hidden && toggle) toggle.click();
         setTimeout(() => {
-            stage.item.scrollIntoView({ behavior: reduce() ? "auto" : "smooth", block: "center" });
+            stage.item.scrollIntoView({ behavior: scrollBehavior(), block: "center" });
             highlight(stage.item);
         }, hidden ? 450 : 0);
     };
