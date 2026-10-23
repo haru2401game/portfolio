@@ -9360,3 +9360,438 @@ main > section[id]:not(#summary):not(#ending) {
 .achievement-toast .toast-icon {
     color: #4a2f00;
 }
+
+/* ========================================
+   PLAY / SIMPLE（採用担当者モード）
+======================================== */
+
+.mode-toggle {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 2px;
+    margin-left: auto;
+    padding: 3px;
+    border: 2px solid var(--ui-line, #e1e7ef);
+    border-radius: 999px;
+    background: #f5f8fc;
+    box-shadow: 0 3px 0 var(--ui-line, #e1e7ef);
+    color: var(--ui-sub, #5b6560);
+    cursor: pointer;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.mode-toggle + .motion-toggle {
+    margin-left: 10px;
+}
+
+.mode-toggle-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 32px;
+    padding: 0 10px;
+    border-radius: 999px;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.mode-toggle-icon {
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+.mode-toggle[aria-pressed="false"] .is-play,
+.mode-toggle[aria-pressed="true"] .is-simple {
+    background: #111713;
+    color: #fff;
+}
+
+.mode-toggle:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+    .mode-toggle-text {
+        display: none;
+    }
+
+    .mode-toggle-option {
+        padding: 0 7px;
+    }
+}
+
+@media (max-width: 420px) {
+    .mode-toggle + .motion-toggle {
+        margin-left: 6px;
+    }
+
+    .mode-toggle-option {
+        min-height: 32px;
+        padding: 0 5px;
+    }
+}
+
+/* ボタンが増えた分、ヘッダーが窮屈な幅ではロゴの文字を短くする */
+@media (min-width: 769px) and (max-width: 960px) {
+    .header-logo {
+        margin-right: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .brand-name small {
+        display: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .brand-name {
+        display: none;
+    }
+}
+
+/* SIMPLE のときは、遊びの演出をすべて消す（内容はそのまま） */
+.mode-simple .peeker,
+.mode-simple .drifter,
+.mode-simple .card-pop,
+.mode-simple .ambient,
+.mode-simple .play-notice,
+.mode-simple .play-bubble,
+.mode-simple .play-spark,
+.mode-simple .play-parade,
+.mode-simple .play-continue,
+.mode-simple .stage-bar,
+.mode-simple .season-fall,
+.mode-simple .season-badge,
+.mode-simple .achievement-toast,
+.mode-simple .footer-trophy,
+.mode-simple .ending-trophy,
+.mode-simple .ending-rank,
+.mode-simple .cast-meter,
+.mode-simple .ending-secret,
+.mode-simple .rare-shine,
+.mode-simple .hero-index,
+.mode-simple .world-hero,
+.mode-simple .like-combo,
+.mode-simple .like-float,
+.mode-simple .like-particle {
+    display: none !important;
+}
+
+.mode-simple .peeker-sprite,
+.mode-simple .drifter {
+    pointer-events: none;
+}
+
+/* ========================================
+   Timeline：ワールドマップ
+======================================== */
+
+.world-map {
+    width: min(100%, 1040px);
+    margin: 0 auto 36px;
+    overflow: hidden;
+    border: 2px solid #111713;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 6px 0 #111713, 0 18px 36px rgba(20, 25, 30, .08);
+}
+
+.world-map-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 14px;
+    padding: 10px 18px;
+    background: #111713;
+    color: #fff;
+}
+
+.world-map-label {
+    color: #ffd54a;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .2em;
+}
+
+.world-map-hint {
+    color: rgba(255, 255, 255, .78);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.world-map-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+}
+
+.world-map-scroll:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: -3px;
+}
+
+.world-map-field {
+    position: relative;
+    min-width: 100%;
+    background:
+        radial-gradient(rgba(17, 23, 19, .07) 1px, transparent 1.4px) 0 0 / 18px 18px;
+}
+
+.world-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-right: 2px dashed rgba(17, 23, 19, .12);
+}
+
+.world-zone:last-of-type {
+    border-right: 0;
+}
+
+.world-zone.is-world-1 { background: linear-gradient(180deg, rgba(34, 197, 94, .1), rgba(34, 197, 94, .02)); }
+.world-zone.is-world-2 { background: linear-gradient(180deg, rgba(0, 163, 224, .1), rgba(0, 163, 224, .02)); }
+.world-zone.is-world-3 { background: linear-gradient(180deg, rgba(139, 92, 246, .1), rgba(139, 92, 246, .02)); }
+
+.world-zone span {
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    color: rgba(17, 23, 19, .5);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .18em;
+}
+
+.world-path {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.world-road {
+    fill: none;
+    stroke: #e8dcc0;
+    stroke-linecap: round;
+    stroke-width: 16;
+}
+
+.world-road-dash {
+    fill: none;
+    stroke: #b99b5f;
+    stroke-dasharray: 2 10;
+    stroke-linecap: round;
+    stroke-width: 4;
+}
+
+.world-node {
+    position: absolute;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+.world-node-dot {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #111713;
+    border-radius: 50%;
+    background: var(--node, #22c55e);
+    box-shadow: 0 4px 0 #111713;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+    transition: transform .2s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.world-node.is-clear { --node: #15803d; }
+.world-node.is-award { --node: #ffb300; }
+.world-node.is-award .world-node-dot { color: #4a2f00; }
+.world-node.is-now { --node: #d6363d; }
+
+.world-node:hover .world-node-dot,
+.world-node:focus-visible .world-node-dot {
+    transform: translateY(-3px) scale(1.1);
+}
+
+.world-node:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 4px;
+    border-radius: 50%;
+}
+
+.world-node-code {
+    position: absolute;
+    top: -4px;
+    right: -14px;
+    padding: 1px 5px;
+    border-radius: 6px;
+    background: #111713;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .04em;
+}
+
+.world-node-name {
+    position: absolute;
+    left: 50%;
+    display: -webkit-box;
+    width: 104px;
+    overflow: hidden;
+    color: #111713;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1.35;
+    text-align: center;
+    transform: translateX(-50%);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.world-node-name.is-above {
+    bottom: calc(100% + 6px);
+}
+
+.world-node-name.is-below {
+    top: calc(100% + 8px);
+}
+
+.world-hero {
+    position: absolute;
+    z-index: 2;
+    width: 40px;
+    image-rendering: pixelated;
+    pointer-events: none;
+    transform: translate(-50%, -78%);
+    animation: world-hero 1.2s ease-in-out infinite;
+}
+
+@keyframes world-hero {
+    50% { translate: 0 -6px; }
+}
+
+/* マップから移動してきた経歴カードを光らせる */
+.timeline-item.is-map-target .timeline-content {
+    animation: map-target 1.6s ease;
+}
+
+@keyframes map-target {
+    0%, 100% { box-shadow: none; }
+    20%, 60% { box-shadow: 0 0 0 4px #ffb300, 0 0 24px rgba(255, 179, 0, .45); }
+}
+
+@media (max-width: 768px) {
+    .world-map {
+        margin-bottom: 26px;
+        border-radius: 16px;
+    }
+
+    .world-map-hint {
+        font-size: 10px;
+    }
+}
+
+/* ========================================
+   Other Works：ゲームカセット風のカード
+======================================== */
+
+.works-list .work-card,
+.works-list .work-card:hover {
+    gap: 6px;
+    padding: 16px 12px 24px;
+    border: 2px solid #7d8794;
+    border-radius: 10px 10px 22px 22px;
+    background: linear-gradient(180deg, #e6e9ee 0%, #cfd5dd 100%);
+    box-shadow: 0 6px 0 #6f7986, inset 0 2px 0 rgba(255, 255, 255, .75), inset 0 -3px 0 rgba(0, 0, 0, .08);
+}
+
+.works-list .work-card:hover {
+    border-color: #5b6672;
+    box-shadow: 0 10px 0 #5b6672, 0 20px 34px rgba(30, 45, 70, .14), inset 0 2px 0 rgba(255, 255, 255, .75);
+}
+
+/* 上の溝（カセットの差し込み口） */
+.works-list .work-card::before {
+    display: block;
+    z-index: 1;
+    top: 5px;
+    left: 50%;
+    width: 34%;
+    height: 6px;
+    border-radius: 3px;
+    background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .2) 0 2px, transparent 2px 6px);
+    content: "";
+    text-shadow: none;
+    translate: -50% 0;
+}
+
+/* 下の刻印 */
+.works-list .work-card::after {
+    display: block;
+    top: auto;
+    right: 0;
+    bottom: 5px;
+    left: 0;
+    height: auto;
+    background: none;
+    color: rgba(17, 23, 19, .34);
+    content: "HARU GAMES";
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: .34em;
+    text-align: center;
+    transform: none;
+}
+
+/* ラベル（画像と説明）を貼ったシールのように */
+.works-list .work-card > .work-thumb {
+    overflow: hidden;
+    border: 2px solid rgba(17, 23, 19, .18);
+    border-radius: 8px;
+}
+
+.works-list .work-card > .work-content {
+    border: 2px solid rgba(17, 23, 19, .12);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.works-list .work-card .stage-badges {
+    top: 22px;
+    left: 20px;
+}
+
+/* 受賞作は金色のカセット */
+.works-list .work-card.is-rare,
+.works-list .work-card.is-rare:hover {
+    border-color: #b8860b;
+    background: linear-gradient(180deg, #ffe9a8 0%, #f2c14b 100%);
+    box-shadow: 0 6px 0 #a87a08, 0 0 0 4px rgba(242, 183, 5, .18), inset 0 2px 0 rgba(255, 255, 255, .7);
+}
+
+.works-list .work-card.is-rare::after {
+    color: rgba(92, 60, 0, .5);
+    content: "★ HARU GAMES ★";
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .world-hero {
+        animation: none;
+    }
+}
+

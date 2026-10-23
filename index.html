@@ -108,6 +108,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     </a>
 
     <button
+        class="mode-toggle"
+        type="button"
+        aria-pressed="false"
+        aria-label="シンプル表示（遊びの演出をすべて消す）">
+        <span class="mode-toggle-option is-play" aria-hidden="true"><span class="mode-toggle-icon">🎮</span><span class="mode-toggle-text">PLAY</span></span>
+        <span class="mode-toggle-option is-simple" aria-hidden="true"><span class="mode-toggle-icon">📄</span><span class="mode-toggle-text">SIMPLE</span></span>
+    </button>
+    <button
         class="motion-toggle"
         type="button"
         role="switch"

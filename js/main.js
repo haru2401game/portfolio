@@ -79,6 +79,15 @@ function motionOff() {
     }
     const off = saved ? saved === "off" : prefersReducedMotion;
     document.documentElement.classList.toggle("motion-off", off);
+
+    // シンプル表示（採用担当者モード）：遊びの演出を消して、動きも止める
+    let mode = null;
+    try {
+        mode = localStorage.getItem("portfolio-mode");
+    } catch {
+        mode = null;
+    }
+    if (mode === "simple") document.documentElement.classList.add("mode-simple", "motion-off");
 })();
 
 const heroVideo = document.querySelector(".hero-video");
@@ -1386,6 +1395,50 @@ function syncMotionToggle() {
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return rect.bottom > 0 && rect.top < window.innerHeight;
+}
+
+/* ---------- PLAY / SIMPLE（シンプル表示）の切り替え ---------- */
+
+const modeToggle = document.querySelector(".mode-toggle");
+
+function isSimple() {
+    return document.documentElement.classList.contains("mode-simple");
+}
+
+function syncModeToggle() {
+    if (!modeToggle) return;
+    modeToggle.setAttribute("aria-pressed", String(isSimple()));
+}
+
+if (modeToggle) {
+    syncModeToggle();
+
+    modeToggle.addEventListener("click", () => {
+        const simple = !isSimple();
+        const root = document.documentElement;
+        root.classList.toggle("mode-simple", simple);
+
+        // シンプル表示では動きも止める。PLAY に戻したら、MOTION の設定に戻す
+        let motion = null;
+        try {
+            motion = localStorage.getItem(MOTION_STORAGE_KEY);
+            localStorage.setItem("portfolio-mode", simple ? "simple" : "play");
+        } catch {
+            motion = null;
+        }
+        const off = simple || (motion ? motion === "off" : prefersReducedMotion);
+        root.classList.toggle("motion-off", off);
+
+        [heroVideo, featuredVideo].forEach((video) => {
+            if (!video) return;
+            if (off) video.pause();
+            else if (isInViewport(video)) video.play().catch(() => {});
+        });
+
+        syncModeToggle();
+        syncMotionToggle();
+        document.dispatchEvent(new CustomEvent("play:event", { detail: { name: `表示モード: ${simple ? "SIMPLE" : "PLAY"}` } }));
+    });
 }
 
 if (motionToggle) {

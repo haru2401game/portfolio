@@ -15,6 +15,8 @@
     const reduceMotion = () =>
         root.classList.contains("motion-off") ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // シンプル表示（採用担当者モード）のときは、遊びの演出を出さない
+    const simple = () => root.classList.contains("mode-simple");
 
     const store = {
         get(key, fallback) {
@@ -75,6 +77,7 @@
     };
 
     const notify = (notice) => {
+        if (simple()) return;
         notices.push(notice);
         showNext();
     };
@@ -181,6 +184,7 @@
     });
 
     document.addEventListener("click", (event) => {
+        if (simple()) return;
         let img = event.target.closest?.(".peeker-sprite, .drifter");
         if (!img && !event.target.closest?.(INTERACTIVE)) img = characterAt(event.clientX, event.clientY);
         if (img) catchCharacter(img, event);
@@ -197,7 +201,7 @@
     let parading = false;
 
     const parade = () => {
-        if (parading) return;
+        if (parading || simple()) return;
         parading = true;
         report("隠しコマンド");
 
@@ -350,7 +354,7 @@
     const target = saved && typeof saved.id === "string" ? document.getElementById(saved.id) : null;
     const recent = saved && Date.now() - Number(saved.at || 0) < 30 * 24 * 60 * 60 * 1000;
 
-    if (firstView && target && recent && stageSections.includes(target) && !location.hash && window.scrollY < 200) {
+    if (!simple() && firstView && target && recent && stageSections.includes(target) && !location.hash && window.scrollY < 200) {
         const card = document.createElement("div");
         card.className = "play-continue";
         card.setAttribute("role", "dialog");
@@ -433,6 +437,7 @@
     const reduceMotion = () =>
         root.classList.contains("motion-off") ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const simple = () => root.classList.contains("mode-simple");
 
     const local = {
         get(key, fallback) {
@@ -479,6 +484,10 @@
     let showing = false;
     const showNext = () => {
         if (showing || !queue.length) return;
+        if (simple()) {
+            queue.length = 0;
+            return;
+        }
         showing = true;
         const { trophy, n } = queue.shift();
         const toast = document.createElement("div");
@@ -816,5 +825,184 @@
             hero.append(layer);
         }
     }
+})();
+
+/* ========================================
+   Timeline：ワールドマップ（ステージ選択風）
+   - 経歴（.timeline-item）から自動で作る。経歴を足せばマップも増える
+   - 年ごとに WORLD 1, 2 … と区切り、ステージ番号は 1-1, 1-2 …
+   - ステージを押すと、その経歴のカードへ移動して光らせる
+======================================== */
+
+(() => {
+    const container = document.querySelector(".timeline-container");
+    const items = Array.from(document.querySelectorAll(".timeline-item"));
+    if (!container || items.length < 2) return;
+
+    const reduce = () =>
+        document.documentElement.classList.contains("motion-off") ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const clean = (text) => (text || "").replace(/\s+/g, " ").trim();
+    const stages = items.map((item) => {
+        const date = clean(item.querySelector(".timeline-date")?.textContent);
+        const title = clean(item.querySelector("h3")?.textContent).replace(/^\[|\]$/g, "");
+        return { item, date, year: date.slice(0, 4), title, type: item.dataset.quest || "clear" };
+    });
+
+    const years = [...new Set(stages.map((stage) => stage.year))];
+    const counter = {};
+    stages.forEach((stage) => {
+        stage.world = years.indexOf(stage.year) + 1;
+        counter[stage.world] = (counter[stage.world] || 0) + 1;
+        stage.code = `${stage.world}-${counter[stage.world]}`;
+    });
+
+    const STEP = 112;
+    const LEFT = 64;
+    const TOP_Y = 62;
+    const LOW_Y = 132;
+    const width = LEFT * 2 + STEP * (stages.length - 1);
+    const height = 210;
+    const pointOf = (index) => ({ x: LEFT + index * STEP, y: index % 2 ? LOW_Y : TOP_Y });
+
+    const map = document.createElement("div");
+    map.className = "world-map";
+
+    const head = document.createElement("div");
+    head.className = "world-map-head";
+    const label = document.createElement("span");
+    label.className = "world-map-label";
+    label.textContent = "WORLD MAP";
+    const hint = document.createElement("span");
+    hint.className = "world-map-hint";
+    hint.textContent = "◀ 横にスクロール ／ ステージを押すと経歴へ";
+    head.append(label, hint);
+
+    const scroller = document.createElement("div");
+    scroller.className = "world-map-scroll";
+    scroller.tabIndex = 0;
+    scroller.setAttribute("role", "group");
+    scroller.setAttribute("aria-label", "経歴のワールドマップ（横にスクロールできます）");
+
+    const field = document.createElement("div");
+    field.className = "world-map-field";
+    field.style.width = `${width}px`;
+    field.style.height = `${height}px`;
+
+    // 年ごとの背景（WORLD 1 / WORLD 2 …）
+    years.forEach((year, index) => {
+        const inWorld = stages.map((stage, i) => (stage.year === year ? i : -1)).filter((i) => i >= 0);
+        const start = pointOf(inWorld[0]).x - STEP / 2;
+        const end = pointOf(inWorld[inWorld.length - 1]).x + STEP / 2;
+        const zone = document.createElement("div");
+        zone.className = `world-zone is-world-${(index % 3) + 1}`;
+        zone.style.left = `${Math.max(start, 0)}px`;
+        zone.style.width = `${Math.min(end, width) - Math.max(start, 0)}px`;
+        const name = document.createElement("span");
+        name.textContent = `WORLD ${index + 1} · ${year}`;
+        zone.append(name);
+        field.append(zone);
+    });
+
+    // ステージをつなぐ道
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("class", "world-path");
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("width", String(width));
+    svg.setAttribute("height", String(height));
+    svg.setAttribute("aria-hidden", "true");
+    const d = stages.map((_, i) => {
+        const p = pointOf(i);
+        if (i === 0) return `M ${p.x} ${p.y}`;
+        const prev = pointOf(i - 1);
+        const mid = (prev.x + p.x) / 2;
+        return `C ${mid} ${prev.y}, ${mid} ${p.y}, ${p.x} ${p.y}`;
+    }).join(" ");
+    const road = document.createElementNS(ns, "path");
+    road.setAttribute("d", d);
+    road.setAttribute("class", "world-road");
+    const dash = document.createElementNS(ns, "path");
+    dash.setAttribute("d", d);
+    dash.setAttribute("class", "world-road-dash");
+    svg.append(road, dash);
+    field.append(svg);
+
+    const ICON = { award: "★", now: "▶", clear: "✓" };
+
+    const highlight = (item) => {
+        item.classList.remove("is-map-target");
+        void item.offsetWidth;
+        item.classList.add("is-map-target");
+        setTimeout(() => item.classList.remove("is-map-target"), 1800);
+    };
+
+    const goTo = (stage) => {
+        const drawer = document.getElementById("quest-drawer");
+        const toggle = document.querySelector('[aria-controls="quest-drawer"]');
+        const hidden = drawer && drawer.contains(stage.item) && !drawer.classList.contains("is-open");
+        if (hidden && toggle) toggle.click();
+        setTimeout(() => {
+            stage.item.scrollIntoView({ behavior: reduce() ? "auto" : "smooth", block: "center" });
+            highlight(stage.item);
+        }, hidden ? 450 : 0);
+    };
+
+    stages.forEach((stage, index) => {
+        const p = pointOf(index);
+        const node = document.createElement("button");
+        node.type = "button";
+        node.className = `world-node is-${stage.type}`;
+        node.style.left = `${p.x}px`;
+        node.style.top = `${p.y}px`;
+        node.setAttribute("aria-label", `ステージ ${stage.code}：${stage.date} ${stage.title}（経歴へ移動）`);
+
+        const dot = document.createElement("span");
+        dot.className = "world-node-dot";
+        dot.setAttribute("aria-hidden", "true");
+        dot.textContent = ICON[stage.type] || ICON.clear;
+
+        const code = document.createElement("span");
+        code.className = "world-node-code";
+        code.setAttribute("aria-hidden", "true");
+        code.textContent = stage.code;
+
+        const name = document.createElement("span");
+        name.className = `world-node-name ${index % 2 ? "is-below" : "is-above"}`;
+        name.setAttribute("aria-hidden", "true");
+        name.textContent = stage.title;
+
+        node.append(dot, code, name);
+        node.addEventListener("click", () => goTo(stage));
+        field.append(node);
+
+        // いま挑戦中のステージには主人公が立っている
+        if (stage.type === "now") {
+            const hero = document.createElement("img");
+            hero.className = "world-hero";
+            hero.src = "images/character/Player.png";
+            hero.alt = "";
+            hero.setAttribute("aria-hidden", "true");
+            hero.style.left = `${p.x - 40}px`;
+            hero.style.top = `${p.y}px`;
+            field.append(hero);
+        }
+    });
+
+    scroller.append(field);
+    map.append(head, scroller);
+    // 「これまでのクエストを見る」ボタンより上に置く
+    const questToggle = document.querySelector('[aria-controls="quest-drawer"]');
+    (questToggle && !container.contains(questToggle) ? questToggle : container).before(map);
+
+    // 最初は「いまのステージ」が見える位置に
+    const showCurrent = () => {
+        const nowIndex = stages.findIndex((stage) => stage.type === "now");
+        const index = nowIndex >= 0 ? nowIndex : stages.length - 1;
+        scroller.scrollLeft = Math.max(0, pointOf(index).x - scroller.clientWidth * 0.7);
+    };
+    requestAnimationFrame(showCurrent);
+    window.addEventListener("resize", showCurrent, { once: true });
 })();
 
