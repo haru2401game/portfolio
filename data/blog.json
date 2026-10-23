@@ -1,6 +1,13 @@
 {
-    "articleCount": 271,
+    "articleCount": 272,
     "articles": [
+        {
+            "title": "「【3Dゲーム制作】コインの使い道、スキルツリーの実装！」 はる日記#272",
+            "date": "2026.10.23",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/327112226/rectangle_large_type_2_556fbd2707e03cd4b180f7d1a6602176.png?fit=bounds&quality=85&width=1280",
+            "summary": "「はじめに」 こんにちは！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/nf9074576172d"
+        },
         {
             "title": "「無料ブラウザゲームサイトを作ってみた」 はる日記#271",
             "date": "2026.10.22",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/326411343/rectangle_large_type_2_7d8d321a7021aaf030c9c2cbd2f457c5.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 こんにちは！ ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n5f35e244d397"
-        },
-        {
-            "title": "「【3Dゲーム制作】敵のAIとレベルアップを実装！戦闘システムをブラッシュアップ」 はる日記#269",
-            "date": "2026.10.20",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/325997308/rectangle_large_type_2_5dd5f4be62907394862a8c38606de5e4.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 こんにちは！ゲームクリエイターを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n7cc49151c940"
         }
     ]
 }
