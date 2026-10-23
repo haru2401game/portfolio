@@ -8500,3 +8500,132 @@ footer.has-peeker {
     }
 }
 
+/* ========================================
+   Design polish（見出し・余白・Blog・細部の統一）
+======================================== */
+
+/* ---------- セクション見出し：全セクションで同じ形（左寄せ＋下に区切り線） ---------- */
+
+section[id] > .section-title {
+    display: block;
+    width: min(100%, 1200px);
+    max-width: none;
+    margin: 0 auto 40px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(17, 23, 19, .12);
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    section[id] > .section-title {
+        margin-bottom: 24px;
+        padding-bottom: 18px;
+    }
+}
+
+/* ---------- セクションの上下の余白を詰める ---------- */
+
+main > section[id]:not(#summary):not(#ending) {
+    padding-top: clamp(64px, 6.2vw, 88px);
+    padding-bottom: clamp(64px, 6.2vw, 88px);
+}
+
+.summary {
+    padding-top: 40px;
+}
+
+/* ---------- Play Games：説明の長さが違ってもタイトルとボタンの位置をそろえる ---------- */
+
+.play-card {
+    align-content: stretch;
+    align-items: start;
+    grid-template-rows: minmax(0, 1fr);
+}
+
+.play-card > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.play-card > div > span:last-child {
+    margin-top: auto;
+}
+
+/* ---------- Blog の画像が読み込めなかったとき ---------- */
+
+.article-card img.is-fallback {
+    padding: 28px;
+    background: var(--ui-panel, #f5f8fc);
+    object-fit: contain;
+}
+
+@media (min-width: 901px) {
+
+    /* ---------- Contact：SNS が5つのとき、下の段の2つを中央に ---------- */
+
+    .sns-list {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .sns-list > * {
+        grid-column: span 2;
+    }
+
+    .sns-list > :nth-child(4):nth-last-child(2) {
+        grid-column: 2 / span 2;
+    }
+
+    /* ---------- Blog の紹介：横1列にまとめて低くする ---------- */
+
+    .blog-introduction {
+        gap: 36px;
+        padding: 32px 40px;
+    }
+
+    .blog-introduction .blog-logo {
+        flex: 0 0 auto;
+        width: 112px;
+        height: 112px;
+    }
+
+    .blog-intro-content {
+        display: grid;
+        flex: 1 1 auto;
+        grid-template-areas:
+            "title stats"
+            "message button";
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px 40px;
+        width: auto;
+        max-width: none;
+    }
+
+    .blog-intro-content > h3 {
+        grid-area: title;
+        margin: 0;
+        font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+    }
+
+    .blog-intro-content > .blog-message {
+        grid-area: message;
+        width: auto;
+        max-width: 620px;
+        margin: 0;
+    }
+
+    .blog-intro-content > .blog-stats {
+        grid-area: stats;
+        justify-self: end;
+        margin: 0;
+    }
+
+    .blog-intro-content > .blog-button {
+        grid-area: button;
+        justify-self: end;
+        margin: 0;
+    }
+}
+

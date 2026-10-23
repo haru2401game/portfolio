@@ -408,7 +408,14 @@ fetch("data/blog.json")
             const articleUrl = safeWebUrl(article.url);
 
             const image = document.createElement("img");
+            // 画像が無い・読み込めないときは HARU GAMES のロゴを代わりに出す
+            const useFallback = () => {
+                image.classList.add("is-fallback");
+                image.src = "images/index/Blog/icon.webp";
+            };
+            image.addEventListener("error", useFallback, { once: true });
             if (imageUrl) image.src = imageUrl;
+            else useFallback();
             image.alt = title;
             image.loading = "lazy";
 
