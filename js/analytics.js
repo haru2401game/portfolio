@@ -196,6 +196,12 @@
         }
     }, true);
 
+    // 隠し要素（隠しコマンド・キャラ図鑑コンプリート・つづきから）
+    document.addEventListener("play:event", (event) => {
+        const name = event.detail?.name || "";
+        if (name && remember(`play:${name}`)) track("ui_open", name);
+    });
+
     // 作品の詳細ポップアップを開いた（前後の作品へ移ったときも1作品ずつ数える）
     document.addEventListener("work-viewer:open", (event) => {
         const title = event.detail?.title || "";
