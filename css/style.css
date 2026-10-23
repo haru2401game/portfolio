@@ -9793,3 +9793,133 @@ main > section[id]:not(#summary):not(#ending) {
     }
 }
 
+/* ========================================
+   Main Works：押すと再生する動画
+======================================== */
+
+.movie-play {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: #111713;
+    cursor: pointer;
+}
+
+.movie-play img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.1s cubic-bezier(.2, .7, .2, 1), filter .6s ease;
+}
+
+.movie-play:hover img,
+.movie-play:focus-visible img {
+    transform: scale(1.025);
+    filter: saturate(1.08) brightness(.92);
+}
+
+/* 真ん中の再生ボタン */
+.movie-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: clamp(64px, 9vw, 92px);
+    height: clamp(64px, 9vw, 92px);
+    border: 3px solid #111713;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 6px 0 #111713, 0 16px 30px rgba(0, 0, 0, .25);
+    transform: translate(-50%, -50%);
+    transition: transform .25s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.movie-play-icon::before {
+    width: 0;
+    height: 0;
+    margin-left: 12%;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 22px solid #d6363d;
+    content: "";
+}
+
+.movie-play:hover .movie-play-icon,
+.movie-play:focus-visible .movie-play-icon {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* 右下の「PLAY MOVIE 2:54」 */
+.movie-play-label {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(17, 23, 19, .82);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .16em;
+}
+
+.movie-play-label small {
+    color: #ffd54a;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+.movie-play:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: -3px;
+}
+
+/* 再生中 */
+.featured-video.is-playing video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    object-fit: contain;
+    transform: none;
+    filter: none;
+}
+
+.featured-video.is-playing::after {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .movie-play-icon::before {
+        border-top-width: 11px;
+        border-bottom-width: 11px;
+        border-left-width: 17px;
+    }
+
+    .movie-play-label {
+        right: 10px;
+        bottom: 10px;
+        padding: 5px 10px;
+        font-size: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .movie-play img,
+    .movie-play-icon {
+        transition: none;
+    }
+}
+

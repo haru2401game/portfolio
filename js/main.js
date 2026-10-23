@@ -208,31 +208,41 @@ revealInOrder(document.querySelectorAll(".contact-container"));
 revealInOrder(document.querySelectorAll(".sns-card"), 0.05);
 
 /* ========================================
-   Main Works の動画（画面に入ったら再生・出たら停止）
+   Main Works の動画：最初は画像。押したら動画に入れ替えて再生する
+   （ページを開いただけでは動画を読み込まないので、スマホの通信量が少なくて済む）
 ======================================== */
 
-const featuredVideo = document.querySelector(".featured-video video");
+document.querySelectorAll(".featured-video[data-video]").forEach((box) => {
+    const button = box.querySelector(".movie-play");
+    if (!button) return;
 
-if (featuredVideo && !motionOff()) {
-    if ("IntersectionObserver" in window) {
-        new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting && !motionOff()) featuredVideo.play().catch(() => {});
-                else featuredVideo.pause();
-            });
-        }, { rootMargin: "200px 0px" }).observe(featuredVideo);
-    } else {
-        featuredVideo.play().catch(() => {});
-    }
-}
+    button.addEventListener("click", () => {
+        const poster = button.querySelector("img");
+        const video = make("video");
+        video.src = box.dataset.video;
+        video.poster = poster?.currentSrc || poster?.src || "";
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = "auto";
+        // 音声のない短いプレイ映像はくり返し再生する
+        if (box.hasAttribute("data-loop")) {
+            video.loop = true;
+            video.muted = true;
+        }
+        video.setAttribute("aria-label", `${box.dataset.title || ""}の映像`);
 
-// MOTION・SIMPLE を切り替えたときの動画
-function syncVideos(off) {
-    [heroVideo, featuredVideo].forEach((video) => {
-        if (!video) return;
-        if (off) video.pause();
-        else if (isInViewport(video)) video.play().catch(() => {});
+        button.replaceWith(video);
+        box.classList.add("is-playing");
+        video.play().catch(() => {});
+        video.focus({ preventScroll: true });
     });
+});
+
+// MOTION・SIMPLE を切り替えたときのトップの動画
+function syncVideos(off) {
+    if (!heroVideo) return;
+    if (off) heroVideo.pause();
+    else if (isInViewport(heroVideo)) heroVideo.play().catch(() => {});
 }
 
 /* ========================================

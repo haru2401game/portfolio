@@ -476,15 +476,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <div class="main-work" id="main-shishito" role="tabpanel" aria-labelledby="tab-shishito">
     <!-- Work Movie -->
-    <div class="featured-video">
-        <video
-            src="videos/index/Shishito.mp4"
-            muted
-            loop
-            playsinline
-            preload="none"
-            poster="images/index/Hero/poster.webp">
-        </video>
+    <!-- 最初は画像。押すと動画を再生する（通信量を減らすため） -->
+    <div class="featured-video is-image is-movie" data-video="videos/index/Shishito.mp4" data-title="ししとう" data-loop>
+        <button class="movie-play" type="button" aria-label="ししとうのプレイ映像を再生（15秒・音声なし）">
+            <img
+                src="images/index/Hero/poster.webp"
+                width="703"
+                height="397"
+                alt="ししとうのタイトル画面"
+                loading="lazy">
+            <span class="movie-play-icon" aria-hidden="true"></span>
+            <span class="movie-play-label" aria-hidden="true">PLAY MOVIE<small>0:15</small></span>
+        </button>
     </div>
 
     <!-- Work Information -->
@@ -675,13 +678,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
          Main Work 02: Falien
     ================================ -->
     <div class="main-work" id="main-falien" role="tabpanel" aria-labelledby="tab-falien" hidden>
-    <div class="featured-video is-image is-grandprix">
-        <img
-            src="images/index/otherworks/Falien.webp"
-            width="1280"
-            height="720"
-            alt="Falienのタイトル画面"
-            loading="lazy">
+    <!-- 最初は画像。押すと動画（PV・音声あり）を再生する -->
+    <div class="featured-video is-image is-grandprix is-movie" data-video="videos/index/Falien.mp4" data-title="Falien">
+        <button class="movie-play" type="button" aria-label="FalienのPVを再生（約3分・音声あり）">
+            <img
+                src="images/index/otherworks/Falien.webp"
+                width="1280"
+                height="720"
+                alt="Falienのタイトル画面"
+                loading="lazy">
+            <span class="movie-play-icon" aria-hidden="true"></span>
+            <span class="movie-play-label" aria-hidden="true">PLAY MOVIE<small>2:54 ・ 音声あり</small></span>
+        </button>
     </div>
 
     <div class="featured-container" data-work="Falien" data-tech="Unity C# GitHub" data-member="7" data-role="ジェネラリスト(総合管理) タイトルシーン 統合 ローカライズ">

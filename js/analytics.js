@@ -158,6 +158,11 @@
             return;
         }
 
+        if (target.matches(".movie-play")) {
+            track("video_play", target.closest("[data-title]")?.dataset.title || "");
+            return;
+        }
+
         if (target.matches(".tech-photo, .timeline-photo")) {
             const caption = target.dataset.caption || target.querySelector("img")?.alt || "";
             track("photo_open", caption.split("：")[0]);
