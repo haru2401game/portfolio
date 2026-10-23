@@ -158,6 +158,7 @@
 
         found.add(name);
         store.set("pa-cast", [...found]);
+        document.dispatchEvent(new CustomEvent("play:cast", { detail: { count: found.size, total: castTotal } }));
         bubble(event.clientX, event.clientY, "見つかった！");
         const count = found.size;
         notify({
@@ -422,3 +423,398 @@
         }, 550);
     }, { passive: true });
 })();
+
+/* ========================================
+   Play 2（トロフィー・季節イベント・プレイタイムとランク）
+======================================== */
+
+(() => {
+    const root = document.documentElement;
+    const reduceMotion = () =>
+        root.classList.contains("motion-off") ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const local = {
+        get(key, fallback) {
+            try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+        },
+        set(key, value) {
+            try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
+        },
+    };
+    const session = {
+        get(key, fallback) {
+            try { return JSON.parse(sessionStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+        },
+        set(key, value) {
+            try { sessionStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
+        },
+    };
+
+    /* ========================================
+       トロフィー
+    ======================================== */
+
+    const TROPHIES = [
+        { id: "start", icon: "▶", title: "PRESS START", text: "ポートフォリオに遊びに来た", hint: "" },
+        { id: "achievements", icon: "★", title: "実績チェック", text: "制作実績をチェックした", hint: "Achievements を見てみよう" },
+        { id: "works5", icon: "🎮", title: "作品ハンター", text: "作品の詳細を5作品見た", hint: "Other Works のカードを押してみよう" },
+        { id: "photo", icon: "📷", title: "思い出アルバム", text: "写真を拡大して見た", hint: "写真を押してみよう" },
+        { id: "play", icon: "🕹", title: "プレイヤー", text: "遊べる作品のサイトを開いた", hint: "実際に遊べる場所があるよ" },
+        { id: "cast5", icon: "👀", title: "キャラ探し", text: "キャラクターを5体見つけた", hint: "顔を出すキャラを押してみよう" },
+        { id: "castAll", icon: "📖", title: "図鑑コンプリート", text: "全キャラクターを見つけた", hint: "キャラクターを全員見つけよう" },
+        { id: "konami", icon: "🔑", title: "隠しコマンド", text: "隠しコマンドを見つけた", hint: "ゲーム好きなら知っているあのコマンド" },
+        { id: "like100", icon: "❤", title: "いいね連打", text: "いいねを100回押した", hint: "右下のハートを押しまくろう" },
+        { id: "allStages", icon: "🗺", title: "全ステージ踏破", text: "全ステージ（9セクション）を見た", hint: "すべてのセクションを見てみよう" },
+        { id: "ending", icon: "🏁", title: "ALL CLEAR", text: "エンディングにたどり着いた", hint: "最後まで進んでみよう" },
+        { id: "continue", icon: "💾", title: "セーブデータ", text: "「つづきから」で再開した", hint: "また遊びに来てね" },
+    ];
+
+    let unlocked = local.get("pa-trophy", {});
+    if (!unlocked || typeof unlocked !== "object" || Array.isArray(unlocked)) unlocked = {};
+    const count = () => TROPHIES.filter((t) => unlocked[t.id]).length;
+
+    /* 解除の通知（右下の金色のトースト・続けて解除しても順番に出す） */
+    const queue = [];
+    let showing = false;
+    const showNext = () => {
+        if (showing || !queue.length) return;
+        showing = true;
+        const { trophy, n } = queue.shift();
+        const toast = document.createElement("div");
+        toast.className = "achievement-toast";
+        toast.setAttribute("role", "status");
+        const icon = document.createElement("span");
+        icon.className = "toast-icon";
+        icon.textContent = trophy.icon;
+        const text = document.createElement("span");
+        text.className = "toast-text";
+        const label = document.createElement("small");
+        label.textContent = `TROPHY UNLOCKED  ${n} / ${TROPHIES.length}`;
+        const message = document.createElement("strong");
+        message.textContent = trophy.text;
+        text.append(label, message);
+        toast.append(icon, text);
+        document.body.append(toast);
+        requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add("is-visible")));
+        setTimeout(() => {
+            toast.classList.remove("is-visible");
+            setTimeout(() => {
+                toast.remove();
+                showing = false;
+                showNext();
+            }, 500);
+        }, 3200);
+    };
+
+    let room = null;
+    let opener = null;
+
+    const unlock = (id) => {
+        const trophy = TROPHIES.find((t) => t.id === id);
+        if (!trophy || unlocked[id]) return;
+        unlocked[id] = Date.now();
+        local.set("pa-trophy", unlocked);
+        queue.push({ trophy, n: count() });
+        showNext();
+        renderOpener();
+        if (room?.open) renderRoom();
+        if (count() === TROPHIES.length) document.dispatchEvent(new CustomEvent("play:event", { detail: { name: "トロフィー コンプリート" } }));
+    };
+    window.PlayTrophy = { unlock };
+
+    /* 一覧（フッターとエンディングから開く） */
+    const renderRoom = () => {
+        const list = room.querySelector(".trophy-list");
+        list.replaceChildren(...TROPHIES.map((trophy) => {
+            const item = document.createElement("li");
+            const got = Boolean(unlocked[trophy.id]);
+            item.className = got ? "trophy is-got" : "trophy";
+            const icon = document.createElement("span");
+            icon.className = "trophy-icon";
+            icon.textContent = got ? trophy.icon : "?";
+            const body = document.createElement("span");
+            const title = document.createElement("b");
+            title.textContent = got ? trophy.title : "？？？";
+            const text = document.createElement("small");
+            text.textContent = got ? trophy.text : `ヒント：${trophy.hint}`;
+            body.append(title, text);
+            item.append(icon, body);
+            return item;
+        }));
+        const n = count();
+        room.querySelector(".trophy-count").textContent = `${n} / ${TROPHIES.length}`;
+        room.querySelector(".trophy-gauge span").style.transform = `scaleX(${n / TROPHIES.length})`;
+    };
+
+    const openRoom = () => {
+        if (!room) {
+            room = document.createElement("dialog");
+            room.className = "trophy-room";
+            room.setAttribute("aria-labelledby", "trophy-title");
+            const head = document.createElement("div");
+            head.className = "trophy-head";
+            const h = document.createElement("h2");
+            h.id = "trophy-title";
+            h.textContent = "🏆 TROPHY";
+            const n = document.createElement("span");
+            n.className = "trophy-count";
+            const close = document.createElement("button");
+            close.type = "button";
+            close.className = "trophy-close";
+            close.setAttribute("aria-label", "閉じる");
+            close.textContent = "×";
+            close.addEventListener("click", () => room.close());
+            head.append(h, n, close);
+            const gauge = document.createElement("div");
+            gauge.className = "trophy-gauge";
+            gauge.append(document.createElement("span"));
+            const list = document.createElement("ul");
+            list.className = "trophy-list";
+            const note = document.createElement("p");
+            note.className = "trophy-note";
+            note.textContent = "トロフィーの記録は、このブラウザにだけ保存されます。";
+            room.append(head, gauge, list, note);
+            room.addEventListener("click", (event) => { if (event.target === room) room.close(); });
+            document.body.append(room);
+        }
+        renderRoom();
+        if (typeof room.showModal === "function") room.showModal();
+        document.dispatchEvent(new CustomEvent("play:event", { detail: { name: "トロフィー一覧" } }));
+    };
+
+    const renderOpener = () => {
+        document.querySelectorAll("[data-trophy-count]").forEach((node) => {
+            node.textContent = `${count()} / ${TROPHIES.length}`;
+        });
+    };
+
+    const footer = document.querySelector(".footer-inner");
+    if (footer) {
+        opener = document.createElement("button");
+        opener.type = "button";
+        opener.className = "footer-trophy";
+        opener.innerHTML = '<span aria-hidden="true">🏆</span> TROPHY <b data-trophy-count></b>';
+        opener.addEventListener("click", openRoom);
+        footer.querySelector(".footer-motto")?.after(opener);
+    }
+    const endingActions = document.querySelector(".ending-actions");
+    if (endingActions) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "ending-button ending-trophy";
+        button.innerHTML = '🏆 トロフィー <b data-trophy-count></b>';
+        button.addEventListener("click", openRoom);
+        endingActions.append(button);
+    }
+    renderOpener();
+
+    /* ---------- 解除の条件 ---------- */
+
+    unlock("start");
+
+    // 作品の詳細（ポップアップ）を5作品
+    const seenWorks = new Set(session.get("pa-works", []));
+    document.addEventListener("work-viewer:open", (event) => {
+        if (event.detail?.title) seenWorks.add(event.detail.title);
+        session.set("pa-works", [...seenWorks]);
+        if (seenWorks.size >= 5) unlock("works5");
+    });
+
+    let photos = session.get("pa-photos", 0);
+    let likes = local.get("pa-likes", 0);
+    document.addEventListener("click", (event) => {
+        if (event.target.closest?.(".tech-photo, .timeline-photo")) {
+            photos += 1;
+            session.set("pa-photos", photos);
+            unlock("photo");
+        }
+        if (event.target.closest?.(".play-card")) unlock("play");
+        if (event.target.closest?.(".like-button")) {
+            likes += 1;
+            local.set("pa-likes", likes);
+            if (likes >= 100) unlock("like100");
+        }
+    }, true);
+
+    document.addEventListener("play:cast", (event) => {
+        if (event.detail.count >= 5) unlock("cast5");
+        if (event.detail.count >= event.detail.total) unlock("castAll");
+    });
+    document.addEventListener("play:event", (event) => {
+        const name = event.detail?.name;
+        if (name === "隠しコマンド") unlock("konami");
+        if (name === "つづきから") unlock("continue");
+    });
+    // 以前に見つけていた分も反映
+    const castFound = local.get("pa-cast", []).length;
+    const castTotal = document.querySelectorAll(".cast-name").length;
+    if (castFound >= 5) unlock("cast5");
+    if (castTotal && castFound >= castTotal) unlock("castAll");
+
+    /* 読んだステージ（この訪問で） */
+    const stages = Array.from(document.querySelectorAll("main > section[id]"))
+        .filter((section) => section.querySelector(":scope > .section-title h2"));
+    const reached = new Set(session.get("pa-reached", []));
+    const ending = document.getElementById("ending");
+
+    if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                if (entry.target === ending) {
+                    unlock("ending");
+                    startRankClock();
+                    return;
+                }
+                reached.add(entry.target.id);
+                session.set("pa-reached", [...reached]);
+                if (stages.every((stage) => reached.has(stage.id))) unlock("allStages");
+            });
+        }, { threshold: 0.25 });
+        stages.forEach((stage) => observer.observe(stage));
+        if (ending) observer.observe(ending);
+    }
+
+    /* ========================================
+       プレイタイムとランク（エンディング）
+    ======================================== */
+
+    let playTime = Number(session.get("pa-playtime", 0)) || 0;
+    setInterval(() => {
+        if (document.visibilityState !== "visible") return;
+        playTime += 1;
+        if (playTime % 5 === 0) session.set("pa-playtime", playTime);
+    }, 1000);
+
+    const RANKS = [
+        { rank: "S", min: 105, text: "パーフェクト！ 隅々まで見てくれてありがとうございます" },
+        { rank: "A", min: 75, text: "じっくり見てくれてありがとうございます" },
+        { rank: "B", min: 45, text: "まだ見ていないステージや作品があります" },
+        { rank: "C", min: 0, text: "もう一度はじめから、ゆっくりどうぞ！" },
+    ];
+
+    const score = () => {
+        const sections = stages.filter((stage) => reached.has(stage.id)).length;
+        const cast = local.get("pa-cast", []).length;
+        const points =
+            sections * 8 +                       // 最大 72
+            Math.min(seenWorks.size, 5) * 4 +    // 最大 20
+            Math.min(photos, 3) * 2 +            // 最大 6
+            Math.min(cast, 14) +                 // 最大 14
+            Math.min(playTime / 300, 1) * 20;    // 5分で最大 20
+        return { points, sections, cast };
+    };
+
+    let rankBox = null;
+    const renderRank = () => {
+        if (!ending) return;
+        if (!rankBox) {
+            rankBox = document.createElement("div");
+            rankBox.className = "ending-rank";
+            ending.querySelector("[data-ending-stats]")?.after(rankBox);
+        }
+        const { points, sections, cast } = score();
+        const result = RANKS.find((r) => points >= r.min);
+        const mm = String(Math.floor(playTime / 60)).padStart(2, "0");
+        const ss = String(playTime % 60).padStart(2, "0");
+        rankBox.dataset.rank = result.rank;
+        rankBox.replaceChildren();
+        const badge = document.createElement("span");
+        badge.className = "ending-rank-badge";
+        badge.innerHTML = `<small>RANK</small>${result.rank}`;
+        const body = document.createElement("span");
+        body.className = "ending-rank-body";
+        const time = document.createElement("b");
+        time.textContent = `PLAY TIME ${mm}:${ss}`;
+        const detail = document.createElement("small");
+        detail.textContent = `読んだステージ ${sections} / ${stages.length} ／ 見た作品 ${seenWorks.size} ／ 発見キャラ ${cast}`;
+        const comment = document.createElement("span");
+        comment.textContent = result.text;
+        body.append(time, detail, comment);
+        rankBox.append(badge, body);
+    };
+
+    let rankTimer = 0;
+    function startRankClock() {
+        renderRank();
+        if (rankTimer) return;
+        // 一度エンディングに来たら、画面に見えているあいだだけ毎秒更新する
+        rankTimer = setInterval(() => {
+            const box = ending.getBoundingClientRect();
+            if (box.bottom > 0 && box.top < window.innerHeight) renderRank();
+        }, 1000);
+    }
+
+    /* ========================================
+       季節イベント（日本時間の日付で自動で切り替わる）
+       確認したいときは URL の末尾に ?season=halloween などを付ける
+    ======================================== */
+
+    const SEASONS = {
+        newyear: { badge: "🎍 HAPPY NEW YEAR", glyphs: ["🎍", "✨", "🌅", "🎌"], fall: ["✨"] },
+        spring: { badge: "🌸 SPRING STAGE", glyphs: ["🌸", "🌱", "✿", "🌸"], fall: ["🌸"] },
+        halloween: { badge: "🎃 HAPPY HALLOWEEN", glyphs: ["🎃", "🦇", "👻", "🍬"], fall: ["🦇", "🍬"] },
+        christmas: { badge: "🎄 MERRY CHRISTMAS", glyphs: ["🎄", "⭐", "🎁", "❄"], fall: ["❄"] },
+        winter: { badge: "❄ WINTER STAGE", glyphs: ["❄", "⛄", "✦", "❄"], fall: ["❄"] },
+    };
+
+    const seasonOf = (date) => {
+        const jst = new Date(date.getTime() + 9 * 3600 * 1000);
+        const m = jst.getUTCMonth() + 1;
+        const d = jst.getUTCDate();
+        const md = m * 100 + d;
+        if (md >= 101 && md <= 107) return "newyear";
+        if (md >= 325 && md <= 415) return "spring";
+        if (md >= 1015 && md <= 1031) return "halloween";
+        if (md >= 1201 && md <= 1225) return "christmas";
+        if (md >= 1226 || md <= 228) return "winter";
+        return "";
+    };
+
+    let season = seasonOf(new Date());
+    try {
+        const forced = new URLSearchParams(location.search).get("season");
+        if (forced !== null) season = SEASONS[forced] ? forced : "";
+    } catch { /* ignore */ }
+
+    if (season) {
+        const config = SEASONS[season];
+        root.classList.add(`season-${season}`);
+
+        // 背景の飾り（✦●▲）を季節のものに
+        document.querySelectorAll(".ambient i").forEach((shape, index) => {
+            shape.textContent = config.glyphs[index % config.glyphs.length];
+            shape.classList.add("is-season");
+        });
+
+        // トップにバッジ
+        const eyebrow = document.querySelector(".hero-eyebrow");
+        if (eyebrow) {
+            const badge = document.createElement("p");
+            badge.className = "season-badge";
+            badge.textContent = config.badge;
+            eyebrow.before(badge);
+        }
+
+        // トップに舞い落ちるもの
+        const hero = document.querySelector(".hero");
+        if (hero && !reduceMotion()) {
+            const layer = document.createElement("div");
+            layer.className = "season-fall";
+            layer.setAttribute("aria-hidden", "true");
+            for (let i = 0; i < 14; i += 1) {
+                const bit = document.createElement("i");
+                bit.textContent = config.fall[i % config.fall.length];
+                bit.style.setProperty("--x", `${(i * 37) % 100}%`);
+                bit.style.setProperty("--d", `${9 + (i % 5) * 2.2}s`);
+                bit.style.setProperty("--delay", `${-(i * 1.3).toFixed(1)}s`);
+                bit.style.setProperty("--s", `${14 + (i % 4) * 5}px`);
+                bit.style.setProperty("--sway", `${i % 2 ? 30 : -30}px`);
+                layer.append(bit);
+            }
+            hero.append(layer);
+        }
+    }
+})();
+

@@ -823,7 +823,8 @@ if (achievementsSection && "IntersectionObserver" in window) {
     const toastObserver = new IntersectionObserver((entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
             toastObserver.disconnect();
-            setTimeout(showAchievementToast, 900);
+            // トロフィー機能（play.js）があればそちらで解除する
+            setTimeout(() => (window.PlayTrophy ? window.PlayTrophy.unlock("achievements") : showAchievementToast()), 900);
         }
     }, { threshold: 0.45 });
 

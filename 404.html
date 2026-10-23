@@ -42,7 +42,7 @@
     }
 
     main {
-        width: min(100%, 560px);
+        width: min(100%, 680px);
     }
 
     .stage {
@@ -61,52 +61,83 @@
     h1 {
         margin: 0;
         color: var(--red);
-        font-size: clamp(3.4rem, 15vw, 6.4rem);
+        font-size: clamp(3rem, 13vw, 5.6rem);
         font-weight: 900;
         letter-spacing: -.04em;
         line-height: .95;
         text-shadow: 4px 4px 0 var(--ink);
-        animation: hit .55s cubic-bezier(.3, 1.6, .5, 1) both, wobble 4s ease-in-out 1s infinite;
+        animation: hit .55s cubic-bezier(.3, 1.6, .5, 1) both;
     }
 
     .message {
-        margin: 22px 0 6px;
-        font-size: 1.05rem;
+        margin: 18px 0 4px;
+        font-size: 1.02rem;
         font-weight: 800;
     }
 
     .sub {
         margin: 0;
         color: var(--sub);
-        font-size: .88rem;
+        font-size: .86rem;
         line-height: 1.8;
     }
 
-    .character {
-        display: block;
-        width: 84px;
-        height: 84px;
-        margin: 26px auto 0;
-        image-rendering: pixelated;
-        animation: fall 3s ease-in-out infinite;
+    /* ---------- Mini game ---------- */
+
+    .game {
+        position: relative;
+        margin: 22px 0 0;
+        overflow: hidden;
+        border: 2px solid var(--ink);
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 6px 0 var(--ink), 0 18px 36px rgba(20, 25, 30, .12);
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
     }
 
-    .continue {
-        margin: 18px 0 0;
-        font-size: 1.3rem;
+    .game-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 14px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 11px;
         font-variant-numeric: tabular-nums;
-        font-weight: 900;
-        letter-spacing: .12em;
+        font-weight: 800;
+        letter-spacing: .14em;
     }
 
-    .continue b {
-        display: inline-block;
-        min-width: 1.4em;
-        color: var(--red);
+    .game-bar b {
+        color: #ffd54a;
     }
 
-    .continue.is-stopped b {
-        display: none;
+    canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .game-tip {
+        margin: 10px 0 0;
+        color: var(--sub);
+        font-size: .78rem;
+    }
+
+    .game-tip kbd {
+        padding: 1px 6px;
+        border: 1px solid #cfd8e3;
+        border-bottom-width: 2px;
+        border-radius: 5px;
+        background: #fff;
+        font-family: inherit;
+        font-size: .72rem;
+        font-weight: 800;
     }
 
     .actions {
@@ -114,7 +145,7 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 12px;
-        margin-top: 18px;
+        margin-top: 20px;
     }
 
     .button {
@@ -147,13 +178,19 @@
         transform: translateY(3px);
     }
 
-    .button:focus-visible {
-        outline: 3px solid var(--ink);
+    .button:focus-visible,
+    canvas:focus-visible {
+        outline: 3px solid #ffb300;
         outline-offset: 3px;
     }
 
-    .blink {
-        animation: blink 1s steps(1) infinite;
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
     }
 
     @keyframes hit {
@@ -161,26 +198,8 @@
         to { opacity: 1; transform: scale(1); }
     }
 
-    @keyframes wobble {
-        0%, 90%, 100% { transform: translateX(0); }
-        92% { transform: translateX(-6px); }
-        94% { transform: translateX(6px); }
-        96% { transform: translateX(-3px); }
-    }
-
-    @keyframes fall {
-        0%, 100% { transform: translateY(0) rotate(-8deg); }
-        50% { transform: translateY(-10px) rotate(8deg); }
-    }
-
-    @keyframes blink {
-        50% { opacity: 0; }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-        h1,
-        .character,
-        .blink {
+        h1 {
             animation: none;
         }
     }
@@ -189,47 +208,240 @@
 <body>
 <main>
     <p class="stage">ERROR 404 / PAGE NOT FOUND</p>
-    <h1>GAME<br>OVER</h1>
+    <h1>GAME OVER</h1>
     <p class="message">お探しのページは見つかりませんでした。</p>
-    <p class="sub">URLが間違っているか、ページが移動した可能性があります。</p>
+    <p class="sub">URLが間違っているか、ページが移動した可能性があります。<br>せっかくなので、1回遊んでいきませんか？</p>
 
-    <img class="character" src="/portfolio/images/character/Clone_0.png" alt="" width="84" height="84">
-
-    <p class="continue" id="continue">CONTINUE? <b id="count" aria-hidden="true">10</b></p>
+    <div class="game">
+        <div class="game-bar" aria-hidden="true">
+            <span>BONUS STAGE</span>
+            <span>SCORE <b id="score">00000</b>　HI <b id="high">00000</b></span>
+        </div>
+        <canvas id="game" width="720" height="240" tabindex="0" role="img"
+            aria-label="ミニゲーム：キャラクターをジャンプさせて、地面を歩く魚をよけるゲームです。スペースキーかタップでジャンプします。"></canvas>
+    </div>
+    <p class="game-tip"><kbd>SPACE</kbd> / <kbd>↑</kbd> / タップでジャンプ。空を飛ぶ魚はジャンプしないでよけよう。</p>
+    <p class="sr-only" id="announce" aria-live="polite"></p>
 
     <div class="actions">
-        <a class="button is-primary" href="/portfolio/"><span class="blink" aria-hidden="true">▶</span>&nbsp;CONTINUE（トップへ）</a>
+        <a class="button is-primary" href="/portfolio/">▶ CONTINUE（トップへ）</a>
         <a class="button" href="/portfolio/#other-works">作品一覧を見る</a>
     </div>
 </main>
 
 <script>
-    /* 10カウントで自動的にトップへ（ボタンに触れたらカウントを止める） */
+    /* ========================================
+       404 ミニゲーム（キャラクターで障害物をよける）
+       - 地面を歩く赤い魚 → ジャンプでよける
+       - 空を飛ぶ青い魚（スコア150から）→ ジャンプしないでよける
+       - だんだん速くなる。ハイスコアはこのブラウザに保存
+    ======================================== */
     (() => {
-        const label = document.getElementById("continue");
-        const count = document.getElementById("count");
-        let left = 10;
-        let timer = 0;
+        const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d");
+        const scoreEl = document.getElementById("score");
+        const highEl = document.getElementById("high");
+        const announce = document.getElementById("announce");
 
-        const stop = () => {
-            clearInterval(timer);
-            label.classList.add("is-stopped");
+        // スマホなど幅が狭いときは、画面を少し近くに寄せる（キャラが小さくなりすぎないように）
+        const narrow = canvas.clientWidth < 520;
+        const W = narrow ? 460 : 720;
+        const H = narrow ? 250 : 240;
+        const GROUND = H - 36;
+        const GRAVITY = 2600;
+        const JUMP = -820;
+
+        // 高解像度の画面でもくっきり描く
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = W * ratio;
+        canvas.height = H * ratio;
+        ctx.scale(ratio, ratio);
+        ctx.imageSmoothingEnabled = false;
+
+        const load = (name) => {
+            const img = new Image();
+            img.src = `/portfolio/images/character/${name}.png`;
+            return img;
+        };
+        const sprites = { player: load("Player"), walker: load("RedFish"), flyer: load("Fish") };
+
+        let high = 0;
+        try { high = Number(localStorage.getItem("pa-404-high")) || 0; } catch { high = 0; }
+
+        const pad = (n) => String(Math.floor(n)).padStart(5, "0");
+        highEl.textContent = pad(high);
+
+        const player = { x: 76, y: GROUND, vy: 0, size: 46 };
+        let obstacles = [];
+        let clouds = Array.from({ length: 5 }, (_, i) => ({ x: i * (W / 4.5) + 40, y: 30 + (i % 3) * 26, w: 40 + (i % 2) * 24 }));
+        let state = "ready";      // ready / play / over
+        let speed = 330;
+        let score = 0;
+        let spawnIn = 1.2;
+        let last = 0;
+        let blink = 0;
+
+        const reset = () => {
+            obstacles = [];
+            player.y = GROUND;
+            player.vy = 0;
+            speed = 330;
+            score = 0;
+            spawnIn = 1.1;
         };
 
-        timer = setInterval(() => {
-            left -= 1;
-            count.textContent = String(left);
-            if (left <= 0) {
-                clearInterval(timer);
-                location.href = "/portfolio/";
+        const jump = () => {
+            if (state === "ready" || state === "over") {
+                reset();
+                state = "play";
+                announce.textContent = "スタート";
             }
-        }, 1000);
+            if (player.y >= GROUND) player.vy = JUMP;
+        };
 
-        document.querySelectorAll(".button").forEach((button) => {
-            button.addEventListener("pointerenter", stop);
-            button.addEventListener("focus", stop);
+        const spawn = () => {
+            const flying = score > 150 && Math.random() < 0.35;
+            obstacles.push(flying
+                ? { kind: "flyer", x: W + 20, y: GROUND - 92 - Math.random() * 14, size: 38, wobble: Math.random() * 6 }
+                : { kind: "walker", x: W + 20, y: GROUND, size: 34 + Math.random() * 10, wobble: 0 });
+            spawnIn = Math.max(0.55, (0.85 + Math.random() * 0.9) * (330 / speed) * 1.25);
+        };
+
+        const hit = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+
+        const update = (dt) => {
+            clouds.forEach((c) => {
+                c.x -= speed * 0.15 * dt;
+                if (c.x < -80) c.x = W + Math.random() * 60;
+            });
+            if (state !== "play") return;
+
+            speed = Math.min(780, speed + 14 * dt);
+            score += speed * dt * 0.05;
+
+            player.vy += GRAVITY * dt;
+            player.y = Math.min(GROUND, player.y + player.vy * dt);
+            if (player.y >= GROUND) player.vy = 0;
+
+            spawnIn -= dt;
+            if (spawnIn <= 0) spawn();
+
+            const me = { x: player.x + 10, y: player.y - player.size + 8, w: player.size - 20, h: player.size - 10 };
+            for (const o of obstacles) {
+                o.x -= speed * dt * (o.kind === "flyer" ? 1.15 : 1);
+                o.wobble += dt * 8;
+                const top = o.kind === "flyer" ? o.y + Math.sin(o.wobble) * 4 : o.y;
+                const box = { x: o.x + 7, y: top - o.size + 8, w: o.size - 14, h: o.size - 12 };
+                if (hit(me, box)) {
+                    state = "over";
+                    if (score > high) {
+                        high = Math.floor(score);
+                        try { localStorage.setItem("pa-404-high", String(high)); } catch { /* ignore */ }
+                        highEl.textContent = pad(high);
+                        announce.textContent = `ミス！ スコア ${Math.floor(score)}。ハイスコア更新！`;
+                    } else {
+                        announce.textContent = `ミス！ スコア ${Math.floor(score)}`;
+                    }
+                    break;
+                }
+            }
+            obstacles = obstacles.filter((o) => o.x > -60);
+            scoreEl.textContent = pad(score);
+        };
+
+        const drawSprite = (img, x, groundY, size, flip) => {
+            if (!img.complete || !img.naturalWidth) {
+                ctx.fillStyle = "#111713";
+                ctx.fillRect(x, groundY - size, size, size);
+                return;
+            }
+            ctx.save();
+            if (flip) {
+                ctx.translate(x + size, groundY - size);
+                ctx.scale(-1, 1);
+                ctx.drawImage(img, 0, 0, size, size);
+            } else {
+                ctx.drawImage(img, x, groundY - size, size, size);
+            }
+            ctx.restore();
+        };
+
+        const text = (value, y, size, color) => {
+            ctx.font = `900 ${size}px Inter, "Noto Sans JP", sans-serif`;
+            ctx.textAlign = "center";
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = "#fff";
+            ctx.strokeText(value, W / 2, y);
+            ctx.fillStyle = color;
+            ctx.fillText(value, W / 2, y);
+        };
+
+        const draw = () => {
+            ctx.clearRect(0, 0, W, H);
+
+            // 空とドット
+            ctx.fillStyle = "#f5f8fc";
+            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = "#dfe7f1";
+            clouds.forEach((c) => {
+                ctx.fillRect(c.x, c.y, c.w, 10);
+                ctx.fillRect(c.x + 8, c.y - 8, c.w - 16, 8);
+            });
+
+            // 地面
+            ctx.fillStyle = "#111713";
+            ctx.fillRect(0, GROUND, W, 3);
+            ctx.fillStyle = "#cfd8e3";
+            const offset = (performance.now() / 1000 * (state === "play" ? speed : 60)) % 40;
+            for (let x = -offset; x < W; x += 40) ctx.fillRect(x, GROUND + 14, 14, 3);
+
+            // 障害物
+            obstacles.forEach((o) => {
+                const y = o.kind === "flyer" ? o.y + Math.sin(o.wobble) * 4 : o.y;
+                drawSprite(o.kind === "flyer" ? sprites.flyer : sprites.walker, o.x, y, o.size, false);
+            });
+
+            // プレイヤー（走っているあいだは少し跳ねる）
+            const bob = state === "play" && player.y >= GROUND ? Math.abs(Math.sin(performance.now() / 70)) * 3 : 0;
+            drawSprite(sprites.player, player.x, player.y - bob, player.size, false);
+
+            blink += 1;
+            if (state === "ready") {
+                text("BONUS STAGE", 92, 34, "#d6363d");
+                if (Math.floor(blink / 30) % 2 === 0) text("▶ スペース / タップでスタート", 132, 18, "#111713");
+            } else if (state === "over") {
+                text("MISS!", 92, 40, "#d6363d");
+                text(`SCORE ${Math.floor(score)}`, 126, 20, "#111713");
+                if (Math.floor(blink / 30) % 2 === 0) text("▶ もう一度（スペース / タップ）", 156, 16, "#5b6560");
+            }
+        };
+
+        const loop = (time) => {
+            const dt = Math.min((time - last) / 1000 || 0, 0.05);
+            last = time;
+            update(dt);
+            draw();
+            requestAnimationFrame(loop);
+        };
+        requestAnimationFrame(loop);
+
+        // 操作：スペース・↑・W、または画面をタップ
+        document.addEventListener("keydown", (event) => {
+            if (!["Space", "ArrowUp", "KeyW"].includes(event.code)) return;
+            if (event.target.closest("a") && event.code === "Space") return;
+            event.preventDefault();
+            jump();
         });
-        document.addEventListener("keydown", stop, { once: true });
+        canvas.addEventListener("pointerdown", (event) => {
+            event.preventDefault();
+            canvas.focus({ preventScroll: true });
+            jump();
+        });
+
+        // 別のタブに移ったら一時停止
+        document.addEventListener("visibilitychange", () => {
+            last = performance.now();
+        });
     })();
 </script>
 </body>

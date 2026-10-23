@@ -9035,3 +9035,328 @@ main > section[id]:not(#summary):not(#ending) {
     display: none;
 }
 
+/* ========================================
+   Play 2（トロフィー・ランク・季節イベント）
+======================================== */
+
+/* ---------- トロフィーを開くボタン ---------- */
+
+.footer-trophy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 2px solid #ffd666;
+    border-radius: 999px;
+    background: #fff8e1;
+    box-shadow: 0 4px 0 #ffd666;
+    color: #8a5a00;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .12em;
+    cursor: pointer;
+    transition: transform .15s ease;
+}
+
+.footer-trophy:hover {
+    transform: translateY(-2px);
+}
+
+.footer-trophy:focus-visible,
+.ending-trophy:focus-visible,
+.trophy-close:focus-visible {
+    outline: 3px solid #111713;
+    outline-offset: 3px;
+}
+
+.ending-trophy {
+    border: 2px solid #ffd666;
+    background: #fff8e1;
+    box-shadow: 0 5px 0 #f0c14b;
+    color: #8a5a00;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.ending-trophy b,
+.footer-trophy b {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- トロフィー一覧 ---------- */
+
+.trophy-room {
+    position: fixed;
+    inset: 0;
+    width: min(720px, calc(100vw - 24px));
+    height: fit-content;
+    margin: auto;
+    max-height: calc(100dvh - 48px);
+    padding: 0;
+    overflow: auto;
+    border: 2px solid #111713;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 8px 0 #111713, 0 30px 60px rgba(0, 0, 0, .3);
+    color: #111713;
+}
+
+.trophy-room::backdrop {
+    background: rgba(17, 23, 19, .55);
+}
+
+.trophy-head {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px 14px 22px;
+    background: #111713;
+    color: #fff;
+}
+
+.trophy-head h2 {
+    margin: 0;
+    color: #ffd54a;
+    font-size: 1.05rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+}
+
+.trophy-count {
+    font-variant-numeric: tabular-nums;
+    font-weight: 900;
+}
+
+.trophy-close {
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    border: 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.trophy-gauge {
+    height: 8px;
+    background: #fff1c2;
+}
+
+.trophy-gauge span {
+    display: block;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .35) 0 6px, transparent 6px 12px), #ffb300;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .6s cubic-bezier(.2, .8, .2, 1);
+}
+
+.trophy-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    padding: 18px;
+    list-style: none;
+}
+
+.trophy {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 2px dashed #d7dde6;
+    border-radius: 14px;
+    background: #f5f8fc;
+    color: #5b6560;
+}
+
+.trophy.is-got {
+    border: 2px solid #ffd666;
+    background: #fffaf0;
+    box-shadow: 0 4px 0 #ffe7a3;
+    color: #111713;
+}
+
+.trophy-icon {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #e5eaf1;
+    color: #8a939c;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.trophy.is-got .trophy-icon {
+    background: #ffb300;
+    color: #4a2f00;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .15);
+}
+
+.trophy b {
+    display: block;
+    font-size: .88rem;
+    font-weight: 900;
+}
+
+.trophy small {
+    display: block;
+    margin-top: 2px;
+    font-size: .74rem;
+    line-height: 1.5;
+}
+
+.trophy-note {
+    margin: 0;
+    padding: 0 18px 18px;
+    color: #5b6560;
+    font-size: .74rem;
+}
+
+@media (max-width: 560px) {
+    .trophy-list {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 14px;
+    }
+}
+
+/* ---------- エンディングのランク ---------- */
+
+.ending-rank {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: min(520px, 100%);
+    margin: 16px auto 22px;
+    padding: 12px 18px 12px 12px;
+    border: 2px solid #111713;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 5px 0 #111713;
+    text-align: left;
+}
+
+.ending-rank-badge {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 74px;
+    height: 74px;
+    border-radius: 16px;
+    background: var(--rank-bg, #5b6560);
+    color: #fff;
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, .25);
+}
+
+.ending-rank-badge small {
+    display: block;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-shadow: none;
+}
+
+.ending-rank[data-rank="S"] { --rank-bg: linear-gradient(135deg, #ffb300, #ff5a5f); }
+.ending-rank[data-rank="A"] { --rank-bg: #d6363d; }
+.ending-rank[data-rank="B"] { --rank-bg: #007caa; }
+.ending-rank[data-rank="C"] { --rank-bg: #5b6560; }
+
+.ending-rank-body b {
+    display: block;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 900;
+    letter-spacing: .08em;
+}
+
+.ending-rank-body small {
+    display: block;
+    margin: 4px 0;
+    color: #5b6560;
+    font-size: .74rem;
+    line-height: 1.5;
+}
+
+.ending-rank-body span {
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+/* ---------- 季節イベント ---------- */
+
+.season-badge {
+    display: inline-block;
+    margin: 0 0 10px;
+    padding: 5px 12px;
+    border: 2px solid #111713;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 3px 0 #111713;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .14em;
+}
+
+.season-halloween .season-badge { background: #ff9a1f; color: #2b1300; }
+.season-christmas .season-badge { background: #d6363d; color: #fff; }
+.season-spring .season-badge { background: #ffd6e7; color: #6b1d3a; }
+.season-newyear .season-badge { background: #fff1c2; color: #6b3d00; }
+.season-winter .season-badge { background: #e0f4ff; color: #00435e; }
+
+.ambient i.is-season {
+    opacity: .5;
+}
+
+.season-fall {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.season-fall i {
+    position: absolute;
+    top: -40px;
+    left: var(--x);
+    font-size: var(--s);
+    font-style: normal;
+    opacity: .75;
+    animation: season-fall var(--d) linear var(--delay) infinite;
+}
+
+@keyframes season-fall {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(var(--sway), 50vh) rotate(180deg); }
+    100% { transform: translate(0, 110vh) rotate(360deg); }
+}
+
+.motion-off .season-fall {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .season-fall {
+        display: none;
+    }
+}
+
+/* トロフィー通知のアイコン（記号）は黄色の上でも読める濃い色に */
+.achievement-toast .toast-icon {
+    color: #4a2f00;
+}
