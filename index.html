@@ -6,64 +6,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- セキュリティ：読み込んでよい場所を決める（自分のファイル・Google Fonts・Font Awesome・noteの画像・アクセス解析だけ）
+<!-- セキュリティ：読み込んでよい場所を決める（自分のファイル・Google Fonts・noteの画像・アクセス解析だけ）
      新しく外部の画像やスクリプトを使うときは、ここに追加する -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://assets.st-note.com; media-src 'self'; connect-src 'self' https://portfolio-analytics.haru2401game.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://assets.st-note.com; media-src 'self'; connect-src 'self' https://portfolio-analytics.haru2401game.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
 <title>長屋晴太 | Game Programmer Portfolio</title>
 
-<meta 
+<meta
 name="description"
-content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオサイト。ゲーム制作、プログラミング、企画、チーム制作などの経験や制作実績を紹介しています。">
-<meta name="author" content="Nagaya Haruta">
-<meta name="theme-color" content="#000000">
+content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオ。TGS2026出展の2D格闘ゲーム「ししとう」、IGCCグランプリの「Falien」など、Unity・C#・C++で作ったゲーム作品と経歴を紹介しています。">
+<meta name="author" content="長屋晴太（Nagaya Haruta）">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://haru2401game.github.io/portfolio/">
 
-<!-- OGP -->
-<meta property="og:title"
-content="Nagaya Haruta | Game Programmer Portfolio">
-
-<meta property="og:type"
-content="website">
-
-<meta property="og:description"
-content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオサイト">
-
-<meta property="og:url"
-content="https://haru2401game.github.io/portfolio/">
-<meta property="og:image"
-content="https://haru2401game.github.io/portfolio/images/ogp.png?v=20261023">
+<!-- OGP（SNS で共有されたときの表示） -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="長屋晴太 Portfolio">
+<meta property="og:title" content="長屋晴太 | Game Programmer Portfolio">
+<meta property="og:description" content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオ。TGS2026出展「ししとう」、IGCCグランプリ「Falien」など、遊べる作品を紹介しています。">
+<meta property="og:url" content="https://haru2401game.github.io/portfolio/">
+<meta property="og:image" content="https://haru2401game.github.io/portfolio/images/ogp.png?v=20261023">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="長屋晴太 ゲームプログラマー志望のポートフォリオ。IGCCグランプリ・TGS2026出展">
 
-<meta property="og:site_name"
-content="Nagaya Haruta Portfolio">
-
-<!-- Twitter Card -->
-<meta name="twitter:card"
-content="summary_large_image">
-
-<meta name="twitter:title"
-content="Nagaya Haruta | Game Programmer Portfolio">
-
-<meta name="twitter:description"
-content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオサイト">
-
-<meta name="twitter:image"
-content="https://haru2401game.github.io/portfolio/images/ogp.png?v=20261023">
+<!-- X（Twitter）で共有されたときの表示 -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@haru2401game">
+<meta name="twitter:title" content="長屋晴太 | Game Programmer Portfolio">
+<meta name="twitter:description" content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオ。TGS2026出展「ししとう」、IGCCグランプリ「Falien」など、遊べる作品を紹介しています。">
+<meta name="twitter:image" content="https://haru2401game.github.io/portfolio/images/ogp.png?v=20261023">
+<meta name="twitter:image:alt" content="長屋晴太 ゲームプログラマー志望のポートフォリオ。IGCCグランプリ・TGS2026出展">
 
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+<!-- 最初に見える画像は先に読み込む（表示を速くする） -->
+<link rel="preload" as="image" href="images/index/Hero/poster.webp" fetchpriority="high">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap">
 
 <link rel="stylesheet" href="css/style.css">
-
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <script type="application/ld+json">
 {
@@ -111,7 +98,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         class="mode-toggle"
         type="button"
         aria-pressed="false"
-        aria-label="シンプル表示（遊びの演出をすべて消す）">
+        aria-label="シンプル表示（遊びの演出をすべて消す）"
+        title="PLAY：遊べる表示 ／ SIMPLE：演出なしの表示">
         <span class="mode-toggle-option is-play" aria-hidden="true"><span class="mode-toggle-icon">🎮</span><span class="mode-toggle-text">PLAY</span></span>
         <span class="mode-toggle-option is-simple" aria-hidden="true"><span class="mode-toggle-icon">📄</span><span class="mode-toggle-text">SIMPLE</span></span>
     </button>
@@ -120,7 +108,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         type="button"
         role="switch"
         aria-checked="true"
-        aria-label="アニメーション">
+        aria-label="アニメーション"
+        title="アニメーションの ON / OFF">
         <span class="motion-toggle-label" aria-hidden="true">MOTION</span>
         <span class="motion-toggle-track" aria-hidden="true"><span class="motion-toggle-knob"></span></span>
         <span class="motion-toggle-state" aria-hidden="true">ON</span>
@@ -159,6 +148,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             class="hero-video"
             poster="images/index/Hero/poster.webp"
             src="videos/index/Shishito.mp4"
+            data-src-small="videos/index/Shishito-sm.mp4"
             muted
             loop
             playsinline
@@ -649,8 +639,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                             <img
                                 src="images/index/FeaturedWorks/gallery/gamejam.webp"
                                 alt="学生チーム対抗ゲームジャムで、チームで「ししとう」を制作している様子"
-                                width="1600"
-                                height="1067"
+                                width="1280"
+                                height="854"
                                 loading="lazy">
                             <span class="tech-photo-caption"><b>GAME JAM</b>学生チーム対抗ゲームジャムでの制作風景</span>
                         </button>
@@ -660,8 +650,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                             <img
                                 src="images/index/FeaturedWorks/gallery/tgs2026.webp"
                                 alt="東京ゲームショウ2026のIGDA日本ブースで、「ししとう」のチラシを持つチームメンバー"
-                                width="1200"
-                                height="1600"
+                                width="960"
+                                height="1280"
                                 loading="lazy">
                             <span class="tech-photo-caption"><b>TGS 2026</b>IGDA日本ブースでの出展</span>
                         </button>
@@ -874,8 +864,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                             <img
                                 src="images/index/FeaturedWorks/falien/team.webp"
                                 alt="IGCCの会場で、「Falien」の展示ブースの前でポーズをとるチームメンバー"
-                                width="1600"
-                                height="1067"
+                                width="1280"
+                                height="854"
                                 loading="lazy">
                             <span class="tech-photo-caption"><b>TEAM</b>6か国・7人のチームでブース展示</span>
                         </button>
@@ -885,8 +875,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                             <img
                                 src="images/index/FeaturedWorks/falien/exhibit.webp"
                                 alt="IGCCの会場で、「Falien」をノートPCで展示している様子"
-                                width="1200"
-                                height="1600"
+                                width="960"
+                                height="1280"
                                 loading="lazy">
                             <span class="tech-photo-caption"><b>PLAY</b>会場でのゲーム展示</span>
                         </button>
@@ -1321,8 +1311,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <!-- Thumbnail -->
             <img
                 src="images/index/otherworks/NULL.webp"
-                width="1919"
-                height="1079"
+                width="1280"
+                height="720"
                 alt="NULLのタイトル画面"
                 loading="lazy">
             <!-- Work Content -->
@@ -2849,7 +2839,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     本格的にゲーム開発に挑戦
                 </p>
                 <button class="timeline-photo" type="button" data-caption="入学式：専門学校トライデントの入学式にて">
-                    <img src="images/index/TimeLine/entrance.webp" alt="専門学校トライデントの入学式の看板の前でポーズをとる様子" width="1600" height="900" loading="lazy" decoding="async">
+                    <img src="images/index/TimeLine/entrance.webp" alt="専門学校トライデントの入学式の看板の前でポーズをとる様子" width="1280" height="720" loading="lazy" decoding="async">
                 </button>
             </div>
         </div>
@@ -2911,7 +2901,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     学校内コンペティションにて企業賞受賞
                 </p>
                 <button class="timeline-photo" type="button" data-caption="企業プレゼン：学校内コンペティションでの企業賞の表彰">
-                    <img src="images/index/TimeLine/presentation.webp" alt="学校内コンペティションの表彰で、企業賞の賞品を受け取る様子" width="1600" height="900" loading="lazy" decoding="async">
+                    <img src="images/index/TimeLine/presentation.webp" alt="学校内コンペティションの表彰で、企業賞の賞品を受け取る様子" width="1280" height="720" loading="lazy" decoding="async">
                 </button>
             </div>
         </div>
@@ -2960,7 +2950,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     個人とチームで進級展に展示する
                 </p>
                 <button class="timeline-photo" type="button" data-caption="進級展：「RETURN RECORD」の展示">
-                    <img src="images/index/TimeLine/shinkyu.webp" alt="進級展で「RETURN RECORD」のポスターを持ち、作品を展示している様子" width="1200" height="1600" loading="lazy" decoding="async" style="object-position: 50% 35%;">
+                    <img src="images/index/TimeLine/shinkyu.webp" alt="進級展で「RETURN RECORD」のポスターを持ち、作品を展示している様子" width="960" height="1280" loading="lazy" decoding="async" style="object-position: 50% 35%;">
                 </button>
             </div>
         </div>
@@ -3034,7 +3024,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     IGCCゲームジャムにて「Falien」がグランプリを受賞
                 </p>
                 <button class="timeline-photo" type="button" data-caption="IGCCゲームジャム：「Falien」でグランプリを受賞">
-                    <img src="images/index/TimeLine/igcc.webp" alt="IGCCゲームジャムのグランプリのトロフィーを手に喜ぶ様子" width="900" height="1600" loading="lazy" decoding="async" style="object-position: 50% 30%;">
+                    <img src="images/index/TimeLine/igcc.webp" alt="IGCCゲームジャムのグランプリのトロフィーを手に喜ぶ様子" width="720" height="1280" loading="lazy" decoding="async" style="object-position: 50% 30%;">
                 </button>
             </div>
         </div>
@@ -3051,7 +3041,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
                     TGS2026に「ししとう」を展示する
                 </p>
                 <button class="timeline-photo" type="button" data-caption="東京ゲームショウ2026：IGDA日本ブースで「ししとう」を展示">
-                    <img src="images/index/TimeLine/tgs.webp" alt="東京ゲームショウ2026のIGDA日本ブースで「ししとう」を展示している様子" width="1477" height="1108" loading="lazy" decoding="async">
+                    <img src="images/index/TimeLine/tgs.webp" alt="東京ゲームショウ2026のIGDA日本ブースで「ししとう」を展示している様子" width="1280" height="960" loading="lazy" decoding="async">
                 </button>
             </div>
         </div>

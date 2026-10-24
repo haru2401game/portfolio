@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 検索エンジン向けのページ一覧。Google Search Console に登録して使う -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://haru2401game.github.io/portfolio/</loc>
+        <lastmod>2026-10-25</lastmod>
+    </url>
+</urlset>

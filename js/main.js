@@ -178,7 +178,15 @@ const MODE_STORAGE_KEY = "portfolio-mode";
 ======================================== */
 
 const heroVideo = document.querySelector(".hero-video");
-if (heroVideo && !motionOff()) heroVideo.play().catch(() => {});
+// 通信量を抑える設定（データセーバー）の人には、動画を流さず画像のままにする
+const saveData = Boolean(navigator.connection?.saveData);
+if (heroVideo) {
+    // スマホなど画面が小さいときは、軽い動画（480p）を使う
+    if (heroVideo.dataset.srcSmall && window.matchMedia("(max-width: 768px)").matches) {
+        heroVideo.src = heroVideo.dataset.srcSmall;
+    }
+    if (!motionOff() && !saveData) heroVideo.play().catch(() => {});
+}
 
 window.addEventListener("DOMContentLoaded", () => {
     const heroText = document.querySelector(".hero-content");
@@ -240,7 +248,7 @@ document.querySelectorAll(".featured-video[data-video]").forEach((box) => {
 
 // MOTION・SIMPLE を切り替えたときのトップの動画
 function syncVideos(off) {
-    if (!heroVideo) return;
+    if (!heroVideo || saveData) return;
     if (off) heroVideo.pause();
     else if (isInViewport(heroVideo)) heroVideo.play().catch(() => {});
 }
@@ -923,6 +931,55 @@ if (motionToggle) {
     });
 }
 
+// 初めて来た人に、SIMPLE 表示があることを一度だけ吹き出しで知らせる
+// （スマホではボタンがアイコンだけなので、何のボタンか分かるように）
+(() => {
+    const HINT_KEY = "pa-hint-simple";
+    const header = document.querySelector(".header");
+    if (!modeToggle || !header || isSimple() || storage.get(MODE_STORAGE_KEY) || storage.get(HINT_KEY)) return;
+
+    const hint = make("div", "mode-hint");
+    hint.setAttribute("role", "status");
+    const message = make("span");
+    message.append("📄 SIMPLE を押すと、", make("br"), "演出なしの読みやすい表示になります");
+    hint.append(make("b", "", "採用担当の方へ"), message);
+    const close = make("button", "mode-hint-close", "×");
+    close.type = "button";
+    close.setAttribute("aria-label", "お知らせを閉じる");
+    hint.append(close);
+
+    let timer = 0;
+    let done = false;
+    const hide = () => {
+        done = true;
+        clearTimeout(timer);
+        hint.classList.remove("is-shown");
+        setTimeout(() => hint.remove(), 300);
+        window.removeEventListener("scroll", onScroll);
+    };
+    const onScroll = () => { if (window.scrollY > 400) hide(); };
+
+    setTimeout(() => {
+        if (done || isSimple()) return;
+        storage.set(HINT_KEY, "1");
+        const toggleBox = modeToggle.getBoundingClientRect();
+        const headerBox = header.getBoundingClientRect();
+        const center = toggleBox.left + toggleBox.width / 2;
+        const width = Math.min(300, window.innerWidth - 24);
+        const left = Math.max(12, Math.min(center - width / 2, window.innerWidth - width - 12));
+        hint.style.setProperty("--hint-left", `${left - headerBox.left}px`);
+        hint.style.setProperty("--hint-width", `${width}px`);
+        hint.style.setProperty("--hint-arrow", `${center - left}px`);
+        header.append(hint);
+        requestAnimationFrame(() => hint.classList.add("is-shown"));
+        timer = setTimeout(hide, 9000);
+        window.addEventListener("scroll", onScroll, { passive: true });
+    }, 1800);
+
+    close.addEventListener("click", hide);
+    modeToggle.addEventListener("click", hide);
+})();
+
 /* ========================================
    メールアドレスのコピー
 ======================================== */
@@ -1001,16 +1058,17 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     const timelineSection = document.getElementById("timeline");
     const setDrawer = bindDrawer(drawer, toggle);
 
-    const setOpen = (open) => {
+    const setOpen = (open, fromUser = true) => {
         setDrawer(open);
         text.textContent = open ? "これまでのクエストを閉じる" : `これまでのクエストを見る（${older.length}件）`;
-        if (!open && timelineSection && timelineSection.getBoundingClientRect().top < 0) {
+        // 閉じたときに見出しが画面より上なら戻す（最初の表示では位置を測らない＝読み込みを止めない）
+        if (fromUser && !open && timelineSection && timelineSection.getBoundingClientRect().top < 0) {
             timelineSection.scrollIntoView({ behavior: scrollBehavior() });
         }
     };
 
     toggle.addEventListener("click", () => setOpen(!drawer.classList.contains("is-open")));
-    setOpen(false);
+    setOpen(false, false);
 })();
 
 /* ========================================
