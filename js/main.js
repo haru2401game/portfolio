@@ -981,6 +981,23 @@ if (motionToggle) {
 })();
 
 /* ========================================
+   メールアドレス：HTML には書かず、ここで組み立てて入れる
+   （迷惑メール業者のプログラムに、ページから拾われにくくするため）
+======================================== */
+
+(() => {
+    const address = ["haru2401game", "gmail.com"].join("@");
+    document.querySelectorAll("[data-mail]").forEach((element) => {
+        if (element.matches(".mail-copy")) {
+            element.dataset.copy = address;
+            return;
+        }
+        element.href = `mailto:${address}`;
+        if (element.matches(".mail-address")) element.textContent = address;
+    });
+})();
+
+/* ========================================
    メールアドレスのコピー
 ======================================== */
 

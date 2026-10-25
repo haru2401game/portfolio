@@ -179,6 +179,8 @@ portfolio/
 - **Content-Security-Policy** で、読み込んでよい場所（自分のファイル・Google Fonts・note の画像・解析サーバー）を限定
 - 外部から取り込む文章（ブログの記事タイトルなど）は、`innerHTML` ではなく `textContent` で入れて、スクリプトが混ざっても動かないようにしている
 - 外部リンクには `rel="noopener noreferrer"` を付けている
+- メールアドレスは HTML に直接書かず、JavaScript で組み立てて入れている（迷惑メール業者に拾われにくくする）
+- 使っている部品（npm パッケージ・GitHub Actions）は、Dependabot が毎週チェックし、更新があればプルリクエストで知らせる
 - 解析サーバー側では、ログインの総当たり対策、同じ相手からの連続送信の制限、日報に偽のリンクが混ざらないための文字の除去を行っている
 
 ### 4. プライバシーに配慮したアクセス解析
@@ -223,6 +225,7 @@ Canvas で描くランゲームです。
 | 作品を追加する | `index.html` の Other Works に `.work-card` を1つ追加（いちばん上が最新） |
 | 経歴を追加する | `index.html` の Timeline に `.timeline-item` を追加。受賞は `data-quest="award"`、挑戦中は `data-quest="now"` |
 | 受賞作にする | 受賞の経歴の本文に「作品名」と書く（カードのタイトルと同じ名前） |
+| メールアドレスを変える | `js/main.js` の「メールアドレス」の欄（HTML 側は `data-mail` を付けるだけ） |
 | イベント参加数を変える | `data/profile.json` の `eventCount` |
 | 外部の画像やスクリプトを使う | `index.html` 先頭の Content-Security-Policy に、読み込み元を追加 |
 | アイコンを増やす | `css/style.css` の「アイコン」の欄に、Font Awesome の SVG から1行追加（使い方は `<i class="fa-solid fa-○○">` のまま） |

@@ -1,0 +1,14 @@
+# Dependabot：使っている部品（npm パッケージと GitHub Actions）に
+# 危ない更新や新しいバージョンが出たら、自動でプルリクエストを作って知らせる
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
