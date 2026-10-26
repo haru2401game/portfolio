@@ -9816,3 +9816,163 @@ section[id] .section-title h2 {
     font-weight: 700;
     line-height: 1.6;
 }
+
+/* ========================================
+   スマホを短く：折りたたみ・スキルセットのタブ（PC では何も変わらない）
+======================================== */
+
+.mobile-fold-toggle,
+.can-do-tabs,
+.nav-mail {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .is-mobile-folded [data-mobile-fold] {
+        display: none !important;
+    }
+
+    .mobile-fold-toggle {
+        display: flex;
+        margin: 12px 0 16px;
+    }
+
+    .status-screen .mobile-fold-toggle {
+        grid-column: 1 / -1;
+        margin: 4px 0 0;
+    }
+
+    /* What I Can Do：3つのスキルセットをタブで切り替え */
+    .can-do-tabs {
+        position: sticky;
+        z-index: 5;
+        top: 76px;
+        display: flex;
+        gap: 6px;
+        margin: 0 0 14px;
+        padding: 4px;
+        border: 2px solid var(--ui-line, #e1e7ef);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 4px 0 var(--ui-line, #e1e7ef);
+    }
+
+    .can-do-tabs button {
+        flex: 1;
+        min-height: 42px;
+        padding: 6px 4px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        color: var(--ui-sub, #5b6560);
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .can-do-tabs button[aria-pressed="true"] {
+        background: #111713;
+        color: #fff;
+    }
+
+    .can-do-tabs button:focus-visible {
+        outline: 3px solid #ffb300;
+        outline-offset: 2px;
+    }
+
+    .has-mobile-tabs .can-do-category:not(.is-mobile-current) {
+        display: none;
+    }
+
+    /* About：BASE / FOCUS を横に並べる */
+    .about .about-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Contact：SNS を2列に（説明文は省いて名前だけ） */
+    .sns-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sns-card {
+        min-height: 64px;
+    }
+
+    .sns-card p {
+        display: none;
+    }
+
+    /* メニューを開いたとき、いちばん下にメールのボタン */
+    .header-nav .nav-mail {
+        display: block;
+        margin-top: 8px;
+        border-radius: 14px;
+        background: var(--red-strong, #d6363d);
+        box-shadow: 0 4px 0 var(--red-edge, #a8262c);
+        color: #fff;
+        font-weight: 900;
+        text-align: center;
+    }
+}
+
+/* ========================================
+   連絡ボタン（画面の左下。読み進めたら出てくる）
+======================================== */
+
+.quick-contact {
+    position: fixed;
+    z-index: 900;
+    left: 16px;
+    bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 6px 16px 6px 6px;
+    border: 2px solid #111713;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 4px 0 #111713, 0 12px 24px rgba(17, 23, 19, .18);
+    color: #111713;
+    font-size: 14px;
+    font-weight: 900;
+    text-decoration: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(16px);
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+.quick-contact.is-shown {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+}
+
+.quick-contact:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 3px;
+}
+
+.quick-contact-icon {
+    display: inline-grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--red-strong, #d6363d);
+    color: #fff;
+    font-size: 16px;
+}
+
+.motion-off .quick-contact {
+    transition: none;
+}
+
+@media (max-width: 360px) {
+    .quick-contact {
+        left: 10px;
+        padding-right: 12px;
+    }
+}

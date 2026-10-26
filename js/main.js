@@ -1198,6 +1198,45 @@ function setLanguage(lang) {
 })();
 
 /* ========================================
+   連絡ボタン（画面の左下）
+   ・30秒まとめを読み終えたあたりから表示し、Contact とエンディングが見えている間は隠す
+   ・押すと Contact へ移動（メールの送信・アドレスのコピーはそこから）
+======================================== */
+
+(() => {
+    const contact = document.getElementById("contact");
+    const summary = document.getElementById("summary");
+    if (!contact) return;
+
+    const button = make("a", "quick-contact");
+    button.href = "#contact";
+    button.append(decor(make("span", "quick-contact-icon", "✉")), make("span", "quick-contact-text", "連絡する"));
+    button.setAttribute("aria-label", "連絡先（メール・SNS）へ移動");
+    document.body.append(button);
+
+    const hideZones = [contact, document.getElementById("ending")].filter(Boolean);
+    let frame = 0;
+    const update = () => {
+        frame = 0;
+        const start = summary ? summary.getBoundingClientRect().bottom : window.innerHeight;
+        const inZone = hideZones.some((zone) => {
+            const box = zone.getBoundingClientRect();
+            return box.top < window.innerHeight * 0.85 && box.bottom > 0;
+        });
+        const menuOpen = document.body.classList.contains("menu-open");
+        button.classList.toggle("is-shown", start < 0 && !inZone && !menuOpen);
+    };
+    const schedule = () => {
+        if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    // メニューを開いたら隠す
+    new MutationObserver(schedule).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    update();
+})();
+
+/* ========================================
    メールアドレスのコピー
 ======================================== */
 
@@ -1251,7 +1290,8 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     if (!container) return;
 
     const items = Array.from(container.querySelectorAll(".timeline-item"));
-    const VISIBLE = 3;
+    // 最初から見せる新しいクエストの数（スマホは画面が縦に長くなるので2つ）
+    const VISIBLE = window.matchMedia("(max-width: 768px)").matches ? 2 : 3;
     if (items.length <= VISIBLE) return;
 
     const older = items.slice(0, items.length - VISIBLE);
@@ -1656,6 +1696,83 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         render();
         steps.after(toggle);
     });
+
+    /* スマホで長いところを折りたたむ（PC では何も変わらない）
+       ・container の中の hide に当たる要素を、ボタンを押すまで隠す
+       ・開いた回数はアクセス解析に「くわしく: ○○」として記録される */
+    const foldOnMobile = (container, hide, before, name, labels) => {
+        const targets = container ? Array.from(container.querySelectorAll(hide)) : [];
+        if (!targets.length) return;
+        container.classList.add("is-mobile-folded");
+        targets.forEach((target) => target.setAttribute("data-mobile-fold", ""));
+        container.id ||= `mobile-fold-${Math.random().toString(36).slice(2, 8)}`;
+
+        const toggle = make("button", "tech-steps-toggle mobile-fold-toggle");
+        toggle.type = "button";
+        toggle.setAttribute("aria-controls", container.id);
+        const label = make("span");
+        const icon = decor(make("i"));
+        toggle.append(label, icon);
+
+        const render = () => {
+            const open = !container.classList.contains("is-mobile-folded");
+            toggle.setAttribute("aria-expanded", String(open));
+            label.textContent = open ? labels[1] : labels[0];
+            icon.className = `fa-solid ${open ? "fa-chevron-up" : "fa-chevron-down"}`;
+        };
+        toggle.addEventListener("click", () => {
+            container.classList.toggle("is-mobile-folded");
+            render();
+            if (container.classList.contains("is-mobile-folded")) {
+                toggle.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+            } else {
+                emitPlayEvent(`くわしく: ${name}`);
+            }
+        });
+        render();
+        (before ? container.querySelector(before) : null)?.before(toggle) ?? container.append(toggle);
+    };
+
+    // Main Works：チーム構成・開発環境は、押したら開く
+    document.querySelectorAll(".featured-container[data-work]").forEach((work) => {
+        foldOnMobile(work.querySelector(".tech-log"), ".tech-grid", ".tech-grid", `${work.dataset.work} チーム構成`,
+            ["チーム構成と開発環境を見る", "チーム構成と開発環境を閉じる"]);
+    });
+
+    // What I Can Do：ステータス画面の EXP（使った技術・担当）は、押したら開く
+    // （ステータス画面は JS で作るので、作り終わってから）
+    const foldStatus = () => {
+        const status = document.querySelector(".status-screen");
+        if (!status || status.hidden || status.querySelector(".mobile-fold-toggle")) return;
+        foldOnMobile(status, ".status-exp", null, "スキルEXP", ["技術・担当ごとのEXPを見る", "EXPを閉じる"]);
+    };
+    foldStatus();
+    window.addEventListener("load", foldStatus);
+
+    // What I Can Do：3つのスキルセットを、スマホではタブで1つずつ見せる
+    const canDo = document.getElementById("what-i-can-do");
+    const categories = canDo ? Array.from(canDo.querySelectorAll(".can-do-category")) : [];
+    if (categories.length > 1) {
+        const tabs = make("div", "can-do-tabs");
+        tabs.setAttribute("role", "group");
+        tabs.setAttribute("aria-label", "スキルセットの切り替え");
+        const buttons = categories.map((category, index) => {
+            const button = make("button", "", textOf(category, ".can-do-category-title h3"));
+            button.type = "button";
+            button.addEventListener("click", () => select(index));
+            tabs.append(button);
+            return button;
+        });
+        const select = (current) => {
+            categories.forEach((category, index) => category.classList.toggle("is-mobile-current", index === current));
+            buttons.forEach((button, index) => button.setAttribute("aria-pressed", String(index === current)));
+            // 切り替えたスキルセットの横スワイプを先頭に戻す
+            categories[current].querySelector(".can-do-list")?.scrollTo({ left: 0 });
+        };
+        canDo.classList.add("has-mobile-tabs");
+        categories[0].before(tabs);
+        select(0);
+    }
 })();
 
 /* ========================================
