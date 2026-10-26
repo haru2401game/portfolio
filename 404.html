@@ -245,6 +245,41 @@
         }
     })();
     const L = (ja, en) => (EN ? en : ja);
+
+    /* 効果音：トップページの設定で「効果音 ON」のときだけ鳴らす（音量も同じ設定） */
+    const beep = (() => {
+        let saved = {};
+        try {
+            saved = JSON.parse(localStorage.getItem("pa-settings")) || {};
+        } catch {
+            saved = {};
+        }
+        const volume = Number.isFinite(Number(saved.volume)) ? Number(saved.volume) : 70;
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (saved.sfx !== "on" || saved.muted || volume <= 0 || !Ctx) return () => {};
+        let audio = null;
+        return (notes, slide = 0) => {
+            audio = audio || new Ctx();
+            const master = audio.createGain();
+            master.gain.value = (volume / 100) * 0.1;
+            master.connect(audio.destination);
+            const now = audio.currentTime;
+            notes.forEach(([frequency, start, length]) => {
+                const osc = audio.createOscillator();
+                const env = audio.createGain();
+                osc.type = "square";
+                osc.frequency.setValueAtTime(frequency, now + start);
+                if (slide) osc.frequency.exponentialRampToValueAtTime(frequency * slide, now + start + length);
+                env.gain.setValueAtTime(0.0001, now + start);
+                env.gain.exponentialRampToValueAtTime(1, now + start + 0.008);
+                env.gain.exponentialRampToValueAtTime(0.0001, now + start + length);
+                osc.connect(env);
+                env.connect(master);
+                osc.start(now + start);
+                osc.stop(now + start + length + 0.02);
+            });
+        };
+    })();
     if (EN) {
         document.documentElement.lang = "en";
         document.title = "GAME OVER | Haruta Nagaya Portfolio";
@@ -320,7 +355,10 @@
                 state = "play";
                 announce.textContent = L("スタート", "Start");
             }
-            if (player.y >= GROUND) player.vy = JUMP;
+            if (player.y >= GROUND) {
+                player.vy = JUMP;
+                beep([[523, 0, 0.12]], 2);
+            }
         };
 
         const spawn = () => {
@@ -358,6 +396,7 @@
                 const box = { x: o.x + 7, y: top - o.size + 8, w: o.size - 14, h: o.size - 12 };
                 if (hit(me, box)) {
                     state = "over";
+                    beep([[392, 0, 0.12], [262, 0.12, 0.3]]);
                     if (score > high) {
                         high = Math.floor(score);
                         try { localStorage.setItem("pa-404-high", String(high)); } catch { /* ignore */ }

@@ -422,6 +422,8 @@
         text.append(label, message);
         toast.append(icon, text);
         document.body.append(toast);
+        // 効果音（sfx.js）に知らせる
+        document.dispatchEvent(new CustomEvent("play:trophy", { detail: { id: trophy.id, count: n } }));
         requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add("is-visible")));
         setTimeout(() => {
             toast.classList.remove("is-visible");

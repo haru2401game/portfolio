@@ -180,6 +180,7 @@ const defaultSettings = () => ({
     motion: prefersReducedMotion ? "none" : "default",
     volume: DEFAULT_VOLUME,
     muted: false,
+    sfx: "off",
     lang: "ja",
 });
 
@@ -191,6 +192,8 @@ const settings = (() => {
         motion: MOTION_LEVELS.includes(saved.motion) ? saved.motion : motionOff() ? "none" : "default",
         volume: Number.isFinite(volume) ? Math.min(100, Math.max(0, Math.round(volume))) : DEFAULT_VOLUME,
         muted: saved.muted === true,
+        // 効果音は、急に音が鳴らないように最初は OFF
+        sfx: saved.sfx === "on" ? "on" : "off",
         lang: saved.lang === "en" ? "en" : "ja",
     };
 })();
@@ -954,7 +957,8 @@ function makeSprite(file, className) {
 /* ========================================
    設定画面（OPTIONS）：ゲームのオプション画面のように、ヘッダーの ⚙ から開く
    ・アニメーション：デフォルト ／ 軽量 ／ なし
-   ・音量：作品の動画の音量とミュート
+   ・音量：作品の動画と効果音の音量・ミュート
+   ・効果音：ボタンやトロフィーの音（ON / OFF。鳴らすのは sfx.js）
    ・言語：日本語 ／ English（訳は data/i18n-en.js、切り替えは i18n.js）
 ======================================== */
 
@@ -980,6 +984,11 @@ function setVolume(volume, muted = settings.muted) {
     settings.muted = muted;
     saveSettings();
     document.querySelectorAll("video").forEach(applyVolume);
+}
+
+function setSfx(value) {
+    settings.sfx = value === "on" ? "on" : "off";
+    saveSettings();
 }
 
 function setLanguage(lang) {
@@ -1019,7 +1028,15 @@ function setLanguage(lang) {
                     <input type="range" min="0" max="100" step="5" aria-labelledby="settings-volume">
                     <output class="settings-volume-value" aria-hidden="true"></output>
                 </div>
-                <p class="settings-note">作品紹介の動画の音量です</p>
+                <p class="settings-note">作品紹介の動画と効果音の音量です</p>
+            </div>
+            <div class="settings-row">
+                <h3 class="settings-label" id="settings-sfx">効果音</h3>
+                <div class="settings-choices" role="radiogroup" aria-labelledby="settings-sfx" data-setting="sfx">
+                    <button type="button" role="radio" data-value="on">ON</button>
+                    <button type="button" role="radio" data-value="off">OFF</button>
+                </div>
+                <p class="settings-note">ボタンを押したときやトロフィーを解除したときに、短い音が鳴ります</p>
             </div>
             <div class="settings-row">
                 <h3 class="settings-label" id="settings-lang" data-no-translate>言語 / Language</h3>
@@ -1063,6 +1080,7 @@ function setLanguage(lang) {
         const value = option.dataset.value;
         if (group.dataset.setting === "motion") setMotion(value);
         if (group.dataset.setting === "lang") setLanguage(value);
+        if (group.dataset.setting === "sfx") setSfx(value);
         render();
         emitPlayEvent(`設定: ${group.dataset.setting}=${value}`);
     };
@@ -1096,6 +1114,7 @@ function setLanguage(lang) {
         const initial = defaultSettings();
         setMotion(initial.motion);
         setVolume(initial.volume, initial.muted);
+        setSfx(initial.sfx);
         setLanguage(initial.lang);
         render();
     });
