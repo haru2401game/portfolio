@@ -77,7 +77,9 @@
     };
 
     const track = (t, n = "", extra = {}) => {
-        queue.push({ t, n: String(n).trim().slice(0, 80), ...extra });
+        // 英語表示中でも、作品名などは日本語のまま記録する（i18n.js）
+        const name = window.I18n ? window.I18n.toJa(String(n).trim()) : String(n);
+        queue.push({ t, n: String(name).trim().slice(0, 80), ...extra });
         if (!timer) timer = setTimeout(flush, 1500);
     };
 

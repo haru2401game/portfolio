@@ -50,6 +50,9 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap">
 
+<!-- 設定（アニメーション・言語）を、ページを描く前に反映する -->
+<script src="js/settings-boot.js"></script>
+
 <link rel="stylesheet" href="css/style.css">
 
 <script type="application/ld+json">
@@ -95,24 +98,12 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
     </a>
 
     <button
-        class="mode-toggle"
+        class="settings-button"
         type="button"
-        aria-pressed="false"
-        aria-label="シンプル表示（遊びの演出をすべて消す）"
-        title="PLAY：遊べる表示 ／ SIMPLE：演出なしの表示">
-        <span class="mode-toggle-option is-play" aria-hidden="true"><span class="mode-toggle-icon">🎮</span><span class="mode-toggle-text">PLAY</span></span>
-        <span class="mode-toggle-option is-simple" aria-hidden="true"><span class="mode-toggle-icon">📄</span><span class="mode-toggle-text">SIMPLE</span></span>
-    </button>
-    <button
-        class="motion-toggle"
-        type="button"
-        role="switch"
-        aria-checked="true"
-        aria-label="アニメーション"
-        title="アニメーションの ON / OFF">
-        <span class="motion-toggle-label" aria-hidden="true">MOTION</span>
-        <span class="motion-toggle-track" aria-hidden="true"><span class="motion-toggle-knob"></span></span>
-        <span class="motion-toggle-state" aria-hidden="true">ON</span>
+        aria-haspopup="dialog"
+        aria-label="設定（アニメーション・音量・言語）">
+        <span class="settings-button-icon" aria-hidden="true">⚙</span>
+        <span class="settings-button-text" aria-hidden="true">OPTIONS</span>
     </button>
 
     <button
@@ -3301,6 +3292,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <script src="js/analytics.js"></script>
 <script src="js/like.js"></script>
 <script src="js/play.js"></script>
+<script src="js/i18n.js"></script>
 
 </body>
 </html>

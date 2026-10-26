@@ -2703,6 +2703,10 @@ footer {
     content: "● NOW PLAYING — ししとう";
 }
 
+:root[lang="en"] .hero-overlay::before {
+    content: "● NOW PLAYING — SHISHITO";
+}
+
 .hero-content {
     z-index: 2;
     padding: 0;
@@ -4480,93 +4484,71 @@ footer.has-peeker {
 }
 
 /* ========================================
-   Header: motion switch
+   Header: ⚙ OPTIONS（設定画面を開くボタン）
 ======================================== */
 
-.motion-toggle {
+.settings-button {
     display: inline-flex;
     flex: 0 0 auto;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
+    min-height: 40px;
+    margin-left: auto;
     margin-right: 22px;
-    padding: 6px 10px 6px 12px;
+    padding: 6px 14px 6px 10px;
     border: 2px solid var(--ui-line);
     border-radius: 999px;
     background: #fff;
     box-shadow: 0 3px 0 var(--ui-line);
-    color: var(--ui-sub);
+    color: var(--ui-ink);
     cursor: pointer;
     font: inherit;
-    font-size: 10px;
-    font-weight: 750;
+    font-size: 11px;
+    font-weight: 900;
     letter-spacing: .14em;
     transition: transform .15s ease, box-shadow .15s ease, border-color .2s ease;
 }
 
-.motion-toggle:hover {
+.settings-button:hover {
     transform: translateY(-1px);
     border-color: #9fdff8;
 }
 
-.motion-toggle:active {
+.settings-button:active {
     transform: translateY(2px);
     box-shadow: 0 1px 0 var(--ui-line);
 }
 
-.motion-toggle:focus-visible {
+.settings-button:focus-visible {
     outline: 3px solid #ffb300;
     outline-offset: 2px;
 }
 
-.motion-toggle-track {
-    position: relative;
-    width: 34px;
-    height: 20px;
-    border-radius: 999px;
-    background: #22c55e;
-    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .12);
-    transition: background .2s ease;
-}
-
-.motion-toggle-knob {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 14px;
-    height: 14px;
+.settings-button-icon {
+    display: inline-grid;
+    width: 26px;
+    height: 26px;
+    place-items: center;
     border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
-    translate: 14px 0;
-    transition: translate .25s cubic-bezier(.3, 1.5, .5, 1);
+    background: #111713;
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 0;
+    line-height: 1;
+    transition: rotate .4s ease;
 }
 
-.motion-toggle-state {
-    min-width: 2.2em;
-    color: #15803d;
-}
-
-.motion-toggle[aria-checked="false"] .motion-toggle-track {
-    background: #cbd5e1;
-}
-
-.motion-toggle[aria-checked="false"] .motion-toggle-knob {
-    translate: 0 0;
-}
-
-.motion-toggle[aria-checked="false"] .motion-toggle-state {
-    color: var(--ui-sub);
+.settings-button:hover .settings-button-icon {
+    rotate: 90deg;
 }
 
 @media (max-width: 768px) {
-    .motion-toggle {
+    .settings-button {
         margin-right: 12px;
-        padding: 6px 8px 6px 10px;
+        padding: 6px;
     }
-}
 
-@media (max-width: 420px) {
-    .motion-toggle-label {
+    .settings-button-text {
         display: none;
     }
 }
@@ -4583,7 +4565,7 @@ footer.has-peeker {
     display: none !important;
 }
 
-/* Header fit: keep logo, motion switch and nav on one tidy row at every width */
+/* Header fit: keep logo, ⚙ button and nav on one tidy row at every width */
 .header-nav a,
 .brand-name,
 .brand-name small {
@@ -4591,11 +4573,12 @@ footer.has-peeker {
 }
 
 @media (min-width: 769px) and (max-width: 1100px) {
-    .motion-toggle {
+    .settings-button {
         margin-right: 14px;
+        padding: 6px;
     }
 
-    .motion-toggle-label {
+    .settings-button-text {
         display: none;
     }
 
@@ -4620,13 +4603,8 @@ footer.has-peeker {
 }
 
 @media (max-width: 420px) {
-    .motion-toggle {
+    .settings-button {
         margin-right: 8px;
-        padding: 6px;
-    }
-
-    .motion-toggle-state {
-        display: none;
     }
 
     .brand-name small {
@@ -8642,80 +8620,9 @@ main > section[id]:not(#summary):not(#ending) {
 }
 
 /* ========================================
-   PLAY / SIMPLE（採用担当者モード）
+   ヘッダーが窮屈な幅ではロゴの文字を短くする
 ======================================== */
 
-.mode-toggle {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: 2px;
-    margin-left: auto;
-    padding: 3px;
-    border: 2px solid var(--ui-line, #e1e7ef);
-    border-radius: 999px;
-    background: #f5f8fc;
-    box-shadow: 0 3px 0 var(--ui-line, #e1e7ef);
-    color: var(--ui-sub, #5b6560);
-    cursor: pointer;
-    font: inherit;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: .12em;
-}
-
-.mode-toggle + .motion-toggle {
-    margin-left: 10px;
-}
-
-.mode-toggle-option {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    min-height: 32px;
-    padding: 0 10px;
-    border-radius: 999px;
-    transition: background-color .2s ease, color .2s ease;
-}
-
-.mode-toggle-icon {
-    font-size: 13px;
-    letter-spacing: 0;
-}
-
-.mode-toggle[aria-pressed="false"] .is-play,
-.mode-toggle[aria-pressed="true"] .is-simple {
-    background: #111713;
-    color: #fff;
-}
-
-.mode-toggle:focus-visible {
-    outline: 3px solid #ffb300;
-    outline-offset: 3px;
-}
-
-@media (max-width: 1100px) {
-    .mode-toggle-text {
-        display: none;
-    }
-
-    .mode-toggle-option {
-        padding: 0 7px;
-    }
-}
-
-@media (max-width: 420px) {
-    .mode-toggle + .motion-toggle {
-        margin-left: 6px;
-    }
-
-    .mode-toggle-option {
-        min-height: 32px;
-        padding: 0 5px;
-    }
-}
-
-/* ボタンが増えた分、ヘッダーが窮屈な幅ではロゴの文字を短くする */
 @media (min-width: 769px) and (max-width: 960px) {
     .header-logo {
         margin-right: 12px;
@@ -8732,39 +8639,6 @@ main > section[id]:not(#summary):not(#ending) {
     .brand-name {
         display: none;
     }
-}
-
-/* SIMPLE のときは、遊びの演出をすべて消す（内容はそのまま） */
-.mode-simple .peeker,
-.mode-simple .drifter,
-.mode-simple .card-pop,
-.mode-simple .ambient,
-.mode-simple .play-notice,
-.mode-simple .play-bubble,
-.mode-simple .play-spark,
-.mode-simple .play-parade,
-.mode-simple .play-continue,
-.mode-simple .stage-bar,
-.mode-simple .season-fall,
-.mode-simple .season-badge,
-.mode-simple .achievement-toast,
-.mode-simple .footer-trophy,
-.mode-simple .ending-trophy,
-.mode-simple .ending-rank,
-.mode-simple .cast-meter,
-.mode-simple .ending-secret,
-.mode-simple .rare-shine,
-.mode-simple .hero-index,
-.mode-simple .world-hero,
-.mode-simple .like-combo,
-.mode-simple .like-float,
-.mode-simple .like-particle {
-    display: none !important;
-}
-
-.mode-simple .peeker-sprite,
-.mode-simple .drifter {
-    pointer-events: none;
 }
 
 /* ========================================
@@ -9255,10 +9129,10 @@ main > section[id]:not(#summary):not(#ending) {
 }
 
 /* ========================================
-   初回だけ出る吹き出し：SIMPLE 表示の案内
+   初回だけ出る吹き出し：⚙ OPTIONS（設定）の案内
 ======================================== */
 
-.mode-hint {
+.settings-hint {
     position: absolute;
     top: calc(100% + 12px);
     left: var(--hint-left, 12px);
@@ -9276,13 +9150,13 @@ main > section[id]:not(#summary):not(#ending) {
     transition: opacity .25s, transform .25s;
 }
 
-.mode-hint.is-shown {
+.settings-hint.is-shown {
     opacity: 1;
     transform: none;
     pointer-events: auto;
 }
 
-.mode-hint::before {
+.settings-hint::before {
     content: "";
     position: absolute;
     top: -9px;
@@ -9295,13 +9169,13 @@ main > section[id]:not(#summary):not(#ending) {
     transform: rotate(45deg);
 }
 
-.mode-hint b {
+.settings-hint b {
     color: #00739e;
     font-size: 12px;
     letter-spacing: .08em;
 }
 
-.mode-hint-close {
+.settings-hint-close {
     position: absolute;
     top: 4px;
     right: 4px;
@@ -9316,12 +9190,12 @@ main > section[id]:not(#summary):not(#ending) {
     cursor: pointer;
 }
 
-.mode-hint-close:hover,
-.mode-hint-close:focus-visible {
+.settings-hint-close:hover,
+.settings-hint-close:focus-visible {
     background: #eef2f7;
 }
 
-.motion-off .mode-hint {
+.motion-off .settings-hint {
     transition: none;
 }
 
@@ -9461,8 +9335,7 @@ main > section[id]:not(#summary):not(#ending) {
     }
 }
 
-.motion-off .works-pickup-card,
-.mode-simple .works-pickup-card {
+.motion-off .works-pickup-card {
     transition: none;
 }
 
@@ -9583,4 +9456,350 @@ section[id] .section-title h2 {
     .achievement-card[data-no-meter] {
         padding-bottom: 53px;
     }
+}
+
+/* ========================================
+   アニメーション「軽量」：常に動いている飾り（ふわふわ・点滅・流れる線など）だけ止める
+   表示されるときの動きやボタンの反応、キャラクターの顔出しは残す
+   ※ 新しく infinite のアニメーションを足したら、ここにも追加する
+======================================== */
+
+.motion-lite .status-state::before,
+.motion-lite .timeline-item[data-quest="now"]::before,
+.motion-lite .hero-index span,
+.motion-lite .blog-logo,
+.motion-lite .blog-logo::after,
+.motion-lite .article-badges .is-new,
+.motion-lite .brand-mark,
+.motion-lite .hero-screen,
+.motion-lite .hero-eyebrow::before,
+.motion-lite .hero-button,
+.motion-lite .hero-overlay,
+.motion-lite .about-image,
+.motion-lite .about-kicker::before,
+.motion-lite .achievements .achievement-card i,
+.motion-lite .stat-gauge span::after,
+.motion-lite .blog-exp .stat-gauge span::after,
+.motion-lite .can-do-icon,
+.motion-lite .featured-video::before,
+.motion-lite .stage-filter-label::before,
+.motion-lite .stage-badges .is-wip,
+.motion-lite .timeline-container::before,
+.motion-lite .timeline-item[data-quest="award"]::before,
+.motion-lite .timeline-item[data-quest="now"] .timeline-content::after,
+.motion-lite .play-card img,
+.motion-lite .play-card span::before,
+.motion-lite .sns-card img,
+.motion-lite .footer-top span,
+.motion-lite .works-toggle-icon,
+.motion-lite .mail-card-icon,
+.motion-lite .stage-filter button[aria-pressed="true"],
+.motion-lite .can-do-category-title > span,
+.motion-lite .quest-toggle-icon,
+.motion-lite .challenge-pip.is-next,
+.motion-lite .like-heart,
+.motion-lite .exp-fill::after,
+.motion-lite .rare-shine::before,
+.motion-lite .ending-kicker span,
+.motion-lite .main-tab[aria-selected="true"]::after,
+.motion-lite .world-hero {
+    animation: none !important;
+}
+
+.motion-lite .ambient,
+.motion-lite .drifter,
+.motion-lite .season-fall {
+    display: none !important;
+}
+
+/* ========================================
+   設定画面（OPTIONS）：ゲームのオプション画面風
+======================================== */
+
+.settings-panel {
+    position: fixed;
+    inset: 0;
+    width: min(560px, calc(100vw - 24px));
+    height: fit-content;
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 2px solid #111713;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 8px 0 #111713, 0 30px 60px rgba(0, 0, 0, .3);
+    color: #111713;
+}
+
+.settings-panel::backdrop {
+    background: rgba(17, 23, 19, .55);
+}
+
+.settings-panel[open] {
+    animation: settings-open .28s cubic-bezier(.2, .9, .3, 1.2);
+}
+
+@keyframes settings-open {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(.97);
+    }
+}
+
+.motion-off .settings-panel[open] {
+    animation: none;
+}
+
+.settings-head {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 14px 14px 20px;
+    background: #111713;
+    color: #fff;
+}
+
+.settings-head-icon {
+    color: #ffd666;
+    font-size: 20px;
+}
+
+.settings-head h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: .18em;
+}
+
+.settings-head-sub {
+    color: #b9c2bd;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.settings-close {
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .1);
+    color: #fff;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.settings-close:hover,
+.settings-close:focus-visible {
+    background: rgba(255, 255, 255, .22);
+}
+
+.settings-body {
+    display: grid;
+    gap: 6px;
+    padding: 14px 20px 6px;
+    background: var(--ui-dots), #fff;
+}
+
+.settings-row {
+    padding: 14px 0;
+    border-bottom: 2px dashed var(--ui-line);
+}
+
+.settings-row:last-child {
+    border-bottom: 0;
+}
+
+.settings-label {
+    margin: 0 0 10px;
+    color: var(--ui-ink);
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: .06em;
+}
+
+.settings-label::before {
+    margin-right: 8px;
+    color: #00a3e0;
+    content: "■";
+    font-size: 10px;
+    vertical-align: 2px;
+}
+
+.settings-choices {
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    border: 2px solid var(--ui-line);
+    border-radius: 14px;
+    background: var(--ui-panel);
+}
+
+.settings-choices [role="radio"] {
+    position: relative;
+    flex: 1;
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ui-sub);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.settings-choices [role="radio"]:hover {
+    background: #fff;
+    color: var(--ui-ink);
+}
+
+.settings-choices [role="radio"][aria-checked="true"] {
+    background: #111713;
+    box-shadow: 0 3px 0 #000;
+    color: #fff;
+}
+
+/* 選んでいる項目に、ゲームのメニューのような ▶ を出す */
+.settings-choices [role="radio"][aria-checked="true"]::before {
+    margin-right: 6px;
+    color: #ffd666;
+    content: "▶";
+    font-size: 10px;
+    vertical-align: 1px;
+}
+
+.settings-choices [role="radio"]:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 2px;
+}
+
+.settings-note {
+    margin: 8px 2px 0;
+    color: var(--ui-sub);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.settings-volume {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-mute {
+    display: grid;
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 2px solid var(--ui-line);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 0 var(--ui-line);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.settings-mute[aria-pressed="true"] {
+    border-color: #ffc2c5;
+    background: #ffe1e2;
+}
+
+.settings-mute:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 2px;
+}
+
+.settings-volume input[type="range"] {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    margin: 0;
+    accent-color: #00a3e0;
+    cursor: pointer;
+}
+
+.settings-panel.is-muted input[type="range"] {
+    opacity: .45;
+}
+
+.settings-volume-value {
+    min-width: 3.4em;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: #111713;
+    color: #ffd666;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 900;
+    text-align: center;
+}
+
+.settings-foot {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 12px 20px 18px;
+}
+
+.settings-foot button {
+    min-height: 44px;
+    padding: 8px 18px;
+    border: 2px solid var(--ui-line);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 0 var(--ui-line);
+    color: var(--ui-ink);
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.settings-foot .settings-done {
+    min-width: 96px;
+    border-color: #a8262c;
+    background: #d6363d;
+    box-shadow: 0 3px 0 #a8262c;
+    color: #fff;
+    letter-spacing: .1em;
+}
+
+.settings-foot button:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 2px;
+}
+
+@media (max-width: 420px) {
+    .settings-body {
+        padding: 10px 14px 4px;
+    }
+
+    .settings-choices [role="radio"] {
+        padding: 8px 4px;
+        font-size: 13px;
+    }
+
+    .settings-foot {
+        padding: 10px 14px 14px;
+    }
+
+    .settings-foot button {
+        flex: 1;
+    }
+}
+
+/* 英語に切り替えるとき、訳し終わるまで本文を隠す（ちらつき防止） */
+.i18n-wait body {
+    visibility: hidden;
 }

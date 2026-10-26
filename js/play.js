@@ -10,7 +10,7 @@
    記録（図鑑・前回の位置）は、見ている人のブラウザ（localStorage）にだけ残る
 ======================================== */
 
-// 共通の道具（make・decor・root・reduceMotion・isSimple・localData・sessionData・emitPlayEvent）は main.js にある
+// 共通の道具（make・decor・root・reduceMotion・liteMotion・localData・sessionData・emitPlayEvent）は main.js にある
 (() => {
     /* ---------- お知らせ（ヘッダーの下にゲーム風の通知） ---------- */
 
@@ -48,7 +48,6 @@
     };
 
     const notify = (notice) => {
-        if (isSimple()) return;
         notices.push(notice);
         showNext();
     };
@@ -93,10 +92,8 @@
             ? `CAST ${count} / ${names.length} コンプリート！`
             : `CAST ${count} / ${names.length} 発見 ── サイトのあちこちで顔を出すキャラクターを、クリックして探してみてください`;
         meter.classList.toggle("is-complete", count >= names.length);
-        if (count < names.length && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            meter.textContent = `CAST ${count} / ${names.length} 発見 ── 端末の設定で動きを減らしているため、キャラクターは出てきません`;
-        } else if (count < names.length && root.classList.contains("motion-off")) {
-            meter.textContent = `CAST ${count} / ${names.length} 発見 ── ヘッダーの MOTION を ON にすると、キャラクターが顔を出します`;
+        if (count < names.length && root.classList.contains("motion-off")) {
+            meter.textContent = `CAST ${count} / ${names.length} 発見 ── ⚙ OPTIONS のアニメーションを「なし」以外にすると、キャラクターが顔を出します`;
         }
 
         // 全員見つけた人だけが見られるメッセージ
@@ -147,7 +144,6 @@
     });
 
     document.addEventListener("click", (event) => {
-        if (isSimple()) return;
         let img = event.target.closest?.(".peeker-sprite, .drifter");
         if (!img && !event.target.closest?.(INTERACTIVE)) img = characterAt(event.clientX, event.clientY);
         if (img) catchCharacter(img, event);
@@ -164,7 +160,7 @@
     let parading = false;
 
     const parade = () => {
-        if (parading || isSimple()) return;
+        if (parading) return;
         parading = true;
         emitPlayEvent("隠しコマンド");
 
@@ -312,7 +308,7 @@
     const target = saved && typeof saved.id === "string" ? document.getElementById(saved.id) : null;
     const recent = saved && Date.now() - Number(saved.at || 0) < 30 * 24 * 60 * 60 * 1000;
 
-    if (!isSimple() && firstView && target && recent && stageSections.includes(target) && !location.hash && window.scrollY < 200) {
+    if (firstView && target && recent && stageSections.includes(target) && !location.hash && window.scrollY < 200) {
         const card = make("div", "play-continue");
         card.setAttribute("role", "dialog");
         card.setAttribute("aria-label", "前回の続きから見る");
@@ -361,7 +357,7 @@
     let sparkCount = 0;
 
     document.addEventListener("pointerdown", (event) => {
-        if (event.pointerType !== "mouse" || event.button !== 0 || reduceMotion()) return;
+        if (event.pointerType !== "mouse" || event.button !== 0 || liteMotion()) return;
         if (sparkCount > 24) return;
 
         const burst = decor(make("span", "play-spark"));
@@ -415,10 +411,6 @@
     let showing = false;
     const showNext = () => {
         if (showing || !queue.length) return;
-        if (isSimple()) {
-            queue.length = 0;
-            return;
-        }
         showing = true;
         const { trophy, n } = queue.shift();
         const toast = make("div", "achievement-toast");
@@ -714,7 +706,7 @@
 
         // トップに舞い落ちるもの
         const hero = document.querySelector(".hero");
-        if (hero && !reduceMotion()) {
+        if (hero && !liteMotion()) {
             const layer = decor(make("div", "season-fall"));
             for (let i = 0; i < 14; i += 1) {
                 const bit = make("i", "", config.fall[i % config.fall.length]);

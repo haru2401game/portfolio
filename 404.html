@@ -236,6 +236,30 @@
        - 空を飛ぶ青い魚（スコア150から）→ ジャンプしないでよける
        - だんだん速くなる。ハイスコアはこのブラウザに保存
     ======================================== */
+    /* 言語：トップページの設定（⚙ OPTIONS）で English を選んでいたら英語で表示 */
+    const EN = (() => {
+        try {
+            return JSON.parse(localStorage.getItem("pa-settings"))?.lang === "en";
+        } catch {
+            return false;
+        }
+    })();
+    const L = (ja, en) => (EN ? en : ja);
+    if (EN) {
+        document.documentElement.lang = "en";
+        document.title = "GAME OVER | Haruta Nagaya Portfolio";
+        const set = (selector, text) => {
+            const element = document.querySelector(selector);
+            if (element) element.textContent = text;
+        };
+        set(".message", "The page you were looking for could not be found.");
+        document.querySelector(".sub").innerHTML = "The URL may be wrong, or the page may have moved.<br>Since you're here, why not play a round?";
+        document.querySelector("#game").setAttribute("aria-label", "Mini-game: make the character jump to dodge the fish walking on the ground. Press Space or tap to jump.");
+        document.querySelector(".game-tip").innerHTML = "<kbd>SPACE</kbd> / <kbd>↑</kbd> / tap to jump. Don't jump for the flying fish — let them pass overhead.";
+        set(".actions .is-primary", "▶ CONTINUE (back to top)");
+        set(".actions .button:not(.is-primary)", "View all works");
+    }
+
     (() => {
         const canvas = document.getElementById("game");
         const ctx = canvas.getContext("2d");
@@ -294,7 +318,7 @@
             if (state === "ready" || state === "over") {
                 reset();
                 state = "play";
-                announce.textContent = "スタート";
+                announce.textContent = L("スタート", "Start");
             }
             if (player.y >= GROUND) player.vy = JUMP;
         };
@@ -338,9 +362,9 @@
                         high = Math.floor(score);
                         try { localStorage.setItem("pa-404-high", String(high)); } catch { /* ignore */ }
                         highEl.textContent = pad(high);
-                        announce.textContent = `ミス！ スコア ${Math.floor(score)}。ハイスコア更新！`;
+                        announce.textContent = L(`ミス！ スコア ${Math.floor(score)}。ハイスコア更新！`, `Miss! Score ${Math.floor(score)}. New high score!`);
                     } else {
-                        announce.textContent = `ミス！ スコア ${Math.floor(score)}`;
+                        announce.textContent = L(`ミス！ スコア ${Math.floor(score)}`, `Miss! Score ${Math.floor(score)}`);
                     }
                     break;
                 }
@@ -408,11 +432,11 @@
             blink += 1;
             if (state === "ready") {
                 text("BONUS STAGE", 92, 34, "#d6363d");
-                if (Math.floor(blink / 30) % 2 === 0) text("▶ スペース / タップでスタート", 132, 18, "#111713");
+                if (Math.floor(blink / 30) % 2 === 0) text(L("▶ スペース / タップでスタート", "▶ SPACE / TAP TO START"), 132, 18, "#111713");
             } else if (state === "over") {
                 text("MISS!", 92, 40, "#d6363d");
                 text(`SCORE ${Math.floor(score)}`, 126, 20, "#111713");
-                if (Math.floor(blink / 30) % 2 === 0) text("▶ もう一度（スペース / タップ）", 156, 16, "#5b6560");
+                if (Math.floor(blink / 30) % 2 === 0) text(L("▶ もう一度（スペース / タップ）", "▶ TRY AGAIN (SPACE / TAP)"), 156, 16, "#5b6560");
             }
         };
 

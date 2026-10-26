@@ -55,9 +55,11 @@ function jsonStore(area) {
 const localData = jsonStore(() => localStorage);
 const sessionData = jsonStore(() => sessionStorage);
 
+// アニメーションの強さ（設定画面で選ぶ。<html> のクラスで判断する）
+//   なし（motion-off）：すべて止める ／ 軽量（motion-lite）：常に動いている飾りだけ止める
 const motionOff = () => root.classList.contains("motion-off");
-const reduceMotion = () => motionOff() || prefersReducedMotion;
-const isSimple = () => root.classList.contains("mode-simple");
+const liteMotion = () => motionOff() || root.classList.contains("motion-lite");
+const reduceMotion = () => motionOff();
 const scrollBehavior = () => (reduceMotion() ? "auto" : "smooth");
 
 // 隠し要素などの出来事をアクセス解析（analytics.js）とトロフィー（play.js）に知らせる
@@ -165,19 +167,42 @@ function bindDrawer(drawer, toggle) {
 }
 
 /* ========================================
-   MOTION と PLAY / SIMPLE の初期設定（ページを描く前に決める）
+   設定（OPTIONS）：アニメーションの強さ・音量・言語
+   ・保存先は localStorage の pa-settings（見ている人のブラウザだけ）
+   ・アニメーションと言語は、settings-boot.js がページを描く前に <html> へ反映している
 ======================================== */
 
-const MOTION_STORAGE_KEY = "portfolio-motion";
-const MODE_STORAGE_KEY = "portfolio-mode";
+const SETTINGS_KEY = "pa-settings";
+const MOTION_LEVELS = ["default", "lite", "none"];
+const DEFAULT_VOLUME = 70;
 
-(() => {
-    const saved = storage.get(MOTION_STORAGE_KEY);
-    root.classList.toggle("motion-off", saved ? saved === "off" : prefersReducedMotion);
+const defaultSettings = () => ({
+    motion: prefersReducedMotion ? "none" : "default",
+    volume: DEFAULT_VOLUME,
+    muted: false,
+    lang: "ja",
+});
 
-    // シンプル表示（採用担当者モード）：遊びの演出を消して、動きも止める
-    if (storage.get(MODE_STORAGE_KEY) === "simple") root.classList.add("mode-simple", "motion-off");
+const settings = (() => {
+    const saved = localData.get(SETTINGS_KEY, {}) || {};
+    const volume = Number(saved.volume);
+    return {
+        // 保存が無いときは settings-boot.js が決めたクラス（以前の MOTION OFF・端末の設定）に合わせる
+        motion: MOTION_LEVELS.includes(saved.motion) ? saved.motion : motionOff() ? "none" : "default",
+        volume: Number.isFinite(volume) ? Math.min(100, Math.max(0, Math.round(volume))) : DEFAULT_VOLUME,
+        muted: saved.muted === true,
+        lang: saved.lang === "en" ? "en" : "ja",
+    };
 })();
+
+const saveSettings = () => localData.set(SETTINGS_KEY, settings);
+
+// 動画の音量（作品の動画は、作ったときと設定を変えたときにこれを通す）
+function applyVolume(video) {
+    if (!video || video.classList.contains("hero-video")) return;
+    video.volume = settings.volume / 100;
+    video.muted = settings.muted || settings.volume === 0;
+}
 
 /* ========================================
    トップ（ヒーロー）
@@ -238,6 +263,7 @@ document.querySelectorAll(".featured-video[data-video]").forEach((box) => {
         video.controls = true;
         video.playsInline = true;
         video.preload = "auto";
+        applyVolume(video);
         // 音声のない短いプレイ映像はくり返し再生する
         if (box.hasAttribute("data-loop")) {
             video.loop = true;
@@ -252,7 +278,7 @@ document.querySelectorAll(".featured-video[data-video]").forEach((box) => {
     });
 });
 
-// MOTION・SIMPLE を切り替えたときのトップの動画
+// アニメーションを「なし」にしたとき・戻したときのトップの動画
 function syncVideos(off) {
     if (!heroVideo || saveData) return;
     if (off) heroVideo.pause();
@@ -926,69 +952,177 @@ function makeSprite(file, className) {
 })();
 
 /* ========================================
-   ヘッダーのスイッチ：PLAY / SIMPLE と MOTION
+   設定画面（OPTIONS）：ゲームのオプション画面のように、ヘッダーの ⚙ から開く
+   ・アニメーション：デフォルト ／ 軽量 ／ なし
+   ・音量：作品の動画の音量とミュート
+   ・言語：日本語 ／ English（訳は data/i18n-en.js、切り替えは i18n.js）
 ======================================== */
 
-const motionToggle = document.querySelector(".motion-toggle");
-const modeToggle = document.querySelector(".mode-toggle");
+const settingsButton = document.querySelector(".settings-button");
 
-function syncMotionToggle() {
-    if (!motionToggle) return;
-    const on = !motionOff();
-    motionToggle.setAttribute("aria-checked", String(on));
-    const state = motionToggle.querySelector(".motion-toggle-state");
-    if (state) state.textContent = on ? "ON" : "OFF";
+const MOTION_NOTES = {
+    default: "すべての演出を表示します",
+    lite: "常に動いている飾りを止めて、軽くします",
+    none: "アニメーションをすべて止めます",
+};
+
+function setMotion(level) {
+    if (!MOTION_LEVELS.includes(level)) return;
+    settings.motion = level;
+    root.classList.toggle("motion-off", level === "none");
+    root.classList.toggle("motion-lite", level === "lite");
+    saveSettings();
+    syncVideos(level === "none");
 }
 
-function syncModeToggle() {
-    modeToggle?.setAttribute("aria-pressed", String(isSimple()));
+function setVolume(volume, muted = settings.muted) {
+    settings.volume = Math.min(100, Math.max(0, Math.round(volume)));
+    settings.muted = muted;
+    saveSettings();
+    document.querySelectorAll("video").forEach(applyVolume);
 }
 
-if (modeToggle) {
-    syncModeToggle();
-
-    modeToggle.addEventListener("click", () => {
-        const simple = !isSimple();
-        root.classList.toggle("mode-simple", simple);
-        storage.set(MODE_STORAGE_KEY, simple ? "simple" : "play");
-
-        // シンプル表示では動きも止める。PLAY に戻したら、MOTION の設定に戻す
-        const motion = storage.get(MOTION_STORAGE_KEY);
-        const off = simple || (motion ? motion === "off" : prefersReducedMotion);
-        root.classList.toggle("motion-off", off);
-
-        syncVideos(off);
-        syncModeToggle();
-        syncMotionToggle();
-        emitPlayEvent(`表示モード: ${simple ? "SIMPLE" : "PLAY"}`);
-    });
+function setLanguage(lang) {
+    settings.lang = lang === "en" ? "en" : "ja";
+    saveSettings();
+    window.I18n?.setLang(settings.lang);
 }
 
-if (motionToggle) {
-    syncMotionToggle();
-
-    motionToggle.addEventListener("click", () => {
-        const turnOff = !motionOff();
-        root.classList.toggle("motion-off", turnOff);
-        storage.set(MOTION_STORAGE_KEY, turnOff ? "off" : "on");
-        syncVideos(turnOff);
-        syncMotionToggle();
-    });
-}
-
-// 初めて来た人に、SIMPLE 表示があることを一度だけ吹き出しで知らせる
-// （スマホではボタンがアイコンだけなので、何のボタンか分かるように）
 (() => {
-    const HINT_KEY = "pa-hint-simple";
-    const header = document.querySelector(".header");
-    if (!modeToggle || !header || isSimple() || storage.get(MODE_STORAGE_KEY) || storage.get(HINT_KEY)) return;
+    if (!settingsButton || typeof HTMLDialogElement !== "function") return;
 
-    const hint = make("div", "mode-hint");
+    const panel = make("dialog", "settings-panel");
+    panel.setAttribute("aria-labelledby", "settings-title");
+    panel.innerHTML = `
+        <div class="settings-head">
+            <span class="settings-head-icon" aria-hidden="true">⚙</span>
+            <h2 id="settings-title">OPTIONS</h2>
+            <span class="settings-head-sub">設定</span>
+            <button type="button" class="settings-close" aria-label="閉じる">×</button>
+        </div>
+        <div class="settings-body">
+            <div class="settings-row">
+                <h3 class="settings-label" id="settings-motion">アニメーション</h3>
+                <div class="settings-choices" role="radiogroup" aria-labelledby="settings-motion" data-setting="motion">
+                    <button type="button" role="radio" data-value="default">デフォルト</button>
+                    <button type="button" role="radio" data-value="lite">軽量</button>
+                    <button type="button" role="radio" data-value="none">なし</button>
+                </div>
+                <p class="settings-note" data-note="motion"></p>
+            </div>
+            <div class="settings-row">
+                <h3 class="settings-label" id="settings-volume">音量</h3>
+                <div class="settings-volume">
+                    <button type="button" class="settings-mute" aria-pressed="false" aria-label="ミュート">
+                        <span aria-hidden="true">🔊</span>
+                    </button>
+                    <input type="range" min="0" max="100" step="5" aria-labelledby="settings-volume">
+                    <output class="settings-volume-value" aria-hidden="true"></output>
+                </div>
+                <p class="settings-note">作品紹介の動画の音量です</p>
+            </div>
+            <div class="settings-row">
+                <h3 class="settings-label" id="settings-lang" data-no-translate>言語 / Language</h3>
+                <div class="settings-choices" role="radiogroup" aria-labelledby="settings-lang" data-setting="lang">
+                    <button type="button" role="radio" data-value="ja" lang="ja" data-no-translate>日本語</button>
+                    <button type="button" role="radio" data-value="en" lang="en">English</button>
+                </div>
+            </div>
+        </div>
+        <div class="settings-foot">
+            <button type="button" class="settings-reset">初期設定に戻す</button>
+            <button type="button" class="settings-done">OK</button>
+        </div>`;
+    document.body.append(panel);
+
+    const groups = panel.querySelectorAll(".settings-choices");
+    const motionNote = panel.querySelector('[data-note="motion"]');
+    const range = panel.querySelector('input[type="range"]');
+    const output = panel.querySelector(".settings-volume-value");
+    const mute = panel.querySelector(".settings-mute");
+
+    // 画面の表示を、今の設定に合わせる
+    const render = () => {
+        groups.forEach((group) => {
+            const current = settings[group.dataset.setting];
+            group.querySelectorAll("[role=radio]").forEach((option) => {
+                const checked = option.dataset.value === current;
+                option.setAttribute("aria-checked", String(checked));
+                option.tabIndex = checked ? 0 : -1;
+            });
+        });
+        motionNote.textContent = MOTION_NOTES[settings.motion];
+        range.value = String(settings.volume);
+        output.textContent = settings.muted ? "MUTE" : String(settings.volume);
+        mute.setAttribute("aria-pressed", String(settings.muted));
+        mute.querySelector("span").textContent = settings.muted || settings.volume === 0 ? "🔇" : "🔊";
+        panel.classList.toggle("is-muted", settings.muted);
+    };
+
+    const choose = (group, option) => {
+        const value = option.dataset.value;
+        if (group.dataset.setting === "motion") setMotion(value);
+        if (group.dataset.setting === "lang") setLanguage(value);
+        render();
+        emitPlayEvent(`設定: ${group.dataset.setting}=${value}`);
+    };
+
+    // ラジオボタン：押す・左右キーで選ぶ（ゲームのメニューのように）
+    groups.forEach((group) => {
+        const options = Array.from(group.querySelectorAll("[role=radio]"));
+        options.forEach((option) => option.addEventListener("click", () => choose(group, option)));
+        group.addEventListener("keydown", (event) => {
+            const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+            if (!step) return;
+            event.preventDefault();
+            const index = options.indexOf(document.activeElement);
+            const next = options[(index + step + options.length) % options.length];
+            next.focus();
+            choose(group, next);
+        });
+    });
+
+    range.addEventListener("input", () => {
+        setVolume(Number(range.value), Number(range.value) === 0 ? settings.muted : false);
+        render();
+    });
+    range.addEventListener("change", () => emitPlayEvent(`設定: volume=${settings.volume}`));
+    mute.addEventListener("click", () => {
+        setVolume(settings.volume, !settings.muted);
+        render();
+    });
+
+    panel.querySelector(".settings-reset").addEventListener("click", () => {
+        const initial = defaultSettings();
+        setMotion(initial.motion);
+        setVolume(initial.volume, initial.muted);
+        setLanguage(initial.lang);
+        render();
+    });
+    panel.querySelectorAll(".settings-close, .settings-done").forEach((button) => button.addEventListener("click", () => panel.close()));
+    closeOnBackdrop(panel);
+    panel.addEventListener("close", () => settingsButton.focus());
+
+    settingsButton.addEventListener("click", () => {
+        render();
+        panel.showModal();
+        panel.querySelector('[role=radio][aria-checked="true"]')?.focus();
+        emitPlayEvent("設定を開いた");
+    });
+})();
+
+// 初めて来た人に、⚙ で設定（英語表示など）を変えられることを一度だけ吹き出しで知らせる
+(() => {
+    const HINT_KEY = "pa-hint-options";
+    const header = document.querySelector(".header");
+    if (!settingsButton || !header || storage.get(HINT_KEY) || storage.get(SETTINGS_KEY)) return;
+
+    const hint = make("div", "settings-hint");
     hint.setAttribute("role", "status");
     const message = make("span");
-    message.append("📄 SIMPLE を押すと、", make("br"), "演出なしの読みやすい表示になります");
-    hint.append(make("b", "", "採用担当の方へ"), message);
-    const close = make("button", "mode-hint-close", "×");
+    message.append("アニメーションの強さ・音量・言語を", make("br"), "ここで変えられます");
+    hint.append(make("b", "", "⚙ OPTIONS ／ English"), message);
+    const close = make("button", "settings-hint-close", "×");
     close.type = "button";
     close.setAttribute("aria-label", "お知らせを閉じる");
     hint.append(close);
@@ -1002,14 +1136,16 @@ if (motionToggle) {
         setTimeout(() => hint.remove(), 300);
         window.removeEventListener("scroll", onScroll);
     };
-    const onScroll = () => { if (window.scrollY > 400) hide(); };
+    const onScroll = () => {
+        if (window.scrollY > 400) hide();
+    };
 
     setTimeout(() => {
-        if (done || isSimple()) return;
+        if (done) return;
         storage.set(HINT_KEY, "1");
-        const toggleBox = modeToggle.getBoundingClientRect();
+        const buttonBox = settingsButton.getBoundingClientRect();
         const headerBox = header.getBoundingClientRect();
-        const center = toggleBox.left + toggleBox.width / 2;
+        const center = buttonBox.left + buttonBox.width / 2;
         const width = Math.min(300, window.innerWidth - 24);
         const left = Math.max(12, Math.min(center - width / 2, window.innerWidth - width - 12));
         hint.style.setProperty("--hint-left", `${left - headerBox.left}px`);
@@ -1022,7 +1158,7 @@ if (motionToggle) {
     }, 1800);
 
     close.addEventListener("click", hide);
-    modeToggle.addEventListener("click", hide);
+    settingsButton.addEventListener("click", hide);
 })();
 
 /* ========================================
