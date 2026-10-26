@@ -10,14 +10,13 @@
    記録（図鑑・前回の位置）は、見ている人のブラウザ（localStorage）にだけ残る
 ======================================== */
 
-// 共通の道具（root・reduceMotion・isSimple・localData・sessionData・emitPlayEvent）は main.js にある
+// 共通の道具（make・decor・root・reduceMotion・isSimple・localData・sessionData・emitPlayEvent）は main.js にある
 (() => {
     /* ---------- お知らせ（ヘッダーの下にゲーム風の通知） ---------- */
 
     const notices = [];
     let noticeBusy = false;
-    const noticeBox = document.createElement("div");
-    noticeBox.className = "play-notice";
+    const noticeBox = make("div", "play-notice");
     noticeBox.setAttribute("role", "status");
     noticeBox.setAttribute("aria-live", "polite");
     document.body.append(noticeBox);
@@ -29,14 +28,13 @@
         noticeBox.replaceChildren();
         noticeBox.dataset.tone = tone || "";
         if (image) {
-            const img = document.createElement("img");
+            const img = make("img");
             img.src = image;
             img.alt = "";
             noticeBox.append(img);
         }
-        const body = document.createElement("span");
-        const b = document.createElement("b");
-        b.textContent = label;
+        const body = make("span");
+        const b = make("b", "", label);
         body.append(b, document.createTextNode(text));
         noticeBox.append(body);
         noticeBox.classList.add("is-show");
@@ -69,9 +67,7 @@
 
     const bubble = (x, y, text) => {
         if (reduceMotion()) return;
-        const node = document.createElement("span");
-        node.className = "play-bubble";
-        node.textContent = text;
+        const node = make("span", "play-bubble", text);
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
         document.body.append(node);
@@ -83,16 +79,13 @@
         if (!cast) return;
         const names = allCast();
         cast.replaceChildren(...names.flatMap((name, index) => {
-            const item = document.createElement("span");
-            item.className = found.has(name) ? "cast-name is-found" : "cast-name";
-            item.textContent = name;
+            const item = make("span", found.has(name) ? "cast-name is-found" : "cast-name", name);
             return index ? [document.createTextNode(" ／ "), item] : [item];
         }));
 
         let meter = document.querySelector(".cast-meter");
         if (!meter) {
-            meter = document.createElement("p");
-            meter.className = "cast-meter";
+            meter = make("p", "cast-meter");
             cast.closest(".credits-window")?.after(meter);
         }
         const count = [...found].filter((name) => names.includes(name)).length;
@@ -109,12 +102,9 @@
         // 全員見つけた人だけが見られるメッセージ
         let secret = document.querySelector(".ending-secret");
         if (count >= names.length && !secret) {
-            secret = document.createElement("div");
-            secret.className = "ending-secret";
-            const title = document.createElement("b");
-            title.textContent = "★ SECRET MESSAGE ★";
-            const text = document.createElement("p");
-            text.textContent = "全員見つけてくれて、本当にありがとうございます！ 細かいところまで遊んでくれるあなたと、いつか一緒にゲームを作れたらうれしいです。";
+            secret = make("div", "ending-secret");
+            const title = make("b", "", "★ SECRET MESSAGE ★");
+            const text = make("p", "", "全員見つけてくれて、本当にありがとうございます！ 細かいところまで遊んでくれるあなたと、いつか一緒にゲームを作れたらうれしいです。");
             secret.append(title, text);
             meter.after(secret);
         }
@@ -178,18 +168,15 @@
         parading = true;
         emitPlayEvent("隠しコマンド");
 
-        const layer = document.createElement("div");
-        layer.className = "play-parade";
-        layer.setAttribute("aria-hidden", "true");
+        const layer = decor(make("div", "play-parade"));
 
-        const banner = document.createElement("p");
-        banner.className = "play-parade-banner";
+        const banner = make("p", "play-parade-banner");
         banner.innerHTML = "<small>SECRET COMMAND</small>SECRET UNLOCKED!";
         layer.append(banner);
 
         const files = Array.from(new Set(Array.from(document.querySelectorAll('img[src*="images/character/"]')).map((img) => img.getAttribute("src"))));
         files.forEach((src, index) => {
-            const runner = document.createElement("img");
+            const runner = make("img");
             runner.src = src;
             runner.alt = "";
             runner.className = "play-runner";
@@ -248,9 +235,7 @@
     /* ---------- 4. 進行バー ---------- */
 
     const header = document.querySelector(".header");
-    const bar = document.createElement("div");
-    bar.className = "stage-bar";
-    bar.setAttribute("aria-hidden", "true");
+    const bar = decor(make("div", "stage-bar"));
     bar.innerHTML = '<span class="stage-bar-fill"></span><span class="stage-bar-chip"></span>';
     header?.append(bar);
     const fill = bar.querySelector(".stage-bar-fill");
@@ -328,22 +313,20 @@
     const recent = saved && Date.now() - Number(saved.at || 0) < 30 * 24 * 60 * 60 * 1000;
 
     if (!isSimple() && firstView && target && recent && stageSections.includes(target) && !location.hash && window.scrollY < 200) {
-        const card = document.createElement("div");
-        card.className = "play-continue";
+        const card = make("div", "play-continue");
         card.setAttribute("role", "dialog");
         card.setAttribute("aria-label", "前回の続きから見る");
 
-        const text = document.createElement("p");
-        const small = document.createElement("small");
-        small.textContent = "SAVE DATA FOUND";
+        const text = make("p");
+        const small = make("small", "", "SAVE DATA FOUND");
         text.append(small, document.createTextNode(`前回は「${labelOf(target)}」まで見ていました`));
 
-        const go = document.createElement("button");
+        const go = make("button");
         go.type = "button";
         go.className = "play-continue-go";
         go.textContent = "▶ つづきから";
 
-        const close = document.createElement("button");
+        const close = make("button");
         close.type = "button";
         close.className = "play-continue-new";
         close.textContent = "はじめから";
@@ -381,13 +364,11 @@
         if (event.pointerType !== "mouse" || event.button !== 0 || reduceMotion()) return;
         if (sparkCount > 24) return;
 
-        const burst = document.createElement("span");
-        burst.className = "play-spark";
-        burst.setAttribute("aria-hidden", "true");
+        const burst = decor(make("span", "play-spark"));
         burst.style.left = `${event.clientX}px`;
         burst.style.top = `${event.clientY}px`;
         for (let i = 0; i < 6; i += 1) {
-            const bit = document.createElement("i");
+            const bit = make("i");
             bit.style.setProperty("--a", `${i * 60 + (sparkCount % 3) * 20}deg`);
             bit.style.setProperty("--c", SPARK_COLORS[(i + sparkCount) % SPARK_COLORS.length]);
             burst.append(bit);
@@ -440,18 +421,12 @@
         }
         showing = true;
         const { trophy, n } = queue.shift();
-        const toast = document.createElement("div");
-        toast.className = "achievement-toast";
+        const toast = make("div", "achievement-toast");
         toast.setAttribute("role", "status");
-        const icon = document.createElement("span");
-        icon.className = "toast-icon";
-        icon.textContent = trophy.icon;
-        const text = document.createElement("span");
-        text.className = "toast-text";
-        const label = document.createElement("small");
-        label.textContent = `TROPHY UNLOCKED  ${n} / ${TROPHIES.length}`;
-        const message = document.createElement("strong");
-        message.textContent = trophy.text;
+        const icon = make("span", "toast-icon", trophy.icon);
+        const text = make("span", "toast-text");
+        const label = make("small", "", `TROPHY UNLOCKED  ${n} / ${TROPHIES.length}`);
+        const message = make("strong", "", trophy.text);
         text.append(label, message);
         toast.append(icon, text);
         document.body.append(toast);
@@ -486,17 +461,13 @@
     const renderRoom = () => {
         const list = room.querySelector(".trophy-list");
         list.replaceChildren(...TROPHIES.map((trophy) => {
-            const item = document.createElement("li");
+            const item = make("li");
             const got = Boolean(unlocked[trophy.id]);
             item.className = got ? "trophy is-got" : "trophy";
-            const icon = document.createElement("span");
-            icon.className = "trophy-icon";
-            icon.textContent = got ? trophy.icon : "?";
-            const body = document.createElement("span");
-            const title = document.createElement("b");
-            title.textContent = got ? trophy.title : "？？？";
-            const text = document.createElement("small");
-            text.textContent = got ? trophy.text : `ヒント：${trophy.hint}`;
+            const icon = make("span", "trophy-icon", got ? trophy.icon : "?");
+            const body = make("span");
+            const title = make("b", "", got ? trophy.title : "？？？");
+            const text = make("small", "", got ? trophy.text : `ヒント：${trophy.hint}`);
             body.append(title, text);
             item.append(icon, body);
             return item;
@@ -508,31 +479,24 @@
 
     const openRoom = () => {
         if (!room) {
-            room = document.createElement("dialog");
-            room.className = "trophy-room";
+            room = make("dialog", "trophy-room");
             room.setAttribute("aria-labelledby", "trophy-title");
-            const head = document.createElement("div");
-            head.className = "trophy-head";
-            const h = document.createElement("h2");
+            const head = make("div", "trophy-head");
+            const h = make("h2");
             h.id = "trophy-title";
             h.textContent = "🏆 TROPHY";
-            const n = document.createElement("span");
-            n.className = "trophy-count";
-            const close = document.createElement("button");
+            const n = make("span", "trophy-count");
+            const close = make("button");
             close.type = "button";
             close.className = "trophy-close";
             close.setAttribute("aria-label", "閉じる");
             close.textContent = "×";
             close.addEventListener("click", () => room.close());
             head.append(h, n, close);
-            const gauge = document.createElement("div");
-            gauge.className = "trophy-gauge";
-            gauge.append(document.createElement("span"));
-            const list = document.createElement("ul");
-            list.className = "trophy-list";
-            const note = document.createElement("p");
-            note.className = "trophy-note";
-            note.textContent = "トロフィーの記録は、このブラウザにだけ保存されます。";
+            const gauge = make("div", "trophy-gauge");
+            gauge.append(make("span"));
+            const list = make("ul", "trophy-list");
+            const note = make("p", "trophy-note", "トロフィーの記録は、このブラウザにだけ保存されます。");
             room.append(head, gauge, list, note);
             room.addEventListener("click", (event) => { if (event.target === room) room.close(); });
             document.body.append(room);
@@ -550,7 +514,7 @@
 
     const footer = document.querySelector(".footer-inner");
     if (footer) {
-        opener = document.createElement("button");
+        opener = make("button");
         opener.type = "button";
         opener.className = "footer-trophy";
         opener.innerHTML = '<span aria-hidden="true">🏆</span> TROPHY <b data-trophy-count></b>';
@@ -559,7 +523,7 @@
     }
     const endingActions = document.querySelector(".ending-actions");
     if (endingActions) {
-        const button = document.createElement("button");
+        const button = make("button");
         button.type = "button";
         button.className = "ending-button ending-trophy";
         button.innerHTML = '🏆 トロフィー <b data-trophy-count></b>';
@@ -669,8 +633,7 @@
     const renderRank = () => {
         if (!ending) return;
         if (!rankBox) {
-            rankBox = document.createElement("div");
-            rankBox.className = "ending-rank";
+            rankBox = make("div", "ending-rank");
             ending.querySelector("[data-ending-stats]")?.after(rankBox);
         }
         const { points, sections, cast } = score();
@@ -679,17 +642,12 @@
         const ss = String(playTime % 60).padStart(2, "0");
         rankBox.dataset.rank = result.rank;
         rankBox.replaceChildren();
-        const badge = document.createElement("span");
-        badge.className = "ending-rank-badge";
+        const badge = make("span", "ending-rank-badge");
         badge.innerHTML = `<small>RANK</small>${result.rank}`;
-        const body = document.createElement("span");
-        body.className = "ending-rank-body";
-        const time = document.createElement("b");
-        time.textContent = `PLAY TIME ${mm}:${ss}`;
-        const detail = document.createElement("small");
-        detail.textContent = `読んだステージ ${sections} / ${stages.length} ／ 見た作品 ${seenWorks.size} ／ 発見キャラ ${cast}`;
-        const comment = document.createElement("span");
-        comment.textContent = result.text;
+        const body = make("span", "ending-rank-body");
+        const time = make("b", "", `PLAY TIME ${mm}:${ss}`);
+        const detail = make("small", "", `読んだステージ ${sections} / ${stages.length} ／ 見た作品 ${seenWorks.size} ／ 発見キャラ ${cast}`);
+        const comment = make("span", "", result.text);
         body.append(time, detail, comment);
         rankBox.append(badge, body);
     };
@@ -750,21 +708,16 @@
         // トップにバッジ
         const eyebrow = document.querySelector(".hero-eyebrow");
         if (eyebrow) {
-            const badge = document.createElement("p");
-            badge.className = "season-badge";
-            badge.textContent = config.badge;
+            const badge = make("p", "season-badge", config.badge);
             eyebrow.before(badge);
         }
 
         // トップに舞い落ちるもの
         const hero = document.querySelector(".hero");
         if (hero && !reduceMotion()) {
-            const layer = document.createElement("div");
-            layer.className = "season-fall";
-            layer.setAttribute("aria-hidden", "true");
+            const layer = decor(make("div", "season-fall"));
             for (let i = 0; i < 14; i += 1) {
-                const bit = document.createElement("i");
-                bit.textContent = config.fall[i % config.fall.length];
+                const bit = make("i", "", config.fall[i % config.fall.length]);
                 bit.style.setProperty("--x", `${(i * 37) % 100}%`);
                 bit.style.setProperty("--d", `${9 + (i % 5) * 2.2}s`);
                 bit.style.setProperty("--delay", `${-(i * 1.3).toFixed(1)}s`);
@@ -812,27 +765,19 @@
     const height = 210;
     const pointOf = (index) => ({ x: LEFT + index * STEP, y: index % 2 ? LOW_Y : TOP_Y });
 
-    const map = document.createElement("div");
-    map.className = "world-map";
+    const map = make("div", "world-map");
 
-    const head = document.createElement("div");
-    head.className = "world-map-head";
-    const label = document.createElement("span");
-    label.className = "world-map-label";
-    label.textContent = "WORLD MAP";
-    const hint = document.createElement("span");
-    hint.className = "world-map-hint";
-    hint.textContent = "◀ 横にスクロール ／ ステージを押すと経歴へ";
+    const head = make("div", "world-map-head");
+    const label = make("span", "world-map-label", "WORLD MAP");
+    const hint = make("span", "world-map-hint", "◀ 横にスクロール ／ ステージを押すと経歴へ");
     head.append(label, hint);
 
-    const scroller = document.createElement("div");
-    scroller.className = "world-map-scroll";
+    const scroller = make("div", "world-map-scroll");
     scroller.tabIndex = 0;
     scroller.setAttribute("role", "group");
     scroller.setAttribute("aria-label", "経歴のワールドマップ（横にスクロールできます）");
 
-    const field = document.createElement("div");
-    field.className = "world-map-field";
+    const field = make("div", "world-map-field");
     field.style.width = `${width}px`;
     field.style.height = `${height}px`;
 
@@ -841,12 +786,10 @@
         const inWorld = stages.map((stage, i) => (stage.year === year ? i : -1)).filter((i) => i >= 0);
         const start = pointOf(inWorld[0]).x - STEP / 2;
         const end = pointOf(inWorld[inWorld.length - 1]).x + STEP / 2;
-        const zone = document.createElement("div");
-        zone.className = `world-zone is-world-${(index % 3) + 1}`;
+        const zone = make("div", `world-zone is-world-${(index % 3) + 1}`);
         zone.style.left = `${Math.max(start, 0)}px`;
         zone.style.width = `${Math.min(end, width) - Math.max(start, 0)}px`;
-        const name = document.createElement("span");
-        name.textContent = `WORLD ${index + 1} · ${year}`;
+        const name = make("span", "", `WORLD ${index + 1} · ${year}`);
         zone.append(name);
         field.append(zone);
     });
@@ -897,26 +840,20 @@
 
     stages.forEach((stage, index) => {
         const p = pointOf(index);
-        const node = document.createElement("button");
+        const node = make("button");
         node.type = "button";
         node.className = `world-node is-${stage.type}`;
         node.style.left = `${p.x}px`;
         node.style.top = `${p.y}px`;
         node.setAttribute("aria-label", `ステージ ${stage.code}：${stage.date} ${stage.title}（経歴へ移動）`);
 
-        const dot = document.createElement("span");
-        dot.className = "world-node-dot";
-        dot.setAttribute("aria-hidden", "true");
+        const dot = decor(make("span", "world-node-dot"));
         dot.textContent = ICON[stage.type] || ICON.clear;
 
-        const code = document.createElement("span");
-        code.className = "world-node-code";
-        code.setAttribute("aria-hidden", "true");
+        const code = decor(make("span", "world-node-code"));
         code.textContent = stage.code;
 
-        const name = document.createElement("span");
-        name.className = `world-node-name ${index % 2 ? "is-below" : "is-above"}`;
-        name.setAttribute("aria-hidden", "true");
+        const name = decor(make("span", `world-node-name ${index % 2 ? "is-below" : "is-above"}`));
         name.textContent = stage.title;
 
         node.append(dot, code, name);
@@ -925,8 +862,7 @@
 
         // いま挑戦中のステージには主人公が立っている
         if (stage.type === "now") {
-            const hero = document.createElement("img");
-            hero.className = "world-hero";
+            const hero = make("img", "world-hero");
             hero.src = "images/character/Player.png";
             hero.alt = "";
             hero.setAttribute("aria-hidden", "true");

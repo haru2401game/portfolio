@@ -72,6 +72,12 @@ function make(tag, className = "", text) {
     return element;
 }
 
+// 飾りの要素（読み上げソフトには読ませない）
+function decor(element) {
+    element.setAttribute("aria-hidden", "true");
+    return element;
+}
+
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return rect.bottom > 0 && rect.top < window.innerHeight;
@@ -289,8 +295,7 @@ function animateCount(element) {
 
 // 「次の目標」までのゲージ（Achievements と Blog で共通）
 function makeExpMeter(className, nextClassName, number) {
-    const meter = make("div", className);
-    meter.setAttribute("aria-hidden", "true");
+    const meter = decor(make("div", className));
     const gauge = make("div", "stat-gauge");
     gauge.append(make("span"));
     meter.append(gauge, make("span", nextClassName));
@@ -405,8 +410,7 @@ function buildArticleCard(article, index) {
         content.append(link);
     }
 
-    const badges = make("div", "article-badges");
-    badges.setAttribute("aria-hidden", "true");
+    const badges = decor(make("div", "article-badges"));
     if (index === 0) badges.append(make("span", "is-new", "NEW!"));
     const issue = title.match(/#(\d+)/);
     if (issue) badges.append(make("span", "", `LOG #${issue[1]}`));
@@ -561,8 +565,7 @@ loadJson("data/profile.json", {})
         card.dataset.threeD = String(/3D/.test(genre));
         card.dataset.team = String(member > 1);
 
-        const badges = make("div", "stage-badges");
-        badges.setAttribute("aria-hidden", "true");
+        const badges = decor(make("div", "stage-badges"));
         badges.append(make("span", "", `STAGE ${String(total - index).padStart(2, "0")}`));
         if (member > 1) badges.append(make("span", "is-team", `TEAM ×${member}`));
         if (role.includes("未完成")) badges.append(make("span", "is-wip", "WIP"));
@@ -578,8 +581,7 @@ loadJson("data/profile.json", {})
             ribbon.append(document.createTextNode(award.label));
             card.querySelector(".work-content")?.prepend(ribbon);
 
-            const shine = make("span", "rare-shine");
-            shine.setAttribute("aria-hidden", "true");
+            const shine = decor(make("span", "rare-shine"));
             card.append(shine);
         }
 
@@ -646,19 +648,24 @@ loadJson("data/profile.json", {})
     toggle.setAttribute("aria-controls", "works-drawer");
 
     const toggleText = make("span", "works-toggle-text");
-    const thumbs = make("span", "works-toggle-thumbs");
-    thumbs.setAttribute("aria-hidden", "true");
-    [0, 1, 2, 3].map((i) => cards[Math.floor((i * total) / 4)]).filter(Boolean).forEach((card) => {
+    const thumbs = decor(make("span", "works-toggle-thumbs"));
+    // カードの画像の小さな写し（ボタンの中のサムネイル用）
+    const thumbOf = (card) => {
         const source = card.querySelector("img");
-        if (!source) return;
+        if (!source) return null;
         const thumb = make("img");
         thumb.src = source.getAttribute("src");
         thumb.alt = "";
+        thumb.width = Number(source.getAttribute("width")) || 16;
+        thumb.height = Number(source.getAttribute("height")) || 9;
         thumb.loading = "lazy";
-        thumbs.append(thumb);
+        return thumb;
+    };
+    [0, 1, 2, 3].map((i) => cards[Math.floor((i * total) / 4)]).filter(Boolean).forEach((card) => {
+        const thumb = thumbOf(card);
+        if (thumb) thumbs.append(thumb);
     });
-    const toggleIcon = make("span", "works-toggle-icon", "▼");
-    toggleIcon.setAttribute("aria-hidden", "true");
+    const toggleIcon = decor(make("span", "works-toggle-icon", "▼"));
 
     toggle.append(make("span", "works-toggle-label", "SELECT STAGE"), toggleText, thumbs, toggleIcon);
     drawer.before(toggle);
@@ -682,16 +689,8 @@ loadJson("data/profile.json", {})
             button.type = "button";
             button.setAttribute("aria-label", `${textOf(card, "h3")} の詳細を開く`);
 
-            const source = card.querySelector("img");
-            if (source) {
-                const thumb = make("img");
-                thumb.src = source.getAttribute("src");
-                thumb.alt = "";
-                thumb.width = Number(source.getAttribute("width")) || 16;
-                thumb.height = Number(source.getAttribute("height")) || 9;
-                thumb.loading = "lazy";
-                button.append(thumb);
-            }
+            const thumb = thumbOf(card);
+            if (thumb) button.append(thumb);
             const text = make("span", "works-pickup-text");
             text.append(
                 make("span", "works-pickup-award", `★ ${card.dataset.award || "AWARD"}`),
@@ -750,10 +749,8 @@ loadJson("data/profile.json", {})
     message.dataset.text = fullText;
 
     const srText = make("span", "sr-only", fullText);
-    const typed = make("span", "blog-message-text");
-    typed.setAttribute("aria-hidden", "true");
-    const cursor = make("span", "blog-message-cursor", "▼");
-    cursor.setAttribute("aria-hidden", "true");
+    const typed = decor(make("span", "blog-message-text"));
+    const cursor = decor(make("span", "blog-message-cursor", "▼"));
     message.replaceChildren(srText, typed, cursor);
 
     if (motionOff() || !("IntersectionObserver" in window)) {
@@ -796,8 +793,7 @@ function startTypewriter(message) {
     const spots = [[4, 14], [93, 10], [7, 82], [90, 76], [48, 4], [97, 44], [2, 48], [62, 94]];
 
     document.querySelectorAll("section").forEach((section, sectionIndex) => {
-        const layer = make("div", "ambient");
-        layer.setAttribute("aria-hidden", "true");
+        const layer = decor(make("div", "ambient"));
 
         const count = section.classList.contains("hero") ? 8 : 6;
         for (let i = 0; i < count; i += 1) {
@@ -871,8 +867,7 @@ function makeSprite(file, className) {
         const host = document.querySelector(config.host);
         if (!host) return;
 
-        const frame = make("div", "peeker");
-        frame.setAttribute("aria-hidden", "true");
+        const frame = decor(make("div", "peeker"));
         frame.style.setProperty("--peek-x", config.x);
         frame.style.setProperty("--peek-w", `${config.w}px`);
         frame.style.setProperty("--peek-delay", `${config.delay}s`);
@@ -1116,8 +1111,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     const toggle = make("button", "quest-toggle");
     toggle.type = "button";
     toggle.setAttribute("aria-controls", "quest-drawer");
-    const icon = make("span", "quest-toggle-icon", "▲");
-    icon.setAttribute("aria-hidden", "true");
+    const icon = decor(make("span", "quest-toggle-icon", "▲"));
     const text = make("span", "quest-toggle-text");
     toggle.append(icon, text, make("span", "quest-toggle-count", `QUEST 01–${String(older.length).padStart(2, "0")}`));
     container.before(toggle);
@@ -1486,8 +1480,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         toggle.type = "button";
         toggle.setAttribute("aria-controls", steps.id);
         const label = make("span");
-        const icon = make("i");
-        icon.setAttribute("aria-hidden", "true");
+        const icon = decor(make("i"));
         toggle.append(label, icon);
 
         const render = () => {
@@ -1652,8 +1645,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
             thumb.type = "button";
             thumb.setAttribute("aria-label", `${textOf(card, "h3")} の詳細を開く`);
             image.before(thumb);
-            const hint = make("span", "work-thumb-hint");
-            hint.setAttribute("aria-hidden", "true");
+            const hint = decor(make("span", "work-thumb-hint"));
             hint.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>くわしく見る';
             thumb.append(image, hint);
         }
