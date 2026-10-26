@@ -312,7 +312,8 @@ function setStat(element, value) {
     element.dataset.value = number;
 
     const card = element.closest(".achievement-card");
-    if (card) {
+    // 目標のない数字（インターン・開発歴）は、ゲージ（NEXT ○）を付けない
+    if (card && !card.hasAttribute("data-no-meter")) {
         const meter = card.querySelector(".stat-meter");
         if (meter) updateExpMeter(meter, "stat-next", number);
         else card.append(makeExpMeter("stat-meter", "stat-next", number));
@@ -387,11 +388,14 @@ function buildArticleCard(article, index) {
     image.loading = "lazy";
 
     const content = make("div", "article-content");
-    content.append(
-        make("p", "article-date", String(article.date || "")),
-        make("h3", "", title),
-        make("p", "article-summary", String(article.summary || ""))
-    );
+    content.append(make("p", "article-date", String(article.date || "")), make("h3", "", title));
+    // 抜き出しの先頭は毎回同じあいさつなので外す。残りが無ければ紹介文は出さない
+    const summary = String(article.summary || "")
+        .replace(/続きをみる.*$/, "")
+        .replace(/^\s*「?はじめに」?\s*/, "")
+        .replace(/^こんにちは[！!]?.*?はるです[！!。]?\s*/, "")
+        .trim();
+    if (summary.length >= 10) content.append(make("p", "article-summary", summary));
 
     if (articleUrl) {
         const link = make("a", "", "記事を読む →");
@@ -663,9 +667,55 @@ loadJson("data/profile.json", {})
     closeButton.type = "button";
     drawerInner.append(closeButton);
 
+    /* ---------- 受賞作のピックアップ（一覧を閉じていても見える） ---------- */
+
+    const rareCards = cards.filter((card) => card.classList.contains("is-rare"));
+    const pickup = make("div", "works-pickup");
+    if (rareCards.length) {
+        const head = make("p", "works-pickup-head");
+        head.append(make("span", "works-pickup-label", "★ PICK UP"), make("span", "", "受賞した作品"));
+        const list = make("ul", "works-pickup-list");
+
+        rareCards.forEach((card) => {
+            const item = make("li");
+            const button = make("button", "works-pickup-card");
+            button.type = "button";
+            button.setAttribute("aria-label", `${textOf(card, "h3")} の詳細を開く`);
+
+            const source = card.querySelector("img");
+            if (source) {
+                const thumb = make("img");
+                thumb.src = source.getAttribute("src");
+                thumb.alt = "";
+                thumb.width = Number(source.getAttribute("width")) || 16;
+                thumb.height = Number(source.getAttribute("height")) || 9;
+                thumb.loading = "lazy";
+                button.append(thumb);
+            }
+            const text = make("span", "works-pickup-text");
+            text.append(
+                make("span", "works-pickup-award", `★ ${card.dataset.award || "AWARD"}`),
+                make("span", "works-pickup-title", textOf(card, "h3")),
+                make("span", "works-pickup-genre", textOf(card, ".work-genre"))
+            );
+            button.append(text);
+            // 一覧の中の本物のカードを押したのと同じ動き（詳細のポップアップ）にする
+            button.addEventListener("click", () => card.dispatchEvent(new MouseEvent("click", { bubbles: true })));
+
+            item.append(button);
+            list.append(item);
+        });
+
+        list.style.setProperty("--pickup-count", String(Math.min(rareCards.length, 4)));
+        pickup.append(head, list);
+        toggle.before(pickup);
+    }
+
     const setDrawer = bindDrawer(drawer, toggle);
     const setWorksOpen = (open, { scroll = false } = {}) => {
         setDrawer(open);
+        // 一覧を開いたら、ピックアップは一覧と重複するので隠す
+        pickup.hidden = open;
         toggleText.textContent = open ? "作品一覧を閉じる" : `全${total}作品を見る`;
         if (!open && scroll && worksSection) worksSection.scrollIntoView({ behavior: scrollBehavior() });
     };

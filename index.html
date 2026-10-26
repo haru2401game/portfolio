@@ -159,7 +159,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
     <!-- Catch Copy -->
     <div class="hero-content">
-        <p class="hero-eyebrow">ゲームプログラマー志望 / 2028年卒</p>
+        <p class="hero-eyebrow"><b class="hero-name">長屋晴太</b>ゲームプログラマー志望 / 2028年卒</p>
         <h1><span class="hero-mark">遊びの発見</span>を、<br>心に残る体験へ。</h1>
         <p class="hero-lead">
             企画からプログラムまで。<br>
@@ -292,15 +292,11 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </p>
             <p class="about-text">
                 愛知県豊橋市出身。<br>
-                名古屋のトライデントコンピュータ専門学校
-                ゲームサイエンス学科でゲーム制作を学んでいます。<br><br>
+                名古屋のトライデントコンピュータ専門学校ゲームサイエンス学科でゲーム制作を学んでいます。<br><br>
 
-                ゲーム業界を目指し、
-                企画・プログラミング・チーム制作など、
-                幅広いゲーム開発に取り組んでいます。<br><br>
+                ゲーム業界を目指し、企画・プログラミング・チーム制作など、幅広いゲーム開発に取り組んでいます。<br><br>
 
-                制作を通してさまざまな役割を経験し、
-                チームでより良いゲームを作ることを大切にしています。
+                制作を通してさまざまな役割を経験し、チームでより良いゲームを作ることを大切にしています。
             </p>
             <div class="about-meta">
                 <div>
@@ -399,7 +395,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
         </div>
 
-        <div class="achievement-card">
+        <div class="achievement-card" data-no-meter>
 
             <i class="fa-solid fa-briefcase"></i>
 
@@ -413,7 +409,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
         </div>
 
-        <div class="achievement-card">
+        <div class="achievement-card" data-no-meter>
 
             <i class="fa-solid fa-code"></i>
             
@@ -503,7 +499,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     開発期間
                 </h4>
                 <p>
-                    2026年07月〜制作中
+                    2026年07月〜<wbr>制作中
                 </p>
             </div>
             <div class="info-item">
@@ -556,22 +552,19 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     <li class="tech-step is-problem">
                         <span class="tech-step-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>課題</span>
                         <p>
-                            実装初期は <code>Transform</code> の <code>Rotation</code> で四肢を回していましたが、
-                            地面を押す力が足りず、画面の動きが小さく、キャラクターの動きも激しくなりませんでした。
+                            実装初期は <code>Transform</code> の <code>Rotation</code> で四肢を回していましたが、地面を押す力が足りず、画面の動きが小さく、キャラクターの動きも激しくなりませんでした。
                         </p>
                     </li>
                     <li class="tech-step is-solution">
                         <span class="tech-step-label"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>解決</span>
                         <p>
-                            回転の仕組みを <code>Rigidbody</code> の <code>AddForce</code> で特定の方向に力を加える方式に変更。
-                            回した手足で壁や床を強く押せるようになり、画面とキャラクターの激しい動きを表現できました。
+                            回転の仕組みを <code>Rigidbody</code> の <code>AddForce</code> で特定の方向に力を加える方式に変更。回した手足で壁や床を強く押せるようになり、画面とキャラクターの激しい動きを表現できました。
                         </p>
                     </li>
                     <li class="tech-step is-result">
                         <span class="tech-step-label"><i class="fa-solid fa-face-laugh-squint" aria-hidden="true"></i>結果</span>
                         <p>
-                            おもしろおかしいゲームの雰囲気を表現でき、
-                            遊ぶだけでなく見ていて面白いゲームになりました。
+                            おもしろおかしいゲームの雰囲気を表現でき、遊ぶだけでなく見ていて面白いゲームになりました。
                         </p>
                     </li>
                 </ol>
@@ -753,15 +746,13 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     <li class="tech-step is-problem">
                         <span class="tech-step-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>課題</span>
                         <p>
-                            タイトル画面を1枚絵で作ると、背景もキャラクターも一緒に固定され、
-                            画面に動きを付けることができませんでした。
+                            タイトル画面を1枚絵で作ると、背景もキャラクターも一緒に固定され、画面に動きを付けることができませんでした。
                         </p>
                     </li>
                     <li class="tech-step is-solution">
                         <span class="tech-step-label"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>解決</span>
                         <p>
-                            背景の集中線とキャラクターを1枚絵から切り離し、それぞれ別のUIとして配置。
-                            パーツごとにアニメーションを付けられるようにしました。
+                            背景の集中線とキャラクターを1枚絵から切り離し、それぞれ別のUIとして配置。パーツごとにアニメーションを付けられるようにしました。
                         </p>
                     </li>
                     <li class="tech-step is-result">
@@ -782,15 +773,13 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     <li class="tech-step is-problem">
                         <span class="tech-step-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>課題</span>
                         <p>
-                            国際チームのため日本語・英語・フランス語に対応したかったものの、
-                            既存のフォントでは言語によって対応していない文字がありました。
+                            国際チームのため日本語・英語・フランス語に対応したかったものの、既存のフォントでは言語によって対応していない文字がありました。
                         </p>
                     </li>
                     <li class="tech-step is-solution">
                         <span class="tech-step-label"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>解決</span>
                         <p>
-                            チームメンバーが自作したフォントを使い、3言語に対応するローカライズ処理を実装。
-                            翻訳で長くなる文章も、画面上で自然に見えるように調整しました。
+                            チームメンバーが自作したフォントを使い、3言語に対応するローカライズ処理を実装。翻訳で長くなる文章も、画面上で自然に見えるように調整しました。
                         </p>
                     </li>
                     <li class="tech-step is-result">
@@ -1202,8 +1191,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     企画・プログラム
                 </p>
                 <p class="work-description">
-                    ワイヤーアクションを駆使して
-                    ステージを攻略する3Dアクションゲーム
+                    ワイヤーアクションを駆使してステージを攻略する3Dアクションゲーム
                 </p>
                 <a
                     href="https://note.com/ha_03ru_01/n/nc707a412117b?magazine_key=md93091202e8f"
@@ -1247,8 +1235,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     プログラム全般 統合作業
                 </p>
                 <p class="work-description">
-                    あなたはただの村人です。勇者がいないので魔王討伐に向かうことになった。
-                    魔王によって町中危険だが、魔王を倒さなければならないのだ。
+                    あなたはただの村人です。勇者がいないので魔王討伐に向かうことになった。魔王によって町中危険だが、魔王を倒さなければならないのだ。
                 </p>
                 <a
                     href="https://note.com/ha_03ru_01/n/n8e6cd286cfa8?magazine_key=md93091202e8f"
@@ -1865,8 +1852,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     企画・プログラム
                 </p>
                 <p class="work-description">
-                    ある日、ぺんぎんの「ぺんさんど」がばらばらになっちゃった！？
-                    体のパーツをもとに戻してあげよう!
+                    ある日、ぺんぎんの「ぺんさんど」がばらばらになっちゃった！？体のパーツをもとに戻してあげよう!
                 </p>
                 <a
                     href="https://note.com/ha_03ru_01/n/n742d34cb5a6d?magazine_key=md93091202e8f"
@@ -1910,8 +1896,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     企画・プログラム・スプライトデザイン
                 </p>
                 <p class="work-description">
-                    魚たちが人間に復讐！？
-                    迫りくる魚たちを捌き地上を守る！一人の海パン小僧の物語です。
+                    魚たちが人間に復讐！？迫りくる魚たちを捌き地上を守る！一人の海パン小僧の物語です。
                 </p>
                 <a
                     href="https://note.com/ha_03ru_01/n/n747c82964bb2?magazine_key=md93091202e8f"
@@ -2360,8 +2345,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                 </h3>
 
                 <p>
-                    Unityで制作した
-                    Webゲームを公開しています。
+                    Unityで制作したWebゲームを公開しています。
                 </p>
 
                 <span>
@@ -2391,8 +2375,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                 </h3>
 
                 <p>
-                    海外向けに
-                    ゲーム作品を公開しています。
+                    海外向けにゲーム作品を公開しています。
                 </p>
 
                 <span>
@@ -2493,9 +2476,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        ゲームのルールやプレイヤー操作、
-                        敵の挙動、UIなど、
-                        ゲームを構成するシステムをプログラムできます。
+                        ゲームのルールやプレイヤー操作、敵の挙動、UIなど、ゲームを構成するシステムをプログラムできます。
                     </p>
 
                     <div class="can-do-tags">
@@ -2523,9 +2504,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        Unityを使用した2D・3Dゲーム制作を経験しています。
-                        ゲームシステム、UI、シーン管理、
-                        アニメーション制御などを実装できます。
+                        Unityを使用した2D・3Dゲーム制作を経験しています。ゲームシステム、UI、シーン管理、アニメーション制御などを実装できます。
                     </p>
 
                     <div class="can-do-tags">
@@ -2554,10 +2533,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        C++とDirectXTK・DxLibを使用した
-                        ゲーム制作を経験しています。
-                        2Dゲームだけでなく、
-                        3Dゲームの制作にも取り組んでいます。
+                        C++とDirectXTK・DxLibを使用したゲーム制作を経験しています。2Dゲームだけでなく、3Dゲームの制作にも取り組んでいます。
                     </p>
 
                     <div class="can-do-tags">
@@ -2613,10 +2589,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        プレイヤー操作、ゲームルール、
-                        UI、シーン遷移など、
-                        ゲームを遊べる状態にするための
-                        システム制作を経験しています。
+                        プレイヤー操作、ゲームルール、UI、シーン遷移など、ゲームを遊べる状態にするためのシステム制作を経験しています。
                     </p>
 
                     <div class="can-do-tags">
@@ -2644,9 +2617,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        ゲームジャムや学校でのチーム制作を通して、
-                        プログラミングだけでなく、
-                        プロジェクト統合やメンバー間の調整も経験しています。
+                        ゲームジャムや学校でのチーム制作を通して、プログラミングだけでなく、プロジェクト統合やメンバー間の調整も経験しています。
                     </p>
 
                     <div class="can-do-tags">
@@ -2674,9 +2645,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        実際に遊んだ人の視点を意識しながら、
-                        UIや操作方法、ゲームの分かりやすさを考え、
-                        より遊びやすいゲームへ改善していきます。
+                        実際に遊んだ人の視点を意識しながら、UIや操作方法、ゲームの分かりやすさを考え、より遊びやすいゲームへ改善していきます。
                     </p>
 
                     <div class="can-do-tags">
@@ -2732,9 +2701,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        ゲームのコンセプトやルール、
-                        遊びの面白さを考え、
-                        実際にゲームとして形にするところまで取り組んでいます。
+                        ゲームのコンセプトやルール、遊びの面白さを考え、実際にゲームとして形にするところまで取り組んでいます。
                     </p>
 
                     <div class="can-do-tags">
@@ -2761,9 +2728,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        noteやSNSを通して、
-                        ゲーム制作の進捗や学んだこと、
-                        制作の裏側などを継続的に発信しています。
+                        noteやSNSを通して、ゲーム制作の進捗や学んだこと、制作の裏側などを継続的に発信しています。
                     </p>
 
                     <div class="can-do-tags">
@@ -2791,9 +2756,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     </h4>
 
                     <p>
-                        HTML・CSS・JavaScriptを使用して、
-                        自身の制作活動や作品を紹介する
-                        ポートフォリオサイトを制作・運用しています。
+                        HTML・CSS・JavaScriptを使用して、自身の制作活動や作品を紹介するポートフォリオサイトを制作・運用しています。
                     </p>
 
                     <div class="can-do-tags">
@@ -2831,7 +2794,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content has-photo">
                 <h3>
-                    [入学・ゲーム業界を目指す]
+                    入学・ゲーム業界を目指す
                 </h3>
                 <p>
                     トライデントコンピュータ専門学校で<br>
@@ -2849,7 +2812,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [初受賞・ゲームジャム]
+                    初受賞・ゲームジャム
                 </h3>
                 <p>
                     初めてゲームジャムに参加<br>
@@ -2864,7 +2827,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [初オリジナルタイトル]
+                    初オリジナルタイトル
                 </h3>
                 <p>
                     C++とDxLibを使用した<br>
@@ -2880,7 +2843,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [外部ゲームジャムへ参加]
+                    外部ゲームジャムへ参加
                 </h3>
                 <p>
                     「学生チーム対抗ゲームジャム2025」へ参加
@@ -2894,7 +2857,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content has-photo">
                 <h3>
-                    [企業プレゼン・受賞]
+                    企業プレゼン・受賞
                 </h3>
                 <p>
                     「Over Fish」を企業様へプレゼン<br>
@@ -2912,7 +2875,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [クラス内1位：Click Hero]
+                    クラス内1位：Click Hero
                 </h3>
                 <p>
                     「Click Hero」<br>
@@ -2927,7 +2890,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [クラス内1位：POTION BERSERKER]
+                    クラス内1位：POTION BERSERKER
                 </h3>
                 <p>
                     「POTION BERSERKER」<br>
@@ -2942,7 +2905,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content has-photo">
                 <h3>
-                    [進級展への展示]
+                    進級展への展示
                 </h3>
                 <p>
                     「RETURN RECORD」<br>
@@ -2961,7 +2924,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [企業合同ゲームジャムに参加]
+                    企業合同ゲームジャムに参加
                 </h3>
                 <p>
                     学校と企業様の共同主催ゲームジャムに参加
@@ -2975,7 +2938,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [ポートフォリオ制作開始]
+                    ポートフォリオ制作開始
                 </h3>
                 <p>
                     自作ポートフォリオサイトを作り始める
@@ -2989,7 +2952,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [部活動ゲームジャムに参加]
+                    部活動ゲームジャムに参加
                 </h3>
                 <p>
                     学校内の部活動にて<br>
@@ -3004,7 +2967,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [大手企業様のインターン]
+                    大手企業様のインターン
                 </h3>
                 <p>
                     ゲーム企業様のインターンシップに参加する
@@ -3018,7 +2981,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content has-photo">
                 <h3>
-                    [IGCCグランプリ受賞]
+                    IGCCグランプリ受賞
                 </h3>
                 <p>
                     IGCCゲームジャムにて「Falien」がグランプリを受賞
@@ -3035,7 +2998,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content has-photo">
                 <h3>
-                    [東京ゲームショウへ出展]
+                    東京ゲームショウへ出展
                 </h3>
                 <p>
                     TGS2026に「ししとう」を展示する
@@ -3052,7 +3015,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="timeline-content">
                 <h3>
-                    [3Dゲーム制作]
+                    3Dゲーム制作
                 </h3>
                 <p>
                     Unityを用いた3Dゲーム10本制作チャレンジを開始する
@@ -3105,9 +3068,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                 ゲーム制作の学びを発信
             </h3>
             <p>
-                ゲーム制作で学んだ技術や設計、
-                制作の裏側、就職活動などを
-                noteで継続して発信しています。
+                ゲーム制作で学んだ技術や設計、制作の裏側、就職活動などをnoteで継続して発信しています。
             </p>
 
             <!-- Article Count -->
