@@ -590,7 +590,7 @@ loadJson("data/profile.json", {})
         const role = textOf(card, ".work-role");
 
         card.dataset.unity = String(/unity/i.test(tech));
-        card.dataset.cpp = String(/directx|dxlib/i.test(tech));
+        card.dataset.cpp = String(/c\+\+|directx/i.test(tech));
         card.dataset.threeD = String(/3D/.test(genre));
         card.dataset.team = String(member > 1);
 
@@ -623,7 +623,7 @@ loadJson("data/profile.json", {})
         { label: "すべて", test: () => true },
         { label: "★ 受賞作", test: (card) => card.classList.contains("is-rare") },
         { label: "Unity", test: (card) => card.dataset.unity === "true" },
-        { label: "C++ / DirectX・DxLib", test: (card) => card.dataset.cpp === "true" },
+        { label: "C++ / DirectX", test: (card) => card.dataset.cpp === "true" },
         { label: "3D", test: (card) => card.dataset.threeD === "true" },
         { label: "チーム制作", test: (card) => card.dataset.team === "true" },
         { label: "個人制作", test: (card) => card.dataset.team !== "true" },
@@ -1273,6 +1273,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
         if (label) label.textContent = copied ? "コピーしました！" : "コピーできませんでした";
         button.classList.toggle("is-copied", copied);
+        if (!copied) document.dispatchEvent(new CustomEvent("copy:failed"));
 
         setTimeout(() => {
             if (label) label.textContent = original;
@@ -1434,7 +1435,6 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         ["C#", /c#/i],
         ["C++", /c\+\+/i],
         ["GitHub", /github/i],
-        ["DxLib", /dxlib/i],
         ["DirectX", /directx/i],
     ].map(([label, re]) => ({ label, value: count((work) => re.test(work.tech)) }));
 

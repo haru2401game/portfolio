@@ -9976,3 +9976,13 @@ section[id] .section-title h2 {
         padding-right: 12px;
     }
 }
+
+/* ---------- 押した手ごたえ：選ぶ・切り替えるボタンを押した瞬間に少し沈む（効果音とセット） ---------- */
+
+:root:not(.motion-off) :is(.stage-filter button, .can-do-tabs button, .settings-choices [role="radio"], .swipe-dot, .world-node):active {
+    scale: .94;
+}
+
+:root:not(.motion-off) :is(.work-thumb, .works-pickup-card):active {
+    scale: .985;
+}
