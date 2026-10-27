@@ -10723,3 +10723,325 @@ main:focus {
 #web-works {
     scroll-margin-top: 110px;
 }
+
+/* ---------- このサイトの技術（What I Can Do の最後） ---------- */
+
+.site-tech {
+    margin-top: 48px;
+    padding: 28px;
+    border: 2px solid var(--ui-line);
+    border-radius: 22px;
+    background:
+        var(--ui-dots),
+        var(--ui-panel);
+}
+
+.site-tech-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.site-tech-label {
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+}
+
+.site-tech-head h3 {
+    margin: 0;
+    color: var(--ui-ink);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.site-tech-head p {
+    max-width: 720px;
+    margin: 0;
+    color: var(--color-text);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.site-tech-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-tech-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 18px 20px;
+    border: 2px solid var(--ui-line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 5px 0 var(--ui-line);
+}
+
+.site-tech-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--ui-panel);
+    font-size: 20px;
+}
+
+.site-tech-card h4 {
+    margin: 0;
+    color: var(--ui-ink);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.site-tech-card p {
+    flex: 1;
+    margin: 0;
+    color: var(--color-text);
+    font-size: 12.5px;
+    line-height: 1.8;
+}
+
+.site-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.site-tech-tags span {
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #eef4fb;
+    color: #00567f;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.site-tech-try {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 7px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--ui-ink);
+    box-shadow: 0 4px 0 #000;
+    color: #fff;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.site-tech-try:hover {
+    background: var(--cyan-strong);
+}
+
+.site-tech-try:active {
+    translate: 0 2px;
+    box-shadow: 0 2px 0 #000;
+}
+
+.site-tech-try:focus-visible,
+.site-tech-source:focus-visible,
+.next-stage:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 3px;
+}
+
+.site-tech-hint {
+    margin-top: 4px;
+    color: var(--ui-sub);
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+.site-tech-note:empty {
+    display: none;
+}
+
+.site-tech-note {
+    margin: 14px 0 0;
+    color: var(--ui-sub);
+    font-size: 12.5px;
+}
+
+.site-tech-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    color: var(--cyan-strong);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.site-tech-source img {
+    width: 20px;
+    height: auto;
+}
+
+.site-tech-source:hover {
+    text-decoration: underline;
+}
+
+/* ---------- 次のステージへの案内（各セクションの最後） ---------- */
+
+.next-stage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 10px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 44px auto 0;
+    padding: 10px 20px;
+    border: 2px solid var(--ui-line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 4px 0 var(--ui-line);
+    color: var(--ui-ink);
+    font-size: 13px;
+    text-decoration: none;
+    transition: translate .2s ease, box-shadow .2s ease;
+}
+
+.next-stage:hover {
+    translate: 0 -2px;
+    box-shadow: 0 6px 0 var(--ui-line);
+}
+
+.next-stage-label {
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+}
+
+.next-stage-num {
+    padding: 1px 7px;
+    border-radius: 6px;
+    background: var(--ui-ink);
+    color: #fff;
+    font-size: 11px;
+}
+
+.next-stage-title {
+    font-weight: 800;
+}
+
+.next-stage-sub {
+    color: var(--ui-sub);
+    font-size: 12px;
+}
+
+.next-stage-left {
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: #fff4d6;
+    color: #7a4a00;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.next-stage-arrow {
+    color: var(--ui-sub);
+    font-size: 10px;
+}
+
+:root:not(.motion-lite):not(.motion-off) .next-stage-arrow {
+    animation: next-stage-bob 1.4s ease-in-out infinite;
+}
+
+@keyframes next-stage-bob {
+    50% { translate: 0 3px; }
+}
+
+@media (max-width: 900px) {
+    .site-tech-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .site-tech {
+        margin-top: 32px;
+        padding: 20px 16px;
+    }
+
+    /* スマホでは、強み（WHY ME）とこのサイトの技術を横スワイプにして、縦の長さを短くする */
+    .why-me-list,
+    .site-tech-list {
+        display: flex;
+        gap: 12px;
+        padding: 6px 2px 14px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 2px;
+        scrollbar-width: none;
+    }
+
+    .why-me-list::-webkit-scrollbar,
+    .site-tech-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .why-me-list > li,
+    .site-tech-list > li {
+        flex: 0 0 86%;
+        scroll-snap-align: start;
+    }
+
+    /* 目的別の窓口：目的を選んだ人には、その窓口だけくわしく出す（ほかは見出しとボタンだけ） */
+    :root[data-mode] .purpose-card:not(.is-recommended) > p,
+    .purpose-card:not(.is-recommended) .purpose-can {
+        display: none;
+    }
+
+    /* 代表作のあとの連絡ボタン：スマホでは小さくまとめる */
+    .work-cta {
+        gap: 8px 12px;
+        margin-top: 28px;
+        padding: 12px 14px;
+    }
+
+    .work-cta p {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .work-cta-button {
+        padding: 8px 16px;
+    }
+
+    /* Blog：セクションの見出しと同じ説明文・ロゴは省いて、記事のカードを早く見せる */
+    .blog-logo,
+    .blog-intro-content > p {
+        display: none;
+    }
+
+    /* スマホでは1行に収める（見出しの英語名と「連絡先まで あと○」だけ） */
+    .next-stage {
+        flex-wrap: nowrap;
+        gap: 8px;
+        margin-top: 20px;
+        padding: 7px 14px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .next-stage-label,
+    .next-stage-sub {
+        display: none;
+    }
+}

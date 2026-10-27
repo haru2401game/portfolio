@@ -264,7 +264,7 @@
         const section = list[Math.min(next, list.length - 1)];
         if (!section) return;
         section.scrollIntoView({ behavior: behavior(), block: "start" });
-        const first = Array.from(section.querySelectorAll(FOCUSABLE)).find(isShown);
+        const first = Array.from(section.querySelectorAll(FOCUSABLE)).find((element) => isShown(element) && !element.matches(".next-stage"));
         if (first) first.focus({ preventScroll: true });
         else document.activeElement?.blur?.();
         sound("jump");

@@ -211,6 +211,16 @@
     };
     window.PlaySfx = sfx;
 
+    // 「このサイトの技術」の試しボタン用：効果音が OFF でも1回だけ鳴らす（音量・ミュートは守る）
+    window.PlaySfxPreview = () => {
+        if (settings.muted || settings.volume === 0) return;
+        try {
+            SOUNDS.powerup();
+        } catch {
+            /* 音が出せない環境でも、ページの動きは止めない */
+        }
+    };
+
     /* ---------- どの操作で、どの音を鳴らすか ---------- */
 
     const CLOSERS = ".settings-close, .settings-done, .work-viewer-close, .photo-viewer-close, .trophy-close, .settings-hint-close, [aria-label='閉じる'], [aria-label='Close'], [aria-label='お知らせを閉じる'], [aria-label='Close notice']";
@@ -222,6 +232,8 @@
     const HOVERABLE = "a[href], button, [role='tab'], .work-card, .works-pickup-card, .play-card, .web-card, .sns-card, .article-card";
 
     const soundFor = (target) => {
+        // 「このサイトの技術」の試しボタンは、それ自体が音を鳴らすので重ねない
+        if (target.closest("[data-try='sfx']")) return null;
         if (target.closest(".like-button")) return ["like"];
         if (target.closest(".mail-copy")) return ["copy"];
         if (target.closest(MAIL)) return ["mail"];

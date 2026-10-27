@@ -2861,7 +2861,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                     <p>
                         HTML・CSS・JavaScriptを使用して、自身の制作活動や作品を紹介するポートフォリオサイトを制作・運用しています。
                     </p>
-                    <p class="can-do-example">例：このサイトも、フレームワークを使わずに作っています</p>
+                    <p class="can-do-example">例：このサイト（設計は自分、実装は生成AIと協力）。しくみは下の「このサイトの技術」で紹介しています</p>
 
                     <div class="can-do-tags">
                         <span>HTML</span>
@@ -2875,6 +2875,61 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
         </div>
 
+    </div>
+
+    <!-- このサイトの技術（BEHIND THE SCENES）：作り方は正直に書く（設計・企画は自分、実装は生成AIと協力） -->
+    <div id="site-tech" class="site-tech">
+        <div class="site-tech-head">
+            <span class="site-tech-label">BEHIND THE SCENES</span>
+            <h3>このサイトの技術</h3>
+            <p>サイトの設計と、入れる機能の企画は長屋晴太。実装は生成AI（Claude）と協力して進め、仕組みを自分で説明できるところまで確かめています。</p>
+        </div>
+        <ul class="site-tech-list">
+            <li class="site-tech-card">
+                <span class="site-tech-icon" aria-hidden="true">🔊</span>
+                <h4>その場で作る効果音</h4>
+                <p>音声ファイルは使わず、Web Audio API で波形を組み合わせて、操作ごとに違う音を鳴らしています。</p>
+                <span class="site-tech-tags"><span>Web Audio API</span></span>
+                <button class="site-tech-try" type="button" data-try="sfx">▶ 音を鳴らしてみる</button>
+            </li>
+            <li class="site-tech-card">
+                <span class="site-tech-icon" aria-hidden="true">🎮</span>
+                <h4>コントローラーで操作</h4>
+                <p>Gamepad API で入力を読み、画面上の位置から「となりのボタン」を探してカーソルを動かします。</p>
+                <span class="site-tech-tags"><span>Gamepad API</span></span>
+                <span class="site-tech-hint">コントローラーをつなぐと使えます</span>
+            </li>
+            <li class="site-tech-card">
+                <span class="site-tech-icon" aria-hidden="true">🌐</span>
+                <h4>日本語 ⇄ English</h4>
+                <p>自作の辞書と MutationObserver で、あとから出てくる通知まで含めて、ページ全体を切り替えます。</p>
+                <span class="site-tech-tags"><span>JavaScript</span><span>MutationObserver</span></span>
+                <button class="site-tech-try" type="button" data-try="lang" data-no-translate>▶ English で見る</button>
+            </li>
+            <li class="site-tech-card">
+                <span class="site-tech-icon" aria-hidden="true">📊</span>
+                <h4>自作のアクセス解析</h4>
+                <p>Cloudflare Workers と D1 で作成。Cookie や IP アドレスは保存せず、毎朝 Discord に日報が届きます。</p>
+                <span class="site-tech-tags"><span>Cloudflare Workers</span><span>D1</span></span>
+            </li>
+            <li class="site-tech-card">
+                <span class="site-tech-icon" aria-hidden="true">🧮</span>
+                <h4>作品データから自動集計</h4>
+                <p>ステータス画面や実績の数字は、ページ内の作品カードから自動で数えています。作品を足すだけで、全部が更新されます。</p>
+                <span class="site-tech-tags"><span>JavaScript</span></span>
+            </li>
+            <li class="site-tech-card">
+                <span class="site-tech-icon" aria-hidden="true">♿</span>
+                <h4>だれでも使いやすく</h4>
+                <p>文字のコントラスト・ボタンの名前・キーボード操作など、WCAG 2.1 AA の主な項目を点検して直しています。</p>
+                <span class="site-tech-tags"><span>WCAG 2.1 AA</span></span>
+            </li>
+        </ul>
+        <p class="site-tech-note" aria-live="polite"></p>
+        <a class="site-tech-source" href="https://github.com/haru2401game/portfolio" target="_blank" rel="noopener noreferrer">
+            <img src="images/index/Contact/Github.webp" width="128" height="133" alt="" loading="lazy">
+            GitHub でソースコードを見る →
+        </a>
     </div>
 
 </section>
@@ -3237,7 +3292,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                 <li>
                     <span class="why-me-num" aria-hidden="true">03</span>
                     <b>作って、伝えるところまでやる</b>
-                    <p>note で<b data-summary-stat="blogCount">270</b>本以上の記事を公開し、制作の過程を発信。このサイトも、フレームワークを使わずに自分で作っています。</p>
+                    <p>note で<b data-summary-stat="blogCount">270</b>本以上の記事を公開し、制作の過程を発信。このサイトも、生成AIと協力しながら設計・運用しています。</p>
                 </li>
             </ol>
             <p class="why-me-next">
@@ -3275,7 +3330,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                 <span class="purpose-label">WEB</span>
                 <h3>Web制作のご依頼</h3>
                 <p>紹介サイト・ポートフォリオ・ブラウザゲームのサイトなど、まずはお気軽にご相談ください。内容をうかがい、条件は個別に決めます。</p>
-                <p class="purpose-can">担当できること：HTML・CSS・JavaScript でのサイト制作（このサイトが実例です）</p>
+                <p class="purpose-can">担当できること：サイトの企画・設計と、生成AIを活用した HTML・CSS・JavaScript での制作（このサイトが実例です）</p>
                 <a class="purpose-button" href="#contact" data-mail="web">
                     <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                     Web制作の相談はこちら

@@ -1247,6 +1247,76 @@ function setLanguage(lang) {
 })();
 
 /* ========================================
+   次のステージへの案内（各セクションの最後）
+   ・後半まで読んでもらえるように、「次は何があるか」と「連絡先まであと何ステージか」を出す
+   ・ステージは、見出し（.section-title h2）のある main 直下のセクション（play.js のステージと同じ）
+======================================== */
+
+(() => {
+    const stages = Array.from(document.querySelectorAll("main > section[id]"))
+        .filter((section) => section.querySelector(":scope > .section-title h2"));
+    if (stages.length < 2) return;
+    const navLabel = (id) => textOf(document, `.header-nav a[href="#${id}"]`);
+    const contactIndex = stages.findIndex((section) => section.id === "contact");
+
+    stages.slice(0, -1).forEach((section, index) => {
+        const next = stages[index + 1];
+        const link = make("a", "next-stage");
+        link.href = `#${next.id}`;
+        const title = textOf(next, ".section-title h2");
+        const sub = navLabel(next.id);
+        const left = contactIndex - (index + 1);
+
+        link.append(
+            make("span", "next-stage-label", "NEXT STAGE"),
+            make("b", "next-stage-num", String(index + 2).padStart(2, "0")),
+            make("span", "next-stage-title", title),
+        );
+        if (sub && sub !== title) link.append(make("small", "next-stage-sub", sub));
+        if (left > 0) link.append(make("span", "next-stage-left", `連絡先まで あと${left}`));
+        link.append(decor(make("span", "next-stage-arrow", "▼")));
+        section.append(link);
+    });
+})();
+
+/* ========================================
+   このサイトの技術：その場で試せるボタン
+   ・効果音：設定で OFF のままでも、このボタンだけは1回鳴らして聞いてもらう
+   ・言語：日本語 ⇄ English をその場で切り替える（設定画面と同じ設定）
+======================================== */
+
+(() => {
+    const block = document.querySelector(".site-tech");
+    if (!block) return;
+    const note = block.querySelector(".site-tech-note");
+    const langButton = block.querySelector('[data-try="lang"]');
+
+    const syncLang = () => {
+        if (langButton) langButton.textContent = settings.lang === "en" ? "▶ 日本語で見る" : "▶ English で見る";
+    };
+
+    block.addEventListener("click", (event) => {
+        const button = event.target.closest?.("[data-try]");
+        if (!button) return;
+        if (button.dataset.try === "sfx") {
+            window.PlaySfxPreview?.();
+            if (note) {
+                note.textContent = settings.muted || settings.volume === 0
+                    ? "いまは音量が 0（ミュート）です。⚙ OPTIONS の音量を上げると聞こえます。"
+                    : settings.sfx === "on" ? "" : "サイト全体の効果音は、⚙ OPTIONS で ON にできます。";
+            }
+            emitPlayEvent("技術デモ: 効果音");
+        }
+        if (button.dataset.try === "lang") {
+            setLanguage(settings.lang === "en" ? "ja" : "en");
+            emitPlayEvent(`設定: lang=${settings.lang}`);
+        }
+    });
+    document.addEventListener("i18n:change", syncLang);
+    syncLang();
+})();
+
+/* ========================================
    目的別の入口（SELECT MODE）
    ・選んだ目的は、この訪問のあいだ覚えておき、Contact の同じ窓口を「おすすめ」として目立たせる
 ======================================== */
@@ -1714,7 +1784,9 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         }
 
         const label = list.closest(".can-do-category")?.querySelector("h3")?.textContent.trim()
-            || (list.matches(".latest-articles") ? "最新記事" : "写真");
+            || (list.matches(".latest-articles") ? "最新記事"
+                : list.matches(".site-tech-list") ? "このサイトの技術"
+                : list.matches(".why-me-list") ? "強み" : "写真");
         dots.setAttribute("role", "group");
         dots.setAttribute("aria-label", `${label}（横にスワイプで切り替え）`);
         dots.replaceChildren(...items.map((item, index) => {
@@ -1731,7 +1803,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         update(list);
     };
 
-    document.querySelectorAll(".can-do-list, .latest-articles, .tech-photos").forEach(setupSwipe);
+    document.querySelectorAll(".can-do-list, .latest-articles, .tech-photos, .site-tech-list, .why-me-list").forEach(setupSwipe);
 
     // ブログの最新記事は読み込み後に作られるので、そのときにドットを作り直す
     document.addEventListener("articles:rendered", () => {
@@ -1825,6 +1897,10 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         foldOnMobile(status, ".status-exp", null, "スキルEXP", ["技術・担当ごとのEXPを見る", "EXPを閉じる"]);
     };
     foldStatus();
+
+    // What I Can Do：このサイトの技術は、作り方の説明だけ見せて、6つのカードは押したら開く
+    foldOnMobile(document.querySelector(".site-tech"), ".site-tech-list, .site-tech-list + .swipe-dots, .site-tech-note", ".site-tech-source",
+        "このサイトの技術", ["6つの技術を見る", "技術の一覧を閉じる"]);
     window.addEventListener("load", foldStatus);
 
     // What I Can Do：3つのスキルセットを、スマホではタブで1つずつ見せる
