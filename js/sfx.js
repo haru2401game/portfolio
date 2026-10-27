@@ -217,9 +217,9 @@
     const TABS = "[role='tab'], [role='radio'], .stage-filter button, .can-do-tabs button, .swipe-dot, .world-node, .work-viewer-nav button";
     const DIALOGS = ".settings-button, .work-card, .works-pickup-card, .footer-trophy, .ending-trophy, .trophy-open";
     const PHOTOS = ".tech-photo, .timeline-photo";
-    const CARDS = ".play-card, .sns-card, .article-card a, .summary-works a, .main-tab";
+    const CARDS = ".play-card, .web-card, .sns-card, .article-card a, .summary-works a, .main-tab";
     const MAIL = "a[href^='mailto:'], [data-mail], .quick-contact, .nav-mail";
-    const HOVERABLE = "a[href], button, [role='tab'], .work-card, .works-pickup-card, .play-card, .sns-card, .article-card";
+    const HOVERABLE = "a[href], button, [role='tab'], .work-card, .works-pickup-card, .play-card, .web-card, .sns-card, .article-card";
 
     const soundFor = (target) => {
         if (target.closest(".like-button")) return ["like"];

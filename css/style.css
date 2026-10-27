@@ -10129,3 +10129,174 @@ main:focus {
     from { opacity: 0; translate: 0 12px; }
     to { opacity: 1; translate: 0 0; }
 }
+
+/* ---------- Web Works：制作した Web サイト（Play Games の下） ---------- */
+
+.web-works {
+    margin-top: 56px;
+}
+
+.web-works-title {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 0 0 18px;
+    color: var(--ui-ink);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.web-works-kicker {
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: .2em;
+}
+
+.web-card {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    overflow: hidden;
+    border: 2px solid var(--ui-line);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 6px 0 var(--ui-line);
+    color: inherit;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.web-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 0 var(--ui-line);
+}
+
+.web-card:focus-visible {
+    outline: 3px solid #ffb300;
+    outline-offset: 3px;
+}
+
+/* サイトの画面：ブラウザの窓のような枠に、トップ画面のスクリーンショットを入れる */
+.web-card-screen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    overflow: hidden;
+    background: #b8f36b;
+}
+
+.web-card-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #a5dd5c;
+}
+
+.web-card-bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(17, 23, 19, .35);
+}
+
+.web-card-screen img {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    object-fit: cover;
+    object-position: left top;
+    transition: scale .4s ease;
+}
+
+:root:not(.motion-off) .web-card:hover .web-card-screen img {
+    scale: 1.03;
+}
+
+.web-card-body {
+    display: grid;
+    align-content: center;
+    gap: 10px;
+    padding: 32px 36px;
+}
+
+.web-card-tag {
+    color: #137538;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+}
+
+.web-card-body h4 {
+    margin: 0;
+    color: var(--ui-ink);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.web-card-body p {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.web-card-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 2px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.web-card-points li {
+    padding: 4px 10px;
+    border: 1px solid #cfe9bd;
+    border-radius: 999px;
+    background: #f1fbe8;
+    color: #1f4d17;
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+.web-card-body .web-card-note {
+    padding-left: 10px;
+    border-left: 3px solid #b8f36b;
+    color: var(--ui-sub);
+    font-size: 12px;
+}
+
+.web-card-link {
+    justify-self: start;
+    margin-top: 6px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: #137538;
+    box-shadow: 0 4px 0 #0c5226;
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .web-works {
+        margin-top: 40px;
+    }
+
+    .web-card {
+        grid-template-columns: 1fr;
+    }
+
+    .web-card-screen {
+        min-height: 0;
+    }
+
+    .web-card-screen img {
+        flex: none;
+        height: auto;
+    }
+
+    .web-card-body {
+        padding: 22px;
+    }
+}
