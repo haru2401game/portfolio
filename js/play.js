@@ -51,6 +51,10 @@
         notices.push(notice);
         showNext();
     };
+    // ほかのファイル（gamepad.js など）からも、同じ通知を出せるように
+    document.addEventListener("play:notify", (event) => {
+        if (event.detail?.text) notify(event.detail);
+    });
 
     /* ========================================
        1. キャラクター図鑑
@@ -194,6 +198,9 @@
 
         setTimeout(() => notify({ label: "HINT", text: " 走っていたキャラは、サイトのどこかに隠れています。クリックで図鑑に登録！", tone: "" }), reduceMotion() ? 2400 : 4400);
     };
+
+    // コントローラー（gamepad.js）で入力したとき
+    document.addEventListener("play:konami", parade);
 
     document.addEventListener("keydown", (event) => {
         if (event.target.closest?.("input, textarea, select, [contenteditable]")) return;
@@ -400,6 +407,7 @@
         { id: "allStages", icon: "🗺", title: "全ステージ踏破", text: "全ステージ（9セクション）を見た", hint: "すべてのセクションを見てみよう" },
         { id: "ending", icon: "🏁", title: "ALL CLEAR", text: "エンディングにたどり着いた", hint: "最後まで進んでみよう" },
         { id: "continue", icon: "💾", title: "セーブデータ", text: "「つづきから」で再開した", hint: "また遊びに来てね" },
+        { id: "gamepad", icon: "🎮", title: "コントローラー派", text: "ゲームパッドでサイトを操作した", hint: "コントローラーをつないでみよう" },
     ];
 
     let unlocked = localData.get("pa-trophy", {});
@@ -562,6 +570,7 @@
         const name = event.detail?.name;
         if (name === "隠しコマンド") unlock("konami");
         if (name === "つづきから") unlock("continue");
+        if (name === "ゲームパッド") unlock("gamepad");
     });
     // 以前に見つけていた分も反映
     const castFound = localData.get("pa-cast", []).length;

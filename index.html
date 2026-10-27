@@ -84,12 +84,14 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 </head>
 
 <body id="top">
+
+<a class="skip-link" href="#main">本文へスキップ</a>
 <!-- ================================
      Header
 ================================ -->
 <header class="header">
 
-    <a href="#top" class="header-logo" aria-label="長屋晴太 ポートフォリオ ホーム">
+    <a href="#top" class="header-logo" aria-label="HARUTA NAGAYA GAME PROGRAMMER PORTFOLIO（トップへ戻る）">
         <img class="brand-mark" src="images/favicon.webp" width="128" height="128" alt="" aria-hidden="true">
         <span class="brand-name">
             HARUTA NAGAYA
@@ -101,7 +103,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
         class="settings-button"
         type="button"
         aria-haspopup="dialog"
-        aria-label="設定（アニメーション・音量・言語）">
+        aria-label="OPTIONS：設定（アニメーション・音量・言語）">
         <span class="settings-button-icon" aria-hidden="true">⚙</span>
         <span class="settings-button-text" aria-hidden="true">OPTIONS</span>
     </button>
@@ -166,7 +168,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
     </div>
 </section>
 
-<main>
+<main id="main" tabindex="-1">
 
 <!-- ================================
      Quick Guide（30秒でわかるまとめ）
@@ -459,7 +461,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
     <!-- Work Movie -->
     <!-- 最初は画像。押すと動画を再生する（通信量を減らすため） -->
     <div class="featured-video is-image is-movie" data-video="videos/index/Shishito-pv.mp4" data-title="ししとう">
-        <button class="movie-play" type="button" aria-label="ししとうのプレイ映像を再生（15秒・音声あり）">
+        <button class="movie-play" type="button" aria-label="PLAY MOVIE：ししとうのプレイ映像（0:15・音声あり）">
             <img
                 src="images/index/Hero/poster.webp"
                 width="703"
@@ -658,7 +660,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
     <div class="main-work" id="main-falien" role="tabpanel" aria-labelledby="tab-falien" hidden>
     <!-- 最初は画像。押すと動画（PV・音声あり）を再生する -->
     <div class="featured-video is-image is-grandprix is-movie" data-video="videos/index/Falien.mp4" data-title="Falien">
-        <button class="movie-play" type="button" aria-label="FalienのPVを再生（約3分・音声あり）">
+        <button class="movie-play" type="button" aria-label="PLAY MOVIE：FalienのPV（2:54・音声あり）">
             <img
                 src="images/index/otherworks/Falien.webp"
                 width="1280"
@@ -3304,6 +3306,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <script src="js/like.js"></script>
 <script src="js/play.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/gamepad.js"></script>
 <script src="js/i18n.js"></script>
 
 </body>

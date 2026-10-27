@@ -222,6 +222,29 @@ if (heroVideo) {
     if (!motionOff() && !saveData) heroVideo.play().catch(() => {});
 }
 
+// トップの動画を止める・流すボタン（ずっと動いているものは、見る人が止められるように）
+let heroPausedByUser = false;
+const heroScreen = heroVideo?.closest(".hero-screen");
+if (heroScreen && !saveData) {
+    const pause = make("button", "hero-pause");
+    pause.type = "button";
+    const icon = decor(make("span", "hero-pause-icon"));
+    pause.append(icon);
+    const sync = () => {
+        pause.setAttribute("aria-pressed", String(heroPausedByUser));
+        pause.setAttribute("aria-label", heroPausedByUser ? "背景の動画を再生" : "背景の動画を一時停止");
+        icon.textContent = heroPausedByUser ? "▶" : "❚❚";
+    };
+    pause.addEventListener("click", () => {
+        heroPausedByUser = !heroPausedByUser;
+        if (heroPausedByUser) heroVideo.pause();
+        else heroVideo.play().catch(() => {});
+        sync();
+    });
+    sync();
+    heroScreen.append(pause);
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     const heroText = document.querySelector(".hero-content");
     if (heroText) setTimeout(() => heroText.classList.add("is-visible"), 300);
@@ -284,7 +307,7 @@ document.querySelectorAll(".featured-video[data-video]").forEach((box) => {
 // アニメーションを「なし」にしたとき・戻したときのトップの動画
 function syncVideos(off) {
     if (!heroVideo || saveData) return;
-    if (off) heroVideo.pause();
+    if (off || heroPausedByUser) heroVideo.pause();
     else if (isInViewport(heroVideo)) heroVideo.play().catch(() => {});
 }
 
@@ -1211,7 +1234,7 @@ function setLanguage(lang) {
     const button = make("a", "quick-contact");
     button.href = "#contact";
     button.append(decor(make("span", "quick-contact-icon", "✉")), make("span", "quick-contact-text", "連絡する"));
-    button.setAttribute("aria-label", "連絡先（メール・SNS）へ移動");
+    button.setAttribute("aria-label", "連絡する（メール・SNS の連絡先へ移動）");
     document.body.append(button);
 
     const hideZones = [contact, document.getElementById("ending")].filter(Boolean);
@@ -1341,6 +1364,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
     const figure = make("figure");
     const image = make("img");
+    image.alt = "";
     const caption = make("figcaption");
     const close = make("button", "photo-viewer-close", "×");
     close.type = "button";
@@ -1915,7 +1939,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         if (image && !image.closest(".work-thumb")) {
             const thumb = make("button", "work-thumb");
             thumb.type = "button";
-            thumb.setAttribute("aria-label", `${textOf(card, "h3")} の詳細を開く`);
+            thumb.setAttribute("aria-label", `${textOf(card, "h3")} をくわしく見る`);
             image.before(thumb);
             const hint = decor(make("span", "work-thumb-hint"));
             hint.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>くわしく見る';

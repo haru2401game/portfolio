@@ -8,8 +8,11 @@
 window.I18N_EN = {
     "title": "Haruta Nagaya | Game Programmer Portfolio",
     "texts": {
-        "長屋晴太 ポートフォリオ ホーム": "Haruta Nagaya portfolio home",
-        "設定（アニメーション・音量・言語）": "Settings (animation, volume, language)",
+        "HARUTA NAGAYA GAME PROGRAMMER PORTFOLIO（トップへ戻る）": "HARUTA NAGAYA GAME PROGRAMMER PORTFOLIO (back to top)",
+        "本文へスキップ": "Skip to content",
+        "背景の動画を一時停止": "Pause the background video",
+        "背景の動画を再生": "Play the background video",
+        "OPTIONS：設定（アニメーション・音量・言語）": "OPTIONS: settings (animation, volume, language)",
         "メニューを開く": "Open menu",
         "メニューを閉じる": "Close menu",
         "メインナビゲーション": "Main navigation",
@@ -61,7 +64,7 @@ window.I18N_EN = {
         "メイン作品の切り替え": "Switch main work",
         "TITLE 01 ／ TGS 2026 出展": "TITLE 01 / TGS 2026 Exhibit",
         "TITLE 02 ／ IGCC グランプリ": "TITLE 02 / IGCC Grand Prix",
-        "ししとうのプレイ映像を再生（15秒・音声あり）": "Play the SHISHITO gameplay video (15 sec, with sound)",
+        "PLAY MOVIE：ししとうのプレイ映像（0:15・音声あり）": "PLAY MOVIE: SHISHITO gameplay video (0:15, with sound)",
         "ししとうのタイトル画面": "SHISHITO title screen",
         "0:15 ・ 音声あり": "0:15 · With sound",
         "ゲーム概要": "Overview",
@@ -115,7 +118,7 @@ window.I18N_EN = {
         "東京ゲームショウ2026：IGDA日本ブース（インディーゲームコーナー）での出展": "Tokyo Game Show 2026: exhibiting at the IGDA Japan booth (Indie Game Area)",
         "東京ゲームショウ2026のIGDA日本ブースで、「ししとう」のチラシを持つチームメンバー": "Team members holding SHISHITO flyers at the IGDA Japan booth, Tokyo Game Show 2026",
         "IGDA日本ブースでの出展": "Exhibiting at the IGDA Japan booth",
-        "FalienのPVを再生（約3分・音声あり）": "Play the Falien trailer (about 3 min, with sound)",
+        "PLAY MOVIE：FalienのPV（2:54・音声あり）": "PLAY MOVIE: Falien trailer (2:54, with sound)",
         "Falienのタイトル画面": "Falien title screen",
         "2:54 ・ 音声あり": "2:54 · With sound",
         "宇宙人の足を付け替えて研究所から脱出する2Dアクション（1〜2人プレイ）": "A 2D action game where you swap an alien's legs to escape a lab (1–2 players)",
@@ -462,6 +465,15 @@ window.I18N_EN = {
         "セーブデータ": "Save Data",
         "「つづきから」で再開した": "Resumed with “Continue”",
         "また遊びに来てね": "Come back and play again",
+        "コントローラー派": "Controller Player",
+        "ゲームパッドでサイトを操作した": "Used a gamepad on the site",
+        "コントローラーをつないでみよう": "Try plugging in a controller",
+        "コントローラーで操作できます（左下に操作ガイド）": "You can use your controller (button guide at bottom left)",
+        "移動": "Move",
+        "決定": "Select",
+        "戻る": "Back",
+        "セクション": "Section",
+        "いいね": "Like",
         "トロフィー コンプリート": "All trophies unlocked",
         "？？？": "???",
         "トロフィーの記録は、このブラウザにだけ保存されます。": "Trophy progress is saved only in this browser.",
@@ -505,7 +517,7 @@ window.I18N_EN = {
         "EXPを閉じる": "Hide EXP",
         "スキルセットの切り替え": "Switch skill set",
         "連絡する": "Contact",
-        "連絡先（メール・SNS）へ移動": "Go to contact (email & social)",
+        "連絡する（メール・SNS の連絡先へ移動）": "Contact me (go to email & social)",
         "✉ メールで連絡する": "✉ Email me",
         "DirectX": "DirectX",
         "PongGameをC++で制作": "Pong built with C++",
@@ -533,6 +545,10 @@ window.I18N_EN = {
         [
             "^(.+) の詳細を開く$",
             "Open details: {t1}"
+        ],
+        [
+            "^(.+) をくわしく見る$",
+            "View details: {t1}"
         ],
         [
             "^これまでのクエストを見る（(\\d+)件）$",

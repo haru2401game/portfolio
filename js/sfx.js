@@ -257,6 +257,13 @@
         if (sound) sfx(...sound);
     }, true);
 
+    // ゲームパッド（gamepad.js）で押したときも、クリックと同じ音を鳴らす
+    window.PlaySfxFor = (target) => {
+        if (!(target instanceof Element)) return;
+        const sound = soundFor(target);
+        if (sound) sfx(...sound);
+    };
+
     // カーソルを乗せたとき（マウスのある PC だけ）
     const finePointer = window.matchMedia?.("(hover: hover) and (pointer: fine)").matches;
     let hovered = null;
