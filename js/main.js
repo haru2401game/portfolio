@@ -1210,14 +1210,68 @@ function setLanguage(lang) {
 
 (() => {
     const address = ["haru2401game", "gmail.com"].join("@");
-    document.querySelectorAll("[data-mail]").forEach((element) => {
+
+    // 目的別の窓口（data-mail="recruit" など）は、件名と本文のひな形を入れておく
+    // （送る人が書くことに迷わないように。英語表示のときは英語のひな形）
+    const TEMPLATES = {
+        recruit: {
+            ja: ["【採用・インターン】ご連絡", "長屋 晴太 様\n\n会社名：\nお名前：\nご用件：\n"],
+            en: ["[Recruiting / Internship] Inquiry", "Hi Haruta,\n\nCompany:\nName:\nMessage:\n"],
+        },
+        game: {
+            ja: ["【ゲーム制作のお誘い】", "長屋 晴太 様\n\nお名前・活動名：\n制作の内容（ゲームジャム／共同制作／開発のお手伝い など）：\nお願いしたい担当：\n期間・スケジュール：\n"],
+            en: ["[Game Dev] Let's make a game together", "Hi Haruta,\n\nName / team:\nProject (game jam / co-development / development help, etc.):\nRole you'd like me to take:\nSchedule:\n"],
+        },
+        web: {
+            ja: ["【Web制作のご相談】", "長屋 晴太 様\n\nお名前・会社名：\n作りたいサイトの内容：\n希望の時期：\nご予算の目安（わかれば）：\n"],
+            en: ["[Web] Website request", "Hi Haruta,\n\nName / company:\nWhat kind of site:\nTiming:\nBudget (if known):\n"],
+        },
+    };
+    const hrefFor = (purpose) => {
+        const template = TEMPLATES[purpose]?.[root.lang === "en" ? "en" : "ja"];
+        if (!template) return `mailto:${address}`;
+        const [subject, body] = template;
+        return `mailto:${address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    };
+
+    const fill = () => document.querySelectorAll("[data-mail]").forEach((element) => {
         if (element.matches(".mail-copy")) {
             element.dataset.copy = address;
             return;
         }
-        element.href = `mailto:${address}`;
+        element.href = hrefFor(element.dataset.mail);
         if (element.matches(".mail-address")) element.textContent = address;
     });
+    fill();
+    document.addEventListener("i18n:change", fill);
+})();
+
+/* ========================================
+   目的別の入口（SELECT MODE）
+   ・選んだ目的は、この訪問のあいだ覚えておき、Contact の同じ窓口を「おすすめ」として目立たせる
+======================================== */
+
+(() => {
+    const cards = document.querySelectorAll(".mode-card");
+    if (!cards.length) return;
+    const MODES = ["recruit", "game", "web"];
+
+    const apply = (mode) => {
+        if (!MODES.includes(mode)) return;
+        root.dataset.mode = mode;
+        cards.forEach((card) => card.classList.toggle("is-selected", card.dataset.mode === mode));
+        document.querySelectorAll(".purpose-card").forEach((card) => {
+            card.classList.toggle("is-recommended", card.dataset.mode === mode);
+        });
+    };
+
+    cards.forEach((card) => {
+        card.addEventListener("click", () => {
+            apply(card.dataset.mode);
+            sessionData.set("pa-mode", card.dataset.mode);
+        });
+    });
+    apply(sessionData.get("pa-mode", ""));
 })();
 
 /* ========================================
@@ -1995,7 +2049,8 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     const summary = document.getElementById("summary");
     if (!summary) return;
 
-    summary.querySelectorAll("[data-summary-stat]").forEach((target) => {
+    // トップの実績バッジ・Contact の強みにも、同じ数字を写す
+    document.querySelectorAll("[data-summary-stat]").forEach((target) => {
         const source = document.getElementById(target.dataset.summaryStat);
         if (!source) return;
         const copy = () => {

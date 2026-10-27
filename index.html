@@ -160,6 +160,11 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             企画からプログラムまで。<br>
             アイデアを、遊べるかたちにしています。
         </p>
+        <ul class="hero-badges" aria-label="主な実績">
+            <li><span aria-hidden="true">🏆</span>IGCC グランプリ</li>
+            <li><span aria-hidden="true">🎮</span>東京ゲームショウ2026 出展</li>
+            <li><span aria-hidden="true">🕹</span><b data-summary-stat="gameCount">34</b>作品を制作</li>
+        </ul>
         <div class="hero-actions">
             <a class="hero-button" href="#featured-works">注目作品を見る <span aria-hidden="true">↗</span></a>
             <a class="hero-text-link" href="#other-works">すべての作品 <span aria-hidden="true">→</span></a>
@@ -170,12 +175,53 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <main id="main" tabindex="-1">
 
+
 <!-- ================================
      Quick Guide（30秒でわかるまとめ）
      数字は Achievements と同じものを自動で表示する
 ================================ -->
 <section id="summary" class="summary" aria-labelledby="summary-title">
-    <div class="summary-card">
+    <!-- 目的別の入口（SELECT MODE）：採用担当・ゲーム制作の仲間・Web制作のご依頼、それぞれ見てほしい場所へ案内する。
+         選んだ目的は Contact の窓口でも強調する（js/main.js） -->
+    <nav class="mode-select" aria-labelledby="mode-select-title">
+        <p class="mode-select-head">
+            <span class="mode-select-label">SELECT MODE</span>
+            <b id="mode-select-title">どの目的でご覧になっていますか？</b>
+        </p>
+        <ul class="mode-select-list">
+            <li>
+                <a class="mode-card" href="#quick-guide" data-mode="recruit">
+                    <span class="mode-card-icon" aria-hidden="true">💼</span>
+                    <span class="mode-card-text">
+                        <b>採用担当の方</b>
+                        <small>30秒まとめ → 代表作</small>
+                    </span>
+                    <span class="mode-card-go" aria-hidden="true">▶</span>
+                </a>
+            </li>
+            <li>
+                <a class="mode-card" href="#featured-works" data-mode="game">
+                    <span class="mode-card-icon" aria-hidden="true">🎮</span>
+                    <span class="mode-card-text">
+                        <b>一緒にゲームを作りたい方</b>
+                        <small>代表作 → 担当できること</small>
+                    </span>
+                    <span class="mode-card-go" aria-hidden="true">▶</span>
+                </a>
+            </li>
+            <li>
+                <a class="mode-card" href="#web-works" data-mode="web">
+                    <span class="mode-card-icon" aria-hidden="true">🌐</span>
+                    <span class="mode-card-text">
+                        <b>Web制作のご依頼</b>
+                        <small>制作したWebサイト → ご相談</small>
+                    </span>
+                    <span class="mode-card-go" aria-hidden="true">▶</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div id="quick-guide" class="summary-card">
         <div class="summary-head">
             <span class="summary-label">QUICK GUIDE</span>
             <h2 id="summary-title">30秒でわかる 長屋晴太</h2>
@@ -240,7 +286,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
         <div class="summary-contact">
             <p>お仕事・採用に関するご連絡は、メールでお気軽にどうぞ。</p>
             <div class="summary-actions">
-                <a class="summary-mail" href="#contact" data-mail>
+                <a class="summary-mail" href="#contact" data-mail="recruit">
                     <i class="fa-solid fa-envelope" aria-hidden="true"></i>メールを送る
                 </a>
                 <a class="summary-more" href="#contact">連絡先・SNS <span aria-hidden="true">→</span></a>
@@ -872,6 +918,13 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
         </div>
     </div>
+    </div>
+
+    <div class="work-cta">
+        <p>この作品やチーム制作について、もっと話を聞いてみたい方へ</p>
+        <a class="work-cta-button" href="#contact">
+            <span aria-hidden="true">✉</span>連絡する
+        </a>
     </div>
 </section>
 
@@ -2417,7 +2470,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 
     <!-- Web Works：制作した Web サイト -->
-    <div class="web-works">
+    <div id="web-works" class="web-works">
 
         <h3 id="web-works-title" class="web-works-title">
             <span class="web-works-kicker">WEB WORKS</span>
@@ -3159,14 +3212,77 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             Contact
         </h2>
         <p>
-            メール・SNS・制作活動リンク
+            ご連絡・ご依頼の窓口
         </p>
     </div>
     <div class="contact-container">
-        <p class="contact-message">
-            ゲーム制作の過程や活動について発信しています。<br>
-            制作作品の詳細や開発記録については、各リンクからご覧いただけます。
+
+        <!-- 一緒に作るなら（強み） -->
+        <div class="why-me">
+            <p class="why-me-head">
+                <span class="why-me-label">WHY ME</span>
+                <b>一緒に作るなら、こんなことができます</b>
+            </p>
+            <ol class="why-me-list">
+                <li>
+                    <span class="why-me-num" aria-hidden="true">01</span>
+                    <b>遊びの手触りを、プログラムで形にする</b>
+                    <p>「ししとう」では、手足を回して闘うプレイヤー操作を物理挙動で実装。アイデアを「触って面白い」ところまで作り込みます。</p>
+                </li>
+                <li>
+                    <span class="why-me-num" aria-hidden="true">02</span>
+                    <b>チームをまとめ、ひとつのゲームに仕上げる</b>
+                    <p>「ししとう」ではリードプログラマー・チームリーダーとしてプロジェクト統合を担当。6か国7人の国際チーム（Falien）でも、シーンをつないで完成まで仕上げました。</p>
+                </li>
+                <li>
+                    <span class="why-me-num" aria-hidden="true">03</span>
+                    <b>作って、伝えるところまでやる</b>
+                    <p>note で<b data-summary-stat="blogCount">270</b>本以上の記事を公開し、制作の過程を発信。このサイトも、フレームワークを使わずに自分で作っています。</p>
+                </li>
+            </ol>
+            <p class="why-me-next">
+                <span>NEXT STAGE</span>
+                いまは DirectXTK を使った3Dゲーム制作に挑戦中。2Dで身につけた「遊びの作り方」を、3Dにも広げていきます。
+            </p>
+        </div>
+
+        <!-- 目的別の窓口：メールの件名と本文のひな形は js/main.js で入れる -->
+        <p class="contact-purposes-head">
+            <span class="contact-purposes-label">CONTACT</span>
+            <b>ご用件に合わせて、窓口を選んでください</b>
         </p>
+        <div class="contact-purposes">
+            <article class="purpose-card" data-mode="recruit">
+                <span class="purpose-label">RECRUIT</span>
+                <h3>採用・インターンのご連絡</h3>
+                <p>選考・インターン・会社説明会などのご案内をお待ちしています。</p>
+                <a class="purpose-button" href="#contact" data-mail="recruit">
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                    インターン・選考のご連絡はこちら
+                </a>
+            </article>
+            <article class="purpose-card" data-mode="game">
+                <span class="purpose-label">GAME DEV</span>
+                <h3>一緒にゲームを作りたい方</h3>
+                <p>ゲームジャムのチーム・個人／インディーの共同制作・開発のお手伝いなど、お気軽に声をかけてください。</p>
+                <p class="purpose-can">担当できること：Unity / C# / C++ のプログラム、シーンの結合・プロジェクト統合、ローカライズ</p>
+                <a class="purpose-button" href="#contact" data-mail="game">
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                    ゲーム制作のお誘いはこちら
+                </a>
+            </article>
+            <article class="purpose-card" data-mode="web">
+                <span class="purpose-label">WEB</span>
+                <h3>Web制作のご依頼</h3>
+                <p>紹介サイト・ポートフォリオ・ブラウザゲームのサイトなど、まずはお気軽にご相談ください。内容をうかがい、条件は個別に決めます。</p>
+                <p class="purpose-can">担当できること：HTML・CSS・JavaScript でのサイト制作（このサイトが実例です）</p>
+                <a class="purpose-button" href="#contact" data-mail="web">
+                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                    Web制作の相談はこちら
+                </a>
+            </article>
+        </div>
+        <p class="contact-reply">いただいたご連絡は、内容を確認して順にお返事します。</p>
         <!-- Mail -->
         <div class="mail-card">
             <div class="mail-card-icon" aria-hidden="true">
@@ -3174,7 +3290,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </div>
             <div class="mail-card-text">
                 <span class="mail-card-label">MAIL</span>
-                <p>お仕事・採用に関するご連絡は、こちらのメールアドレスまでお気軽にどうぞ。</p>
+                <p>そのほかのご連絡も、こちらのメールアドレスまでお気軽にどうぞ。</p>
                 <a class="mail-address" href="#contact" data-mail>haru2401game [at] gmail.com</a>
             </div>
             <div class="mail-actions">
@@ -3327,7 +3443,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
     <div class="ending-actions">
         <a class="ending-button is-primary" href="#top">▶ もう一度はじめから</a>
-        <a class="ending-button" href="#contact" data-mail>✉ 連絡する</a>
+        <a class="ending-button" href="#contact">✉ 連絡する</a>
     </div>
     <p class="ending-hint">気に入ってもらえたら、右下の <span aria-hidden="true">❤</span> を押してもらえるとうれしいです</p>
 </section>

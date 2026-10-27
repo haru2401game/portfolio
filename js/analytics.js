@@ -142,6 +142,7 @@
     /* ---------- クリック ---------- */
 
     const textOf = (node) => (node ? node.textContent.replace(/\s+/g, " ").trim() : "");
+    const PURPOSES = { recruit: "採用", game: "ゲーム制作", web: "Web制作" };
 
     document.addEventListener("click", (event) => {
         const target = event.target.closest("a, button");
@@ -193,8 +194,17 @@
             return;
         }
 
+        // 目的別の窓口から送ったメールは、目的ごとに数える（表示言語に関係なく日本語の名前）
         if (target.matches("a[href^='mailto:']")) {
-            track("contact_click", "メール");
+            const purpose = PURPOSES[target.dataset.mail];
+            track("contact_click", purpose ? `メール（${purpose}）` : "メール");
+            return;
+        }
+
+        // 目的別の入口（SELECT MODE）：どんな人が見に来ているか
+        if (target.matches(".mode-card")) {
+            const purpose = PURPOSES[target.dataset.mode];
+            if (purpose && remember(`mode:${purpose}`)) track("ui_open", `目的: ${purpose}`);
             return;
         }
 
