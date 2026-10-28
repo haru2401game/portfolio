@@ -219,8 +219,14 @@ if (heroVideo) {
     if (heroVideo.dataset.srcSmall && window.matchMedia("(max-width: 768px)").matches) {
         heroVideo.src = heroVideo.dataset.srcSmall;
     }
-    if (!motionOff() && !saveData) heroVideo.play().catch(() => {});
 }
+// 動画（スマホで約1.3MB）が画像と通信を取り合わないように、ページの表示が終わってから流し始める
+const startHeroVideo = () => {
+    if (!heroVideo || motionOff() || saveData || heroPausedByUser) return;
+    heroVideo.play().catch(() => {});
+};
+if (document.readyState === "complete") setTimeout(startHeroVideo, 300);
+else window.addEventListener("load", () => setTimeout(startHeroVideo, 300), { once: true });
 
 // トップの動画を止める・流すボタン（ずっと動いているものは、見る人が止められるように）
 let heroPausedByUser = false;
@@ -1171,6 +1177,10 @@ function setLanguage(lang) {
 
     let timer = 0;
     let done = false;
+    let shownAt = -1;
+    let pendingShow = 0;
+    // スマホでは、開いてすぐに出すと名前の行を隠してしまうので、トップを過ぎてから出す
+    const mobile = window.matchMedia("(max-width: 768px)").matches;
     const hide = () => {
         done = true;
         clearTimeout(timer);
@@ -1179,11 +1189,17 @@ function setLanguage(lang) {
         window.removeEventListener("scroll", onScroll);
     };
     const onScroll = () => {
-        if (window.scrollY > 400) hide();
+        if (shownAt < 0) {
+            // トロフィーの通知と同時に出ないよう、少し待ってから
+            if (mobile && window.scrollY > window.innerHeight * 0.8 && !pendingShow) pendingShow = setTimeout(show, 1500);
+            return;
+        }
+        if (Math.abs(window.scrollY - shownAt) > 600) hide();
     };
 
-    setTimeout(() => {
-        if (done) return;
+    const show = () => {
+        if (done || shownAt >= 0) return;
+        shownAt = window.scrollY;
         storage.set(HINT_KEY, "1");
         const buttonBox = settingsButton.getBoundingClientRect();
         const headerBox = header.getBoundingClientRect();
@@ -1196,8 +1212,9 @@ function setLanguage(lang) {
         header.append(hint);
         requestAnimationFrame(() => hint.classList.add("is-shown"));
         timer = setTimeout(hide, 9000);
-        window.addEventListener("scroll", onScroll, { passive: true });
-    }, 1800);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    if (!mobile) setTimeout(show, 1800);
 
     close.addEventListener("click", hide);
     settingsButton.addEventListener("click", hide);

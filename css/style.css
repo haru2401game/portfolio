@@ -11045,3 +11045,15 @@ main:focus {
         display: none;
     }
 }
+
+/* ---------- スマホ：トップの動画と SELECT MODE の間の余白を詰める ---------- */
+
+@media (max-width: 768px) {
+    section.hero {
+        padding-bottom: 28px;
+    }
+
+    main > section.summary {
+        padding-top: 36px;
+    }
+}

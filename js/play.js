@@ -536,7 +536,18 @@
 
     /* ---------- 解除の条件 ---------- */
 
-    unlock("start");
+    // PRESS START：開いた瞬間に出すと、スマホでは通知がトップのボタンに重なるので、
+    // 最初にスクロールしたとき（スクロールしなければ8秒後）に解除する
+    const pressStart = () => {
+        window.removeEventListener("scroll", onFirstScroll);
+        clearTimeout(startTimer);
+        unlock("start");
+    };
+    const onFirstScroll = () => {
+        if (window.scrollY > 120) pressStart();
+    };
+    window.addEventListener("scroll", onFirstScroll, { passive: true });
+    const startTimer = setTimeout(pressStart, 8000);
 
     // 作品の詳細（ポップアップ）を5作品
     const seenWorks = new Set(sessionData.get("pa-works", []));
