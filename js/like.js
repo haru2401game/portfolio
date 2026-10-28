@@ -38,7 +38,6 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "like-button";
-    button.hidden = true;
     button.innerHTML = `
         <span class="like-heart" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.2 0 3.6 1.2 4.3 2.4.7-1.2 2.1-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>
@@ -53,7 +52,26 @@
     const countEl = button.querySelector(".like-count");
     const comboEl = button.querySelector(".like-combo");
 
-    let total = 0;
+    // 前回表示した累計を覚えておき、開いた瞬間からボタンと数字を出す
+    // （サーバーの返事を待ってから出すと、通信が遅いときにしばらくボタンが見えないため）
+    const CACHE_KEY = "pa-like-total";
+    let cached = null;
+    try {
+        const value = Number(localStorage.getItem(CACHE_KEY));
+        if (Number.isFinite(value) && value > 0) cached = value;
+    } catch {
+        cached = null;
+    }
+    const remember = () => {
+        try {
+            localStorage.setItem(CACHE_KEY, String(total));
+        } catch {
+            /* storage unavailable */
+        }
+    };
+
+    let total = cached || 0;
+    let known = cached !== null;   // 累計がわかっているか（前回の値かサーバーの値）
     let pending = 0;
     let sending = false;
     let timer = 0;
@@ -62,7 +80,7 @@
 
     const render = () => {
         const shown = total + pending;
-        countEl.textContent = shown.toLocaleString();
+        countEl.textContent = known ? shown.toLocaleString() : "-";
         button.setAttribute("aria-label", `このポートフォリオにいいねする（いいね ${shown.toLocaleString()}）`);
     };
 
@@ -84,6 +102,8 @@
                 const data = await response.json();
                 pending -= n;
                 total = Number(data.total) || total;
+                known = true;
+                remember();
             }
         } catch {
             /* keep pending and retry with the next press */
@@ -159,12 +179,16 @@
         .then((response) => (response.ok ? response.json() : Promise.reject()))
         .then((data) => {
             total = Number(data.total) || 0;
+            known = true;
+            remember();
             render();
-            button.hidden = false;
-            document.documentElement.classList.add("has-like");
         })
         .catch(() => {
-            /* API に届かないときはボタンを出さない */
+            /* API に届かないときはボタンをしまう（押しても届かないため） */
             button.remove();
+            document.documentElement.classList.remove("has-like");
         });
+
+    render();
+    document.documentElement.classList.add("has-like");
 })();
