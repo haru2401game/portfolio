@@ -1976,6 +1976,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
             <div class="work-viewer-body">
                 <div class="work-viewer-media">
                     <img data-wv="image" alt="">
+                    <video data-wv="movie" muted loop playsinline preload="none" aria-hidden="true" hidden></video>
                     <div class="work-viewer-badges" data-wv="badges"></div>
                 </div>
                 <div class="work-viewer-info">
@@ -2033,6 +2034,17 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         img.alt = image?.alt || "";
         img.width = image?.width || 16;
         img.height = image?.height || 9;
+
+        // プレイ映像のある作品は、画像の上で映像を流す（動きを止める設定・データセーバーのときは画像のまま）
+        const movie = part("movie");
+        if (card.dataset.preview && !motionOff() && !saveData) {
+            if (movie.getAttribute("src") !== card.dataset.preview) movie.src = card.dataset.preview;
+            movie.hidden = false;
+            movie.play().catch(() => {});
+        } else {
+            movie.pause();
+            movie.hidden = true;
+        }
 
         part("badges").replaceChildren(...Array.from(card.querySelectorAll(".stage-badges span"))
             .filter((badge) => badge.textContent.trim() !== stage)
@@ -2126,9 +2138,104 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
     // 閉じたら、元のカードが見える位置に戻す
     viewer.addEventListener("close", () => {
+        part("movie").pause();
         if (!current) return;
         current.querySelector(".work-thumb")?.focus({ preventScroll: true });
         current.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+    });
+})();
+
+/* ========================================
+   作品カードのプレイ映像（プレビュー）
+   ・映像は data-preview の作品だけ（8秒・音なし・videos/previews/）
+   ・PC：カーソルを乗せている間だけ流す ／ スマホ：画面の中ほどに来たカードを1枚だけ流す
+   ・最初は読み込まない（preload="none"）。流すときに初めて読み込む
+   ・アニメーション「なし」とデータセーバーのときは流さない
+======================================== */
+
+(() => {
+    const cards = Array.from(document.querySelectorAll(".work-card[data-preview]"));
+    if (!cards.length) return;
+
+    const allowed = () => !motionOff() && !saveData;
+    const videos = new Map();
+
+    cards.forEach((card) => {
+        card.classList.add("has-preview");
+        card.querySelector(".work-thumb")?.append(decor(make("span", "work-movie-badge", "▶ MOVIE")));
+    });
+
+    const videoFor = (card) => {
+        let video = videos.get(card);
+        if (video) return video;
+        const thumb = card.querySelector(".work-thumb");
+        if (!thumb) return null;
+        video = decor(make("video", "work-preview"));
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = "none";
+        video.setAttribute("muted", "");
+        video.addEventListener("playing", () => {
+            if (card.classList.contains("is-wanted")) card.classList.add("is-previewing");
+        });
+        thumb.append(video);
+        videos.set(card, video);
+        return video;
+    };
+
+    const start = (card) => {
+        if (!allowed() || card.hidden) return;
+        const video = videoFor(card);
+        if (!video) return;
+        card.classList.add("is-wanted");
+        if (!video.getAttribute("src")) video.src = card.dataset.preview;
+        video.play().catch(() => {});
+    };
+
+    const stop = (card) => {
+        card.classList.remove("is-wanted", "is-previewing");
+        videos.get(card)?.pause();
+    };
+
+    const finePointer = window.matchMedia?.("(hover: hover) and (pointer: fine)").matches;
+    if (finePointer) {
+        cards.forEach((card) => {
+            card.addEventListener("pointerenter", () => start(card));
+            card.addEventListener("pointerleave", () => stop(card));
+        });
+    } else if ("IntersectionObserver" in window) {
+        // スマホ：画面の中ほど（上下 30% を除いた帯）に入ったカードを、1枚だけ流す
+        let playing = null;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const card = cardOf.get(entry.target);
+                if (!card) return;
+                if (entry.isIntersecting) {
+                    if (playing && playing !== card) stop(playing);
+                    playing = card;
+                    start(card);
+                } else if (playing === card) {
+                    stop(card);
+                    playing = null;
+                }
+            });
+        }, { rootMargin: "-30% 0px -30% 0px" });
+        const cardOf = new Map();
+        cards.forEach((card) => {
+            const thumb = card.querySelector(".work-thumb");
+            if (!thumb) return;
+            cardOf.set(thumb, card);
+            observer.observe(thumb);
+        });
+    }
+
+    // キーボード・コントローラーで選んだときも流す
+    cards.forEach((card) => {
+        card.addEventListener("focusin", () => start(card));
+        card.addEventListener("focusout", (event) => {
+            if (!card.contains(event.relatedTarget)) stop(card);
+        });
     });
 })();
 

@@ -34,7 +34,7 @@
 | About | プロフィール |
 | Achievements | 作品数・ブログ記事数・受賞数などの実績（数字はページ内から自動で集計） |
 | Main Works | 代表作2本（ししとう／Falien）をタブで切り替え。動画は押すと再生（最初は画像なので通信量が少ない）。技術の見どころ（課題→解決→結果）、チーム構成、写真 |
-| Other Works | その他の作品。ゲームカセット風のカード、絞り込み、詳細ポップアップ |
+| Other Works | その他の作品。ゲームカセット風のカード、絞り込み、詳細ポップアップ。14作品はプレイ映像つき（PC はカーソルを乗せると、スマホは画面の中ほどに来ると流れる） |
 | Play Games | 実際に遊べるサイト（unityroom など）へのリンクと、制作した Web サイト（WEB WORKS：POCKET PLAY） |
 | What I Can Do | 作品データから自動で作るステータス画面と、スキルの説明。最後に「このサイトの技術」（効果音・コントローラー・英語切り替え・自作アクセス解析など、その場で試せるカード） |
 | Timeline | 経歴。ステージ選択風のワールドマップ付き |
@@ -161,7 +161,7 @@ portfolio/
 ├── .github/workflows/
 │   └── update-note.yml   毎日の自動更新
 ├── images/               画像（WebP）・キャラクター
-└── videos/               動画（トップの動画は、スマホ用の軽い版 -sm も用意）
+└── videos/               動画（トップの動画は、スマホ用の軽い版 -sm も用意。previews/ は作品カードの8秒プレビュー）
 ```
 
 ### JavaScript の役割分担
@@ -255,6 +255,13 @@ Canvas で描くランゲームです。
 ブログの記事は自動で更新されるので、手で直す必要はありません。
 
 ---
+
+### 作品のプレビュー映像を足すとき
+
+1. 元の動画を `_source/works-videos/` に入れる（GitHub には上げない）
+2. 一番動きのある約8秒を、音なし・640×360 に切り出す
+   `ffmpeg -ss <開始秒> -i 元.mp4 -t 8 -an -vf "fps=24,scale=640:360" -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart videos/previews/<名前>.mp4`
+3. `index.html` の作品カードに `data-preview="videos/previews/<名前>.mp4"` を付ける
 
 ## 確認のしかた
 

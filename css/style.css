@@ -11057,3 +11057,64 @@ main:focus {
         padding-top: 36px;
     }
 }
+
+/* ---------- 作品カードのプレイ映像（プレビュー） ---------- */
+
+.work-preview {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity .25s ease;
+    pointer-events: none;
+}
+
+.work-card.is-previewing .work-preview {
+    opacity: 1;
+}
+
+.work-thumb-hint {
+    z-index: 2;
+}
+
+/* 映像のある作品の印（右上） */
+.work-movie-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(17, 23, 19, .78);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    pointer-events: none;
+    transition: background-color .2s ease;
+}
+
+.work-card.is-previewing .work-movie-badge {
+    background: var(--red-strong);
+}
+
+/* 作品のポップアップ：画像の上で映像を流す */
+.work-viewer-media video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #1d2520;
+}
+
+.work-viewer-media video[hidden] {
+    display: none;
+}
+
+.work-viewer-badges {
+    z-index: 1;
+}
