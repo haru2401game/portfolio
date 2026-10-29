@@ -126,7 +126,7 @@
         if (loading) return loading;
         loading = new Promise((resolve) => {
             const script = document.createElement("script");
-            script.src = "data/i18n-en.js";
+            script.src = "data/i18n-en.js?v=c769e7ce";
             script.onload = () => {
                 const data = window.I18N_EN || {};
                 // 作品の英語（data/works.js の en）は、作品データの方を優先する（js/works.js が集めたもの）

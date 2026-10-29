@@ -5,7 +5,8 @@
     "main": "scripts/update-note.js",
     "scripts": {
         "update-note": "node scripts/update-note.js",
-        "test": "cd tests && npm test --"
+        "test": "cd tests && npm test --",
+        "assets": "node scripts/version-assets.js"
     },
     "dependencies": {
         "axios": "^1.11.0",

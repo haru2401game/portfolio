@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
+import { execFileSync } from "node:child_process";
 
 export const title = "1. 作品データとファイル";
 
@@ -151,6 +152,17 @@ export const tests = [
             }
             const dictionary = Object.values(data).find((value) => value && typeof value === "object" && value.texts);
             expect(dictionary && Object.keys(dictionary.texts).length > 100, "英語の辞書の中身が見つかりません");
+        },
+    },
+    {
+        name: "CSS・JS のバージョン番号が最新になっている",
+        async run({ siteDir, expect }) {
+            // 番号が古いと、push してもしばらく古いファイルが表示される（scripts/version-assets.js）
+            try {
+                execFileSync(process.execPath, [path.join(siteDir, "scripts", "version-assets.js"), "--check"], { encoding: "utf8" });
+            } catch (error) {
+                expect(false, `${String(error.stdout || error.message).trim().replace(/\n/g, "\n      ")}`);
+            }
         },
     },
 ];
