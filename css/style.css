@@ -10877,7 +10877,8 @@ main:focus {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 18px;
+    min-height: 32px;
+    margin-top: 14px;
     color: var(--cyan-strong);
     font-size: 13px;
     font-weight: 700;

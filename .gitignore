@@ -1,2 +1,6 @@
 # 元データ（大きな動画など）。GitHub には上げない
 _source/
+
+# 自動テスト：インストールした部品と、失敗したときの画面
+tests/node_modules/
+tests/results/
