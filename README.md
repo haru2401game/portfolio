@@ -144,6 +144,7 @@ portfolio/
 ├── css/
 │   └── style.css         見た目
 ├── js/
+│   ├── works.js          作品データから Other Works の作品カードを作る
 │   ├── main.js           基本の動き（自動集計・ポップアップ・タブ・スマホ表示など）
 │   ├── play.js           遊びの仕掛け（図鑑・トロフィー・隠しコマンド・ワールドマップなど）
 │   ├── settings-boot.js  設定（動き・言語）を、ページを描く前に反映
@@ -153,6 +154,7 @@ portfolio/
 │   ├── gamepad.js        ゲームパッド操作
 │   └── i18n.js           日本語 ⇄ 英語の切り替え（辞書は data/i18n-en.js）
 ├── data/
+│   ├── works.js          作品データ（Other Works の作品カード。作品の追加はここだけ）
 │   ├── blog.json         note の最新記事（自動更新）
 │   ├── blog.js           blog.json の写し（file:// で開いたとき用）
 │   └── profile.json      ページから数えられない数字（イベント参加数など）
@@ -244,7 +246,7 @@ Canvas で描くランゲームです。
 
 | やりたいこと | 書く場所 |
 |---|---|
-| 作品を追加する | `index.html` の Other Works に `.work-card` を1つ追加（いちばん上が最新） |
+| 作品を追加する | `data/works.js` のいちばん上に、作品を1つ書き足す（下の「作品を追加するとき」） |
 | 経歴を追加する | `index.html` の Timeline に `.timeline-item` を追加。受賞は `data-quest="award"`、挑戦中は `data-quest="now"` |
 | 受賞作にする | 受賞の経歴の本文に「作品名」と書く（カードのタイトルと同じ名前） |
 | イベント参加数を変える | `data/profile.json` の `eventCount` |
@@ -256,12 +258,50 @@ Canvas で描くランゲームです。
 
 ---
 
+### 作品を追加するとき
+
+作品カードは `data/works.js` から自動で作られます。HTML を書く必要はありません。
+
+1. サムネイル画像を `images/index/otherworks/` に入れる（WebP・16:9 がおすすめ）
+2. `data/works.js` を開き、`window.WORKS = [` のすぐ下（いちばん上）に、次のかたまりを書き足す
+
+```js
+    {
+        title: "作品名",
+        image: "images/index/otherworks/画像のファイル名.webp",
+        alt: "作品名のタイトル画面",
+        genre: "2Dアクションゲーム",
+        tech: "Unity C# Github",
+        period: "2026/11",
+        member: 1,
+        role: "企画・プログラム",
+        description: "ひとこと説明",
+        link: "https://note.com/ha_03ru_01/n/記事のID",
+        // ここから下は、なくてもよい
+        preview: "videos/previews/名前.mp4",
+        en: {
+            alt: "Title screen of ...",
+            genre: "2D action game",
+            role: "Design & programming",
+            description: "One-line description in English",
+        },
+    },
+```
+
+3. 保存して、ブラウザでページを開き直して確認する
+
+- 自動で付くもの：STAGE 番号・作品数・TEAM ×人数（`member` が2以上）・WIP（`role` に「未完成」）・絞り込み（`tech` に Unity / C++ / DirectX、`genre` に 3D）・スキル集計
+- 受賞作にするには：経歴（Timeline）の受賞の文に「作品名」を書く（`title` と同じ名前）。★RARE とピックアップに自動で出る
+- `en` を書かない項目は、英語表示でも日本語のまま出る。人数（`member`）の英語は自動
+- 書き忘れた項目があると、ブラウザの開発者ツール（F12）の Console に「○番目の作品に △△ がありません」と出る
+- `,`（カンマ）や `"`（ダブルクォート）が抜けると、作品一覧がまるごと出なくなる。そのときは Console の赤いエラーの行を見る
+
 ### 作品のプレビュー映像を足すとき
 
 1. 元の動画を `_source/works-videos/` に入れる（GitHub には上げない）
 2. 一番動きのある約8秒を、音なし・640×360 に切り出す
    `ffmpeg -ss <開始秒> -i 元.mp4 -t 8 -an -vf "fps=24,scale=640:360" -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart videos/previews/<名前>.mp4`
-3. `index.html` の作品カードに `data-preview="videos/previews/<名前>.mp4"` を付ける
+3. `data/works.js` のその作品に `preview: "videos/previews/<名前>.mp4",` を書き足す
 
 ## 確認のしかた
 

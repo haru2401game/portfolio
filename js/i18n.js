@@ -129,7 +129,8 @@
             script.src = "data/i18n-en.js";
             script.onload = () => {
                 const data = window.I18N_EN || {};
-                dict = data.texts || {};
+                // 作品の英語（data/works.js の en）は、作品データの方を優先する（js/works.js が集めたもの）
+                dict = { ...(data.texts || {}), ...(window.I18N_WORKS || {}) };
                 patterns = (data.patterns || []).map(([source, replacement]) => [new RegExp(source), replacement]);
                 resolve();
             };
