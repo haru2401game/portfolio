@@ -579,6 +579,8 @@ window.I18N_EN = {
         "例：このサイト（設計は自分、実装は生成AIと協力）。しくみは下の「このサイトの技術」で紹介しています": "e.g. this site (designed by me, built together with generative AI) — see “How this site works” below",
         "チーム構成と開発環境を見る": "Show team & tools",
         "チーム構成と開発環境を閉じる": "Hide team & tools",
+        "技術の解説・写真・チーム構成を見る": "Show tech notes, photos & team",
+        "技術の解説を閉じる": "Hide tech notes",
         "技術・担当ごとのEXPを見る": "Show EXP by skill and role",
         "EXPを閉じる": "Hide EXP",
         "スキルセットの切り替え": "Switch skill set",

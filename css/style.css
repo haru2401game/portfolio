@@ -9269,13 +9269,43 @@ main > section[id]:not(#summary):not(#ending) {
     outline-offset: 3px;
 }
 
+.works-pickup-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-bottom: 2px solid #b8860b;
+}
+
 .works-pickup-card img {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-bottom: 2px solid #b8860b;
+}
+
+.works-pickup-card.is-previewing .work-preview {
+    opacity: 1;
+}
+
+.works-pickup-media .work-movie-badge {
+    top: 6px;
+    right: 6px;
+}
+
+.works-pickup-card.is-previewing .work-movie-badge {
+    background: var(--red-strong);
+}
+
+/* スマホのピックアップは画像が小さいので、印も小さく */
+@media (max-width: 768px) {
+    .works-pickup-media .work-movie-badge {
+        top: 4px;
+        right: 4px;
+        padding: 2px 6px;
+        font-size: 8.5px;
+        letter-spacing: .04em;
+    }
 }
 
 .works-pickup-text {
@@ -9314,11 +9344,15 @@ main > section[id]:not(#summary):not(#ending) {
         align-items: stretch;
     }
 
-    .works-pickup-card img {
+    .works-pickup-media {
         width: 42%;
         flex-shrink: 0;
         border-right: 2px solid #b8860b;
         border-bottom: 0;
+    }
+
+    .works-pickup-card img {
+        height: 100%;
     }
 
     .works-pickup-text {

@@ -748,7 +748,13 @@ loadJson("data/profile.json", {})
             button.setAttribute("aria-label", `${textOf(card, "h3")} の詳細を開く`);
 
             const thumb = thumbOf(card);
-            if (thumb) button.append(thumb);
+            if (thumb) {
+                // 画像の入れ物（プレイ映像があれば、ここに重ねて流す）
+                const media = make("span", "works-pickup-media");
+                media.append(thumb);
+                button.append(media);
+                if (card.dataset.preview) button.dataset.preview = card.dataset.preview;
+            }
             const text = make("span", "works-pickup-text");
             text.append(
                 make("span", "works-pickup-award", `★ ${card.dataset.award || "AWARD"}`),
@@ -1900,10 +1906,13 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         (before ? container.querySelector(before) : null)?.before(toggle) ?? container.append(toggle);
     };
 
-    // Main Works：チーム構成・開発環境は、押したら開く
+    // Main Works：スマホでは「技術の見どころ」の説明と受賞歴だけ見せて、
+    // 技術の解説・活動の写真・チーム構成は押したら開く（ここで読むのをやめて帰る人が多かったため）
     document.querySelectorAll(".featured-container[data-work]").forEach((work) => {
-        foldOnMobile(work.querySelector(".tech-log"), ".tech-grid", ".tech-grid", `${work.dataset.work} チーム構成`,
-            ["チーム構成と開発環境を見る", "チーム構成と開発環境を閉じる"]);
+        const log = work.querySelector(".tech-log");
+        const before = log?.querySelector(".tech-gallery") ? ".tech-gallery" : ".tech-grid";
+        foldOnMobile(log, ".tech-highlight, .tech-gallery, .tech-grid", before, `${work.dataset.work} 技術の見どころ`,
+            ["技術の解説・写真・チーム構成を見る", "技術の解説を閉じる"]);
     });
 
     // What I Can Do：ステータス画面の EXP（使った技術・担当）は、押したら開く
@@ -2154,21 +2163,23 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 ======================================== */
 
 (() => {
-    const cards = Array.from(document.querySelectorAll(".work-card[data-preview]"));
+    // 一覧のカードと、受賞作のピックアップ（Other Works の一番上）の両方で流す
+    const cards = Array.from(document.querySelectorAll(".work-card[data-preview], .works-pickup-card[data-preview]"));
     if (!cards.length) return;
+    const thumbFor = (card) => card.querySelector(".work-thumb, .works-pickup-media");
 
     const allowed = () => !motionOff() && !saveData;
     const videos = new Map();
 
     cards.forEach((card) => {
         card.classList.add("has-preview");
-        card.querySelector(".work-thumb")?.append(decor(make("span", "work-movie-badge", "▶ MOVIE")));
+        thumbFor(card)?.append(decor(make("span", "work-movie-badge", "▶ MOVIE")));
     });
 
     const videoFor = (card) => {
         let video = videos.get(card);
         if (video) return video;
-        const thumb = card.querySelector(".work-thumb");
+        const thumb = thumbFor(card);
         if (!thumb) return null;
         video = decor(make("video", "work-preview"));
         video.muted = true;
@@ -2185,7 +2196,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     };
 
     const start = (card) => {
-        if (!allowed() || card.hidden) return;
+        if (!allowed() || card.hidden || card.closest("[hidden]")) return;
         const video = videoFor(card);
         if (!video) return;
         card.classList.add("is-wanted");
@@ -2223,7 +2234,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         }, { rootMargin: "-30% 0px -30% 0px" });
         const cardOf = new Map();
         cards.forEach((card) => {
-            const thumb = card.querySelector(".work-thumb");
+            const thumb = thumbFor(card);
             if (!thumb) return;
             cardOf.set(thumb, card);
             observer.observe(thumb);
