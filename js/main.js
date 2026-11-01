@@ -440,6 +440,7 @@ function buildArticleCard(article, index) {
 
     // 画像が無い・読み込めないときは HARU GAMES のロゴを代わりに出す
     const image = make("img");
+    image.loading = "lazy";
     const useFallback = () => {
         image.classList.add("is-fallback");
         image.src = "images/index/Blog/icon.webp";
@@ -712,11 +713,12 @@ loadJson("data/profile.json", {})
         const source = card.querySelector("img");
         if (!source) return null;
         const thumb = make("img");
+        // loading="lazy" は src より先に付ける（後だと、画面の外でもすぐ読み込みが始まってしまう）
+        thumb.loading = "lazy";
         thumb.src = source.getAttribute("src");
         thumb.alt = "";
         thumb.width = Number(source.getAttribute("width")) || 16;
         thumb.height = Number(source.getAttribute("height")) || 9;
-        thumb.loading = "lazy";
         return thumb;
     };
     [0, 1, 2, 3].map((i) => cards[Math.floor((i * total) / 4)]).filter(Boolean).forEach((card) => {
@@ -902,10 +904,11 @@ const ARTICLE_POP_CAST = ["Openji.png", "Penzou.png", "Clone_0.png"];
 
 function makeSprite(file, className) {
     const img = make("img", className);
+    // loading="lazy" は src より先に付ける（後だと、画面の外でもすぐ読み込みが始まってしまう）
+    img.loading = "lazy";
+    img.decoding = "async";
     img.src = CHARACTER_PATH + file;
     img.alt = "";
-    img.decoding = "async";
-    img.loading = "lazy";
     img.setAttribute("aria-hidden", "true");
     img.draggable = false;
     return img;
@@ -2312,11 +2315,11 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         if (!source) return;
         const frame = make("span", "works-bridge-thumb");
         const img = make("img");
+        img.loading = "lazy";
         img.src = source.getAttribute("src");
         img.alt = "";
         img.width = 160;
         img.height = 90;
-        img.loading = "lazy";
         frame.append(img);
         if (card.dataset.preview) frame.append(make("span", "works-bridge-play", "▶"));
         thumbs.append(frame);

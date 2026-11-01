@@ -42,7 +42,7 @@ const update = (file, pattern, makeReplacement) => {
 update("js/i18n.js", /script\.src = "data\/i18n-en\.js(\?v=[0-9a-f]*)?";/, () => `script.src = "data/i18n-en.js?v=${hashOf("data/i18n-en.js")}";`);
 
 // 2. index.html が読み込む CSS・JS（1 で i18n.js が変わっていても、ここで新しい番号になる）
-const TARGET = /(src|href)="((?:js\/[\w-]+\.js)|(?:css\/[\w-]+\.css)|(?:data\/works\.js))(\?v=[0-9a-f]*)?"/g;
+const TARGET = /(src|href)="((?:js\/[\w-]+\.js)|(?:css\/[\w-]+\.css)|(?:data\/(?:works|timeline)\.js))(\?v=[0-9a-f]*)?"/g;
 for (const page of ["index.html", "404.html"]) {
     if (!fs.existsSync(path.join(ROOT, page))) continue;
     update(page, TARGET, (whole, attr, file) => (fs.existsSync(path.join(ROOT, file)) ? `${attr}="${file}?v=${hashOf(file)}"` : whole));

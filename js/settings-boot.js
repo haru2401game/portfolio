@@ -7,6 +7,13 @@
 
 (() => {
     const root = document.documentElement;
+
+    // Google Fonts：届くのを待たずに画面を描けるよう、スクリプトから読み込む
+    // （届くまでは端末の文字で表示し、届いたら切り替わる。display=swap と同じ動き）
+    const fonts = document.createElement("link");
+    fonts.rel = "stylesheet";
+    fonts.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap";
+    document.head.append(fonts);
     let saved = {};
     try {
         saved = JSON.parse(localStorage.getItem("pa-settings")) || {};

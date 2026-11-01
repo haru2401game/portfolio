@@ -48,10 +48,11 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap">
+<!-- Google Fonts は settings-boot.js が読み込む（ここに直接書くと、届くまで画面が真っ白のまま待たされるため） -->
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap"></noscript>
 
 <!-- 設定（アニメーション・言語）を、ページを描く前に反映する -->
-<script src="js/settings-boot.js?v=712a25fa"></script>
+<script src="js/settings-boot.js?v=4154086e"></script>
 
 <link rel="stylesheet" href="css/style.css?v=d3e7b0aa">
 
@@ -310,7 +311,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
         <!-- Profile Image -->
         <div class="about-image">
-            <img 
+            <img loading="lazy" 
                 src="images/index/About/profile.webp"
                 width="1000"
                 height="945"
@@ -974,7 +975,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             rel="noopener noreferrer"
             class="play-card">
 
-            <img
+            <img loading="lazy"
                 src="images/index/PlayGames/unityroom.webp"
                 width="98"
                 height="110"
@@ -1004,7 +1005,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             rel="noopener noreferrer"
             class="play-card">
 
-            <img
+            <img loading="lazy"
                 src="images/index/PlayGames/itchio.webp"
                 width="216"
                 height="215"
@@ -1034,7 +1035,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             rel="noopener noreferrer"
             class="play-card">
 
-            <img
+            <img loading="lazy"
                 src="images/index/PlayGames/mugen.webp"
                 width="100"
                 height="100"
@@ -1538,249 +1539,8 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
         </p>
     </div>
     <div class="timeline-container">
-        <div class="timeline-item">
-            <div class="timeline-date">
-                2025.04
-            </div>
-            <div class="timeline-content has-photo">
-                <h3>
-                    入学・ゲーム業界を目指す
-                </h3>
-                <p>
-                    トライデントコンピュータ専門学校で<br>
-                    ゲーム制作について学び始めた<br>
-                    本格的にゲーム開発に挑戦
-                </p>
-                <button class="timeline-photo" type="button" data-caption="入学式：専門学校トライデントの入学式にて">
-                    <img src="images/index/TimeLine/entrance.webp" alt="専門学校トライデントの入学式の看板の前でポーズをとる様子" width="1280" height="720" loading="lazy" decoding="async">
-                </button>
-            </div>
-        </div>
-        <div class="timeline-item" data-quest="award">
-            <div class="timeline-date">
-                2025.06
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    初受賞・ゲームジャム
-                </h3>
-                <p>
-                    初めてゲームジャムに参加<br>
-                    チームでクリエイティブ賞を受賞
-                </p>
-            </div>
-        </div>
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                2025.06
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    初オリジナルタイトル
-                </h3>
-                <p>
-                    C++を使用した<br>
-                    「HOOKING BOX」を制作<br>
-                    初めてのオリジナルタイトル作品
-                </p>
-            </div>
-        </div>
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                2025.07
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    外部ゲームジャムへ参加
-                </h3>
-                <p>
-                    「学生チーム対抗ゲームジャム2025」へ参加
-                </p>
-            </div>
-        </div>
-        <div class="timeline-item" data-quest="award">
-
-            <div class="timeline-date">
-                2025.09
-            </div>
-            <div class="timeline-content has-photo">
-                <h3>
-                    企業プレゼン・受賞
-                </h3>
-                <p>
-                    「Over Fish」を企業の方々へプレゼン<br>
-                    学校内コンペティションにて企業賞受賞
-                </p>
-                <button class="timeline-photo" type="button" data-caption="企業プレゼン：学校内コンペティションでの企業賞の表彰">
-                    <img src="images/index/TimeLine/presentation.webp" alt="学校内コンペティションの表彰で、企業賞の賞品を受け取る様子" width="1280" height="720" loading="lazy" decoding="async">
-                </button>
-            </div>
-        </div>
-        <div class="timeline-item" data-quest="award">
-
-            <div class="timeline-date">
-                2025.11
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    クラス内1位：Click Hero
-                </h3>
-                <p>
-                    「Click Hero」<br>
-                    クラス内投票で総合1位を受賞
-                </p>
-            </div>
-        </div>
-        <div class="timeline-item" data-quest="award">
-
-            <div class="timeline-date">
-                2025.12
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    クラス内1位：POTION BERSERKER
-                </h3>
-                <p>
-                    「POTION BERSERKER」<br>
-                    クラス内投票で総合1位を受賞
-                </p>
-            </div>
-        </div>
-       <div class="timeline-item">
-
-            <div class="timeline-date">
-                2026.01
-            </div>
-            <div class="timeline-content has-photo">
-                <h3>
-                    進級展への展示
-                </h3>
-                <p>
-                    「RETURN RECORD」<br>
-                    「POTION BERSERKER」<br>
-                    個人とチームで進級展に展示
-                </p>
-                <button class="timeline-photo" type="button" data-caption="進級展：「RETURN RECORD」の展示">
-                    <img src="images/index/TimeLine/shinkyu.webp" alt="進級展で「RETURN RECORD」のポスターを持ち、作品を展示している様子" width="960" height="1280" loading="lazy" decoding="async" style="object-position: 50% 35%;">
-                </button>
-            </div>
-        </div>
-       <div class="timeline-item">
-
-            <div class="timeline-date">
-                2026.02
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    企業合同ゲームジャムに参加
-                </h3>
-                <p>
-                    学校と企業の共同主催ゲームジャムに参加
-                </p>
-            </div>
-        </div>
-       <div class="timeline-item">
-
-            <div class="timeline-date">
-                2026.04
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    ポートフォリオ制作開始
-                </h3>
-                <p>
-                    自作ポートフォリオサイトを作り始めた
-                </p>
-            </div>
-        </div>
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                2026.06
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    部活動ゲームジャムに参加
-                </h3>
-                <p>
-                    学校内の部活動にて<br>
-                    初めて後輩とのゲームジャムに挑戦
-                </p>
-            </div>
-        </div>
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                2026.08
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    大手ゲーム企業のインターン
-                </h3>
-                <p>
-                    ゲーム企業のインターンシップに参加
-                </p>
-            </div>
-        </div>
-        <div class="timeline-item" data-quest="award">
-
-            <div class="timeline-date">
-                2026.09
-            </div>
-            <div class="timeline-content has-photo">
-                <h3>
-                    IGCCグランプリ受賞
-                </h3>
-                <p>
-                    IGCCゲームジャムにて「Falien」がグランプリを受賞
-                </p>
-                <button class="timeline-photo" type="button" data-caption="IGCCゲームジャム：「Falien」でグランプリを受賞">
-                    <img src="images/index/TimeLine/igcc.webp" alt="IGCCゲームジャムのグランプリのトロフィーを手に喜ぶ様子" width="720" height="1280" loading="lazy" decoding="async" style="object-position: 50% 30%;">
-                </button>
-            </div>
-        </div>
-        <div class="timeline-item">
-
-            <div class="timeline-date">
-                2026.09
-            </div>
-            <div class="timeline-content has-photo">
-                <h3>
-                    東京ゲームショウへ出展
-                </h3>
-                <p>
-                    TGS2026で「ししとう」を展示
-                </p>
-                <button class="timeline-photo" type="button" data-caption="東京ゲームショウ2026：IGDA日本ブースで「ししとう」を展示">
-                    <img src="images/index/TimeLine/tgs.webp" alt="東京ゲームショウ2026のIGDA日本ブースで「ししとう」を展示している様子" width="1280" height="960" loading="lazy" decoding="async">
-                </button>
-            </div>
-        </div>
-        <div class="timeline-item" data-quest="now">
-
-            <div class="timeline-date">
-                2026.10
-            </div>
-            <div class="timeline-content">
-                <h3>
-                    3Dゲーム制作
-                </h3>
-                <p>
-                    Unityを用いた3Dゲーム10本制作チャレンジを開始
-                </p>
-                <div class="challenge-progress" data-challenge-total="10">
-                    <div class="challenge-head">
-                        <span class="challenge-label">3D CHALLENGE</span>
-                        <span class="challenge-count"><b data-challenge-count>-</b> / 10本 クリア</span>
-                    </div>
-                    <div class="challenge-bar" role="progressbar" aria-label="3Dゲーム10本制作チャレンジの進捗" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
-                    </div>
-                    <p class="challenge-next" data-challenge-next></p>
-                </div>
-            </div>
-        </div>
+        <!-- 経歴は data/timeline.js から js/timeline.js が作る（ここに直接書かない） -->
+        <noscript><p class="timeline-noscript">経歴を表示するには JavaScript を有効にしてください。</p></noscript>
     </div>
 </section>
 
@@ -2110,12 +1870,14 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 </footer>
 
 <script src="data/blog.js"></script>
+<script src="data/timeline.js?v=84854a92"></script>
+<script src="js/timeline.js?v=e9d06655"></script>
 <script src="data/works.js?v=d55a4975"></script>
-<script src="js/works.js?v=5bedb134"></script>
-<script src="js/main.js?v=7c2a4279"></script>
+<script src="js/works.js?v=c99117f3"></script>
+<script src="js/main.js?v=8dbd147c"></script>
 <script src="js/analytics.js?v=f9802fd0"></script>
 <script src="js/like.js?v=852cfd13"></script>
-<script src="js/play.js?v=3e294bb6"></script>
+<script src="js/play.js?v=478c8e73"></script>
 <script src="js/sfx.js?v=1a48a97f"></script>
 <script src="js/gamepad.js?v=da26b87f"></script>
 <script src="js/i18n.js?v=8dc5a7bb"></script>

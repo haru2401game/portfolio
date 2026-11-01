@@ -46,11 +46,11 @@
 
         const [width, height] = Array.isArray(work.size) && work.size.length === 2 ? work.size : [1280, 720];
         const image = el("img");
+        image.loading = "lazy"; // src より先に付ける（後だと、すぐ読み込みが始まってしまう）
         image.src = work.image || "";
         image.width = width;
         image.height = height;
         image.alt = work.alt || "";
-        image.loading = "lazy";
 
         const content = el("div", "work-content");
         const members = Number(work.member) || 1;

@@ -877,6 +877,7 @@
         // いま挑戦中のステージには主人公が立っている
         if (stage.type === "now") {
             const hero = make("img", "world-hero");
+            hero.loading = "lazy";
             hero.src = "images/character/Player.png";
             hero.alt = "";
             hero.setAttribute("aria-hidden", "true");

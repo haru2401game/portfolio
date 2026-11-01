@@ -165,4 +165,30 @@ export const tests = [
             }
         },
     },
+    {
+        name: "経歴データ（data/timeline.js）が正しい",
+        async run({ siteDir, expect, listUp }) {
+            let data;
+            try {
+                data = loadData(siteDir, "data/timeline.js");
+            } catch (error) {
+                expect(false, `data/timeline.js の書き方に間違いがあります（カンマや括弧の抜けが多いです）\n      ${error.message}`);
+            }
+            const items = data.TIMELINE;
+            expect(Array.isArray(items) && items.length > 0, "window.TIMELINE = [ ... ] の形になっていません");
+            const problems = [];
+            items.forEach((item, index) => {
+                const name = `${index + 1}番目「${item?.title || "名前なし"}」`;
+                const missing = ["date", "title", "text"].filter((key) => !item[key] || (Array.isArray(item[key]) && !item[key].length));
+                if (missing.length) problems.push(`${name}: ${missing.join("・")} がありません`);
+                if (item.date && !/^\d{4}\.\d{2}$/.test(item.date)) problems.push(`${name}: date は "2026.11" の形にしてください`);
+                if (item.quest && !["award", "now"].includes(item.quest)) problems.push(`${name}: quest は "award" か "now" にしてください`);
+                if (item.photo && !exists(siteDir, item.photo.image || "")) problems.push(`${name}: 写真が見つかりません（${item.photo.image}）`);
+                if (item.challenge && item.quest !== "now") problems.push(`${name}: challenge は quest: "now" の経歴にだけ書けます`);
+            });
+            const now = items.filter((item) => item.quest === "now").length;
+            if (now > 1) problems.push(`quest: "now"（いま挑戦中）が ${now} 個あります（1つだけにしてください）`);
+            expect(!problems.length, `経歴データに問題があります\n${listUp(problems)}`);
+        },
+    },
 ];
