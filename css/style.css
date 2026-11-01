@@ -9876,6 +9876,16 @@ section[id] .section-title h2 {
         margin: 4px 0 0;
     }
 
+    /* About：写真を少し低くして、名前と自己紹介が早く見えるように */
+    #about .about-image img {
+        height: clamp(200px, 56vw, 280px);
+        object-position: center 30%;
+    }
+
+    #about .about-content .mobile-fold-toggle {
+        margin: 4px 0 0;
+    }
+
     /* What I Can Do：3つのスキルセットをタブで切り替え */
     .can-do-tabs {
         position: sticky;
@@ -11287,4 +11297,51 @@ main:focus {
 
 .motion-off .works-bridge {
     transition: none;
+}
+
+/* ========================================
+   PC で読みやすく：本文に近い小さな文字を少し大きく（2026/11）
+   PC から見る人（採用担当・学校の先生など）ほど、最後までじっくり読んでいたため。
+   英字の小見出し（GAME WORKS など）は飾りなので、そのままにしている
+======================================== */
+
+@media (min-width: 1024px) {
+    #summary .mode-card-text small { font-size: 12.5px; }
+    #summary .summary-item dt { font-size: 13px; }
+    #summary .summary-item dd p,
+    #summary .summary-tags li,
+    #summary li > a > span { font-size: 13.5px; }
+
+    #featured-works .tech-step p code { font-size: 12.5px; }
+    #featured-works .tech-note,
+    #featured-works .tech-tags li { font-size: 13px; }
+    #featured-works .tech-photo-caption,
+    #featured-works .tech-review figcaption,
+    #featured-works .works-bridge-names { font-size: 13.5px; }
+
+    #other-works .work-description { font-size: 13.5px; }
+    #other-works :is(.work-genre, .work-role, .work-tech, .work-period) { font-size: 12px; }
+    #other-works .works-pickup-genre { font-size: 13px; }
+
+    #play-games .play-card p,
+    #play-games .web-card-note { font-size: 13.5px; }
+    #play-games .play-card div > span,
+    #play-games .web-card-points li,
+    #play-games .web-card-link { font-size: 12.5px; }
+
+    #what-i-can-do .status-class,
+    #what-i-can-do .exp-label,
+    #what-i-can-do .site-tech-card p { font-size: 13.5px; }
+    #what-i-can-do .can-do-example { font-size: 13px; }
+    #what-i-can-do .can-do-tags span,
+    #what-i-can-do .site-tech-tags span { font-size: 11.5px; }
+    #what-i-can-do .site-tech-hint { font-size: 12.5px; }
+
+    #contact .why-me-list li p,
+    #contact .purpose-card p { font-size: 14px; }
+    #contact .purpose-card p.purpose-can { font-size: 13px; }
+    #contact .contact-reply { font-size: 13.5px; }
+    #contact .sns-card p { font-size: 12.5px; }
+
+    .next-stage-left { font-size: 12px; }
 }

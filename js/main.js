@@ -1915,6 +1915,11 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
             ["技術の解説・写真・チーム構成を見る", "技術の解説を閉じる"]);
     });
 
+    // About：スマホでは自己紹介の要点（出身・学校・チームでの役割）だけ見せて、残りは押したら開く
+    // （30秒まとめのあと、About で読むのをやめる人が多かったため）
+    foldOnMobile(document.querySelector("#about .about-content"), ".about-more, .about-meta", ".about-meta",
+        "About", ["続きを読む", "閉じる"]);
+
     // What I Can Do：ステータス画面の EXP（使った技術・担当）は、押したら開く
     // （ステータス画面は JS で作るので、作り終わってから）
     const foldStatus = () => {
@@ -2199,6 +2204,10 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         if (!allowed() || card.hidden || card.closest("[hidden]")) return;
         const video = videoFor(card);
         if (!video) return;
+        // プレイ映像は1本だけ流す（ほかのカードで流れていたら止める）
+        videos.forEach((_, other) => {
+            if (other !== card && other.classList.contains("is-wanted")) stop(other);
+        });
         card.classList.add("is-wanted");
         if (!video.getAttribute("src")) video.src = card.dataset.preview;
         video.play().catch(() => {});

@@ -452,6 +452,7 @@ window.I18N_EN = {
         "受賞した作品": "Award-winning works",
         "写真の拡大表示": "Enlarged photo",
         "閉じる": "Close",
+        "続きを読む": "Read more",
         "COMPLETE! 10本制作達成": "COMPLETE! All 10 games made",
         "企画": "Design",
         "デザイン": "Art",
