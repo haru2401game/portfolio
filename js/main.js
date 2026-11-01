@@ -2280,3 +2280,60 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         });
     });
 })();
+
+/* ========================================
+   Main Works の最後：受賞作のプレイ映像への入口
+   ・Main Works を見て満足して帰る人が多かったので（Other Works まで進むのは約3分の2）、
+     一番よく押されている「受賞作のピックアップ」へ、サムネイル付きの大きなカードで案内する
+   ・押すとピックアップまで移動して、1本目のプレイ映像を流す
+======================================== */
+
+(() => {
+    const section = document.getElementById("featured-works");
+    const pickups = Array.from(document.querySelectorAll(".works-pickup-card"));
+    if (!section || !pickups.length) return;
+
+    const bridge = make("a", "works-bridge");
+    bridge.href = "#other-works";
+    bridge.setAttribute("aria-label", "受賞した作品のプレイ映像を見る（Other Works へ移動）");
+
+    const thumbs = decor(make("span", "works-bridge-thumbs"));
+    pickups.slice(0, 3).forEach((card) => {
+        const source = card.querySelector("img");
+        if (!source) return;
+        const frame = make("span", "works-bridge-thumb");
+        const img = make("img");
+        img.src = source.getAttribute("src");
+        img.alt = "";
+        img.width = 160;
+        img.height = 90;
+        img.loading = "lazy";
+        frame.append(img);
+        if (card.dataset.preview) frame.append(make("span", "works-bridge-play", "▶"));
+        thumbs.append(frame);
+    });
+
+    const titles = pickups.slice(0, 3).map((card) => textOf(card, ".works-pickup-title")).filter(Boolean);
+    const text = make("span", "works-bridge-text");
+    text.append(
+        make("span", "works-bridge-label", "★ AWARD WINNERS"),
+        make("span", "works-bridge-title", "受賞した作品も、プレイ映像で"),
+        make("span", "works-bridge-names", titles.join(" / ")),
+        make("span", "works-bridge-go", "プレイ映像を見る ▶"),
+    );
+    bridge.append(thumbs, text);
+
+    bridge.addEventListener("click", (event) => {
+        event.preventDefault();
+        const pickup = document.querySelector(".works-pickup");
+        const target = pickup && !pickup.hidden ? pickup : document.getElementById("other-works");
+        emitPlayEvent("受賞作へ: Main Works から");
+        target?.scrollIntoView({ behavior: scrollBehavior(), block: "center" });
+        // 移動し終わったころに1本目を選んで、プレイ映像を流す（キーボードで続けて操作もできる）
+        setTimeout(() => pickups[0]?.focus({ preventScroll: true }), reduceMotion() ? 0 : 700);
+    });
+
+    const next = section.querySelector(":scope > .next-stage");
+    if (next) next.before(bridge);
+    else section.append(bridge);
+})();
