@@ -440,7 +440,6 @@ function buildArticleCard(article, index) {
 
     // 画像が無い・読み込めないときは HARU GAMES のロゴを代わりに出す
     const image = make("img");
-    image.loading = "lazy";
     const useFallback = () => {
         image.classList.add("is-fallback");
         image.src = "images/index/Blog/icon.webp";
@@ -713,9 +712,8 @@ loadJson("data/profile.json", {})
         const source = card.querySelector("img");
         if (!source) return null;
         const thumb = make("img");
-        // loading="lazy" は src より先に付ける（後だと、画面の外でもすぐ読み込みが始まってしまう）
-        thumb.loading = "lazy";
-        thumb.src = source.getAttribute("src");
+        // 画面に近づいてから読み込む（settings-boot.js の lazyImage）
+        lazyImage(thumb, imageUrlOf(source));
         thumb.alt = "";
         thumb.width = Number(source.getAttribute("width")) || 16;
         thumb.height = Number(source.getAttribute("height")) || 9;
@@ -2047,7 +2045,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         part("count").textContent = shown.length > 1 ? `${shown.indexOf(card) + 1} / ${shown.length}` : "";
 
         const img = part("image");
-        img.src = image?.currentSrc || image?.src || "";
+        img.src = image?.currentSrc || image?.src || imageUrlOf(image);
         img.alt = image?.alt || "";
         img.width = image?.width || 16;
         img.height = image?.height || 9;
@@ -2315,8 +2313,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         if (!source) return;
         const frame = make("span", "works-bridge-thumb");
         const img = make("img");
-        img.loading = "lazy";
-        img.src = source.getAttribute("src");
+        lazyImage(img, imageUrlOf(source));
         img.alt = "";
         img.width = 160;
         img.height = 90;

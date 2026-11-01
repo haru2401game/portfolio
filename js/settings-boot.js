@@ -14,6 +14,33 @@
     fonts.rel = "stylesheet";
     fonts.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap";
     document.head.append(fonts);
+
+    // 画面に近づいたときに画像を読み込む（作品カードなど、プログラムで作る画像用）
+    // ブラウザの loading="lazy" だけだと、閉じている作品一覧の画像までページを開いた瞬間に読み込むブラウザがあったため、
+    // 自分で「画面の近くに来たか」を見て、そのときに src を入れる
+    const pending = "IntersectionObserver" in window
+        ? new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const img = entry.target;
+                pending.unobserve(img);
+                if (img.dataset.src) img.src = img.dataset.src;
+            });
+        }, { rootMargin: "800px 0px" })
+        : null;
+    window.lazyImage = (img, url) => {
+        img.loading = "lazy";
+        if (!url) return img;
+        if (!pending) {
+            img.src = url;
+            return img;
+        }
+        img.dataset.src = url;
+        pending.observe(img);
+        return img;
+    };
+    // まだ読み込んでいない画像の住所（src か data-src）
+    window.imageUrlOf = (img) => (img ? img.getAttribute("src") || img.dataset.src || "" : "");
     let saved = {};
     try {
         saved = JSON.parse(localStorage.getItem("pa-settings")) || {};

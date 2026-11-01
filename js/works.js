@@ -46,8 +46,12 @@
 
         const [width, height] = Array.isArray(work.size) && work.size.length === 2 ? work.size : [1280, 720];
         const image = el("img");
-        image.loading = "lazy"; // src より先に付ける（後だと、すぐ読み込みが始まってしまう）
-        image.src = work.image || "";
+        // 画面に近づいてから読み込む（閉じている作品一覧の画像を、最初に全部読み込まないように）
+        if (window.lazyImage) window.lazyImage(image, work.image || "");
+        else {
+            image.loading = "lazy";
+            image.src = work.image || "";
+        }
         image.width = width;
         image.height = height;
         image.alt = work.alt || "";
