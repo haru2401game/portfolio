@@ -8330,6 +8330,33 @@ main > section[id]:not(#summary):not(#ending) {
     outline-offset: 3px;
 }
 
+/* 結果をシェア（js/play.js）：ランクのすぐ下 */
+.ending-share-row {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0 6px;
+}
+
+.ending-share {
+    gap: 6px;
+    border-color: #111713;
+    background: #111713;
+    box-shadow: 0 5px 0 #000;
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.ending-share:active {
+    box-shadow: 0 2px 0 #000;
+}
+
+.ending-share:focus-visible {
+    outline: 3px solid #00a3e0;
+    outline-offset: 3px;
+}
+
 .ending-trophy {
     border: 2px solid #ffd666;
     background: #fff8e1;
@@ -11297,6 +11324,87 @@ main:focus {
 
 .motion-off .works-bridge {
     transition: none;
+}
+
+/* ししとうの最後：グランプリ作品 Falien への案内（js/main.js。見た目は上の入口カードと同じ） */
+.works-next {
+    width: 100%;
+    max-width: 1200px;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    /* すぐ下の「受賞作への入口」（金色）と見分けやすいよう、Falien の画面に合わせた青緑にする */
+    border-color: #2a9d8f;
+    background: linear-gradient(180deg, #ecfaf8 0%, #c6ece7 100%);
+    box-shadow: 0 5px 0 #1f7a6f;
+}
+
+.works-next:hover {
+    box-shadow: 0 8px 0 #1f7a6f, 0 16px 30px rgba(42, 157, 143, .22);
+}
+
+.works-next .works-bridge-thumb {
+    border-color: #2a9d8f;
+}
+
+.works-next .works-bridge-label {
+    color: #8a5a00;
+}
+
+.works-next .works-bridge-names {
+    color: #2f514c;
+}
+
+.works-next .works-bridge-thumbs {
+    grid-template-columns: 200px;
+}
+
+/* タブ：まだ選ばれていない Falien に「GRAND PRIX」の札を付ける（選ぶと「▶ SELECT」に替わる） */
+.main-tab.is-grandprix:not([aria-selected="true"])::after {
+    position: absolute;
+    top: -10px;
+    right: 14px;
+    padding: 3px 10px;
+    border: 1px solid #b8860b;
+    border-radius: 999px;
+    background: #ffd54a;
+    color: #4a3300;
+    content: "🏆 GRAND PRIX";
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .12em;
+}
+
+.main-tabs {
+    scroll-margin-top: 90px;
+}
+
+@media (max-width: 768px) {
+    /* スマホ：サムネイルと文字を横に並べて、高さを抑える */
+    .works-next {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .works-next .works-bridge-thumbs {
+        width: 38%;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .works-next .works-bridge-names {
+        display: none;
+    }
+
+    .works-next .works-bridge-go {
+        justify-self: start;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .main-tab.is-grandprix:not([aria-selected="true"])::after {
+        right: 8px;
+    }
 }
 
 /* ========================================

@@ -408,6 +408,7 @@
         { id: "ending", icon: "🏁", title: "ALL CLEAR", text: "エンディングにたどり着いた", hint: "最後まで進んでみよう" },
         { id: "continue", icon: "💾", title: "セーブデータ", text: "「つづきから」で再開した", hint: "また遊びに来てね" },
         { id: "gamepad", icon: "🎮", title: "コントローラー派", text: "ゲームパッドでサイトを操作した", hint: "コントローラーをつないでみよう" },
+        { id: "share", icon: "📣", title: "シェアありがとう", text: "クリアの結果をシェアした", hint: "エンディングで結果をシェアしてみよう" },
     ];
 
     let unlocked = localData.get("pa-trophy", {});
@@ -665,6 +666,43 @@
         body.append(time, detail, comment);
         rankBox.append(badge, body);
     };
+
+    /* ========================================
+       結果をシェア（エンディング）
+       ・ゲームのリザルト画面のように、ランク・プレイタイム・トロフィーの数を X に投稿できる
+       ・X の投稿画面を開くだけで、このサイトからは何も送らない（文章は投稿する人が自由に直せる）
+       ・前回のアクセスが増えたきっかけは引用リポストだったので、見た人が広めやすい入口を置く（2026/11）
+    ======================================== */
+
+    const SHARE_URL = "https://haru2401game.github.io/portfolio/";
+    const SHARE_TAG = "遊べるポートフォリオ"; // シェアされた投稿を X で探すときに使う
+
+    const shareText = () => {
+        const result = RANKS.find((r) => score().points >= r.min);
+        const mm = String(Math.floor(playTime / 60)).padStart(2, "0");
+        const ss = String(playTime % 60).padStart(2, "0");
+        const trophies = `${count()}/${TROPHIES.length}`;
+        const lines = window.I18n?.lang === "en"
+            ? ["I played through Haruta Nagaya's game-style portfolio 🎮", `RANK ${result.rank} (PLAY TIME ${mm}:${ss})`, `🏆 Trophies ${trophies}`]
+            : ["長屋晴太さんのポートフォリオを遊んでみた🎮", `RANK ${result.rank}（PLAY TIME ${mm}:${ss}）`, `🏆 トロフィー ${trophies}`];
+        return [...lines, `#${SHARE_TAG}`].join("\n");
+    };
+
+    if (ending) {
+        const share = make("button", "ending-button ending-share", "𝕏 結果をシェア");
+        share.type = "button";
+        share.setAttribute("aria-label", "結果を X でシェアする（X の投稿画面が新しく開きます）");
+        share.addEventListener("click", () => {
+            unlock("share"); // 先に解除して、シェアする文章のトロフィー数にも入れる
+            const url = `https://x.com/intent/post?text=${encodeURIComponent(shareText())}&url=${encodeURIComponent(SHARE_URL)}`;
+            window.open(url, "_blank", "noopener");
+            emitPlayEvent("結果をシェア");
+        });
+        const row = make("div", "ending-share-row");
+        row.append(share);
+        // ランク（あとから [data-ending-stats] の直後に入る）のすぐ下に来る
+        (ending.querySelector("[data-ending-stats]") || ending.querySelector(".ending-lead"))?.after(row);
+    }
 
     let rankTimer = 0;
     function startRankClock() {

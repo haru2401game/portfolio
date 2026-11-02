@@ -2346,3 +2346,49 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     if (next) next.before(bridge);
     else section.append(bridge);
 })();
+
+/* ========================================
+   ししとうの最後：グランプリ作品 Falien への案内
+   ・Main Works は最初にししとうが表示され、Falien のタブを押すのは約6人に1人だった（2026/11）
+   ・ししとうを見終わったところに Falien のカードを置き、押すと Falien に切り替えて先頭へ戻る
+======================================== */
+
+(() => {
+    const panel = document.getElementById("main-shishito");
+    const tab = document.getElementById("tab-falien");
+    const target = document.getElementById("main-falien");
+    if (!panel || !tab || !target) return;
+
+    const card = make("button", "works-bridge works-next");
+    card.type = "button";
+    card.setAttribute("aria-label", "IGCC グランプリ作品 Falien を見る（Main Works の2作目に切り替え）");
+
+    const thumbs = decor(make("span", "works-bridge-thumbs"));
+    const frame = make("span", "works-bridge-thumb");
+    const img = make("img");
+    lazyImage(img, imageUrlOf(tab.querySelector("img")));
+    img.alt = "";
+    img.width = 160;
+    img.height = 90;
+    frame.append(img, make("span", "works-bridge-play", "▶"));
+    thumbs.append(frame);
+
+    const text = make("span", "works-bridge-text");
+    text.append(
+        make("span", "works-bridge-label", "🏆 IGCC GRAND PRIX"),
+        make("span", "works-bridge-title", "グランプリ作品「Falien」も見る"),
+        make("span", "works-bridge-names", textOf(target, ".featured-info .info-item p")),
+        make("span", "works-bridge-go", "Falien を見る ▶"),
+    );
+    card.append(thumbs, text);
+
+    card.addEventListener("click", () => {
+        emitPlayEvent("Falien へ: ししとうの下から");
+        tab.click();
+        // 切り替えたあと、Falien の動画が見える位置（タブの上）まで戻る
+        document.querySelector(".main-tabs")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+        tab.focus({ preventScroll: true });
+    });
+
+    panel.append(card);
+})();

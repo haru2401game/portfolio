@@ -183,9 +183,11 @@
             return;
         }
 
-        if (target.matches(".tech-steps-toggle") && target.getAttribute("aria-expanded") === "false") {
-            const title = textOf(target.closest(".tech-highlight")?.querySelector("h5"));
-            track("ui_open", `技術の見どころ: ${title}`);
+        // スマホの折りたたみ（続きを読む など）も同じ見た目のボタンを使うので、技術の見どころの中のボタンだけを数える
+        const highlight = target.closest(".tech-highlight");
+        if (highlight && target.matches(".tech-steps-toggle") && target.getAttribute("aria-expanded") === "false") {
+            const title = textOf(highlight.querySelector("h5"));
+            if (title) track("ui_open", `技術の見どころ: ${title}`);
             return;
         }
 
