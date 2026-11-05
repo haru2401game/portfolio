@@ -56,29 +56,65 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <link rel="stylesheet" href="css/style.css?v=43967494">
 
+<!-- 検索エンジン向けの情報（構造化データ）。Google が「誰のどんなページか」を正しく理解して、検索結果に出しやすくなる
+     ・ProfilePage：このページは長屋晴太のプロフィール（ポートフォリオ）である
+     ・Person：名前・学校・技術・受賞・SNS（sameAs）
+     ・WebSite：サイトの名前
+     受賞や SNS を増やしたら、ここも書き足す。dateModified は大きく更新した日にする -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "長屋晴太",
-    "alternateName": "Haruta Nagaya",
-    "url": "https://haru2401game.github.io/portfolio/",
-    "image": "https://haru2401game.github.io/portfolio/images/index/About/profile.webp",
-    "jobTitle": "ゲームプログラマー志望（2028年卒）",
-    "affiliation": {
-        "@type": "EducationalOrganization",
-        "name": "トライデントコンピュータ専門学校 ゲームサイエンス学科"
-    },
-    "knowsAbout": ["ゲームプログラミング", "Unity", "C#", "C++", "DirectX", "ゲーム企画"],
-    "sameAs": [
-        "https://github.com/haru2401game",
-        "https://note.com/ha_03ru_01",
-        "https://unityroom.com/users/haru2401game",
-        "https://haru2401game.itch.io/",
-        "https://www.youtube.com/@haru_game2401",
-        "https://x.com/haru2401game",
-        "https://www.tiktok.com/@haru2401game",
-        "https://www.facebook.com/profile.php?id=61573110660387"
+    "@graph": [
+        {
+            "@type": "ProfilePage",
+            "@id": "https://haru2401game.github.io/portfolio/#page",
+            "url": "https://haru2401game.github.io/portfolio/",
+            "name": "長屋晴太｜ゲームプログラマー志望のポートフォリオ",
+            "inLanguage": "ja",
+            "dateModified": "2026-11-05",
+            "isPartOf": { "@id": "https://haru2401game.github.io/portfolio/#website" },
+            "mainEntity": { "@id": "https://haru2401game.github.io/portfolio/#person" },
+            "primaryImageOfPage": "https://haru2401game.github.io/portfolio/images/ogp.png"
+        },
+        {
+            "@type": "WebSite",
+            "@id": "https://haru2401game.github.io/portfolio/#website",
+            "url": "https://haru2401game.github.io/portfolio/",
+            "name": "長屋晴太 Portfolio",
+            "alternateName": ["長屋晴太のポートフォリオ", "Haruta Nagaya Portfolio"],
+            "inLanguage": "ja",
+            "publisher": { "@id": "https://haru2401game.github.io/portfolio/#person" }
+        },
+        {
+            "@type": "Person",
+            "@id": "https://haru2401game.github.io/portfolio/#person",
+            "name": "長屋晴太",
+            "alternateName": ["Haruta Nagaya", "はる"],
+            "url": "https://haru2401game.github.io/portfolio/",
+            "image": "https://haru2401game.github.io/portfolio/images/index/About/profile.webp",
+            "description": "ゲームプログラマー志望（2028年卒）。Unity・C#・C++でゲームを制作。IGCCゲームジャム グランプリ「Falien」、東京ゲームショウ2026出展「ししとう」。",
+            "jobTitle": "ゲームプログラマー志望（2028年卒）",
+            "affiliation": {
+                "@type": "EducationalOrganization",
+                "name": "トライデントコンピュータ専門学校 ゲームサイエンス学科"
+            },
+            "knowsAbout": ["ゲームプログラミング", "ゲーム制作", "Unity", "C#", "C++", "DirectX", "ゲーム企画"],
+            "award": [
+                "IGCCゲームジャム グランプリ（Falien・2026年）",
+                "学校内コンペティション 企業賞（Over Fish・2025年）",
+                "ゲームジャム クリエイティブ賞（2025年）"
+            ],
+            "sameAs": [
+                "https://github.com/haru2401game",
+                "https://note.com/ha_03ru_01",
+                "https://unityroom.com/users/haru2401game",
+                "https://haru2401game.itch.io/",
+                "https://www.youtube.com/@haru_game2401",
+                "https://x.com/haru2401game",
+                "https://www.tiktok.com/@haru2401game",
+                "https://www.facebook.com/profile.php?id=61573110660387"
+            ]
+        }
     ]
 }
 </script>

@@ -166,6 +166,42 @@ export const tests = [
         },
     },
     {
+        name: "検索エンジン向けの情報（構造化データ）が正しい",
+        async run({ siteDir, expect, listUp }) {
+            // index.html の <script type="application/ld+json">。書き方を間違えると、Google が読み飛ばしてしまう
+            const html = fs.readFileSync(path.join(siteDir, "index.html"), "utf8");
+            const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+            expect(blocks.length === 1, `構造化データが ${blocks.length} 個あります（1つにまとめてください）`);
+            let data;
+            try {
+                data = JSON.parse(blocks[0][1]);
+            } catch (error) {
+                expect(false, `構造化データの書き方に間違いがあります（カンマや括弧、"" の抜けが多いです）\n      ${error.message}`);
+            }
+            const items = data["@graph"] || [];
+            const byType = (type) => items.find((item) => item["@type"] === type);
+            const problems = [];
+            ["ProfilePage", "WebSite", "Person"].forEach((type) => {
+                if (!byType(type)) problems.push(`${type} がありません`);
+            });
+            const ids = new Set(items.map((item) => item["@id"]));
+            JSON.stringify(data).replace(/\{"@id":"([^"]+)"\}/g, (whole, id) => {
+                if (!ids.has(id)) problems.push(`参照先 ${id} がありません`);
+                return whole;
+            });
+            // 画像は、公開先の URL をサイトのフォルダに読み替えて、ファイルがあるか確かめる
+            const SITE = "https://haru2401game.github.io/portfolio/";
+            [byType("Person")?.image, byType("ProfilePage")?.primaryImageOfPage].filter(Boolean).forEach((url) => {
+                if (!url.startsWith(SITE) || !exists(siteDir, url.slice(SITE.length))) problems.push(`画像が見つかりません（${url}）`);
+            });
+            // SNS（sameAs）は、ページの中にも同じリンクがあるか（片方だけ直し忘れを防ぐ）
+            (byType("Person")?.sameAs || []).forEach((url) => {
+                if (!html.includes(`href="${url}"`)) problems.push(`sameAs の ${url} が、ページの中のリンクにありません`);
+            });
+            expect(!problems.length, `構造化データに問題があります\n${listUp(problems)}`);
+        },
+    },
+    {
         name: "経歴データ（data/timeline.js）が正しい",
         async run({ siteDir, expect, listUp }) {
             let data;
