@@ -194,6 +194,10 @@ export const tests = [
             [byType("Person")?.image, byType("ProfilePage")?.primaryImageOfPage].filter(Boolean).forEach((url) => {
                 if (!url.startsWith(SITE) || !exists(siteDir, url.slice(SITE.length))) problems.push(`画像が見つかりません（${url}）`);
             });
+            const modified = byType("ProfilePage")?.dateModified;
+            if (modified && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?([+-]\d{2}:\d{2}|Z)$/.test(modified)) {
+                problems.push(`dateModified は "2026-11-05T14:00:00+09:00" の形にしてください（いまは ${modified}）`);
+            }
             // SNS（sameAs）は、ページの中にも同じリンクがあるか（片方だけ直し忘れを防ぐ）
             (byType("Person")?.sameAs || []).forEach((url) => {
                 if (!html.includes(`href="${url}"`)) problems.push(`sameAs の ${url} が、ページの中のリンクにありません`);
