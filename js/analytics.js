@@ -180,6 +180,12 @@
             return;
         }
 
+        // 作品から「遊ぶ」ボタンを押した（作品の詳しい画面・Main Works）。どの作品が遊ばれたかを数える
+        if (target.matches(".work-viewer-play, .featured-play")) {
+            track("play_click", `${target.dataset.title || "作品"}（作品から）`);
+            return;
+        }
+
         const playCard = target.closest(".play-card");
         if (playCard) {
             track("play_click", nameOf(playCard, "h3") || playCard.hostname);

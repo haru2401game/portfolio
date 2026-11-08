@@ -627,6 +627,7 @@ loadJson("data/profile.json", {})
         badges.append(make("span", "", `STAGE ${String(total - index).padStart(2, "0")}`));
         if (member > 1) badges.append(make("span", "is-team", `TEAM ×${member}`));
         if (role.includes("未完成")) badges.append(make("span", "is-wip", "WIP"));
+        if (card.dataset.play) badges.append(make("span", "is-play", "▶ PLAYABLE"));
 
         const award = awardsByTitle.get(normalizeTitle(textOf(card, "h3")));
         if (award) {
@@ -651,6 +652,7 @@ loadJson("data/profile.json", {})
     const filters = [
         { label: "すべて", test: () => true },
         { label: "★ 受賞作", test: (card) => card.classList.contains("is-rare") },
+        { label: "▶ 遊べる", test: (card) => Boolean(card.dataset.play) },
         { label: "Unity", test: (card) => card.dataset.unity === "true" },
         { label: "C++ / DirectX", test: (card) => card.dataset.cpp === "true" },
         { label: "3D", test: (card) => card.dataset.threeD === "true" },
@@ -2008,6 +2010,10 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
                     </dl>
                     <p class="work-viewer-label">TOOLS</p>
                     <ul class="work-viewer-tools" data-wv="tools"></ul>
+                    <a class="work-viewer-play" data-wv="play" target="_blank" rel="noopener noreferrer" hidden>
+                        <span data-wv="play-label">▶ ブラウザで遊ぶ</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
                     <a class="work-viewer-link" data-wv="link" target="_blank" rel="noopener noreferrer">
                         <span>noteで制作記録を読む</span>
                         <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
@@ -2102,7 +2108,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         current = card;
         showInUrl(card);
         const image = card.querySelector("img:not(.card-pop)");
-        const stage = textOf(card, ".stage-badges span:not(.is-award):not(.is-team):not(.is-wip)");
+        const stage = textOf(card, ".stage-badges span:not(.is-award):not(.is-team):not(.is-wip):not(.is-play)");
         const shown = visibleCards();
 
         part("stage").textContent = stage || "STAGE";
@@ -2139,6 +2145,22 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         });
 
         part("tools").replaceChildren(...textOf(card, ".work-tech").split(/\s+/).filter(Boolean).map((tool) => make("li", "", tool)));
+
+        // ブラウザで遊べる作品は「▶ unityroom で遊ぶ」ボタンを出す（data/works.js の play）
+        const play = part("play");
+        play.hidden = !card.dataset.play;
+        if (card.dataset.play) {
+            play.href = card.dataset.play;
+            play.dataset.title = card.dataset.title || textOf(card, "h3");
+            let host = "";
+            try {
+                host = new URL(card.dataset.play).hostname.replace(/^www\./, "");
+            } catch {
+                host = "";
+            }
+            const where = host.endsWith("unityroom.com") ? "unityroom" : host.endsWith("itch.io") ? "itch.io" : "";
+            part("play-label").textContent = where ? `▶ ${where} で遊ぶ` : "▶ ブラウザで遊ぶ";
+        }
 
         const source = card.querySelector("a.work-link, a[href]");
         const link = part("link");
@@ -2182,6 +2204,9 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
             const hint = decor(make("span", "work-thumb-hint"));
             hint.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus"></i>くわしく見る';
             thumb.append(image, hint);
+            // STAGE・TEAM・PLAYABLE などの印は、画像の中に収める（印が多いと、横の文字の上まではみ出していたため）
+            const badges = card.querySelector(":scope > .stage-badges");
+            if (badges) thumb.append(badges);
         }
 
         card.classList.add("has-viewer");

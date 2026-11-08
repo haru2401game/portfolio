@@ -18,6 +18,7 @@
      ★role         担当（「未完成」を含むと WIP の印が付く）
      ★description  ひとこと説明
      ★link         詳細ページ（note の記事など）の URL
+      play         ブラウザで遊べる場所の URL（unityroom・itch.io など）。書くと「▶ PLAYABLE」の印と「遊ぶ」ボタンが出て、絞り込みの「▶ 遊べる」に入る
       size         画像の幅と高さ [幅, 高さ]（省略すると 16:9 として扱う）
       preview      プレイ映像（videos/previews/ の8秒動画。省略すると映像なし）
       id           作品ごとのリンク（…/portfolio/#work=○○）の ○○ の部分（英小文字・数字・ハイフン）
@@ -135,6 +136,7 @@ window.WORKS = [
         role: "ゲームプログラム全て",
         description: "リズムに合わせて雪だるまが投げてくるものをぱくぱくしよう！",
         link: "https://note.com/ha_03ru_01/n/n7bfc5f61a7a6?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/snowpakupaku",
         preview: "videos/previews/snow-pakupaku.mp4",
         en: {
             title: "Snow PakuPaku",
@@ -175,6 +177,7 @@ window.WORKS = [
         role: "プログラム全般 統合作業",
         description: "あなたはただの村人です。勇者がいないので魔王討伐に向かうことになった。魔王によって町中危険だが、魔王を倒さなければならないのだ。",
         link: "https://note.com/ha_03ru_01/n/n8e6cd286cfa8?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/bakarpg",
         size: [1280, 719],
         preview: "videos/previews/murabito.mp4",
         en: {
@@ -196,6 +199,7 @@ window.WORKS = [
         role: "タイピングシステム プロジェクト統合",
         description: "制限時間内に出てきた文字をタイピングし続けて打ち切れ！",
         link: "https://note.com/ha_03ru_01/n/n47b5ed59d663?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/connetype",
         preview: "videos/previews/connetype.mp4",
         en: {
             alt: "ConneType title screen",
@@ -327,6 +331,7 @@ window.WORKS = [
         role: "企画・プログラム",
         description: "「おもて」と「うら」の世界を切り替えてゴールを目指せ！",
         link: "https://note.com/ha_03ru_01/n/nff3f1333e39e?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/flipmaze",
         size: [892, 494],
         preview: "videos/previews/flip-maze.mp4",
         en: {
@@ -347,6 +352,7 @@ window.WORKS = [
         role: "企画・プログラム",
         description: "表示されたコマンドを素早く入力して高得点を狙おう！",
         link: "https://note.com/ha_03ru_01/n/n7b288af74c72?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/figure_sequence",
         en: {
             alt: "FIGURE SEQUENCE title screen",
             genre: "3D command-input game",
@@ -365,6 +371,7 @@ window.WORKS = [
         role: "メインシステム プロジェクト統合",
         description: "自分だけの薬を研究せよ。",
         link: "https://note.com/ha_03ru_01/n/n4d445c76c48d?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/potionberserker",
         size: [899, 498],
         preview: "videos/previews/potion-berserker.mp4",
         en: {
@@ -405,6 +412,7 @@ window.WORKS = [
         role: "企画・プログラム・スプライトデザイン",
         description: "連打で敵を倒せ！稼いだGoldでステータスやその他諸々を強化しよう！",
         link: "https://note.com/ha_03ru_01/n/neaa4a2950aa8?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/clickhero",
         size: [898, 506],
         preview: "videos/previews/click-hero.mp4",
         en: {
@@ -444,6 +452,7 @@ window.WORKS = [
         role: "企画・プログラム",
         description: "ある日、ぺんぎんの「ぺんさんど」がばらばらになっちゃった！？体のパーツをもとに戻してあげよう!",
         link: "https://note.com/ha_03ru_01/n/n742d34cb5a6d?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/penpuzzle",
         en: {
             title: "Pensand Puzzle",
             alt: "Pensand Puzzle title screen",
@@ -540,6 +549,7 @@ window.WORKS = [
         role: "メインシステム プロジェクト統合",
         description: "このゲームの主人公は、『ぺんさんど』という名前のペンギンです。 ぺんさんどの目標は、“皇帝ペンギン様に褒められること”。 それ以外、何もいりません。",
         link: "https://note.com/ha_03ru_01/n/n13d809da18bd?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/penkoutei",
         size: [908, 509],
         preview: "videos/previews/koutei.mp4",
         en: {
@@ -561,6 +571,7 @@ window.WORKS = [
         role: "ミニゲーム「避けて！天使ちゃん」システム ホームシーンシステム プロジェクト統合",
         description: "このゲームは、見習い天使の「クレア」が相棒の「ぺんさんど」とともに大天使を目指していくゲームとなっています。",
         link: "https://note.com/ha_03ru_01/n/n94d8500da7e4?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/ganbareangel",
         preview: "videos/previews/angel.mp4",
         en: {
             title: "Go for It, Little Angel!",

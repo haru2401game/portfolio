@@ -570,7 +570,7 @@
             sessionData.set("pa-photos", photos);
             unlock("photo");
         }
-        if (event.target.closest?.(".play-card")) unlock("play");
+        if (event.target.closest?.(".play-card, .work-viewer-play, .featured-play")) unlock("play");
         if (event.target.closest?.(".like-button")) {
             likes += 1;
             localData.set("pa-likes", likes);

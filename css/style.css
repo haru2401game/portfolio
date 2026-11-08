@@ -7332,6 +7332,101 @@ footer.has-peeker {
     display: none;
 }
 
+/* ブラウザで遊べる作品の「▶ unityroom で遊ぶ」（作品の詳しい画面・Main Works のししとう）
+   Play Games の「遊びに行く」と同じ緑にして、「遊べる」ことが一目で分かるようにする */
+.work-viewer-play,
+.featured-play {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 20px;
+    border-radius: 14px;
+    background: #1f8a4c;
+    box-shadow: 0 5px 0 #14643a;
+    color: #fff;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.work-viewer-play {
+    margin-top: 22px;
+}
+
+.work-viewer-play:not([hidden]) + .work-viewer-link {
+    margin-top: 12px;
+}
+
+.work-viewer-play:hover,
+.featured-play:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #14643a;
+}
+
+.work-viewer-play:active,
+.featured-play:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #14643a;
+}
+
+.work-viewer-play[hidden] {
+    display: none;
+}
+
+.featured-actions {
+    display: flex;
+    margin: 18px 0 4px;
+}
+
+.featured-play {
+    display: inline-flex;
+}
+
+@media (max-width: 600px) {
+    .featured-play {
+        width: 100%;
+    }
+}
+
+/* 作品カードの印（STAGE・TEAM・PLAYABLE など）は画像の中に収めて、入りきらなければ折り返す（js/main.js）
+   右上の「▶ MOVIE」とは重ならないように、映像のある作品は右側を空ける */
+.works-list .work-card .work-thumb > .stage-badges {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+}
+
+.works-list .work-card.has-preview .work-thumb > .stage-badges {
+    right: 92px;
+}
+
+.works-list .work-card .work-thumb > .stage-badges span {
+    white-space: nowrap;
+}
+
+/* PC：画像が縦長で細いので、印は左上に縦に並べる（映像のある作品は「▶ MOVIE」の下から） */
+@media (min-width: 769px) {
+    .works-list .work-card .work-thumb > .stage-badges,
+    .works-list .work-card.has-preview .work-thumb > .stage-badges {
+        right: auto;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .works-list .work-card.has-preview .work-thumb > .stage-badges {
+        top: 42px;
+    }
+}
+
+/* カードと作品の詳しい画面の「▶ PLAYABLE」の印 */
+.stage-badges .is-play,
+.work-viewer-badges .is-play {
+    background: #1f8a4c;
+    color: #fff;
+}
+
 /* 作品のリンクをコピー（js/main.js。note のボタンの下に、控えめに） */
 .work-viewer-share {
     display: flex;

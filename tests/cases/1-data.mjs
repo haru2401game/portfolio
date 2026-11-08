@@ -94,6 +94,10 @@ export const tests = [
                     problems.push(`${nameOf(work, index)}: サイト内のファイルが見つかりません（${link}）`);
                 }
             });
+            // 遊べる場所（play）は https で始まる URL だけ（それ以外は「遊ぶ」ボタンが出ない）
+            works.forEach((work, index) => {
+                if (work.play !== undefined && !/^https:\/\/\S+$/i.test(String(work.play).trim())) problems.push(`${nameOf(work, index)}: play は https:// で始まる URL にしてください`);
+            });
             expect(!problems.length, `リンクに問題があります\n${listUp(problems)}`);
         },
     },
