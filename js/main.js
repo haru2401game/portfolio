@@ -2227,6 +2227,27 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
        ・Other Works の作品：Other Works まで移動して、詳しい画面を開く
        ・Main Works の作品（#work=falien・#work=shishito）：その作品のタブに切り替えて、Main Works へ移動
        ・知らない名前のときは、何もしない（ふつうにトップから表示） */
+    // すぐに移動する（ページ全体の「なめらかスクロール」だと、読み込み中に途中で止まることがあるため）。
+    // 読み込みが終わるときに、ブラウザが位置を一番上に戻したり、画像や文字で位置がずれたりすることがあるので、
+    // 読み込みが終わったらもう一度合わせる（その間に見る人が自分でスクロールしていなければ）
+    const jumpTo = (element) => {
+        if (!element) return;
+        const go = () => element.scrollIntoView({ behavior: "instant", block: "start" });
+        go();
+        let touched = false;
+        const MOVES = ["wheel", "touchstart", "keydown", "mousedown"];
+        const onMove = () => {
+            touched = true;
+        };
+        MOVES.forEach((type) => window.addEventListener(type, onMove, { once: true, passive: true }));
+        const realign = () => {
+            MOVES.forEach((type) => window.removeEventListener(type, onMove));
+            if (!touched) go();
+        };
+        if (document.readyState === "complete") setTimeout(realign, 300);
+        else window.addEventListener("load", () => setTimeout(realign, 150), { once: true });
+    };
+
     const openFromHash = () => {
         const match = decodeURIComponent(location.hash).match(/^#work=([a-z0-9-]+)$/);
         if (!match) return;
@@ -2234,7 +2255,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
         const card = cards.find((item) => item.dataset.workId === id);
         if (card) {
-            document.getElementById("other-works")?.scrollIntoView({ behavior: "auto" });
+            jumpTo(document.getElementById("other-works"));
             open(card);
             emitPlayEvent(`作品リンクから: ${textOf(card, "h3")}`);
             return;
@@ -2243,7 +2264,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         const tab = document.getElementById(`tab-${id}`);
         if (tab?.getAttribute("role") === "tab") {
             if (tab.getAttribute("aria-selected") !== "true") tab.click();
-            document.querySelector(".main-tabs")?.scrollIntoView({ behavior: "auto", block: "start" });
+            jumpTo(document.querySelector(".main-tabs"));
             emitPlayEvent(`作品リンクから: ${textOf(tab, "b") || id}`);
         }
     };

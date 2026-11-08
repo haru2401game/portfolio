@@ -153,6 +153,8 @@ export const tests = [
             const { page: main } = await open("/#work=falien");
             await main.waitForTimeout(800);
             expect(await main.evaluate(() => document.getElementById("tab-falien")?.getAttribute("aria-selected")) === "true", "#work=falien で Falien のタブに切り替わりません");
+            const tabsTop = await main.evaluate(() => Math.round(document.querySelector(".main-tabs").getBoundingClientRect().top));
+            expect(tabsTop >= 0 && tabsTop < 250, `#work=falien で Main Works まで移動しません（タブが画面の上から ${tabsTop}px の位置）`);
 
             // 知らない名前：何も開かず、エラーも出ない
             const { page: unknown, errors: unknownErrors } = await open("/#work=no-such-work");
