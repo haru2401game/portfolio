@@ -154,6 +154,21 @@
     const textOf = (node) => (node ? node.textContent.replace(/\s+/g, " ").trim() : "");
     const PURPOSES = { recruit: "採用", game: "ゲーム制作", web: "Web制作" };
 
+    // ブラウザの翻訳機能（Chrome の「このページを翻訳」など）を使うと、画面の文字が書き換わる
+    // （例：Falien → 法利恩）。記録する名前は、ページを読み込んだときの元の文字にしておく
+    const ORIGINAL_NAMES = [
+        [".work-card", "h3"],
+        [".play-card", "h3"],
+        [".main-tab", "b"],
+        [".tech-highlight", "h5"],
+    ];
+    ORIGINAL_NAMES.forEach(([selector, heading]) => {
+        document.querySelectorAll(selector).forEach((element) => {
+            if (!element.dataset.paName) element.dataset.paName = element.dataset.title || textOf(element.querySelector(heading));
+        });
+    });
+    const nameOf = (element, heading) => element?.dataset.paName || textOf(element?.querySelector(heading));
+
     document.addEventListener("click", (event) => {
         const target = event.target.closest("a, button");
         if (!target) return;
@@ -161,13 +176,13 @@
         // 作品カードの「詳細を見る」（note へ直接）も作品クリックとして数える
         const workCard = target.closest(".work-card");
         if (workCard && target.matches("a")) {
-            track("work_click", textOf(workCard.querySelector("h3")));
+            track("work_click", nameOf(workCard, "h3"));
             return;
         }
 
         const playCard = target.closest(".play-card");
         if (playCard) {
-            track("play_click", textOf(playCard.querySelector("h3")) || playCard.hostname);
+            track("play_click", nameOf(playCard, "h3") || playCard.hostname);
             return;
         }
 
@@ -189,14 +204,14 @@
         }
 
         if (target.getAttribute("role") === "tab" && target.getAttribute("aria-selected") === "false") {
-            track("ui_open", `Main Works: ${textOf(target.querySelector("b")) || textOf(target)}`);
+            track("ui_open", `Main Works: ${nameOf(target, "b") || textOf(target)}`);
             return;
         }
 
         // スマホの折りたたみ（続きを読む など）も同じ見た目のボタンを使うので、技術の見どころの中のボタンだけを数える
         const highlight = target.closest(".tech-highlight");
         if (highlight && target.matches(".tech-steps-toggle") && target.getAttribute("aria-expanded") === "false") {
-            const title = textOf(highlight.querySelector("h5"));
+            const title = nameOf(highlight, "h5");
             if (title) track("ui_open", `技術の見どころ: ${title}`);
             return;
         }

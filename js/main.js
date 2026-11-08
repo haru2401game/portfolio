@@ -2041,7 +2041,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     });
 
     const announce = (card) => {
-        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: textOf(card, "h3") } }));
+        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: card.dataset.title || textOf(card, "h3") } }));
     };
 
     /* ---------- 作品ごとのリンク（…/portfolio/#work=hook-shift） ----------
@@ -2090,7 +2090,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         const ok = await copyText(workUrl(current));
         setShareLabel(ok ? "リンクをコピーしました" : "コピーできませんでした（アドレスバーの URL を使ってください）");
         shareButton.classList.toggle("is-done", ok);
-        if (ok) emitPlayEvent(`作品リンクをコピー: ${textOf(current, "h3")}`);
+        if (ok) emitPlayEvent(`作品リンクをコピー: ${current.dataset.title || textOf(current, "h3")}`);
         clearTimeout(shareTimer);
         shareTimer = setTimeout(() => {
             setShareLabel("この作品のリンクをコピー");
@@ -2258,7 +2258,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         if (card) {
             jumpTo(document.getElementById("other-works"));
             open(card);
-            emitPlayEvent(`作品リンクから: ${textOf(card, "h3")}`);
+            emitPlayEvent(`作品リンクから: ${card.dataset.title || textOf(card, "h3")}`);
             return;
         }
 
@@ -2266,7 +2266,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         if (tab?.getAttribute("role") === "tab") {
             if (tab.getAttribute("aria-selected") !== "true") tab.click();
             jumpTo(document.querySelector(".main-tabs"));
-            emitPlayEvent(`作品リンクから: ${textOf(tab, "b") || id}`);
+            emitPlayEvent(`作品リンクから: ${tab.dataset.paName || textOf(tab, "b") || id}`);
         }
     };
 
@@ -2406,6 +2406,14 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         });
     });
 })();
+
+/* ========================================
+   スマホの「30秒でわかる」の近道（index.html の .summary-jump）：押された数を分析で数える
+======================================== */
+
+document.querySelectorAll(".summary-jump a[data-jump]").forEach((link) => {
+    link.addEventListener("click", () => emitPlayEvent(`近道: ${link.dataset.jump}`));
+});
 
 /* ========================================
    Main Works の最後：受賞作のプレイ映像への入口

@@ -591,6 +591,8 @@ window.I18N_EN = {
         "グランプリ作品「Falien」も見る": "See the grand prize winner, Falien",
         "Falien を見る ▶": "View Falien ▶",
         "この作品のリンクをコピー": "Copy link to this work",
+        "作品一覧": "All works",
+        "セクションへの近道": "Jump to a section",
         "リンクをコピーしました": "Link copied",
         "コピーできませんでした（アドレスバーの URL を使ってください）": "Couldn't copy (please use the URL in the address bar)",
         "IGCC グランプリ作品 Falien を見る（Main Works の2作目に切り替え）": "View Falien, the IGCC grand prize winner (switches to the second main work)",

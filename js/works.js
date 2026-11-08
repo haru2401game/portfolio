@@ -54,6 +54,7 @@
 
         const card = el("div", "work-card");
         card.dataset.workId = idOf(work);
+        card.dataset.title = work.title || ""; // 分析や作品リンクで使う元の名前（ブラウザの翻訳で書き換わらない）
         if (work.preview) card.dataset.preview = work.preview;
 
         const [width, height] = Array.isArray(work.size) && work.size.length === 2 ? work.size : [1280, 720];

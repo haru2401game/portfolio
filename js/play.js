@@ -415,7 +415,9 @@
     if (!unlocked || typeof unlocked !== "object" || Array.isArray(unlocked)) unlocked = {};
     const count = () => TROPHIES.filter((t) => unlocked[t.id]).length;
 
-    /* 解除の通知（右下の金色のトースト・続けて解除しても順番に出す） */
+    /* 解除の通知（右下の金色のトースト・続けて解除しても順番に出す）
+       スマホでは小さく1行にして、表示する時間も少し短くする（画面の下の本文やボタンを隠しにくくする） */
+    const SHOW_MS = () => (window.matchMedia("(max-width: 600px)").matches ? 2400 : 3200);
     const queue = [];
     let showing = false;
     const showNext = () => {
@@ -426,7 +428,9 @@
         toast.setAttribute("role", "status");
         const icon = make("span", "toast-icon", trophy.icon);
         const text = make("span", "toast-text");
-        const label = make("small", "", `TROPHY UNLOCKED  ${n} / ${TROPHIES.length}`);
+        // スマホでは「TROPHY UNLOCKED」を隠して「3 / 14」だけにする（通知を1行に収めて、画面を隠しにくくする）
+        const label = make("small");
+        label.append(make("span", "toast-label", "TROPHY UNLOCKED "), document.createTextNode(`${n} / ${TROPHIES.length}`));
         const message = make("strong", "", trophy.text);
         text.append(label, message);
         toast.append(icon, text);
@@ -441,7 +445,7 @@
                 showing = false;
                 showNext();
             }, 500);
-        }, 3200);
+        }, SHOW_MS());
     };
 
     let room = null;

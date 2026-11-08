@@ -4108,6 +4108,19 @@ footer.has-peeker {
     display: inline-flex;
     min-height: 40px;
     align-items: center;
+    gap: 10px; /* 「HN」と名前の間（flex の中では span の余白の指定が効かない画面幅があったため） */
+}
+
+.footer-brand span {
+    margin: 0;
+}
+
+/* PC の上のメニュー：押せる範囲を高さ 24px 以上にする（見た目の文字の位置は変えない） */
+@media (min-width: 769px) {
+    .header-nav a {
+        display: inline-block;
+        padding-block: 5px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -5926,6 +5939,54 @@ footer.has-peeker {
     }
 }
 
+/* スマホのトロフィー通知：画面の幅いっぱいの2行 → 右下の小さな1行に（js/play.js）
+   左下の「連絡する」と右下の ❤ のすぐ上に出して、本文を隠す範囲をできるだけ小さくする */
+@media (max-width: 600px) {
+    .achievement-toast,
+    .has-like .achievement-toast {
+        left: auto;
+        right: 14px;
+        bottom: 72px;
+        gap: 8px;
+        max-width: calc(100vw - 28px);
+        padding: 5px 14px 5px 5px;
+        box-shadow: 0 4px 0 #ffd666, 0 10px 24px rgba(30, 45, 70, .16);
+    }
+
+    .achievement-toast .toast-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .achievement-toast .toast-text {
+        display: flex;
+        min-width: 0;
+        align-items: baseline;
+        gap: 6px;
+    }
+
+    .achievement-toast .toast-text small {
+        flex: none;
+        margin: 0;
+        font-size: 10px;
+        letter-spacing: .04em;
+        white-space: nowrap;
+    }
+
+    .achievement-toast .toast-label {
+        display: none;
+    }
+
+    .achievement-toast .toast-text strong {
+        overflow: hidden;
+        font-size: 12.5px;
+        letter-spacing: .02em;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
 .motion-off .like-combo.is-show {
     opacity: 1;
 }
@@ -7652,6 +7713,59 @@ footer.has-peeker {
     background: rgba(245, 248, 252, .85);
 }
 
+/* スマホだけ：下のほうのセクションへの近道（index.html の .summary-jump）
+   PC は上のメニューに同じリンクがあるので出さない */
+.summary-jump {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .summary-jump {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px 14px;
+        border-top: 2px dashed var(--ui-line, #e1e7ef);
+        background: rgba(245, 248, 252, .85);
+    }
+
+    .summary-jump-label {
+        width: 100%;
+        color: var(--ui-sub, #5b6560);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: .16em;
+    }
+
+    .summary-jump a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 0 14px;
+        border: 2px solid var(--ui-line, #e1e7ef);
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 3px 0 var(--ui-line, #e1e7ef);
+        color: var(--ui-ink, #111713);
+        font-size: 13px;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .summary-jump a::after {
+        margin-left: 6px;
+        color: #00739e;
+        content: "↓";
+        font-size: 12px;
+    }
+
+    .summary-jump a:active {
+        box-shadow: 0 1px 0 var(--ui-line, #e1e7ef);
+        transform: translateY(2px);
+    }
+}
+
 .summary-contact p {
     margin: 0;
     color: var(--ui-sub, #5b6560);
@@ -8394,6 +8508,7 @@ main > section[id]:not(#summary):not(#ending) {
 }
 
 .ending-trophy {
+    gap: 6px; /* 「トロフィー」と「4 / 14」の間（ボタンの中では、文字の後ろの空白が消えてしまうため） */
     border: 2px solid #ffd666;
     background: #fff8e1;
     box-shadow: 0 5px 0 #f0c14b;
