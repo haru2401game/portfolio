@@ -33,6 +33,17 @@
         return element;
     };
 
+    // 作品ごとのリンク（…/portfolio/#work=hook-shift）に使う名前
+    //   data/works.js に id があればそれを使い、なければ英語のタイトル（なければタイトル）から作る
+    //   例：HOOK SHIFT → hook-shift、スノーぱくぱく（英語 Snow PakuPaku）→ snow-pakupaku
+    //   ※ タイトルを変えるとリンクも変わるので、リンクを貼ったあとで変えるときは id: "元の名前" を書く
+    const idOf = (work) => String(work.id || work.en?.title || work.title || "")
+        .normalize("NFKC")
+        .toLowerCase()
+        .replace(/['’]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
     const fragment = document.createDocumentFragment();
 
     works.forEach((work, index) => {
@@ -42,6 +53,7 @@
         }
 
         const card = el("div", "work-card");
+        card.dataset.workId = idOf(work);
         if (work.preview) card.dataset.preview = work.preview;
 
         const [width, height] = Array.isArray(work.size) && work.size.length === 2 ? work.size : [1280, 720];

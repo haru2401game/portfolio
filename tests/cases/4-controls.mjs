@@ -123,6 +123,45 @@ export const tests = [
         },
     },
     {
+        name: "作品ごとのリンク（#work=○○）で、その作品が開く",
+        async run({ open, expect, listUp }) {
+            // すべての作品に、ちがう名前が付いているか（同じだと、リンクで別の作品が開いてしまう）
+            const { page: first } = await open("/");
+            const ids = await first.evaluate(() => Array.from(document.querySelectorAll(".works-list .work-card")).map((card) => [card.dataset.workId, card.querySelector("h3")?.textContent.trim()]));
+            const problems = [];
+            const seen = new Map();
+            ids.forEach(([id, title]) => {
+                if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(id || "")) problems.push(`「${title}」のリンク名が作れません（data/works.js に id: "英小文字とハイフン" を書く）`);
+                else if (seen.has(id)) problems.push(`「${seen.get(id)}」と「${title}」のリンク名が同じ（${id}）。どちらかに id を書く`);
+                else seen.set(id, title);
+                if (["shishito", "falien"].includes(id)) problems.push(`「${title}」のリンク名 ${id} が Main Works の作品と同じです`);
+            });
+            expect(!problems.length, `作品のリンク名に問題があります\n${listUp(problems)}`);
+
+            // Other Works の作品：詳しい画面が開き、閉じると URL から #work= が消える
+            const [id, title] = ids[Math.min(6, ids.length - 1)];
+            const { page, errors } = await open(`/#work=${id}`);
+            await page.waitForTimeout(800);
+            const opened = await page.evaluate(() => document.querySelector("dialog.work-viewer[open] [data-wv='title']")?.textContent.trim());
+            expect(opened === title, `#work=${id} で「${title}」が開きません（開いたのは「${opened || "なし"}」）`);
+            expect(await page.evaluate(() => location.hash) === `#work=${id}`, "開いているあいだ、URL に #work= が付いていません");
+            await page.keyboard.press("Escape");
+            await page.waitForTimeout(400);
+            expect(await page.evaluate(() => location.hash) === "", "閉じたあとも URL に #work= が残っています");
+
+            // Main Works の作品：タブが切り替わる
+            const { page: main } = await open("/#work=falien");
+            await main.waitForTimeout(800);
+            expect(await main.evaluate(() => document.getElementById("tab-falien")?.getAttribute("aria-selected")) === "true", "#work=falien で Falien のタブに切り替わりません");
+
+            // 知らない名前：何も開かず、エラーも出ない
+            const { page: unknown, errors: unknownErrors } = await open("/#work=no-such-work");
+            await unknown.waitForTimeout(600);
+            expect(!(await unknown.evaluate(() => !!document.querySelector("dialog.work-viewer[open]"))), "知らない名前なのに、何かが開きました");
+            expect(!errors.length && !unknownErrors.length, `エラーが出ました: ${errors[0] || unknownErrors[0]}`);
+        },
+    },
+    {
         name: "効果音 OFF のときは音が鳴らず、ON のときは鳴る",
         async run({ open, expect }) {
             const play = async (sfx) => {

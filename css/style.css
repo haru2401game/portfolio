@@ -7271,6 +7271,42 @@ footer.has-peeker {
     display: none;
 }
 
+/* 作品のリンクをコピー（js/main.js。note のボタンの下に、控えめに） */
+.work-viewer-share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 12px;
+    padding: 0 16px;
+    border: 2px solid #cfe3ee;
+    border-radius: 14px;
+    background: #fff;
+    color: #00739e;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease;
+}
+
+.work-viewer-share:hover {
+    background: #f0f9fd;
+}
+
+.work-viewer-share:focus-visible {
+    outline: 3px solid #00a3e0;
+    outline-offset: 3px;
+}
+
+.work-viewer-share.is-done {
+    border-color: #2a9d5c;
+    background: #edf9f1;
+    color: #1f7a45;
+}
+
 .work-viewer-nav {
     display: flex;
     flex: 0 0 auto;

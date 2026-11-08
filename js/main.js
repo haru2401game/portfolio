@@ -2012,6 +2012,10 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
                         <span>noteで制作記録を読む</span>
                         <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
                     </a>
+                    <button type="button" class="work-viewer-share" data-wv="share">
+                        <span aria-hidden="true">🔗</span>
+                        <span data-wv="share-label">この作品のリンクをコピー</span>
+                    </button>
                 </div>
             </div>
             <div class="work-viewer-nav">
@@ -2031,12 +2035,71 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     const visibleCards = () => cards.filter((card) => !card.hidden);
     let current = null;
 
+    // 映像が再生できないとき（通信が切れた・対応していない形式など）は、映像を隠して画像を見せる
+    part("movie").addEventListener("error", () => {
+        part("movie").hidden = true;
+    });
+
     const announce = (card) => {
         document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: textOf(card, "h3") } }));
     };
 
+    /* ---------- 作品ごとのリンク（…/portfolio/#work=hook-shift） ----------
+       開いている作品を URL にも出す（アドレスバーからそのままコピーしても、その作品が開く）。
+       履歴は増やさない（戻るボタンで作品を1つずつ戻らなくてよいように） */
+    let hashBeforeOpen = "";
+    // コピーするリンクは、いつも公開先の URL（canonical）にする（index.html 付きなどで開いていても同じリンクになる）
+    const siteUrl = document.querySelector('link[rel="canonical"]')?.href || `${location.origin}${location.pathname}`;
+    const workUrl = (card) => `${siteUrl.split("#")[0]}#work=${card.dataset.workId}`;
+    const showInUrl = (card) => {
+        if (!card.dataset.workId) return;
+        if (!location.hash.startsWith("#work=")) hashBeforeOpen = location.hash;
+        history.replaceState(history.state, "", `#work=${card.dataset.workId}`);
+    };
+    const restoreUrl = () => {
+        if (location.hash.startsWith("#work=")) history.replaceState(history.state, "", `${location.pathname}${location.search}${hashBeforeOpen}`);
+    };
+
+    const shareButton = part("share");
+    const shareLabel = part("share-label");
+    let shareTimer = 0;
+    // 英語表示のときは、書き換えた文字を i18n.js が自動で訳す
+    const setShareLabel = (text) => {
+        shareLabel.textContent = text;
+    };
+    const copyText = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch {
+            // 古いブラウザなど：見えない入力欄に入れてコピーする
+            const input = make("textarea");
+            input.value = text;
+            input.setAttribute("readonly", "");
+            input.style.cssText = "position:fixed;top:0;left:0;opacity:0;";
+            viewer.append(input);
+            input.select();
+            const done = document.execCommand?.("copy") || false;
+            input.remove();
+            return done;
+        }
+    };
+    shareButton.addEventListener("click", async () => {
+        if (!current) return;
+        const ok = await copyText(workUrl(current));
+        setShareLabel(ok ? "リンクをコピーしました" : "コピーできませんでした（アドレスバーの URL を使ってください）");
+        shareButton.classList.toggle("is-done", ok);
+        if (ok) emitPlayEvent(`作品リンクをコピー: ${textOf(current, "h3")}`);
+        clearTimeout(shareTimer);
+        shareTimer = setTimeout(() => {
+            setShareLabel("この作品のリンクをコピー");
+            shareButton.classList.remove("is-done");
+        }, 2500);
+    });
+
     const render = (card) => {
         current = card;
+        showInUrl(card);
         const image = card.querySelector("img:not(.card-pop)");
         const stage = textOf(card, ".stage-badges span:not(.is-award):not(.is-team):not(.is-wip)");
         const shown = visibleCards();
@@ -2154,10 +2217,41 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     // 閉じたら、元のカードが見える位置に戻す
     viewer.addEventListener("close", () => {
         part("movie").pause();
+        restoreUrl();
         if (!current) return;
         current.querySelector(".work-thumb")?.focus({ preventScroll: true });
         current.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
     });
+
+    /* ---------- 作品ごとのリンクから来たとき（…/portfolio/#work=○○） ----------
+       ・Other Works の作品：Other Works まで移動して、詳しい画面を開く
+       ・Main Works の作品（#work=falien・#work=shishito）：その作品のタブに切り替えて、Main Works へ移動
+       ・知らない名前のときは、何もしない（ふつうにトップから表示） */
+    const openFromHash = () => {
+        const match = decodeURIComponent(location.hash).match(/^#work=([a-z0-9-]+)$/);
+        if (!match) return;
+        const id = match[1];
+
+        const card = cards.find((item) => item.dataset.workId === id);
+        if (card) {
+            document.getElementById("other-works")?.scrollIntoView({ behavior: "auto" });
+            open(card);
+            emitPlayEvent(`作品リンクから: ${textOf(card, "h3")}`);
+            return;
+        }
+
+        const tab = document.getElementById(`tab-${id}`);
+        if (tab?.getAttribute("role") === "tab") {
+            if (tab.getAttribute("aria-selected") !== "true") tab.click();
+            document.querySelector(".main-tabs")?.scrollIntoView({ behavior: "auto", block: "start" });
+            emitPlayEvent(`作品リンクから: ${textOf(tab, "b") || id}`);
+        }
+    };
+
+    // ほかのスクリプト（英語表示・つづきから など）の準備が終わってから開く
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openFromHash, { once: true });
+    else openFromHash();
+    window.addEventListener("hashchange", openFromHash);
 })();
 
 /* ========================================
