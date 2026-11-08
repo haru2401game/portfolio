@@ -152,7 +152,7 @@ const makeHelpers = (browser, baseURL, opened) => ({
      * @param {string} pathname  開くページ（"/" や "/404.html"）
      * @param {object} options   phone: スマホの大きさで開く / width: 画面の幅 / settings: 先に入れておく設定（OPTIONS）
      *                           slowNetwork: 外への通信の返事を遅らせる / reducedMotion: "reduce" で「動きを減らす」端末のまね
-     *                           init: ページの読み込み前に動かす関数
+     *                           init: ページの読み込み前に動かす関数 / referer: どこから来たことにするか（例 "https://t.co/"）
      * @returns {Promise<{page, errors}>}  errors にはページで起きたエラーがたまる
      */
     async open(pathname = "/", options = {}) {
@@ -204,7 +204,7 @@ const makeHelpers = (browser, baseURL, opened) => ({
         );
         if (options.init) await page.addInitScript(options.init, options.initArg);
 
-        await page.goto(baseURL + pathname.replace(/^\//, ""), { waitUntil: "load" });
+        await page.goto(baseURL + pathname.replace(/^\//, ""), { waitUntil: "load", referer: options.referer });
         await page.waitForTimeout(options.wait ?? 800);
         return { page, errors };
     },

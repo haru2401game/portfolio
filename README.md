@@ -142,6 +142,7 @@ portfolio/
 ├── index.html            ページ本体（内容はすべてここに書く）
 ├── 404.html              ページが見つからないとき（ミニゲーム）
 ├── sitemap.xml           検索エンジン向けのページ一覧
+├── works/                作品ごとの小さなページ（リンクを貼ったときのカード用。scripts/work-pages.js が自動で作る）
 ├── css/
 │   └── style.css         見た目
 ├── js/
@@ -154,6 +155,7 @@ portfolio/
 │   ├── like.js           いいねボタン
 │   ├── sfx.js            効果音
 │   ├── gamepad.js        ゲームパッド操作
+│   ├── work-redirect.js  作品ごとのページ（works/）から、本体の作品の場所へ移動する
 │   └── i18n.js           日本語 ⇄ 英語の切り替え（辞書は data/i18n-en.js）
 ├── data/
 │   ├── works.js          作品データ（Other Works の作品カード。作品の追加はここだけ）
@@ -162,7 +164,9 @@ portfolio/
 │   ├── blog.js           blog.json の写し（file:// で開いたとき用）
 │   └── profile.json      ページから数えられない数字（イベント参加数など）
 ├── scripts/
-│   └── update-note.js    note の記事を取得するスクリプト
+│   ├── update-note.js    note の記事を取得するスクリプト
+│   ├── version-assets.js CSS・JS にバージョン番号を付ける（npm run assets）
+│   └── work-pages.js     作品ごとのページ（works/）を作る（npm run assets でも一緒に動く）
 ├── tests/                自動テスト（npm test。使い方は tests/README.md）
 │   ├── run.mjs           テストを動かす本体（小さなサーバーとブラウザを起動）
 │   └── cases/            テストの中身（1-data / 2-page / 3-a11y / 4-controls）
@@ -239,7 +243,7 @@ Canvas で描くランゲームです。
 
 ### 7. 品質の確認
 
-`tests/` に自動テスト（41項目）があります。Playwright（ブラウザを自動で操作するツール）でページを開き、次のことを確かめます。
+`tests/` に自動テスト（42項目）があります。Playwright（ブラウザを自動で操作するツール）でページを開き、次のことを確かめます。
 
 - 作品データ（`data/works.js`）の書き忘れ・画像や動画のファイル切れ・リンク切れ
 - 検索エンジン向けの情報（`index.html` の構造化データ）の書き間違い
@@ -269,7 +273,7 @@ Canvas で描くランゲームです。
 ### CSS・JS を直したら（push の前に）
 
 ```bash
-npm run assets   # 読み込むファイルにバージョン番号（?v=…）を付け直す
+npm run assets   # 読み込むファイルにバージョン番号（?v=…）を付け直す。作品ごとのページ（works/）も作り直す
 npm test         # 自動テスト
 ```
 
@@ -309,7 +313,8 @@ npm test         # 自動テスト
 ```
 
 3. 保存して、ブラウザでページを開き直して確認する
-4. 自動テストを動かす（`npm test`）。書き忘れやファイル名の間違いがあれば教えてくれる
+4. `npm run assets` を動かす（作品ごとのページ `works/<リンク名>/` ができる）
+5. 自動テストを動かす（`npm test`）。書き忘れやファイル名の間違いがあれば教えてくれる
 
 - 自動で付くもの：STAGE 番号・作品数・TEAM ×人数（`member` が2以上）・WIP（`role` に「未完成」）・絞り込み（`tech` に Unity / C++ / DirectX、`genre` に 3D）・スキル集計
 - 受賞作にするには：経歴（Timeline）の受賞の文に「作品名」を書く（`title` と同じ名前）。★RARE とピックアップに自動で出る
@@ -358,11 +363,15 @@ Timeline は `data/timeline.js` から自動で作られます。HTML を書く�
 
 unityroom・itch.io の作品説明や、メールで「この作品を見てほしい」ときに使う。
 
-1. サイトで作品を開き、「🔗 この作品のリンクをコピー」を押す（または、作品を開いているときのアドレスバーの URL）
-2. 形は `https://haru2401game.github.io/portfolio/#work=<リンク名>`。リンク名は英語のタイトルから自動で作られる（例：HOOK SHIFT → `hook-shift`）
-3. リンクを貼ったあとで作品のタイトルを変えるときは、`data/works.js` のその作品に `id: "元のリンク名",` を書く（リンクが切れない）
+1. サイトで作品を開き、「🔗 この作品のリンクをコピー」を押す
+2. コピーされるのは `https://haru2401game.github.io/portfolio/works/<リンク名>/`。X・Discord・LINE などに貼ると、その作品の画像とタイトルのカードが出る。開くと本体の作品の場所へすぐ移動する
+3. リンク名は英語のタイトルから自動で作られる（例：HOOK SHIFT → `hook-shift`。Main Works は `shishito`・`falien`）
+4. リンクを貼ったあとで作品のタイトルを変えるときは、`data/works.js` のその作品に `id: "元のリンク名",` を書く（リンクが切れない）
 
-分析ツールでは「作品のリンクから来た：作品名」「作品のリンクをコピーした：作品名」として数えられる。
+- `…/portfolio/#work=<リンク名>` の形でも同じ作品が開く（カードはサイト共通のものになる）
+- `works/` のページは `npm run assets`（または `npm run pages`）で自動で作られる。直接書き換えない。Google の検索結果には出ない設定（noindex）
+- Main Works の2本のカードの文章は、`scripts/work-pages.js` の `MAIN_WORKS` に書いてある
+- 分析ツールでは「作品のリンクから来た：作品名」「作品のリンクをコピーした：作品名」として数えられる。`works/` を通って来た人も、X などの来た元が正しく数えられる（来た元のドメインだけを受け渡す）
 
 ## 確認のしかた
 

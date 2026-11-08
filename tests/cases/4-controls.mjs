@@ -2,6 +2,9 @@
    4. 操作（ボタンを押したときに、ちゃんと動くか）
 ======================================== */
 
+import fs from "node:fs";
+import path from "node:path";
+
 export const title = "4. 操作";
 
 // 鳴った効果音の数を数えられるようにする（AudioContext の音の部品を見張る）
@@ -124,7 +127,7 @@ export const tests = [
     },
     {
         name: "作品ごとのリンク（#work=○○）で、その作品が開く",
-        async run({ open, expect, listUp }) {
+        async run({ open, expect, listUp, siteDir }) {
             // すべての作品に、ちがう名前が付いているか（同じだと、リンクで別の作品が開いてしまう）
             const { page: first } = await open("/");
             const ids = await first.evaluate(() => Array.from(document.querySelectorAll(".works-list .work-card")).map((card) => [card.dataset.workId, card.querySelector("h3")?.textContent.trim()]));
@@ -137,6 +140,23 @@ export const tests = [
                 if (["shishito", "falien"].includes(id)) problems.push(`「${title}」のリンク名 ${id} が Main Works の作品と同じです`);
             });
             expect(!problems.length, `作品のリンク名に問題があります\n${listUp(problems)}`);
+
+            // 作品ごとのページ（works/○○/）が、サイトのリンク名と同じ名前でそろっているか
+            // （scripts/work-pages.js と js/works.js で、名前の作り方がずれていないか）
+            const missingPages = ids.filter(([pageId]) => !fs.existsSync(path.join(siteDir, "works", pageId, "index.html")));
+            expect(!missingPages.length, `作品ごとのページがありません（npm run pages）\n${listUp(missingPages.map(([pageId, pageTitle]) => `${pageTitle}: works/${pageId}/`))}`);
+
+            // 作品ごとのページを開くと、本体へ移動してその作品が開く。来た元のドメインは ?from= で渡る
+            const { page: viaPage } = await open("/works/hook-shift/", { referer: "https://t.co/abc" });
+            await viaPage.waitForTimeout(1200);
+            const via = await viaPage.evaluate(() => ({
+                path: location.pathname,
+                search: location.search,
+                hash: location.hash,
+                title: document.querySelector("dialog.work-viewer[open] [data-wv='title']")?.textContent.trim(),
+            }));
+            expect(via.hash === "#work=hook-shift" && via.title === "HOOK SHIFT", `works/hook-shift/ から HOOK SHIFT が開きません（${via.path}${via.search}${via.hash}・${via.title || "開いていない"}）`);
+            expect(via.search === "?from=t.co", `来た元のドメインが渡っていません（${via.search || "なし"}）`);
 
             // Other Works の作品：詳しい画面が開き、閉じると URL から #work= が消える
             const [id, title] = ids[Math.min(6, ids.length - 1)];

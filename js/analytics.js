@@ -95,8 +95,18 @@
         if (document.referrer && new URL(document.referrer).hostname !== location.hostname) {
             referrer = document.referrer;
         }
+        // 作品ごとのページ（works/○○/）を通って来たときは、そのページが渡した「来た元のドメイン」を使う
+        // （js/work-redirect.js。ドメインだけで、URL の残りの部分は受け取らない）。使ったら URL から消す
+        const params = new URLSearchParams(location.search);
+        const from = params.get("from") || "";
+        if (from) {
+            if (!referrer && /^[a-z0-9.-]{1,100}$/i.test(from)) referrer = `https://${from}/`;
+            params.delete("from");
+            const rest = params.toString();
+            history.replaceState(history.state, "", `${location.pathname}${rest ? `?${rest}` : ""}${location.hash}`);
+        }
     } catch {
-        referrer = "";
+        referrer = referrer || "";
     }
     track("pageview", location.pathname, { r: referrer });
 

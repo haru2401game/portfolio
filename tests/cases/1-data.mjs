@@ -166,6 +166,17 @@ export const tests = [
         },
     },
     {
+        name: "作品ごとのページ（works/）が最新になっている",
+        async run({ siteDir, expect }) {
+            // 古いと、作品を足したのにリンクのカードが出ない・消した作品のページが残る（scripts/work-pages.js）
+            try {
+                execFileSync(process.execPath, [path.join(siteDir, "scripts", "work-pages.js"), "--check"], { encoding: "utf8" });
+            } catch (error) {
+                expect(false, `${String(error.stdout || error.message).trim().replace(/\n/g, "\n      ")}`);
+            }
+        },
+    },
+    {
         name: "検索エンジン向けの情報（構造化データ）が正しい",
         async run({ siteDir, expect, listUp }) {
             // index.html の <script type="application/ld+json">。書き方を間違えると、Google が読み飛ばしてしまう

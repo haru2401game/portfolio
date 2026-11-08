@@ -2049,8 +2049,9 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
        履歴は増やさない（戻るボタンで作品を1つずつ戻らなくてよいように） */
     let hashBeforeOpen = "";
     // コピーするリンクは、いつも公開先の URL（canonical）にする（index.html 付きなどで開いていても同じリンクになる）
+    // 作品ごとのページ（works/○○/）のリンクにする：X などに貼ると、その作品の画像とタイトルのカードが出る（scripts/work-pages.js）
     const siteUrl = document.querySelector('link[rel="canonical"]')?.href || `${location.origin}${location.pathname}`;
-    const workUrl = (card) => `${siteUrl.split("#")[0]}#work=${card.dataset.workId}`;
+    const workUrl = (card) => `${siteUrl.split("#")[0]}works/${card.dataset.workId}/`;
     const showInUrl = (card) => {
         if (!card.dataset.workId) return;
         if (!location.hash.startsWith("#work=")) hashBeforeOpen = location.hash;

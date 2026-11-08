@@ -8,7 +8,8 @@
 
    使い方（portfolio フォルダで）
      npm run assets          … 番号を最新にする（CSS・JS を直したら push の前に1回）
-     npm run assets -- --check … 番号が古くないか確かめるだけ（自動テストが使う）
+                               作品ごとのページ（scripts/work-pages.js）も一緒に作り直す
+     node scripts/version-assets.js --check … 番号が古くないか確かめるだけ（自動テストが使う）
 
    ※ data/blog.js は毎日自動で更新されるので対象外
 ======================================== */
