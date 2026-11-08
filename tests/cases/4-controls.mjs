@@ -146,17 +146,26 @@ export const tests = [
             const missingPages = ids.filter(([pageId]) => !fs.existsSync(path.join(siteDir, "works", pageId, "index.html")));
             expect(!missingPages.length, `作品ごとのページがありません（npm run pages）\n${listUp(missingPages.map(([pageId, pageTitle]) => `${pageTitle}: works/${pageId}/`))}`);
 
-            // 作品ごとのページを開くと、本体へ移動してその作品が開く。来た元のドメインは ?from= で渡る
-            const { page: viaPage } = await open("/works/hook-shift/", { referer: "https://t.co/abc" });
-            await viaPage.waitForTimeout(1200);
-            const via = await viaPage.evaluate(() => ({
-                path: location.pathname,
-                search: location.search,
+            // 作品ごとのページ：作品の情報と「遊ぶ」ボタンがあり、「ポートフォリオでこの作品を見る」で本体のその作品が開く
+            const { page: workPage, errors: workErrors } = await open("/works/potion-berserker/");
+            const info = await workPage.evaluate(() => ({
+                title: document.querySelector("h1")?.textContent.trim(),
+                play: document.querySelector(".wp-button.is-play")?.getAttribute("href"),
+                canonical: document.querySelector('link[rel="canonical"]')?.href,
+                robots: document.querySelector('meta[name="robots"]')?.content || "",
+            }));
+            expect(info.title === "POTION BERSERKER", `works/potion-berserker/ の見出しが違います（${info.title || "なし"}）`);
+            expect(/unityroom\.com\/games\/potionberserker/.test(info.play || ""), "works/potion-berserker/ に「遊ぶ」ボタンがありません");
+            expect(info.canonical === "https://haru2401game.github.io/portfolio/works/potion-berserker/", `canonical が違います（${info.canonical}）`);
+            expect(!/noindex/.test(info.robots), "作品ごとのページが検索に出ない設定（noindex）になっています");
+            await workPage.click(".wp-button.is-portfolio");
+            await workPage.waitForTimeout(1200);
+            const via = await workPage.evaluate(() => ({
                 hash: location.hash,
                 title: document.querySelector("dialog.work-viewer[open] [data-wv='title']")?.textContent.trim(),
             }));
-            expect(via.hash === "#work=hook-shift" && via.title === "HOOK SHIFT", `works/hook-shift/ から HOOK SHIFT が開きません（${via.path}${via.search}${via.hash}・${via.title || "開いていない"}）`);
-            expect(via.search === "?from=t.co", `来た元のドメインが渡っていません（${via.search || "なし"}）`);
+            expect(via.hash === "#work=potion-berserker" && via.title === "POTION BERSERKER", `「ポートフォリオでこの作品を見る」で POTION BERSERKER が開きません（${via.hash}・${via.title || "開いていない"}）`);
+            expect(!workErrors.length, `作品ごとのページでエラーが出ました: ${workErrors[0]}`);
 
             // Other Works の作品：詳しい画面が開き、閉じると URL から #work= が消える
             const [id, title] = ids[Math.min(6, ids.length - 1)];

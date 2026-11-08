@@ -142,9 +142,10 @@ portfolio/
 ├── index.html            ページ本体（内容はすべてここに書く）
 ├── 404.html              ページが見つからないとき（ミニゲーム）
 ├── sitemap.xml           検索エンジン向けのページ一覧
-├── works/                作品ごとの小さなページ（リンクを貼ったときのカード用。scripts/work-pages.js が自動で作る）
+├── works/                作品ごとのページ（検索に出る・リンクを貼るとカードが出る。scripts/work-pages.js が自動で作る）
 ├── css/
-│   └── style.css         見た目
+│   ├── style.css         見た目
+│   └── work-page.css     作品ごとのページ（works/）の見た目
 ├── js/
 │   ├── works.js          作品データから Other Works の作品カードを作る
 │   ├── timeline.js       経歴データから Timeline を作る
@@ -155,7 +156,7 @@ portfolio/
 │   ├── like.js           いいねボタン
 │   ├── sfx.js            効果音
 │   ├── gamepad.js        ゲームパッド操作
-│   ├── work-redirect.js  作品ごとのページ（works/）から、本体の作品の場所へ移動する
+│   ├── work-page.js      作品ごとのページ（works/）のプレイ映像
 │   └── i18n.js           日本語 ⇄ 英語の切り替え（辞書は data/i18n-en.js）
 ├── data/
 │   ├── works.js          作品データ（Other Works の作品カード。作品の追加はここだけ）
@@ -166,7 +167,7 @@ portfolio/
 ├── scripts/
 │   ├── update-note.js    note の記事を取得するスクリプト
 │   ├── version-assets.js CSS・JS にバージョン番号を付ける（npm run assets）
-│   └── work-pages.js     作品ごとのページ（works/）を作る（npm run assets でも一緒に動く）
+│   └── work-pages.js     作品ごとのページ（works/）と sitemap.xml を作る（npm run assets でも一緒に動く）
 ├── tests/                自動テスト（npm test。使い方は tests/README.md）
 │   ├── run.mjs           テストを動かす本体（小さなサーバーとブラウザを起動）
 │   └── cases/            テストの中身（1-data / 2-page / 3-a11y / 4-controls）
@@ -365,14 +366,14 @@ Timeline は `data/timeline.js` から自動で作られます。HTML を書く�
 unityroom・itch.io の作品説明や、メールで「この作品を見てほしい」ときに使う。
 
 1. サイトで作品を開き、「🔗 この作品のリンクをコピー」を押す
-2. コピーされるのは `https://haru2401game.github.io/portfolio/works/<リンク名>/`。X・Discord・LINE などに貼ると、その作品の画像とタイトルのカードが出る。開くと本体の作品の場所へすぐ移動する
+2. コピーされるのは `https://haru2401game.github.io/portfolio/works/<リンク名>/`（作品ごとのページ）。X・Discord・LINE などに貼ると、その作品の画像とタイトルのカードが出る。ページには作品の説明・担当・技術・受賞・「遊ぶ」ボタンがあり、「ポートフォリオでこの作品を見る」で本体のその作品が開く
 3. リンク名は英語のタイトルから自動で作られる（例：HOOK SHIFT → `hook-shift`。Main Works は `shishito`・`falien`）
 4. リンクを貼ったあとで作品のタイトルを変えるときは、`data/works.js` のその作品に `id: "元のリンク名",` を書く（リンクが切れない）
 
 - `…/portfolio/#work=<リンク名>` の形でも同じ作品が開く（カードはサイト共通のものになる）
-- `works/` のページは `npm run assets`（または `npm run pages`）で自動で作られる。直接書き換えない。Google の検索結果には出ない設定（noindex）
-- Main Works の2本のカードの文章は、`scripts/work-pages.js` の `MAIN_WORKS` に書いてある
-- 分析ツールでは「作品のリンクから来た：作品名」「作品のリンクをコピーした：作品名」として数えられる。`works/` を通って来た人も、X などの来た元が正しく数えられる（来た元のドメインだけを受け渡す）
+- `works/` のページと `sitemap.xml` は `npm run assets`（または `npm run pages`）で自動で作られる。直接書き換えない。作品名などで Google 検索に出るように、sitemap.xml にも自動で載る
+- Main Works の2本のページの文章は、`scripts/work-pages.js` の `MAIN_WORKS` に書いてある。受賞は経歴（data/timeline.js）から自動で載る
+- 分析ツールでは「作品のリンクから来た：作品名」「作品のリンクをコピーした：作品名」として数えられる。作品ごとのページの閲覧も、ふつうの閲覧として数えられる（流入元も分かる）
 
 ## 確認のしかた
 

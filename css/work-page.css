@@ -1,0 +1,461 @@
+/* ========================================
+   work-page.css：作品ごとのページ（works/○○/）の見た目
+   ・ページは scripts/work-pages.js が data/works.js から自動で作る
+   ・本体（index.html）の style.css は大きいので読み込まず、ここだけで完結させる
+   ・色や角の丸みは、本体のサイト（明るいゲーム画面風）に合わせている
+======================================== */
+
+:root {
+    --ink: #111713;
+    --sub: #5b6560;
+    --line: #e1e7ef;
+    --bg: #f4f8fb;
+    --card: #fff;
+    --blue: #00739e;
+    --blue-edge: #00506e;
+    --green: #1f8a4c;
+    --green-edge: #14643a;
+    --gold: #ffd54a;
+    --gold-edge: #b8860b;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at 1px 1px, rgba(17, 23, 19, .07) 1px, transparent 0) 0 0 / 22px 22px,
+        linear-gradient(180deg, #eaf6fd 0%, var(--bg) 40%, #fff8ec 100%);
+    color: var(--ink);
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+    line-height: 1.75;
+}
+
+a {
+    color: inherit;
+}
+
+img,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+.wp-skip {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: #fff;
+    z-index: 10;
+}
+
+.wp-skip:focus {
+    top: 12px;
+}
+
+:focus-visible {
+    outline: 3px solid #00a3e0;
+    outline-offset: 3px;
+}
+
+/* ---------- ヘッダー ---------- */
+
+.wp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 16px 20px;
+}
+
+.wp-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-decoration: none;
+}
+
+.wp-brand img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.wp-brand small {
+    display: block;
+    color: var(--sub);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+
+.wp-back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 3px 0 var(--line);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* ---------- 本文 ---------- */
+
+.wp-main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 8px 20px 40px;
+}
+
+.wp-crumbs {
+    margin: 0 0 14px;
+    padding: 0;
+    color: var(--sub);
+    font-size: 12px;
+    list-style: none;
+}
+
+.wp-crumbs li {
+    display: inline;
+}
+
+.wp-crumbs li + li::before {
+    margin: 0 8px;
+    content: "›";
+}
+
+.wp-crumbs a {
+    color: var(--blue);
+}
+
+.wp-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    overflow: hidden;
+    border: 3px solid var(--ink);
+    border-radius: 22px;
+    background: var(--card);
+    box-shadow: 0 8px 0 var(--ink), 0 26px 50px rgba(30, 45, 70, .14);
+}
+
+.wp-card.is-rare {
+    border-color: var(--gold-edge);
+    box-shadow: 0 8px 0 var(--gold-edge), 0 26px 50px rgba(184, 134, 11, .18);
+}
+
+.wp-media {
+    position: relative;
+    display: grid;
+    margin: 0;
+    place-items: center;
+    background: #1d2520;
+}
+
+.wp-media img,
+.wp-media video {
+    width: 100%;
+    height: 100%;
+    max-height: 520px;
+    object-fit: contain;
+}
+
+.wp-media video {
+    position: absolute;
+    inset: 0;
+}
+
+.wp-media video[hidden] {
+    display: none;
+}
+
+.wp-badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.wp-badges span {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 2px 0 rgba(17, 23, 19, .2);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    white-space: nowrap;
+}
+
+.wp-badges .is-award {
+    background: var(--gold);
+}
+
+.wp-badges .is-team {
+    background: #7b5cff;
+    color: #fff;
+}
+
+.wp-badges .is-play {
+    background: var(--green);
+    color: #fff;
+}
+
+.wp-info {
+    padding: 28px 28px 30px;
+}
+
+.wp-kicker {
+    margin: 0 0 6px;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .16em;
+}
+
+.wp-info h1 {
+    margin: 0;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: -.01em;
+    line-height: 1.25;
+}
+
+.wp-genre {
+    margin: 6px 0 0;
+    color: var(--blue);
+    font-weight: 800;
+}
+
+.wp-award {
+    display: inline-block;
+    margin: 14px 0 0;
+    padding: 6px 14px;
+    border-radius: 12px;
+    background: #fff4cc;
+    color: #6b4a00;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.wp-desc {
+    margin: 16px 0 0;
+    font-size: 15px;
+}
+
+.wp-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 20px 0 0;
+}
+
+.wp-stats div {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #f3f6fa;
+}
+
+.wp-stats .is-wide {
+    grid-column: 1 / -1;
+}
+
+.wp-stats dt {
+    color: var(--sub);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+
+.wp-stats dd {
+    margin: 2px 0 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.wp-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.wp-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 50px;
+    padding: 0 18px;
+    border-radius: 14px;
+    color: #fff;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.wp-button:hover {
+    transform: translateY(-2px);
+}
+
+.wp-button:active {
+    transform: translateY(3px);
+}
+
+.wp-button.is-play {
+    background: var(--green);
+    box-shadow: 0 5px 0 var(--green-edge);
+}
+
+.wp-button.is-note {
+    background: var(--blue);
+    box-shadow: 0 5px 0 var(--blue-edge);
+}
+
+.wp-button.is-portfolio {
+    border: 2px solid var(--ink);
+    background: #fff;
+    box-shadow: 0 5px 0 var(--ink);
+    color: var(--ink);
+}
+
+/* ---------- 前後の作品 ---------- */
+
+.wp-pager {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.wp-pager a {
+    display: block;
+    min-height: 64px;
+    padding: 10px 16px;
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 0 var(--line);
+    text-decoration: none;
+}
+
+.wp-pager a.is-next {
+    text-align: right;
+}
+
+.wp-pager small {
+    display: block;
+    color: var(--sub);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .1em;
+}
+
+.wp-pager b {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- 作った人 ---------- */
+
+.wp-author {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 24px;
+    margin-top: 28px;
+    padding: 20px 22px;
+    border: 2px dashed var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .8);
+}
+
+.wp-author h2 {
+    margin: 0 0 4px;
+    font-size: 16px;
+}
+
+.wp-author p {
+    margin: 0;
+    color: var(--sub);
+    font-size: 14px;
+}
+
+.wp-author .wp-button {
+    min-width: 240px;
+}
+
+.wp-footer {
+    padding: 20px;
+    color: var(--sub);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-align: center;
+}
+
+/* ---------- スマホ ---------- */
+
+@media (max-width: 760px) {
+    .wp-header {
+        padding: 12px 16px;
+    }
+
+    .wp-brand span {
+        display: none;
+    }
+
+    .wp-main {
+        padding: 4px 16px 32px;
+    }
+
+    .wp-card {
+        grid-template-columns: 1fr;
+        border-radius: 18px;
+    }
+
+    .wp-media img,
+    .wp-media video {
+        max-height: 300px;
+    }
+
+    .wp-info {
+        padding: 22px 18px 24px;
+    }
+
+    .wp-author .wp-button {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wp-button {
+        transition: none;
+    }
+}
