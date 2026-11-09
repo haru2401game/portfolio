@@ -302,6 +302,9 @@
 
     /* ---------- カードの傾き・ボタンの吸いつき（パソコン） ---------- */
 
+    // スクロールしたら、覚えておいた位置を測り直す
+    let scrollStamp = 0;
+    addEventListener("scroll", () => scrollStamp++, { passive: true });
     const tiltTargets = $$(".work, .stage-tab, .tech-card, .play-card, .purpose");
     tiltTargets.forEach((card) => {
         card.classList.add("tilt");
@@ -312,32 +315,83 @@
             glare.setAttribute("aria-hidden", "true");
             surface.append(glare);
         }
+        // 傾けると箱の位置がずれて、マウスとの位置関係が毎回変わる（=ぶるぶるする）ので、
+        // 入ったときの位置を覚えておき、目標の角度へなめらかに近づける
+        let rect = null;
+        const state = { x: 0, y: 0, tx: 0, ty: 0, raf: 0 };
+        const strong = card.matches(".work, .stage-tab") ? 8 : 4;
+        const render = () => {
+            state.x += (state.tx - state.x) * 0.15;
+            state.y += (state.ty - state.y) * 0.15;
+            const settled = Math.abs(state.tx - state.x) < 0.002 && Math.abs(state.ty - state.y) < 0.002;
+            if (settled && state.tx === 0 && state.ty === 0) {
+                card.style.transform = "";
+                card.classList.remove("is-tilting");
+                state.raf = 0;
+                return;
+            }
+            card.style.transform = `perspective(900px) rotateX(${(-state.y * strong).toFixed(2)}deg) rotateY(${(state.x * strong).toFixed(2)}deg) translateY(-6px)`;
+            card.style.setProperty("--gx", `${(state.x + 0.5) * 100}%`);
+            card.style.setProperty("--gy", `${(state.y + 0.5) * 100}%`);
+            state.raf = requestAnimationFrame(render);
+        };
+        const kick = () => {
+            if (!state.raf) state.raf = requestAnimationFrame(render);
+        };
+        card.addEventListener("pointerenter", (event) => {
+            if (event.pointerType !== "mouse" || calm()) return;
+            rect = { ...card.getBoundingClientRect().toJSON(), stamp: scrollStamp };
+            card.classList.add("is-tilting");
+        });
         card.addEventListener("pointermove", (event) => {
             if (event.pointerType !== "mouse" || calm()) return;
-            const rect = card.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width - 0.5;
-            const y = (event.clientY - rect.top) / rect.height - 0.5;
-            const strong = card.matches(".work, .stage-tab") ? 10 : 5;
-            card.classList.add("is-tilting");
-            card.style.transform = `perspective(900px) rotateX(${(-y * strong).toFixed(2)}deg) rotateY(${(x * strong).toFixed(2)}deg) translateY(-6px)`;
-            card.style.setProperty("--gx", `${(x + 0.5) * 100}%`);
-            card.style.setProperty("--gy", `${(y + 0.5) * 100}%`);
+            if (!rect || rect.stamp !== scrollStamp) rect = { ...card.getBoundingClientRect().toJSON(), stamp: scrollStamp }; // スクロールした後は測り直す
+            state.tx = clamp((event.clientX - rect.left) / rect.width - 0.5, -0.5, 0.5);
+            state.ty = clamp((event.clientY - rect.top) / rect.height - 0.5, -0.5, 0.5);
+            kick();
         });
         card.addEventListener("pointerleave", () => {
-            card.classList.remove("is-tilting");
-            card.style.transform = "";
+            rect = null;
+            state.tx = 0;
+            state.ty = 0;
+            kick();
         });
     });
 
-    $$(".btn, .hd-options, .round, .hd-contact, .next-stage i").forEach((button) => {
+    // ボタンの吸いつき：同じく、入ったときの位置を基準にして、なめらかに追いかける
+    $$(".btn, .hd-options, .round, .hd-contact").forEach((button) => {
+        let rect = null;
+        const state = { x: 0, y: 0, tx: 0, ty: 0, raf: 0 };
+        const render = () => {
+            state.x += (state.tx - state.x) * 0.18;
+            state.y += (state.ty - state.y) * 0.18;
+            if (Math.abs(state.tx - state.x) < 0.05 && Math.abs(state.ty - state.y) < 0.05) {
+                state.x = state.tx;
+                state.y = state.ty;
+            }
+            button.style.translate = state.x || state.y ? `${state.x.toFixed(2)}px ${state.y.toFixed(2)}px` : "";
+            state.raf = state.x === state.tx && state.y === state.ty ? 0 : requestAnimationFrame(render);
+        };
+        const kick = () => {
+            if (!state.raf) state.raf = requestAnimationFrame(render);
+        };
+        button.addEventListener("pointerenter", (event) => {
+            if (event.pointerType !== "mouse" || calm()) return;
+            rect = { ...button.getBoundingClientRect().toJSON(), stamp: scrollStamp };
+        });
         button.addEventListener("pointermove", (event) => {
             if (event.pointerType !== "mouse" || calm()) return;
-            const rect = button.getBoundingClientRect();
-            const x = event.clientX - rect.left - rect.width / 2;
-            const y = event.clientY - rect.top - rect.height / 2;
-            button.style.translate = `${clamp(x * 0.2, -8, 8)}px ${clamp(y * 0.3, -6, 6)}px`;
+            if (!rect || rect.stamp !== scrollStamp) rect = { ...button.getBoundingClientRect().toJSON(), stamp: scrollStamp };
+            state.tx = clamp((event.clientX - rect.left - rect.width / 2) * 0.15, -5, 5);
+            state.ty = clamp((event.clientY - rect.top - rect.height / 2) * 0.2, -4, 4);
+            kick();
         });
-        button.addEventListener("pointerleave", () => (button.style.translate = ""));
+        button.addEventListener("pointerleave", () => {
+            rect = null;
+            state.tx = 0;
+            state.ty = 0;
+            kick();
+        });
     });
 
     /* ---------- カーソル（パソコン） ---------- */

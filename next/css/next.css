@@ -904,7 +904,7 @@ html.has-cursor .cursor-ring { display: flex; }
 /* ---------- カードの傾き ---------- */
 
 .tilt { transform-style: preserve-3d; will-change: transform; }
-.tilt.is-tilting { transition: transform .08s linear !important; }
+.tilt.is-tilting { transition: none !important; }
 .tilt-glare { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .45), transparent 55%); opacity: 0; transition: opacity .2s ease; }
 .tilt.is-tilting .tilt-glare { opacity: 1; }
 
