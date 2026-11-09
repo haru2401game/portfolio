@@ -190,18 +190,19 @@
         host.append(frame);
     });
 
-    // 漂う：セクションの後ろを横切る
+    // 漂う：セクションの上と下の余白（カードや文字の無いところ）を横切る
+    // ※ カードの後ろを通ると、カードを押したいのにキャラに重なる・キャラを押そうとしてカードが開く、になるため
     const DRIFTERS = [
-        { section: ".hero", file: "Fish.png", y: "80%", w: 60, d: 34, delay: -6 },
-        { section: ".about", file: "RedFish.png", y: "86%", w: 54, d: 40, delay: -12, reverse: true },
-        { section: ".featured", file: "Boss.png", y: "58%", w: 116, d: 58, delay: -14 },
-        { section: ".works", file: "RedFish.png", y: "30%", w: 56, d: 38, delay: -4, reverse: true },
-        { section: ".works", file: "Fish.png", y: "74%", w: 50, d: 46, delay: -28 },
-        { section: ".skills", file: "Penzou.png", y: "44%", w: 60, d: 48, delay: -8 },
-        { section: ".play", file: "Ojisand.png", y: "70%", w: 58, d: 40, delay: -16, reverse: true },
-        { section: ".blog", file: "Penko.png", y: "14%", w: 60, d: 50, delay: -30 },
-        { section: ".contact", file: "RedFish.png", y: "72%", w: 54, d: 36, delay: -18 },
-        { section: ".contact", file: "Player.png", y: "18%", w: 50, d: 44, delay: -26, reverse: true },
+        { section: ".about", file: "RedFish.png", band: "top", w: 50, d: 40, delay: -12, reverse: true },
+        { section: ".featured", file: "Boss.png", band: "bottom", w: 84, d: 58, delay: -14 },
+        { section: ".works", file: "RedFish.png", band: "top", w: 50, d: 38, delay: -4, reverse: true },
+        { section: ".works", file: "Fish.png", band: "bottom", w: 48, d: 46, delay: -28 },
+        { section: ".skills", file: "Penzou.png", band: "top", w: 54, d: 48, delay: -8 },
+        { section: ".play", file: "Ojisand.png", band: "bottom", w: 54, d: 40, delay: -16, reverse: true },
+        { section: ".blog", file: "Penko.png", band: "top", w: 54, d: 50, delay: -30 },
+        { section: ".contact", file: "RedFish.png", band: "bottom", w: 50, d: 36, delay: -18 },
+        { section: ".contact", file: "Player.png", band: "top", w: 46, d: 44, delay: -26, reverse: true },
+        { section: ".mode", file: "Fish.png", band: "top", w: 48, d: 34, delay: -6 },
     ];
     DRIFTERS.forEach((config) => {
         const section = $(config.section);
@@ -212,8 +213,7 @@
             layer.setAttribute("aria-hidden", "true");
             section.prepend(layer);
         }
-        const img = sprite(config.file, `drifter${config.reverse ? " is-reverse" : ""}`);
-        img.style.top = config.y;
+        const img = sprite(config.file, `drifter is-${config.band}${config.reverse ? " is-reverse" : ""}`);
         img.style.setProperty("--drift-w", `${config.w}px`);
         img.style.setProperty("--drift-d", `${config.d}s`);
         img.style.setProperty("--drift-delay", `${config.delay}s`);

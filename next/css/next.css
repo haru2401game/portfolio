@@ -1182,3 +1182,7 @@ html.motion-off .peeker, html.motion-off .drifter, html.motion-off .card-pop, ht
 .peeker > img.peeker-sprite { position: static !important; display: block !important; width: 100% !important; height: auto !important; max-width: none !important; object-fit: contain !important; clip-path: none !important; border-radius: 0 !important; background: none !important; animation: peek 9s cubic-bezier(.3, 1.4, .5, 1) var(--peek-delay) infinite !important; }
 .peeker.is-side > img.peeker-sprite { animation-name: peek-side !important; }
 .play-card > img.card-pop, .sns a > img.card-pop { position: absolute !important; width: 52px !important; height: auto !important; object-fit: contain !important; }
+/* 漂うキャラは、セクションの上と下の余白だけを通る（カードと重ならない） */
+.drifter.is-top { top: calc(clamp(72px, 10vw, 128px) / 2 - var(--drift-w) / 2 + 8px); }
+.drifter.is-bottom { top: auto; bottom: calc(clamp(72px, 10vw, 128px) / 2 - var(--drift-w) / 2 - 8px); }
+@keyframes drift { from { translate: -160px 0; } 25% { translate: 25vw -10px; } 50% { translate: 50vw 6px; } 75% { translate: 75vw -8px; } to { translate: calc(100vw + 160px) 0; } }
