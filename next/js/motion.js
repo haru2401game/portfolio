@@ -3,7 +3,7 @@
 
    ・起動演出／名前と見出しの1文字ずつのアニメーション／流れる帯
    ・カーソル／クリックの火花／カードの傾き／ボタンの吸いつき
-   ・スクロール連動（進み具合のバー・パララックス・Timeline の横移動）
+   ・スクロール連動（進み具合のバー・パララックス・Timeline の道が赤くのびる）
    ・説明文は「くわしく」で開く（最初は短く見せる）
    OPTIONS のアニメーション「なし」で全部、「軽量」で重い動きが止まる（boot.js / next.js が <html> にクラスを付ける）
 ======================================== */
@@ -185,27 +185,27 @@
     ].filter(([node]) => node);
     parallax.forEach(([node]) => node.setAttribute("data-parallax", ""));
 
-    // Timeline：パソコンでは、縦にスクロールすると横に進む
+    // Timeline：上から下へ進むワールドマップ。スクロールに合わせて道が赤くのび、出来事が左右から出てくる
     const timeline = $("#timeline");
-    const pin = $("[data-tl-pin]");
     const tlTrack = $("[data-timeline]");
-    const tlHint = $(".tl-hint");
-    let tlDistance = 0;
+    let tlObserver = null;
     const setupTimeline = () => {
-        if (!timeline || !pin || !tlTrack) return;
-        const use = desktop.matches && !light();
-        timeline.classList.toggle("is-pinned", use);
-        if (!use) {
-            timeline.style.height = "";
-            tlTrack.style.transform = "";
-            $$(".tl-item", tlTrack).forEach((item) => item.classList.add("is-reached"));
-            if (tlHint) tlHint.textContent = "横にスクロールすると、いまの挑戦まで進めます";
+        if (!timeline || !tlTrack) return;
+        const items = $$(".tl-item", tlTrack);
+        if (calm() || !("IntersectionObserver" in window)) {
+            items.forEach((item) => item.classList.add("is-reached"));
+            tlTrack.style.setProperty("--tl-fill", "100%");
             return;
         }
-        tlDistance = Math.max(0, tlTrack.scrollWidth - innerWidth);
-        const header = $("#hd")?.offsetHeight || 0;
-        timeline.style.height = `${innerHeight - header + tlDistance + 80}px`;
-        if (tlHint) tlHint.textContent = "そのまま下にスクロールすると、いまの挑戦まで進みます";
+        if (tlObserver) return;
+        tlObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-reached");
+                tlObserver.unobserve(entry.target);
+            });
+        }, { rootMargin: "0px 0px -18% 0px" });
+        items.forEach((item) => tlObserver.observe(item));
     };
 
     let lastY = scrollY;
@@ -222,6 +222,15 @@
         if (progress) {
             const max = document.documentElement.scrollHeight - innerHeight;
             progress.style.transform = `scaleX(${max > 0 ? clamp(y / max, 0, 1) : 0})`;
+        }
+
+        // Timeline：画面の6割の高さまで来たところまで、道を赤くする
+        if (tlTrack && !still) {
+            const rect = tlTrack.getBoundingClientRect();
+            if (rect.bottom > -200 && rect.top < innerHeight + 200) {
+                const fill = clamp((innerHeight * 0.6 - rect.top) / (rect.height || 1), 0, 1);
+                tlTrack.style.setProperty("--tl-fill", `${(fill * 100).toFixed(1)}%`);
+            }
         }
 
         // 流れる帯
@@ -259,20 +268,7 @@
                 node.style.translate = `0 ${offset.toFixed(1)}px`;
             });
 
-            // Timeline の横移動
-            if (timeline?.classList.contains("is-pinned")) {
-                const header = $("#hd")?.offsetHeight || 0;
-                const rect = timeline.getBoundingClientRect();
-                const span = timeline.offsetHeight - (innerHeight - header);
-                const p = span > 0 ? clamp((header - rect.top) / span, 0, 1) : 0;
-                tlTrack.style.transform = `translate3d(${-p * tlDistance}px, 0, 0)`;
-                $$(".tl-item", tlTrack).forEach((item) => {
-                    const r = item.getBoundingClientRect();
-                    item.classList.toggle("is-reached", r.left < innerWidth * 0.82);
-                });
-            }
         } else {
-            if (timeline?.classList.contains("is-pinned") === false) tlTrack && (tlTrack.style.transform = "");
             [heroMedia, heroBody, heroName].forEach((node) => node && (node.style.transform = ""));
             if (heroBody) heroBody.style.opacity = "";
             parallax.forEach(([node]) => (node.style.translate = ""));

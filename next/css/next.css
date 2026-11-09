@@ -1186,3 +1186,51 @@ html.motion-off .peeker, html.motion-off .drifter, html.motion-off .card-pop, ht
 .drifter.is-top { top: calc(clamp(72px, 10vw, 128px) / 2 - var(--drift-w) / 2 + 8px); }
 .drifter.is-bottom { top: auto; bottom: calc(clamp(72px, 10vw, 128px) / 2 - var(--drift-w) / 2 - 8px); }
 @keyframes drift { from { translate: -160px 0; } 25% { translate: 25vw -10px; } 50% { translate: 50vw 6px; } 75% { translate: 75vw -8px; } to { translate: calc(100vw + 160px) 0; } }
+
+/* ================================================================
+   Timeline（v4）：上から下へ進むワールドマップ
+   真ん中の道を、スクロールに合わせて赤くのばす（--tl-fill。motion.js）。出来事は左右から交互に出てくる
+================================================================ */
+.tl-scroller { overflow: visible; scroll-snap-type: none; padding: 8px 0 0; }
+.tl-track { position: relative; display: block; width: min(1100px, 100% - var(--gutter) * 2); margin: 0 auto; padding: 0; --tl-fill: 0%; }
+.tl-track::before, .tl-track::after { content: ""; position: absolute; left: 50%; top: 0; width: 6px; margin-left: -3px; border-radius: 3px; }
+.tl-track::before { bottom: 0; background: repeating-linear-gradient(180deg, var(--ink) 0 16px, transparent 16px 26px); opacity: .25; }
+.tl-track::after { height: var(--tl-fill); background: var(--red); transition: height .15s linear; }
+.tl-item { position: relative; width: auto; padding: 0 0 36px; display: grid; grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr); align-items: start; scroll-snap-align: none; }
+.tl-item::before { display: none; }
+.tl-item .tl-node { grid-column: 2; grid-row: 1; justify-self: center; margin-top: 16px; }
+.tl-item .tl-date { grid-row: 1; padding-top: 12px; font-size: 22px; }
+.tl-item .tl-card { grid-row: 1; width: min(420px, 100%); }
+.tl-item:nth-child(odd) .tl-card { grid-column: 1; justify-self: end; }
+.tl-item:nth-child(odd) .tl-date { grid-column: 3; text-align: left; }
+.tl-item:nth-child(even) .tl-card { grid-column: 3; justify-self: start; }
+.tl-item:nth-child(even) .tl-date { grid-column: 1; text-align: right; }
+.tl-item.is-now .tl-node { margin-top: 12px; }
+/* 左右から出てくる（まだ来ていない出来事は、少し薄く・道の外側にずれている） */
+.tl-item .tl-card, .tl-item .tl-date { transition: opacity .6s ease, translate .7s cubic-bezier(.2, .8, .2, 1), transform .4s cubic-bezier(.2, .8, .2, 1), border-color .2s ease; }
+.tl-item:not(.is-reached) .tl-card, .tl-item:not(.is-reached) .tl-date { opacity: 0; }
+.tl-item:nth-child(odd):not(.is-reached) .tl-card { translate: -48px 0; }
+.tl-item:nth-child(even):not(.is-reached) .tl-card { translate: 48px 0; }
+.tl-item .tl-node { transition: transform .4s cubic-bezier(.3, 1.6, .5, 1), background .3s ease; }
+.tl-item:not(.is-reached) .tl-node { transform: scale(.4); }
+.tl-item.is-reached .tl-node { transform: scale(1); }
+.tl-card p { -webkit-line-clamp: 3; }
+.tl-card p span { display: block; }
+.tl-photo img { height: 150px; }
+/* Chrono が右のふちから顔を出せるように、いまの挑戦のカードは右側にあるときだけ（左側なら上のふちから） */
+.tl-item:nth-child(odd).is-now .peeker.is-side { left: auto; right: 100%; }
+.tl-item:nth-child(odd).is-now .peeker.is-side > img.peeker-sprite { scale: -1 1; }
+html.motion-off .tl-item .tl-card, html.motion-off .tl-item .tl-date { opacity: 1 !important; translate: none !important; }
+html.motion-off .tl-item .tl-node { transform: none !important; }
+
+@media (max-width: 760px) {
+    .tl-track::before, .tl-track::after { left: 18px; }
+    .tl-item { grid-template-columns: 36px minmax(0, 1fr); padding-bottom: 24px; column-gap: 12px; }
+    .tl-item .tl-node, .tl-item:nth-child(n) .tl-node { grid-column: 1; grid-row: 1 / span 2; margin-top: 4px; }
+    .tl-item:nth-child(n) .tl-date { grid-column: 2; grid-row: 1; text-align: left; padding-top: 0; font-size: 18px; }
+    .tl-item:nth-child(n) .tl-card { grid-column: 2; grid-row: 2; justify-self: stretch; width: auto; }
+    .tl-item:nth-child(n):not(.is-reached) .tl-card { translate: 32px 0; }
+    /* スマホでは、いまの挑戦のキャラはカードの上のふちから顔を出す */
+    .tl-item.is-now .peeker.is-side { left: auto !important; right: 16px; top: auto; bottom: 100%; width: 44px; height: 32px; }
+    .tl-item.is-now .peeker.is-side > img.peeker-sprite { scale: 1 1; animation-name: peek !important; translate: 0 102%; }
+}
