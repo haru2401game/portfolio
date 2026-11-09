@@ -749,7 +749,8 @@ window.I18N_EN = {
         "今までのデザイン（クラシック）に切り替えます。いつでも戻せます": "Switch to the previous (classic) design. You can switch back any time",
         "クラシック版で見る →": "View the classic version →",
         "クラシック版で見る（CLASSIC MODE）": "View the classic version (CLASSIC MODE)",
-        "© 2026 Haruta Nagaya ／": "© 2026 Haruta Nagaya /"
+        "© 2026 Haruta Nagaya ／": "© 2026 Haruta Nagaya /",
+        "実装：長屋晴太": "Built by Haruta Nagaya"
     },
     "patterns": [
         [
