@@ -102,7 +102,22 @@
     // トップの名前（落ちてきて弾む）
     $$(".hero-name-en > span").forEach((line, row) => {
         splitInto(line);
-        $$(".ch", line).forEach((ch, i) => ch.style.setProperty("--i", String(i + row * 3)));
+        $$(".ch", line).forEach((ch, i) => {
+            ch.style.setProperty("--i", String(i + row * 3));
+            // 落ち終わったら「着地」。そこから先は、乗せたときの跳ねるアニメーションだけを使う
+            const land = () => ch.classList.add("is-landed");
+            ch.addEventListener("animationend", (event) => {
+                if (event.animationName === "drop") land();
+                if (event.animationName === "hop") ch.classList.remove("is-hop");
+            });
+            ch.addEventListener("animationcancel", (event) => event.animationName === "hop" && ch.classList.remove("is-hop"));
+            if (calm()) land();
+            // 跳ね始めたら、カーソルが外れても最後まで跳ねる
+            ch.addEventListener("pointerenter", (event) => {
+                if (event.pointerType !== "mouse" || calm() || !ch.classList.contains("is-landed") || ch.classList.contains("is-hop")) return;
+                ch.classList.add("is-hop");
+            });
+        });
     });
 
     // 大きな見出し（下から出てくる）
@@ -493,6 +508,7 @@
         if (light() === wasLight) return;
         wasLight = light();
         if (wasLight) root.classList.remove("has-cursor");
+        $$(".hero-name-en .ch").forEach((ch) => ch.classList.add("is-landed")); // 設定を変えたあとも、乗せると跳ねるように
         setupTimeline();
     }).observe(root, { attributes: true, attributeFilter: ["class"] });
     requestAnimationFrame(frame);

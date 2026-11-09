@@ -871,10 +871,13 @@ html.is-booting .boot { position: fixed; inset: 0; z-index: 200; display: flex; 
 /* トップの名前：落ちてきて弾む・乗せると跳ねる */
 .hero-name-en span { opacity: 1; transform: none; animation: none; }
 .hero-name-en .ch { animation: drop .8s cubic-bezier(.3, 1.5, .5, 1) both; animation-delay: calc(.15s + var(--i) * 45ms); }
-.hero-name-en .ch:hover { animation: hop .45s cubic-bezier(.3, 1.6, .5, 1); color: var(--red); }
-.hero-name-en .is-red .ch:hover { color: var(--ink); }
+/* 落ち終わった文字（is-landed）は、カーソルを乗せると最後まで跳ねる（is-hop。motion.js が付け外し）
+   ※ :hover で動かすと、文字が跳ねてカーソルから外れた瞬間に止まってしまうため */
+.hero-name-en .ch.is-landed { animation: none; }
+.hero-name-en .ch.is-landed.is-hop { animation: hop .55s cubic-bezier(.3, 1.6, .5, 1); color: var(--red); }
+.hero-name-en .is-red .ch.is-landed.is-hop { color: var(--ink); }
 @keyframes drop { from { opacity: 0; transform: translateY(-80%) rotate(-10deg); } }
-@keyframes hop { 40% { transform: translateY(-18%) rotate(-4deg); } }
+@keyframes hop { 0%, 100% { transform: none; } 35% { transform: translateY(-20%) rotate(-5deg); } 65% { transform: translateY(4%) rotate(2deg); } }
 html.is-booting .hero-name-en .ch { animation-play-state: paused; }
 
 /* マウスに合わせて、映像と名前が少しずれて動く（奥行き） */
@@ -1099,7 +1102,11 @@ html.using-gamepad:not(.motion-off) .is-gamepad-hop { animation: gamepad-hop .24
 .drifter.is-reverse { animation-direction: reverse, normal; scale: -1 1; }
 @keyframes drift { from { translate: -160px 0; } 25% { translate: 25vw -30px; } 50% { translate: 50vw 10px; } 75% { translate: 75vw -24px; } to { translate: calc(100vw + 160px) 0; } }
 @keyframes drift-spin { 0%, 100% { rotate: -14deg; } 50% { rotate: 14deg; } }
-.is-caught { animation: caught .26s ease !important; }
+/* 見つけたとき：動き（のぞく・漂う）はそのままにして、光らせるだけ
+   ※ animation を上書きすると、動きが最初からやり直しになって消えたり瞬間移動したりするため */
+.peeker-sprite, .drifter { transition: filter .15s ease; }
+.is-caught { filter: brightness(1.5) drop-shadow(0 0 10px rgba(215, 38, 61, .95)); }
+.catch-burst { position: fixed; z-index: 96; width: 12px; height: 12px; margin: -6px 0 0 -6px; border: 3px solid var(--red); border-radius: 50%; pointer-events: none; animation: ring-out .5s ease-out forwards; }
 @keyframes caught { 50% { scale: 1.3; } }
 
 .card-pop { position: absolute; right: 14px; bottom: calc(100% - 14px); width: 52px; opacity: 0; translate: 0 20px; transition: opacity .2s ease, translate .25s cubic-bezier(.3, 1.6, .5, 1); z-index: 0; }

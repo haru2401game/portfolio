@@ -267,7 +267,15 @@
         const name = nameOf(img);
         if (!name) return;
         img.classList.add("is-caught");
-        setTimeout(() => img.classList.remove("is-caught"), 260);
+        setTimeout(() => img.classList.remove("is-caught"), 450);
+        // 押した場所に輪が広がる（キャラ自体の動きは止めない）
+        if (!calm()) {
+            const burst = make("span", "catch-burst");
+            burst.style.left = `${event.clientX}px`;
+            burst.style.top = `${event.clientY}px`;
+            document.body.append(burst);
+            setTimeout(() => burst.remove(), 550);
+        }
         if (found.has(name)) {
             bubble(event.clientX, event.clientY, name);
             return;
