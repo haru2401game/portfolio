@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" data-base="../">
+<html lang="ja" data-base="../" data-design="new">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,6 +51,10 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,600;1,700;1,800&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap">
 <!-- 設定（アニメーション・言語）と起動演出を、ページを描く前に決める -->
 <script src="js/boot.js?v=d0c1623d"></script>
+<!-- デザインの切り替え（NEW ⇄ CLASSIC）。クラシックの住所は下の meta（BETA のあいだはトップ。本番に切り替えると classic.html） -->
+<meta name="pa-design-classic" content="../">
+<script src="../js/design-switch.js?v=1df9736d"></script>
+<link rel="stylesheet" href="../css/design-switch.css?v=72945e20">
 <link rel="stylesheet" href="css/next.css?v=e1d03581">
 <script type="application/ld+json">
 {
@@ -130,7 +134,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <!--beta-->
 <div class="beta-bar">
     <span><b>BETA</b> 新デザインの試作版です。気になる点を教えてください。</span>
-    <a href="../">今のサイトを見る →</a>
+    <a href="../" data-design-link>クラシック版で見る →</a>
 </div>
 <!--/beta-->
 
@@ -696,7 +700,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <footer class="ft">
     <p>実装：長屋晴太（生成AI「Claude」と協力）</p>
-    <p>© 2026 Haruta Nagaya<!--beta--> ／ <a href="../">今のサイトを見る</a><!--/beta--></p>
+    <p>© 2026 Haruta Nagaya ／ <a href="../" data-design-link>クラシック版で見る（CLASSIC MODE）</a></p>
 </footer>
 
 <!-- 作品の詳しい画面 -->
@@ -764,6 +768,14 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
         </div>
     </div>
     <div class="opt">
+        <span class="opt-label" id="opt-design">DESIGN ／ デザイン</span>
+        <div class="seg" role="radiogroup" aria-labelledby="opt-design" data-design-switch>
+            <button type="button" role="radio" data-value="new">NEW</button>
+            <button type="button" role="radio" data-value="classic">CLASSIC</button>
+        </div>
+        <p class="opt-note">今までのデザイン（クラシック）に切り替えます。いつでも戻せます</p>
+    </div>
+    <div class="opt">
         <span class="opt-label">TROPHY ／ トロフィー <b data-trophy-count>0 / 0</b></span>
         <ul class="trophies" data-trophies></ul>
     </div>
@@ -782,7 +794,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <script src="js/extras.js?v=54247470"></script>
 <script src="../js/analytics.js?v=c27ec0c0"></script>
 <script src="../js/like.js?v=852cfd13"></script>
-<script src="../js/i18n.js?v=d4d80b86"></script>
+<script src="../js/i18n.js?v=41e9eca6"></script>
 <script src="../js/gamepad.js?v=365db478"></script>
 <script src="js/motion.js?v=70b1cb67"></script>
 </body>

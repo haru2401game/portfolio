@@ -1,0 +1,97 @@
+/* ========================================
+   デザインの切り替え演出（js/design-switch.js）
+   新デザインとクラシックの両方で読み込む。どちらのページの色にも左右されないよう、色はここで決める
+======================================== */
+
+.ds-switch {
+    --ds-red: #d7263d;
+    --ds-ink: #1a1a1a;
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Barlow Condensed", "Noto Sans JP", "Inter", sans-serif;
+    color: #fff;
+    pointer-events: all;
+}
+
+/* 赤と黒の板が、ななめに画面をおおう */
+.ds-panel {
+    position: absolute;
+    inset: 0;
+    background: var(--ds-red);
+    transform: translateX(-110%) skewX(-12deg);
+    transition: transform .45s cubic-bezier(.7, 0, .2, 1);
+}
+.ds-panel.is-b {
+    background: var(--ds-ink);
+    clip-path: polygon(62% 0, 100% 0, 100% 100%, 38% 100%);
+    transform: translateX(110%) skewX(-12deg);
+    transition-delay: .06s;
+}
+.ds-switch.is-in .ds-panel { transform: translateX(0) skewX(0); }
+
+.ds-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 0 16px;
+    text-align: center;
+    opacity: 0;
+    transform: scale(.92);
+    transition: opacity .3s ease .3s, transform .4s cubic-bezier(.3, 1.4, .5, 1) .3s;
+}
+.ds-switch.is-in .ds-body { opacity: 1; transform: none; }
+.ds-small { margin: 0; font-style: italic; font-weight: 700; font-size: 16px; letter-spacing: .4em; }
+.ds-modes { margin: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 18px; font-style: italic; font-weight: 800; font-size: clamp(34px, 7vw, 84px); line-height: 1; }
+.ds-from { opacity: .5; text-decoration: line-through; text-decoration-thickness: 4px; }
+.ds-arrow { font-size: .5em; animation: ds-nudge .6s ease-in-out infinite; }
+.ds-to { color: #fff; }
+@keyframes ds-nudge { 50% { transform: translateX(8px); } }
+.ds-bar { width: min(420px, 72vw); height: 8px; background: rgba(255, 255, 255, .25); overflow: hidden; }
+.ds-bar span { display: block; height: 100%; width: 0; background: #fff; }
+.ds-num { margin: 0; font-style: italic; font-weight: 700; font-size: 15px; letter-spacing: .3em; }
+.ds-num b { font-size: 1.3em; }
+
+/* 着いた側：同じ赤と黒の板が、上へ抜けて幕が開く（ページを描く前から出せるよう、<html> の飾りで作る） */
+html.ds-arrive::before,
+html.ds-arrive::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    pointer-events: none;
+    animation: ds-open .7s cubic-bezier(.7, 0, .2, 1) .35s forwards;
+}
+html.ds-arrive::before { background: #d7263d; animation-delay: .5s; }
+/* 黒い幕に「○○ MODE」→ 上へ抜ける → 赤い幕 → 上へ抜けてページが見える */
+html.ds-arrive::after {
+    content: attr(data-ds-label);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    color: #fff;
+    font-family: "Barlow Condensed", "Noto Sans JP", "Inter", sans-serif;
+    font-style: italic;
+    font-weight: 800;
+    font-size: clamp(34px, 7vw, 84px);
+    letter-spacing: .02em;
+    animation-delay: .3s;
+}
+@keyframes ds-open { to { transform: translateY(-102%); } }
+
+/* クラシックの設定画面に足した「デザイン」の行 */
+.settings-row:has([data-design-switch]) .settings-note { margin-top: 6px; }
+
+/* 新デザインのフッター・BETA の帯の「○○で見る」リンク */
+[data-design-link][hidden] { display: none !important; }
+
+/* クラシックのフッターの「新しいデザインで見る」 */
+.footer-design { margin: 10px 0 0; text-align: center; }
+.footer-design a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #d7263d; color: #fff; font-weight: 800; font-size: 14px; letter-spacing: .04em; text-decoration: none; }
+.footer-design a:hover { background: #b81d31; }

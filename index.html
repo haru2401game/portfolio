@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-design="classic">
 
 <head>
 
@@ -53,6 +53,10 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <!-- 設定（アニメーション・言語）を、ページを描く前に反映する -->
 <script src="js/settings-boot.js?v=bf22bc21"></script>
+<!-- デザインの切り替え（NEW ⇄ CLASSIC）。新デザインの住所は下の meta（BETA のあいだは next/） -->
+<meta name="pa-design-new" content="next/">
+<script src="js/design-switch.js?v=1df9736d"></script>
+<link rel="stylesheet" href="css/design-switch.css?v=72945e20">
 
 <link rel="stylesheet" href="css/style.css?v=42168cd8">
 
@@ -1920,6 +1924,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
         <a href="#top" class="footer-top">BACK TO TOP <span aria-hidden="true">↑</span></a>
     </div>
     <p class="footer-copyright">© 2026 HARUTA NAGAYA / ALL RIGHTS RESERVED.</p>
+    <p class="footer-design"><a href="next/" data-design-link>▶ 新しいデザインで見る（NEW MODE）</a></p>
     <p class="footer-privacy">このサイトでは閲覧状況を把握するため、独自のアクセス解析を行っています。Cookieは使用せず、個人を特定できる情報は保存しません。</p>
 </footer>
 
@@ -1934,7 +1939,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <script src="js/play.js?v=304d3f1e"></script>
 <script src="js/sfx.js?v=f1476fa6"></script>
 <script src="js/gamepad.js?v=365db478"></script>
-<script src="js/i18n.js?v=d4d80b86"></script>
+<script src="js/i18n.js?v=41e9eca6"></script>
 
 </body>
 </html>

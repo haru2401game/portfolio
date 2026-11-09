@@ -12,6 +12,7 @@
      4. next/css・next/js のファイルを css/・js/ にコピーする
      5. next/index.html は「トップへ移動しました」のページにする（BETA の住所を知っている人のため）
      6. 今のデザイン用のテスト（tests/cases/2〜4）を tests/classic/ にしまう（新デザインは 5-next.mjs が確かめる）
+     7. 今のトップページを classic.html として残す（OPTIONS の「デザイン」・フッターから切り替えられる。検索には出さない）
 
    元に戻すとき：切り替えたコミットを  git revert  する（前のトップページは Git の履歴に残っている）
 ======================================== */
@@ -47,6 +48,18 @@ let page = html.replace(/<!--beta-->[\s\S]*?<!--\/beta-->\n?/g, "");
 if (/beta-bar|noindex/.test(page)) problems.push("BETA の帯か noindex が残っています（<!--beta--> で囲まれていない）");
 
 /* ---------- 2. 住所を本番用に ---------- */
+
+// 切り替え先（クラシック）の住所：BETA では "../"（トップ）→ 本番では classic.html
+if (!/<meta name="pa-design-classic" content="\.\.\/">/.test(page)) problems.push('新デザインに <meta name="pa-design-classic" content="../"> がありません');
+page = page.replace('<meta name="pa-design-classic" content="../">', '<meta name="pa-design-classic" content="classic.html">');
+
+// 今のトップ → classic.html（同じフォルダに置くので、ファイルの住所はそのまま使える）
+const currentTop = read(path.join(ROOT, "index.html"));
+if (!/<meta name="pa-design-new" content="next\/">/.test(currentTop)) problems.push('今のトップに <meta name="pa-design-new" content="next/"> がありません');
+const classic = currentTop
+    .replace('<meta name="pa-design-new" content="next/">', '<meta name="pa-design-new" content="./">')
+    .replace(/(<meta charset="UTF-8">)/i, '$1\n<meta name="robots" content="noindex">')
+    .replace(/(href="next\/" data-design-link)/, 'href="./" data-design-link');
 
 page = page
     .replace('data-base="../"', 'data-base=""')
@@ -89,6 +102,7 @@ if (check) {
 
 /* ---------- 3〜5. 書き込む ---------- */
 
+fs.writeFileSync(path.join(ROOT, "classic.html"), classic);
 fs.writeFileSync(path.join(ROOT, "index.html"), page);
 for (const [from, to] of COPIES) fs.copyFileSync(from, to);
 

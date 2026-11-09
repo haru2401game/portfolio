@@ -455,7 +455,7 @@ window.I18N_EN = {
         "続きを読む": "Read more",
         "COMPLETE! 10本制作達成": "COMPLETE! All 10 games made",
         "企画": "Design",
-        "デザイン": "Art",
+        "デザイン": "Design",
         "CLASS：ゲームプログラマー志望": "CLASS: Aspiring Game Programmer",
         "開発歴（年目）": "Years developing",
         "制作した作品": "Works made",
@@ -742,7 +742,14 @@ window.I18N_EN = {
         "PLAYER STATUS を見てみよう": "Check out PLAYER STATUS",
         "全ステージを見た": "Viewed every stage",
         "作品をたたむ": "Show fewer works",
-        "これまでの歩みをたたむ": "Hide earlier events"
+        "これまでの歩みをたたむ": "Hide earlier events",
+        "新しいデザインに切り替えます（いつでも戻せます）": "Switch to the new design (you can switch back any time)",
+        "▶ 新しいデザインで見る（NEW MODE）": "▶ View the new design (NEW MODE)",
+        "DESIGN ／ デザイン": "DESIGN",
+        "今までのデザイン（クラシック）に切り替えます。いつでも戻せます": "Switch to the previous (classic) design. You can switch back any time",
+        "クラシック版で見る →": "View the classic version →",
+        "クラシック版で見る（CLASSIC MODE）": "View the classic version (CLASSIC MODE)",
+        "© 2026 Haruta Nagaya ／": "© 2026 Haruta Nagaya /"
     },
     "patterns": [
         [

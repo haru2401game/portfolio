@@ -429,6 +429,16 @@ npm test
 - 設定（OPTIONS）・トロフィー・キャラ図鑑の記録も共通なので、どちらのデザインで遊んでも続きになる
 - BETA 版だけに必要な部分（BETA の帯・検索に出さない設定・解析を送らない印）は、`index.html` の中で `<!--beta-->` 〜 `<!--/beta-->` で囲んである
 
+### デザインの切り替え（NEW ⇄ CLASSIC）
+
+新デザインと今までのデザイン（クラシック）は、見る人が切り替えられます（`js/design-switch.js` と `css/design-switch.css`。両方のデザインで共通）。
+
+- 切り替えの場所：OPTIONS の「デザイン」と、フッターのリンク
+- 切り替えるときは「CHANGE DESIGN / NOW LOADING」の演出 → 移動 → 着いた側で黒と赤の幕が上へ開く（アニメーション「なし」のときは演出なし）
+- 選んだデザインは設定（`pa-settings.design`）に覚えて、次に開いたときもそのデザインで表示する
+- `?design=classic` / `?design=new` を付けたリンクで、どちらかを指定して開ける
+- もう片方の住所は `<meta name="pa-design-new">`・`<meta name="pa-design-classic">` に書いてある（BETA のあいだは トップ ⇄ next/、本番に切り替えたあとは トップ ⇄ classic.html。`npm run launch` が自動で書きかえる）
+
 ### 本番に切り替えるとき
 
 ```bash
@@ -444,6 +454,7 @@ npm test         # 自動テスト（すべて合格を確認）
 3. できたページで `index.html` を上書きし、`next/css`・`next/js` のファイルを `css/`・`js/` にコピーする
 4. `next/index.html` は「トップページへ移動しました」のページにする
 5. 今のデザイン用のテスト（`tests/cases/2〜4`）を `tests/classic/` にしまう
+6. 今のトップページを `classic.html` として残す（デザインの切り替え先。検索には出さない）
 
 切り替えられる状態かどうかは、自動テスト（「本番に切り替えられる状態になっている」）がいつも確かめています。
 元に戻すときは、切り替えたコミットを `git revert` します（前のトップページは Git の履歴に残っています）。
