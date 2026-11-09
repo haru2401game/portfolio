@@ -15,36 +15,13 @@ const pageOf = (siteDir) => {
     return fs.readFileSync(next, "utf8").includes('data-launched="1"') ? "/" : "/next/";
 };
 
-// 起動演出（タブで最初の1回）は、テストの操作をさえぎらないように出さない
+// （前のデザインの起動演出の印。今は使っていないが、古い保存が残っていても動くことを確かめる）
 function skipBoot() {
     try {
         sessionStorage.setItem("next-booted", "1");
     } catch {
         /* ignore */
     }
-}
-
-// 鳴った効果音の数を数える（AudioContext の音の部品を見張る）
-function countSounds() {
-    try {
-        sessionStorage.setItem("next-booted", "1");
-    } catch {
-        /* ignore */
-    }
-    const Original = window.AudioContext;
-    window.__sounds = 0;
-    if (!Original) return;
-    window.AudioContext = class extends Original {
-        createOscillator() {
-            const oscillator = super.createOscillator();
-            const start = oscillator.start.bind(oscillator);
-            oscillator.start = (...args) => {
-                window.__sounds += 1;
-                return start(...args);
-            };
-            return oscillator;
-        }
-    };
 }
 
 // にせもののゲームパッド
@@ -154,13 +131,19 @@ export const tests = [
         }),
     },
     {
-        name: "起動演出が出て、クリックで飛ばせる",
-        run: withPage(async ({ open, target, expect }) => {
-            const { page } = await open(target, { wait: 200 });
-            expect(await page.evaluate(() => document.documentElement.classList.contains("is-booting")), "起動演出が出ていません");
-            await page.click("[data-boot]", { force: true });
-            await page.waitForTimeout(1200);
-            expect(!(await page.evaluate(() => document.documentElement.classList.contains("is-booting"))), "クリックしても起動演出が終わりません");
+        name: "遊び要素（キャラクター・トロフィー・いいね・効果音）が入っていない",
+        run: withPage(async ({ openNext, scrollThrough, expect }) => {
+            const { page } = await openNext();
+            await scrollThrough(page);
+            for (const key of ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"]) await page.keyboard.press(key);
+            await page.waitForTimeout(400);
+            const found = await page.evaluate(() =>
+                [".peeker", ".drifter", ".play-parade", "[data-trophies]", ".like-button", "[data-sfx-demo]", "[data-setting='sfx']", ".cursor-ring", ".sparks", "[data-boot]", ".marquee", "[data-share]"]
+                    .filter((selector) => document.querySelector(selector)),
+            );
+            expect(!found.length, `落ち着いたデザインに入れない部品があります: ${found.join(", ")}`);
+            const scripts = await page.evaluate(() => [...document.scripts].map((script) => script.src).filter((src) => /extras|like|sfx|play\.js/.test(src)));
+            expect(!scripts.length, `遊び要素のスクリプトを読み込んでいます: ${scripts.join(", ")}`);
         }),
     },
     {
@@ -295,16 +278,14 @@ export const tests = [
         }),
     },
     {
-        name: "「動きを減らす」設定の端末では、動きと起動演出が止まる",
+        name: "「動きを減らす」設定の端末では、動きが止まる",
         run: withPage(async ({ open, target, expect }) => {
             const { page } = await open(target, { reducedMotion: "reduce", wait: 1200 });
             const state = await page.evaluate(() => ({
                 motionOff: document.documentElement.classList.contains("motion-off"),
-                booting: document.documentElement.classList.contains("is-booting"),
                 heroPlaying: [...document.querySelectorAll(".hero video")].some((video) => !video.paused),
             }));
             expect(state.motionOff, "<html> に motion-off が付いていません");
-            expect(!state.booting, "起動演出が出ています");
             expect(!state.heroPlaying, "トップの動画が自動で再生されています");
         }),
     },
@@ -366,24 +347,6 @@ export const tests = [
         }),
     },
     {
-        name: "効果音 OFF のときは音が鳴らず、ON のときは鳴る",
-        run: withPage(async ({ open, target, expect }) => {
-            const play = async (sfx) => {
-                const { page } = await open(target, { settings: { sfx, volume: 50 }, init: countSounds });
-                await page.mouse.click(5, 400);
-                await page.click(".hd-options");
-                await page.click('[data-setting="motion"] [data-value="lite"]');
-                await page.keyboard.press("Escape");
-                await page.waitForTimeout(400);
-                return page.evaluate(() => window.__sounds);
-            };
-            const off = await play("off");
-            const on = await play("on");
-            expect(off === 0, `効果音 OFF なのに ${off} 回鳴りました`);
-            expect(on > 0, "効果音 ON なのに1回も鳴りませんでした");
-        }),
-    },
-    {
         name: "ゲームパッドの十字キーで移動でき、START で設定が開いて B で閉じる",
         run: withPage(async ({ open, target, expect }) => {
             const { page, errors } = await open(target, { init: fakeGamepad });
@@ -399,38 +362,6 @@ export const tests = [
             await pressPad(page, "b", 500);
             expect(!(await page.evaluate(() => !!document.querySelector("dialog[open]"))), "B ボタンで閉じません");
             expect(!errors.length, `エラーが出ました: ${errors[0]}`);
-        }),
-    },
-    {
-        name: "隠しコマンドでトロフィーが解除され、OPTIONS の一覧に出る",
-        run: withPage(async ({ openNext, expect }) => {
-            const { page } = await openNext();
-            for (const key of ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"]) await page.keyboard.press(key);
-            await page.waitForTimeout(400);
-            expect(await page.evaluate(() => !!document.querySelector(".play-parade")), "隠しコマンドの演出が出ません");
-            const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("pa-trophy") || "{}"));
-            expect(saved.konami, "隠しコマンドのトロフィーが記録されていません");
-            const listed = await page.evaluate(() => [...document.querySelectorAll("[data-trophies] li.is-got b")].map((b) => b.textContent));
-            expect(listed.includes("隠しコマンド"), "トロフィー一覧に出ていません");
-        }),
-    },
-    {
-        name: "いいねボタンが出て、前回の数をすぐ表示する",
-        run: withPage(async ({ openNext, expect }) => {
-            const { page } = await openNext({
-                wait: 300,
-                slowNetwork: true,
-                init: () => {
-                    try {
-                        sessionStorage.setItem("next-booted", "1");
-                    } catch {
-                        /* ignore */
-                    }
-                    localStorage.setItem("pa-like-total", "42");
-                },
-            });
-            const count = await page.evaluate(() => document.querySelector(".like-button .like-count")?.textContent);
-            expect(count === "42", `前回の数（42）ではなく「${count}」が表示されています`);
         }),
     },
     {

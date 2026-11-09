@@ -223,7 +223,7 @@
         // 新デザイン：技術の見どころの「くわしく読む」
         const newHighlight = target.closest(".hl");
         if (newHighlight && target.matches(".more-toggle") && target.getAttribute("aria-expanded") === "false") {
-            const title = nameOf(newHighlight, ".hl-title").replace(/^TECH HIGHLIGHT \d+\s*/, "");
+            const title = nameOf(newHighlight, ".hl-title").replace(/^(TECH HIGHLIGHT|POINT) \d+\s*/i, "");
             if (title) track("ui_open", `技術の見どころ: ${title}`);
             return;
         }

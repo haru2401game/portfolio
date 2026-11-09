@@ -1,11 +1,12 @@
 /* ========================================
-   next.js：新デザインの本体（作品・経歴・ブログ・設定・トロフィーなど）
+   next.js：新デザインの本体（作品・経歴・ブログ・設定など）
+   ・採用担当の方・大人の方向けの落ち着いたデザイン。効果音・トロフィーなどの遊び要素はクラシックだけ
 
    ・作品・経歴・ブログは、今のサイトと同じデータ（data/*.js）から作る
    ・画像・動画の置き場所は <html data-base="…"> を前に付けて探す（BETA 版は "../"、本番は ""）
    ・設定は今のサイトと同じ pa-settings（boot.js がページを描く前に反映している）
-   ・トロフィーなど、このデザインだけの記録は next-○○ に保存する（見ている人のブラウザだけ）
-   ・動き（カーソル・スクロール連動など）は motion.js
+   ・このデザインだけの記録（選んだ目的）は next-○○ に保存する（見ている人のブラウザだけ）
+   ・動き（スクロール連動など）は motion.js
 ======================================== */
 
 (() => {
@@ -107,7 +108,7 @@
             motion: ["default", "lite", "none"].includes(saved.motion) ? saved.motion : root.classList.contains("motion-off") ? "none" : "default",
             volume: Number.isFinite(volume) ? Math.min(100, Math.max(0, Math.round(volume))) : DEFAULT_VOLUME,
             muted: saved.muted === true,
-            // 効果音は、急に音が鳴らないように最初は OFF（今のサイトと同じ）
+            // 効果音はクラシックだけの設定。保存されている値はそのまま残す
             sfx: saved.sfx === "on" ? "on" : "off",
             lang: saved.lang === "en" ? "en" : "ja",
         };
@@ -128,93 +129,6 @@
     };
     window.NextSettings = { get: () => ({ ...settings }) };
 
-    /* ---------- 効果音（Web Audio API で、その場で作る） ---------- */
-
-    const sfx = (() => {
-        let ctx = null;
-        let unlocked = false;
-        const ensure = () => {
-            if (!ctx) {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                if (!AudioContext) return null;
-                ctx = new AudioContext();
-            }
-            if (ctx.state === "suspended") ctx.resume();
-            return ctx;
-        };
-        ["pointerdown", "keydown"].forEach((type) =>
-            window.addEventListener(type, () => {
-                unlocked = true;
-                ensure();
-            }, { once: true, capture: true }),
-        );
-        const tone = (freq, start, length, type = "square", gain = 0.12, slide = 0) => {
-            const audio = ensure();
-            if (!audio || settings.volume <= 0 || settings.muted) return;
-            const t = audio.currentTime + start;
-            const osc = audio.createOscillator();
-            const amp = audio.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, t);
-            if (slide) osc.frequency.exponentialRampToValueAtTime(freq * slide, t + length);
-            const level = gain * (settings.volume / 100);
-            amp.gain.setValueAtTime(0.0001, t);
-            amp.gain.exponentialRampToValueAtTime(level, t + 0.008);
-            amp.gain.exponentialRampToValueAtTime(0.0001, t + length);
-            osc.connect(amp).connect(audio.destination);
-            osc.start(t);
-            osc.stop(t + length + 0.02);
-        };
-        const SOUNDS = {
-            hover: () => tone(1320, 0, 0.035, "square", 0.05),
-            click: () => { tone(660, 0, 0.05); tone(990, 0.045, 0.07); },
-            open: () => { tone(523, 0, 0.06, "triangle", 0.18); tone(784, 0.05, 0.06, "triangle", 0.18); tone(1046, 0.1, 0.12, "triangle", 0.18); },
-            close: () => tone(700, 0, 0.12, "triangle", 0.16, 0.5),
-            select: () => { tone(880, 0, 0.06); tone(1175, 0.06, 0.1); },
-            trophy: () => [523, 659, 784, 1046, 1318].forEach((f, i) => tone(f, i * 0.07, 0.16, "square", 0.08)),
-            copy: () => { tone(1200, 0, 0.05, "sine", 0.2); tone(1600, 0.05, 0.08, "sine", 0.2); },
-        };
-        let lastHover = 0;
-        return {
-            // force：設定で効果音が OFF でも鳴らす（「音を鳴らしてみる」ボタンだけ）
-            play(name, force = false) {
-                if (settings.sfx !== "on" && !force) return;
-                if (!unlocked && name === "hover") return;
-                if (name === "hover") {
-                    const now = performance.now();
-                    if (now - lastHover < 60) return;
-                    lastHover = now;
-                }
-                try {
-                    SOUNDS[name]?.();
-                } catch {
-                    /* 音が出せない環境でも止めない */
-                }
-            },
-        };
-    })();
-
-    // ゲームパッド（../js/gamepad.js）から鳴らす音
-    const PAD_SOUNDS = { cursor: "hover", move: "hover", jump: "select", slide: "select", tab: "select", close: "close", open: "open" };
-    window.PlaySfx = (name) => sfx.play(PAD_SOUNDS[name] || "click");
-    window.PlaySfxFor = (target) => sfx.play(target?.matches?.(".stage-tab, .mode-card, [data-filter]") ? "select" : "click");
-
-    // ボタンとリンクに音を付ける
-    const SOUNDED = "a, button, .work";
-    let hoverTarget = null;
-    document.addEventListener("pointerover", (event) => {
-        if (event.pointerType !== "mouse") return;
-        const target = event.target.closest(SOUNDED);
-        if (target && target !== hoverTarget) sfx.play("hover");
-        hoverTarget = target;
-    });
-    document.addEventListener("click", (event) => {
-        const target = event.target.closest(SOUNDED);
-        if (!target || target.closest("[data-close]") || target.matches("[data-sfx-demo]")) return;
-        if (target.matches(".work, [data-open], .photo, .tl-photo")) return; // 開く音は別に鳴らす
-        sfx.play(target.matches(".stage-tab, .mode-card, [data-filter]") ? "select" : "click");
-    });
-
     /* ---------- 通知（右下のトースト） ---------- */
 
     const toasts = $("[data-toasts]");
@@ -222,9 +136,7 @@
         if (!toasts) return;
         const item = el("div", `toast${info ? " is-info" : ""}`);
         const icon = el("span", "toast-ic");
-        icon.innerHTML = info
-            ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"></path></svg>'
-            : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"></path><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M9 20h6"></path></svg>';
+        icon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"></path></svg>';
         const text = el("span");
         text.append(el("small", "", label), el("b", "", title));
         item.append(icon, text);
@@ -234,14 +146,11 @@
             setTimeout(() => item.remove(), 320);
         }, innerWidth < 640 ? 2400 : 3200);
     };
-    // ほかの部品（ゲームパッド・遊び要素など）からのお知らせを、同じ通知の形で出す
+    // ほかの部品（ゲームパッドなど）からのお知らせを、同じ通知の形で出す
     document.addEventListener("play:notify", (event) => {
-        const { label = "INFO", text = "", trophy = false } = event.detail || {};
-        toast(label, String(text).trim(), !trophy);
+        const { label = "INFO", text = "" } = event.detail || {};
+        toast(label, String(text).trim(), true);
     });
-
-    // 遊び要素（extras.js）が使う部品
-    window.NextUI = { toast, sound: (name) => sfx.play(name), emit };
 
     /* ---------- 数字（作品数・受賞数など）は、データから数える ---------- */
 
@@ -289,8 +198,8 @@
     $$("[data-count]").forEach((node) => {
         const value = COUNTS[node.dataset.count];
         if (value === undefined) return;
-        // 大きく見せる数字（ステータス）だけ数え上げる
-        if (node.closest(".status, .blog-count, .q-stats")) countUp(node, value);
+        // 大きく見せる数字（実績）だけ数え上げる
+        if (node.closest(".status, .blog-count")) countUp(node, value);
         else node.textContent = String(value);
     });
 
@@ -384,7 +293,7 @@
         if (latestWork) {
             const link = el("a");
             link.href = `#work=${idOf(latestWork)}`;
-            link.append(el("span", "tag-red", "NEW WORK"), el("span", "", latestWork.title));
+            link.append(el("span", "news-label", "New Work"), el("span", "", latestWork.title));
             link.addEventListener("click", (event) => {
                 event.preventDefault();
                 emit("最近の更新: 作品");
@@ -399,7 +308,7 @@
             link.rel = "noopener noreferrer";
             const noteTitle = el("span", "", String(latestNote.title || "").replace(/^「|」.*$/g, ""));
             noteTitle.dataset.noTranslate = ""; // note の記事タイトルは訳さない
-            link.append(el("span", "tag-ink", "NOTE"), noteTitle);
+            link.append(el("span", "news-label", "note"), noteTitle);
             news.append(link);
         }
     }
@@ -420,7 +329,7 @@
         reveals.forEach((node) => node.classList.add("is-in"));
     }
 
-    /* ---------- SELECT MODE（目的を選ぶと、Contact の窓口も強調する） ---------- */
+    /* ---------- 目的別の入口（目的を選ぶと、Contact の窓口も強調する） ---------- */
 
     const pickMode = (mode) => {
         $$(".mode-card").forEach((card) => card.classList.toggle("is-picked", card.dataset.mode === mode));
@@ -479,7 +388,6 @@
     $("[data-copy-mail]")?.addEventListener("click", async (event) => {
         const button = event.currentTarget;
         const ok = await copyText(ADDRESS);
-        sfx.play("copy");
         button.textContent = ok ? "コピーしました" : "コピーできませんでした";
         setTimeout(() => (button.textContent = "コピー"), 1800);
     });
@@ -489,14 +397,12 @@
     const openDialog = (dialog) => {
         if (!dialog || dialog.open) return;
         dialog.showModal();
-        sfx.play("open");
     };
     $$("dialog").forEach((dialog) => {
         dialog.addEventListener("click", (event) => {
             // 外側（背景）をクリックしたら閉じる
             if (event.target === dialog || event.target.closest("[data-close]")) dialog.close();
         });
-        dialog.addEventListener("close", () => sfx.play("close"));
     });
     $$("[data-open]").forEach((button) =>
         button.addEventListener("click", () => {
@@ -504,15 +410,15 @@
             if (button.dataset.open === "options") emit("設定を開いた");
         }),
     );
-    // ページ内の近道（JUMP）
+    // ページ内の近道（目次）
     $$(".jump a").forEach((link) => link.addEventListener("click", () => emit(`近道: ${link.textContent.trim()}`)));
 
     /* ---------- 設定画面 ---------- */
 
     const options = $("#options");
     const MOTION_NOTES = {
-        default: "すべての動き（起動演出・カーソル・スクロール連動など）が出ます",
-        lite: "カーソル・カードの傾き・スクロール連動を止めて、軽く表示します",
+        default: "スクロールに合わせた、ゆるやかな動きが出ます",
+        lite: "スクロール連動の動きを止めて、軽く表示します",
         none: "動きをすべて止めます",
     };
     const renderOptions = () => {
@@ -555,7 +461,6 @@
             syncHeroPause();
         }
         if (key === "lang") window.I18n?.setLang?.(value);
-        if (key === "sfx" && value === "on") sfx.play("select");
         renderOptions();
     };
     if (options) {
@@ -584,7 +489,6 @@
         range?.addEventListener("change", () => {
             saveSettings();
             emit(`設定: volume=${settings.volume}`);
-            sfx.play("select");
         });
         $("[data-mute]", options)?.addEventListener("click", () => {
             settings.muted = !settings.muted;
@@ -593,40 +497,19 @@
             renderOptions();
         });
         $("[data-reset]", options)?.addEventListener("click", () => {
-            Object.assign(settings, { motion: matchMedia("(prefers-reduced-motion: reduce)").matches ? "none" : "default", volume: DEFAULT_VOLUME, muted: false, sfx: "off" });
+            Object.assign(settings, { motion: matchMedia("(prefers-reduced-motion: reduce)").matches ? "none" : "default", volume: DEFAULT_VOLUME, muted: false });
             changeSetting("lang", "ja");
             changeSetting("motion", settings.motion);
         });
         renderOptions();
     }
-    // 「音を鳴らしてみる」：設定で効果音が OFF のままでも、このボタンだけは鳴らして聞いてもらう
-    $("[data-sfx-demo]")?.addEventListener("click", (event) => {
-        ["click", "select", "open", "trophy"].forEach((name, i) => setTimeout(() => sfx.play(name, true), i * 420));
-        emit("技術デモ: 効果音");
-        const hint = event.currentTarget.parentElement.querySelector("[data-sfx-hint]");
-        if (hint) hint.textContent = settings.sfx === "on" ? "" : "サイト全体の効果音は、OPTIONS で ON にできます";
-    });
-
     /* ---------- Main Works（タブ・映像・写真） ---------- */
 
     const tabs = $$(".stage-tab");
     let activeTab = "shishito";
-    const wipe = (label) => {
-        if (calm()) return;
-        const layer = el("div", "stage-wipe");
-        layer.setAttribute("aria-hidden", "true");
-        layer.append(el("b", "", label));
-        document.body.append(layer);
-        requestAnimationFrame(() => layer.classList.add("is-run"));
-        setTimeout(() => layer.remove(), 900);
-    };
     const selectTab = (name, { scroll = false, focus = false } = {}) => {
         const changed = name !== activeTab;
         activeTab = name;
-        if (changed) {
-            const tab = document.getElementById(`tab-${name}`);
-            wipe(tab?.querySelector(".stage-no")?.textContent || "STAGE");
-        }
         tabs.forEach((tab) => {
             const on = tab.id === `tab-${name}`;
             tab.setAttribute("aria-selected", String(on));
@@ -652,7 +535,6 @@
             event.preventDefault();
             const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
             selectTab(tabs[next].id.replace("tab-", ""), { focus: true });
-            sfx.play("select");
         });
     });
     $$("[data-go-tab]").forEach((button) =>
@@ -722,7 +604,18 @@
         };
     };
 
-    const playLabel = (url) => (/unityroom/.test(url) ? "▶ unityroom で遊ぶ" : /itch\.io/.test(url) ? "▶ itch.io で遊ぶ" : "▶ ブラウザで遊ぶ");
+    const playLabel = (url) => (/unityroom/.test(url) ? "unityroom で遊ぶ ↗" : /itch\.io/.test(url) ? "itch.io で遊ぶ ↗" : "ブラウザで遊ぶ ↗");
+
+    // 作品の小さな印（遊べる・受賞・チーム・制作中）
+    const badgesOf = (work, t) =>
+        [
+            t.rare && ["badge is-rare", "受賞"],
+            t.play && ["badge", "遊べる"],
+            t.team && ["badge", `${work.member}人チーム`],
+            t.wip && ["badge", "制作中"],
+        ]
+            .filter(Boolean)
+            .map(([cls, text]) => el("span", cls, text));
 
     WORKS.forEach((work, index) => {
         const t = traits(work);
@@ -739,12 +632,9 @@
         img.decoding = "async";
         img.width = 640;
         img.height = 360;
-        thumb.append(img, el("span", "work-no", `STAGE ${String(WORKS.length - index).padStart(2, "0")}`));
+        thumb.append(img);
         const badges = el("span", "work-badges");
-        if (t.play) badges.append(el("span", "badge is-play", "▶ PLAYABLE"));
-        if (t.rare) badges.append(el("span", "badge is-rare", "★ RARE"));
-        if (t.team) badges.append(el("span", "badge", `TEAM×${work.member}`));
-        if (t.wip) badges.append(el("span", "badge", "WIP"));
+        badgesOf(work, t).forEach((badge) => badges.append(badge));
         thumb.append(badges);
 
         button.append(thumb, el("span", "work-title", work.title), el("span", "work-sub"));
@@ -847,14 +737,7 @@
         const t = traits(work);
         v("img").src = asset(work.image);
         v("img").alt = work.alt || work.title;
-        v("badges").replaceChildren(
-            ...[
-                t.play && ["badge is-play", "▶ PLAYABLE"],
-                t.rare && ["badge is-rare", "★ RARE"],
-                t.team && ["badge", `TEAM×${work.member}`],
-                t.wip && ["badge", "WIP"],
-            ].filter(Boolean).map(([cls, text]) => el("span", cls, text)),
-        );
+        v("badges").replaceChildren(...badgesOf(work, t));
         v("title").textContent = work.title;
         v("meta").replaceChildren(joined([work.genre, work.period]));
         v("desc").textContent = work.description || "";
@@ -908,7 +791,6 @@
             const next = list[pos + dir];
             if (next === undefined) return;
             fillViewer(next);
-            sfx.play("select");
         };
         v("prev").addEventListener("click", () => step(-1));
         v("next").addEventListener("click", () => step(1));
@@ -924,7 +806,6 @@
             const url = new URL(`${BASE}works/${idOf(work)}/`, location.href).href;
             const ok = await copyText(url);
             if (ok) emit(`作品リンクをコピー: ${work.title}`);
-            sfx.play("copy");
             v("copy").textContent = ok ? "コピーしました" : "コピーできませんでした";
             setTimeout(() => (v("copy").textContent = "リンクをコピー"), 1800);
         });
@@ -954,7 +835,7 @@
     addEventListener("hashchange", openFromHash);
     openFromHash();
 
-    /* ---------- Timeline（ワールドマップ） ---------- */
+    /* ---------- Timeline（経歴） ---------- */
 
     const track = $("[data-timeline]");
     if (track) {
@@ -966,8 +847,8 @@
             if (nowIndex < 0 || index < nowIndex) li.classList.add("is-done");
             li.append(el("span", "tl-date", item.date || ""), el("span", "tl-node"));
             const card = el("div", "tl-card");
-            if (item.quest === "award") card.append(el("span", "tl-rare", "★ RARE"));
-            if (item.quest === "now") card.append(el("span", "tl-rare", "NOW"));
+            if (item.quest === "award") card.append(el("span", "tl-rare", "受賞"));
+            if (item.quest === "now") card.append(el("span", "tl-rare", "現在"));
             // 1行ずつ別の文字にする（英語の辞書が1行ずつなので）
             const text = el("p");
             (item.text || []).forEach((line) => text.append(el("span", "", line)));
@@ -1085,7 +966,7 @@
                 box.append(img);
             }
             const time = el("time", "", article.date || "");
-            if (index === 0) time.append(el("span", "tag-red", "NEW"));
+            if (index === 0) time.append(el("span", "article-new", "New"));
             const title = el("b", "", article.title || "");
             title.dataset.noTranslate = ""; // note の記事タイトルは訳さない
             link.append(box, time, title, el("span", "go", "記事を読む →"));
