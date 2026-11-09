@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--
-    新デザイン（採用担当の方・大人の方向けの、落ち着いたデザイン）
+    新デザイン（採用担当の方・大人の方向け。ゲーム会社の採用サイトのような、白地 × 赤 × 黒の落ち着いたデザイン）
     ・遊び要素（キャラクター・トロフィー・効果音など）は、クラシック（今までのデザイン）だけに入れている
     ・いまは BETA 版として next/ に置いている。本番に切り替えるときは  npm run launch  を使う（README）
       その時に「beta」の印で囲んだ部分（BETA の帯・検索に出さない設定など）は自動で消え、../ などの住所も直る
@@ -21,7 +21,7 @@
 name="description"
 content="ゲームプログラマー志望（2028年卒）長屋晴太のポートフォリオ。TGS2026出展の2D格闘ゲーム「ししとう」、IGCCグランプリの「Falien」など、Unity・C#・C++で作ったゲーム作品と経歴を紹介しています。">
 <meta name="author" content="長屋晴太（Nagaya Haruta）">
-<meta name="theme-color" content="#f6f4f0">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://haru2401game.github.io/portfolio/">
 
 <!-- OGP（SNS で共有されたときの表示） -->
@@ -49,14 +49,14 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <link rel="preload" as="image" href="../images/index/Hero/poster.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Noto+Serif+JP:wght@500;600&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap">
 <!-- 設定（アニメーション・言語）を、ページを描く前に決める -->
 <script src="js/boot.js?v=326d0318"></script>
 <!-- デザインの切り替え（NEW ⇄ CLASSIC）。クラシックの住所は下の meta（BETA のあいだはトップ。本番に切り替えると classic.html） -->
 <meta name="pa-design-classic" content="../">
 <script src="../js/design-switch.js?v=1df9736d"></script>
 <link rel="stylesheet" href="../css/design-switch.css?v=72945e20">
-<link rel="stylesheet" href="css/next.css?v=3f28ca44">
+<link rel="stylesheet" href="css/next.css?v=4e2cd049">
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -128,15 +128,15 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <header class="hd" id="hd">
     <a class="hd-logo" href="#top" aria-label="HARUTA NAGAYA PORTFOLIO（トップへ戻る）">
-        <span class="hd-logo-name">Haruta Nagaya</span>
-        <span class="hd-logo-sub">Portfolio</span>
+        <span class="hd-logo-name">HARUTA NAGAYA</span>
+        <span class="hd-logo-sub">GAME PROGRAMMER PORTFOLIO</span>
     </a>
     <nav class="hd-nav" id="hd-nav" aria-label="メインナビゲーション">
-        <a href="#featured-works">作品</a>
-        <a href="#what-i-can-do">スキル</a>
-        <a href="#timeline">経歴</a>
-        <a href="#blog">ブログ</a>
-        <a class="hd-contact" href="#contact">お問い合わせ</a>
+        <a href="#featured-works"><b>WORKS</b><span>作品</span></a>
+        <a href="#what-i-can-do"><b>SKILLS</b><span>スキル</span></a>
+        <a href="#timeline"><b>HISTORY</b><span>経歴</span></a>
+        <a href="#blog"><b>BLOG</b><span>ブログ</span></a>
+        <a class="hd-contact" href="#contact"><b>CONTACT</b><span>お問い合わせ</span></a>
     </nav>
     <button class="hd-options" type="button" data-open="options" aria-haspopup="dialog" aria-label="設定（アニメーション・音量・言語・デザイン）">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>
@@ -152,50 +152,59 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <!-- ================= トップ ================= -->
 <section class="hero" id="top" data-section="トップ">
+    <div class="hero-band" aria-hidden="true"></div>
     <div class="wrap hero-grid">
         <div class="hero-body">
-            <p class="hero-eyebrow"><span>Game Programmer</span><span>ゲームプログラマー志望 ／ 2028年卒</span></p>
-            <h1 class="hero-name">
-                <span class="hero-name-en" aria-hidden="true"><span>Haruta</span><span>Nagaya</span></span>
-                <span class="hero-name-ja">長屋 晴太</span>
-            </h1>
+            <p class="hero-display" aria-hidden="true">DISCOVER<br>PLAY<span>.</span></p>
+            <h1 class="hero-name"><span class="hero-name-ja">長屋 晴太</span><span class="hero-name-en">HARUTA NAGAYA</span></h1>
             <p class="hero-copy">遊びの発見を、<br class="sp">心に残る体験へ。</p>
-            <p class="hero-lead">企画からプログラムまで。アイデアを、遊べるかたちにしています。</p>
+            <p class="hero-lead">ゲームプログラマー志望（2028年卒）。企画からプログラムまで、アイデアを遊べるかたちにしています。</p>
             <div class="hero-actions">
-                <a class="btn btn-ink" href="#featured-works">代表作を見る</a>
-                <a class="link-arrow" href="#other-works">すべての作品（<b data-count="works">34</b>）</a>
-                <a class="link-arrow" href="#contact">お問い合わせ</a>
+                <a class="btn btn-ink btn-arrow" href="#featured-works">代表作を見る</a>
+                <a class="btn btn-gray" href="#contact">お問い合わせ</a>
             </div>
+            <div class="hero-news" aria-label="最近の更新" data-news></div>
         </div>
 
         <div class="hero-media">
-            <div class="hero-frame">
+            <div class="hero-frame is-main">
                 <video class="hero-video" muted loop playsinline preload="none"
                     poster="../images/index/Hero/poster.webp"
                     data-src="../videos/index/Shishito.mp4"
                     data-src-small="../videos/index/Shishito-sm.mp4" aria-hidden="true"></video>
                 <button class="hero-pause" type="button" data-hero-pause aria-pressed="false" aria-label="背景の動画を一時停止"><span aria-hidden="true"></span></button>
             </div>
-            <p class="hero-caption">「ししとう」プレイ映像 ／ 東京ゲームショウ2026 出展</p>
+            <div class="hero-frame is-photo"><img src="../images/index/FeaturedWorks/gallery/tgs2026.webp" width="960" height="1280" alt="東京ゲームショウ2026のIGDA日本ブースで、「ししとう」のチラシを持つチームメンバー"></div>
+            <div class="hero-frame is-sub"><img src="../images/index/otherworks/Falien.webp" width="640" height="360" alt="Falienのゲーム画面"></div>
+            <ul class="hero-badges" aria-label="主な実績">
+                <li><b>IGCC GRAND PRIX</b><span>IGCC グランプリ「Falien」</span></li>
+                <li><b>TOKYO GAME SHOW 2026</b><span>東京ゲームショウ2026 出展「ししとう」</span></li>
+            </ul>
         </div>
     </div>
-
-    <div class="wrap hero-foot">
-        <ul class="hero-badges" aria-label="主な実績">
-            <li><b>Grand Prix</b><span>IGCC グランプリ「Falien」</span></li>
-            <li><b>TGS 2026</b><span>東京ゲームショウ2026 出展「ししとう」</span></li>
-        </ul>
-        <div class="hero-news" aria-label="最近の更新" data-news></div>
-    </div>
-    <a class="scroll-cue" href="#mode"><span>Scroll</span></a>
 </section>
+
+<div class="status-band">
+    <div class="wrap">
+        <div class="status" id="achievements" data-reveal>
+            <dl class="status-list">
+                <div><dt>Game Works</dt><dd data-count="works">34</dd></div>
+                <div><dt>Blog Articles</dt><dd data-count="blog">274</dd></div>
+                <div><dt>Awards</dt><dd data-count="awards">5</dd></div>
+                <div><dt>Events</dt><dd data-count="events">10</dd></div>
+                <div><dt>Internship</dt><dd data-count="interns">1</dd></div>
+                <div><dt>Years Developing</dt><dd data-count="years">2</dd></div>
+            </dl>
+        </div>
+    </div>
+</div>
 
 <!-- ================= 目的別の入口 ＋ 30秒まとめ ================= -->
 <section class="sec mode" id="mode" data-section="目的別の入口">
     <div class="wrap mode-grid">
         <div class="mode-left" data-reveal>
-            <p class="eyebrow"><span class="eyebrow-no">01</span>For You</p>
-            <h2 class="sec-title">どの目的で<br>ご覧になっていますか？</h2>
+            <div class="sec-title-row"><h2 class="display">FOR YOU</h2><span class="sec-ja">目的別の入口</span></div>
+            <p class="mode-title">どの目的で<br>ご覧になっていますか？</p>
             <div class="mode-list">
                 <a class="mode-card" href="#quick" data-mode="recruit">
                     <span><b>採用担当の方</b><small>30秒まとめ → 代表作</small></span><i aria-hidden="true">→</i>
@@ -262,8 +271,8 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             <img src="../images/index/About/profile.webp" width="1000" height="945" alt="長屋晴太 プロフィール画像" loading="lazy">
         </figure>
         <div class="about-body" data-reveal>
-            <p class="eyebrow"><span class="eyebrow-no">02</span>About</p>
-            <h2 class="about-name">長屋 晴太 <i>Nagaya Haruta</i></h2>
+            <div class="sec-title-row"><p class="display" aria-hidden="true">ABOUT</p><span class="sec-ja">プロフィール</span></div>
+            <h2 class="about-name">長屋 晴太 <i>NAGAYA HARUTA</i></h2>
             <p class="about-copy">ゲームをつくり、<em>心に残る体験</em>を届ける。</p>
             <p class="about-text">愛知県豊橋市出身。トライデントコンピュータ専門学校で、ゲームプログラマーを目指して制作中。</p>
             <ul class="about-points">
@@ -277,26 +286,13 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             </dl>
         </div>
     </div>
-    <div class="wrap">
-        <div class="status" id="achievements" data-reveal>
-            <p class="eyebrow-muted">In Numbers</p>
-            <dl class="status-list">
-                <div><dt>Game Works</dt><dd data-count="works">34</dd></div>
-                <div><dt>Blog Articles</dt><dd data-count="blog">274</dd></div>
-                <div><dt>Awards</dt><dd data-count="awards">5</dd></div>
-                <div><dt>Events</dt><dd data-count="events">10</dd></div>
-                <div><dt>Internship</dt><dd data-count="interns">1</dd></div>
-                <div><dt>Years Developing</dt><dd data-count="years">2</dd></div>
-            </dl>
-        </div>
-    </div>
 </section>
 
 <!-- ================= 代表作 ================= -->
 <section class="sec featured" id="featured-works" data-section="Main Works">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">03</span>Featured</p><h2 class="display">Main Works</h2></div>
+            <div class="sec-title-row"><h2 class="display">MAIN WORKS</h2><span class="sec-ja">代表作</span></div>
             <p class="sec-lead">チームで作り、外で評価された2作品。選ぶと、担当と技術の見どころを読めます。</p>
         </div>
 
@@ -450,7 +446,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <section class="sec works" id="other-works" data-section="Other Works">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">04</span>All Works · <span data-count="works">34</span></p><h2 class="display">Other Works</h2></div>
+            <div class="sec-title-row"><h2 class="display">OTHER WORKS</h2><span class="sec-ja">作品一覧（<span data-count="works">34</span>）</span></div>
             <div class="filters" role="group" aria-label="作品の絞り込み" data-filters>
                 <button type="button" aria-pressed="true" data-filter="all">すべて</button>
                 <button type="button" aria-pressed="false" data-filter="play">遊べる</button>
@@ -471,7 +467,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <section class="sec play" id="play-games" data-section="Play Games">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">05</span>Play</p><h2 class="display">Play Games</h2></div>
+            <div class="sec-title-row"><h2 class="display">PLAY GAMES</h2><span class="sec-ja">遊べる作品</span></div>
             <p class="sec-lead">公開中のゲームとWebサイトを、そのまま遊べます。</p>
         </div>
         <div class="play-grid" data-reveal>
@@ -507,7 +503,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <section class="sec skills" id="what-i-can-do" data-section="What I Can Do">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">06</span>Skills</p><h2 class="display">What I Can Do</h2></div>
+            <div class="sec-title-row"><h2 class="display">WHAT I CAN DO</h2><span class="sec-ja">できること</span></div>
             <p class="sec-lead">ゲーム制作でできること</p>
         </div>
         <div class="skill-grid">
@@ -538,7 +534,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <section class="sec tech" id="site-tech" data-section="このサイトの技術">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">07</span>Behind the Site</p><h2 class="sec-title">このサイトの技術</h2></div>
+            <div class="sec-title-row"><h2 class="display">BEHIND THE SITE</h2><span class="sec-ja">このサイトの技術</span></div>
             <p class="sec-lead">サイトの設計と、入れる機能の企画は長屋晴太。実装は生成AI（Claude）と協力して進め、仕組みを自分で説明できるところまで確かめています。</p>
         </div>
         <div class="tech-grid">
@@ -557,7 +553,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <section class="sec timeline" id="timeline" data-section="Timeline">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">08</span>History</p><h2 class="display">Timeline</h2></div>
+            <div class="sec-title-row"><h2 class="display">TIMELINE</h2><span class="sec-ja">経歴</span></div>
             <div class="tl-legend"><span><i class="dot is-award"></i>受賞</span><span><i class="dot"></i>出来事</span><span><i class="dot is-photo"></i>写真あり</span></div>
         </div>
     </div>
@@ -570,7 +566,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <section class="sec blog" id="blog" data-section="Blog">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">09</span>Journal</p><h2 class="display">Blog</h2></div>
+            <div class="sec-title-row"><h2 class="display">BLOG</h2><span class="sec-ja">ブログ</span></div>
             <p class="sec-lead">ゲーム制作の学びを発信し続けています</p>
         </div>
         <div class="blog-grid">
@@ -592,7 +588,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <section class="sec contact" id="contact" data-section="Contact">
     <div class="wrap">
         <div class="sec-head" data-reveal>
-            <div><p class="eyebrow"><span class="eyebrow-no">10</span>Contact</p><h2 class="display">Contact</h2></div>
+            <div class="sec-title-row"><h2 class="display">CONTACT</h2><span class="sec-ja">お問い合わせ</span></div>
             <p class="sec-lead">ご用件に合わせて、窓口を選んでください</p>
         </div>
         <div class="contact-grid">
@@ -616,13 +612,13 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                         <span class="purpose-tag">Game Dev</span><b>一緒にゲームを作りたい方</b>
                         <p>ゲームジャムのチーム・個人／インディーの共同制作・開発のお手伝いなど、お気軽に声をかけてください。</p>
                         <small>担当できること：Unity / C# / C++ のプログラム、シーンの結合・プロジェクト統合、ローカライズ</small>
-                        <a class="btn btn-line" href="mailto:haru2401game@gmail.com" data-mail="game">ゲーム制作のお誘いはこちら</a>
+                        <a class="btn btn-ink" href="mailto:haru2401game@gmail.com" data-mail="game">ゲーム制作のお誘いはこちら</a>
                     </div>
                     <div class="purpose" data-purpose="web">
                         <span class="purpose-tag">Web</span><b>Web制作のご依頼</b>
                         <p>紹介サイト・ポートフォリオ・ブラウザゲームのサイトなど、まずはお気軽にご相談ください。内容をうかがい、条件は個別に決めます。</p>
                         <small>担当できること：サイトの企画・設計と、生成AIを活用した HTML・CSS・JavaScript での制作</small>
-                        <a class="btn btn-line" href="mailto:haru2401game@gmail.com" data-mail="web">Web制作の相談はこちら</a>
+                        <a class="btn btn-ink" href="mailto:haru2401game@gmail.com" data-mail="web">Web制作の相談はこちら</a>
                     </div>
                 </div>
                 <div class="mail-bar" data-reveal>
@@ -647,12 +643,12 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <!-- ================= おわりに ================= -->
 <section class="ending" id="ending" data-section="エンディング">
     <div class="wrap ending-inner" data-reveal>
-        <p class="eyebrow-muted">Thank You</p>
+        <p class="ending-display" aria-hidden="true">THANK YOU<span>.</span></p>
         <h2 class="ending-title">最後までご覧いただき、<br class="sp">ありがとうございました。</h2>
         <p class="ending-text">ゲームづくりを通して、心に残る体験を届けられるよう取り組んでいます。</p>
         <div class="ending-actions">
-            <a class="btn btn-red" href="#contact" data-mail="recruit">お問い合わせ</a>
-            <a class="link-arrow" href="#top">ページの先頭へ ↑</a>
+            <a class="btn btn-white btn-arrow" href="#contact" data-mail="recruit">お問い合わせ</a>
+            <a class="ending-top" href="#top">ページの先頭へ ↑</a>
         </div>
     </div>
 </section>
@@ -660,7 +656,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 </main>
 
 <footer class="ft">
-    <p class="ft-name">Haruta Nagaya</p>
+    <p class="ft-name">HARUTA NAGAYA</p>
     <p>実装：長屋晴太</p>
     <p>© 2026 Haruta Nagaya ／ <a href="../" data-design-link>クラシック版で見る（CLASSIC MODE）</a></p>
 </footer>
@@ -742,7 +738,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <script src="../data/blog.js"></script>
 <script src="js/next.js?v=e4d4207d"></script>
 <script src="../js/analytics.js?v=8bd9073f"></script>
-<script src="../js/i18n.js?v=25215c0d"></script>
+<script src="../js/i18n.js?v=dd8cde80"></script>
 <script src="../js/gamepad.js?v=365db478"></script>
 <script src="js/motion.js?v=63fa3983"></script>
 </body>

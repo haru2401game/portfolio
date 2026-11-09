@@ -792,7 +792,13 @@ window.I18N_EN = {
         "動画の音量": "Video volume",
         "遊びながら見られる、今までのデザイン（クラシック）に切り替えます。いつでも戻せます": "Switch to the playful previous design (classic). You can switch back any time",
         "設定（アニメーション・音量・言語・デザイン）": "Settings (animation, volume, language, design)",
-        "言語 ／ Language": "Language"
+        "言語 ／ Language": "Language",
+        "ゲームプログラマー志望（2028年卒）。企画からプログラムまで、アイデアを遊べるかたちにしています。": "Aspiring game programmer (class of 2028). From game design to programming, I turn ideas into things you can play.",
+        "目的別の入口": "Where to start",
+        "プロフィール": "Profile",
+        "作品一覧（": "All works (",
+        "できること": "What I can do",
+        "Falienのゲーム画面": "Falien gameplay screen"
     },
     "patterns": [
         [
