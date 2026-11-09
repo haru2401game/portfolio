@@ -40,13 +40,22 @@ const update = (file, pattern, makeReplacement) => {
 };
 
 // 1. i18n.js があとから読み込む英語の辞書
-update("js/i18n.js", /script\.src = "data\/i18n-en\.js(\?v=[0-9a-f]*)?";/, () => `script.src = "data/i18n-en.js?v=${hashOf("data/i18n-en.js")}";`);
+update("js/i18n.js", /"data\/i18n-en\.js(\?v=[0-9a-f]*)?";/, () => `"data/i18n-en.js?v=${hashOf("data/i18n-en.js")}";`);
 
 // 2. index.html が読み込む CSS・JS（1 で i18n.js が変わっていても、ここで新しい番号になる）
 const TARGET = /(src|href)="((?:js\/[\w-]+\.js)|(?:css\/[\w-]+\.css)|(?:data\/(?:works|timeline)\.js))(\?v=[0-9a-f]*)?"/g;
 for (const page of ["index.html", "404.html"]) {
     if (!fs.existsSync(path.join(ROOT, page))) continue;
     update(page, TARGET, (whole, attr, file) => (fs.existsSync(path.join(ROOT, file)) ? `${attr}="${file}?v=${hashOf(file)}"` : whole));
+}
+
+// 3. 新デザイン（BETA 版の next/index.html）。住所は next/ から見た場所（../js/… は今のサイトと共通のファイル）
+const NEXT_TARGET = /(src|href)="((?:\.\.\/)?(?:js\/[\w-]+\.js|css\/[\w-]+\.css|data\/(?:works|timeline)\.js))(\?v=[0-9a-f]*)?"/g;
+if (fs.existsSync(path.join(ROOT, "next/index.html"))) {
+    update("next/index.html", NEXT_TARGET, (whole, attr, file) => {
+        const real = path.join("next", file);
+        return fs.existsSync(path.join(ROOT, real)) ? `${attr}="${file}?v=${hashOf(real)}"` : whole;
+    });
 }
 
 if (check) {

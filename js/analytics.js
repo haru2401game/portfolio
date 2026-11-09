@@ -13,6 +13,9 @@
 
     if (!ENDPOINT) return;
 
+    // BETA 版のページ（<meta name="pa-analytics" content="off">）では送らない。本番に切り替えると、この印は消える
+    if (document.querySelector('meta[name="pa-analytics"][content="off"]')) return;
+
     try {
         const params = new URLSearchParams(location.search);
         if (params.has("notrack")) localStorage.setItem("pa-notrack", "1");
@@ -161,13 +164,16 @@
         [".play-card", "h3"],
         [".main-tab", "b"],
         [".tech-highlight", "h5"],
+        // 新デザイン（next/）
+        [".stage-tab", ".stage-tab-text b"],
+        [".hl", ".hl-title"],
     ];
     ORIGINAL_NAMES.forEach(([selector, heading]) => {
         document.querySelectorAll(selector).forEach((element) => {
             if (!element.dataset.paName) element.dataset.paName = element.dataset.title || textOf(element.querySelector(heading));
         });
     });
-    const nameOf = (element, heading) => element?.dataset.paName || textOf(element?.querySelector(heading));
+    const nameOf = (element, heading) => element?.dataset.paName || element?.dataset.title || textOf(element?.querySelector(heading));
 
     document.addEventListener("click", (event) => {
         const target = event.target.closest("a, button");
@@ -197,7 +203,7 @@
             return;
         }
 
-        if (target.matches(".tech-photo, .timeline-photo")) {
+        if (target.matches(".tech-photo, .timeline-photo, .photo, .tl-photo")) {
             const caption = target.dataset.caption || target.querySelector("img")?.alt || "";
             track("photo_open", caption.split("：")[0]);
             return;
@@ -214,6 +220,14 @@
             return;
         }
 
+        // 新デザイン：技術の見どころの「くわしく読む」
+        const newHighlight = target.closest(".hl");
+        if (newHighlight && target.matches(".more-toggle") && target.getAttribute("aria-expanded") === "false") {
+            const title = nameOf(newHighlight, ".hl-title").replace(/^TECH HIGHLIGHT \d+\s*/, "");
+            if (title) track("ui_open", `技術の見どころ: ${title}`);
+            return;
+        }
+
         // スマホの折りたたみ（続きを読む など）も同じ見た目のボタンを使うので、技術の見どころの中のボタンだけを数える
         const highlight = target.closest(".tech-highlight");
         if (highlight && target.matches(".tech-steps-toggle") && target.getAttribute("aria-expanded") === "false") {
@@ -222,7 +236,7 @@
             return;
         }
 
-        if (target.matches(".mail-copy")) {
+        if (target.matches(".mail-copy, [data-copy-mail]")) {
             track("contact_click", "メールアドレスをコピー");
             return;
         }

@@ -92,7 +92,7 @@
     const scope = () => {
         const dialogs = document.querySelectorAll("dialog[open]");
         if (dialogs.length) return dialogs[dialogs.length - 1];
-        const menu = document.querySelector(".header-nav.active");
+        const menu = document.querySelector(".header-nav.active, .hd-nav.is-open"); // 今のサイト／新デザイン
         return menu ? menu.closest("header") || menu : document.body;
     };
 
@@ -234,7 +234,7 @@
             }
             return;
         }
-        const hamburger = document.querySelector(".hamburger[aria-expanded='true']");
+        const hamburger = document.querySelector(".hamburger[aria-expanded='true'], .hd-menu[aria-expanded='true']");
         if (hamburger) press(hamburger);
     };
 
@@ -242,9 +242,9 @@
 
     const jumpSection = (step) => {
         // 作品のポップアップでは、前 / 次の作品へ
-        const viewer = document.querySelector("dialog.work-viewer[open]");
+        const viewer = document.querySelector("dialog.work-viewer[open], dialog.viewer[open]");
         if (viewer) {
-            press(viewer.querySelector(`.work-viewer-nav [data-step="${step}"]`));
+            press(viewer.querySelector(`.work-viewer-nav [data-step="${step}"], [data-v="${step > 0 ? "next" : "prev"}"]`));
             return;
         }
         if (scope() !== document.body) return;
@@ -276,9 +276,9 @@
     };
 
     const options = () => {
-        const panel = document.querySelector("dialog.settings-panel[open]");
+        const panel = document.querySelector("dialog.settings-panel[open], dialog.options[open]");
         if (panel) back();
-        else press(document.querySelector(".settings-button"));
+        else press(document.querySelector(".settings-button, .hd-options"));
     };
 
     // 隠しコマンドは、十字キーと B・A の順番だけを見る

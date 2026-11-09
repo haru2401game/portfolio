@@ -1,9 +1,11 @@
 /* ========================================
-   新デザイン試作版の動き（next/index.html）
+   next.js：新デザインの本体（作品・経歴・ブログ・設定・トロフィーなど）
 
-   ・作品・経歴・ブログは、今のサイトと同じデータ（../data/*.js）から作る
-   ・設定（アニメーション・音量）とトロフィーは、このブラウザの中だけに保存する
-   ・アクセス解析は送らない（試作版）
+   ・作品・経歴・ブログは、今のサイトと同じデータ（data/*.js）から作る
+   ・画像・動画の置き場所は <html data-base="…"> を前に付けて探す（BETA 版は "../"、本番は ""）
+   ・設定は今のサイトと同じ pa-settings（boot.js がページを描く前に反映している）
+   ・トロフィーなど、このデザインだけの記録は next-○○ に保存する（見ている人のブラウザだけ）
+   ・動き（カーソル・スクロール連動など）は motion.js
 ======================================== */
 
 (() => {
@@ -14,6 +16,8 @@
     const TIMELINE = Array.isArray(window.TIMELINE) ? window.TIMELINE : [];
     const BLOG = window.BLOG_DATA || {};
     const MAIN_COUNT = 2; // Main Works（ししとう・Falien）
+
+    const BASE = root.dataset.base || "";
 
     const store = {
         get(key, fallback) {
@@ -33,6 +37,38 @@
         },
     };
 
+    // 英語表示（../js/i18n.js）：作品・経歴のデータに書いてある英語（en）を、辞書に足す
+    const english = (window.I18N_WORKS = window.I18N_WORKS || {});
+    const addEnglish = (ja, en) => {
+        const key = String(ja ?? "").replace(/\s+/g, " ").trim();
+        if (key && en) english[key] = String(en);
+    };
+    WORKS.forEach((work) => {
+        const en = work.en || {};
+        ["title", "alt", "genre", "role", "description", "point"].forEach((field) => addEnglish(work[field], en[field]));
+    });
+    TIMELINE.forEach((item) => {
+        const en = item.en || {};
+        addEnglish(item.title, en.title);
+        if (Array.isArray(en.text)) (item.text || []).forEach((line, i) => addEnglish(line, en.text[i]));
+        if (item.photo) {
+            addEnglish(item.photo.caption, en.caption);
+            addEnglish(item.photo.alt, en.alt);
+        }
+    });
+    // 「ジャンル ／ 時期」のように並べる文字は、訳せるように1つずつ別の文字として入れる
+    const joined = (parts, separator = " ／ ") => {
+        const fragment = document.createDocumentFragment();
+        parts.filter(Boolean).forEach((part, i) => {
+            if (i) fragment.append(document.createTextNode(separator));
+            fragment.append(el("span", "", part));
+        });
+        return fragment;
+    };
+
+    // アクセス解析（analytics.js）に「何が使われたか」を伝える（今のサイトと同じ名前で数える）
+    const emit = (name) => document.dispatchEvent(new CustomEvent("play:event", { detail: { name } }));
+
     const el = (tag, className, text) => {
         const node = document.createElement(tag);
         if (className) node.className = className;
@@ -42,8 +78,8 @@
 
     // リンクは http(s) か、サイトの中のページだけ
     const safeUrl = (url) => (/^(https?:\/\/|\.\.?\/)/i.test(String(url || "").trim()) ? String(url).trim() : "");
-    // 画像・動画は今のサイトのフォルダ（../）から読む
-    const asset = (path) => (/^https?:\/\//.test(path || "") ? path : path ? `../${String(path).replace(/^\.?\//, "")}` : "");
+    // 画像・動画は data-base の場所から読む
+    const asset = (path) => (/^https?:\/\//.test(path || "") ? path : path ? `${BASE}${String(path).replace(/^\.?\//, "")}` : "");
 
     // 作品ごとのリンクの名前（今のサイトの js/works.js と同じ作り方）
     const idOf = (work) =>
@@ -54,16 +90,43 @@
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/^-+|-+$/g, "");
 
-    /* ---------- 設定（アニメーション・音量） ---------- */
+    /* ---------- 設定（今のサイトと同じ pa-settings） ---------- */
 
-    const settings = { motion: store.get("motion", "on"), volume: Number(store.get("volume", 40)) };
-    const applyMotion = () => {
-        root.classList.toggle("is-calm", settings.motion === "calm");
-        root.classList.toggle("is-motion", settings.motion === "on" && store.get("motion", null) === "on");
-        $$("[data-motion]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.motion === settings.motion)));
+    const SETTINGS_KEY = "pa-settings";
+    const DEFAULT_VOLUME = 70;
+    const readSettings = () => {
+        let saved = {};
+        try {
+            saved = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+        } catch {
+            saved = {};
+        }
+        const volume = Number(saved.volume);
+        return {
+            // boot.js が決めたクラスに合わせる（保存が無いときは、端末の「動きを減らす」設定から決まっている）
+            motion: ["default", "lite", "none"].includes(saved.motion) ? saved.motion : root.classList.contains("motion-off") ? "none" : "default",
+            volume: Number.isFinite(volume) ? Math.min(100, Math.max(0, Math.round(volume))) : DEFAULT_VOLUME,
+            muted: saved.muted === true,
+            // 効果音は、急に音が鳴らないように最初は OFF（今のサイトと同じ）
+            sfx: saved.sfx === "on" ? "on" : "off",
+            lang: saved.lang === "en" ? "en" : "ja",
+        };
     };
-    const calm = () => root.classList.contains("is-calm") || (matchMedia("(prefers-reduced-motion: reduce)").matches && !root.classList.contains("is-motion"));
-    applyMotion();
+    const settings = readSettings();
+    const saveSettings = () => {
+        try {
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+        } catch {
+            /* 保存できなくても、このページの間は効く */
+        }
+    };
+    const calm = () => root.classList.contains("motion-off");
+    const applyMotion = () => {
+        root.classList.toggle("motion-off", settings.motion === "none");
+        root.classList.toggle("motion-lite", settings.motion === "lite");
+        document.dispatchEvent(new CustomEvent("settings:change", { detail: { ...settings } }));
+    };
+    window.NextSettings = { get: () => ({ ...settings }) };
 
     /* ---------- 効果音（Web Audio API で、その場で作る） ---------- */
 
@@ -87,7 +150,7 @@
         );
         const tone = (freq, start, length, type = "square", gain = 0.12, slide = 0) => {
             const audio = ensure();
-            if (!audio || settings.volume <= 0) return;
+            if (!audio || settings.volume <= 0 || settings.muted) return;
             const t = audio.currentTime + start;
             const osc = audio.createOscillator();
             const amp = audio.createGain();
@@ -113,7 +176,9 @@
         };
         let lastHover = 0;
         return {
-            play(name) {
+            // force：設定で効果音が OFF でも鳴らす（「音を鳴らしてみる」ボタンだけ）
+            play(name, force = false) {
+                if (settings.sfx !== "on" && !force) return;
                 if (!unlocked && name === "hover") return;
                 if (name === "hover") {
                     const now = performance.now();
@@ -128,6 +193,11 @@
             },
         };
     })();
+
+    // ゲームパッド（../js/gamepad.js）から鳴らす音
+    const PAD_SOUNDS = { cursor: "hover", move: "hover", jump: "select", slide: "select", tab: "select", close: "close", open: "open" };
+    window.PlaySfx = (name) => sfx.play(PAD_SOUNDS[name] || "click");
+    window.PlaySfxFor = (target) => sfx.play(target?.matches?.(".stage-tab, .mode-card, [data-filter]") ? "select" : "click");
 
     // ボタンとリンクに音を付ける
     const SOUNDED = "a, button, .work";
@@ -145,22 +215,9 @@
         sfx.play(target.matches(".stage-tab, .mode-card, [data-filter]") ? "select" : "click");
     });
 
-    /* ---------- トロフィー ---------- */
+    /* ---------- 通知（右下のトースト） ---------- */
 
-    const TROPHIES = [
-        { id: "start", title: "PRESS START", hint: "タイトル画面からはじめる" },
-        { id: "mode", title: "モード選択", hint: "SELECT MODE で目的を選ぶ" },
-        { id: "stage", title: "ステージクリア", hint: "Main Works を2作品とも見る" },
-        { id: "hunter", title: "作品ハンター", hint: "作品の詳しい画面を3つ開く" },
-        { id: "album", title: "思い出アルバム", hint: "写真を拡大して見る" },
-        { id: "player", title: "プレイヤー", hint: "遊べる作品を遊びに行く" },
-        { id: "movie", title: "シアター", hint: "プレイ映像を再生する" },
-        { id: "explorer", title: "全ステージ踏破", hint: "すべてのセクションを見る" },
-        { id: "clear", title: "ALL CLEAR", hint: "エンディングまでたどり着く" },
-    ];
-    const got = new Set(store.get("trophies", []));
     const toasts = $("[data-toasts]");
-
     const toast = (label, title, info = false) => {
         if (!toasts) return;
         const item = el("div", `toast${info ? " is-info" : ""}`);
@@ -177,31 +234,14 @@
             setTimeout(() => item.remove(), 320);
         }, innerWidth < 640 ? 2400 : 3200);
     };
+    // ほかの部品（ゲームパッド・遊び要素など）からのお知らせを、同じ通知の形で出す
+    document.addEventListener("play:notify", (event) => {
+        const { label = "INFO", text = "", trophy = false } = event.detail || {};
+        toast(label, String(text).trim(), !trophy);
+    });
 
-    const renderTrophies = () => {
-        const list = $("[data-trophies]");
-        if (list) {
-            list.replaceChildren(
-                ...TROPHIES.map((trophy) => {
-                    const item = el("li", got.has(trophy.id) ? "is-got" : "", got.has(trophy.id) ? trophy.title : "？？？");
-                    item.title = trophy.hint;
-                    return item;
-                }),
-            );
-        }
-        $$("[data-trophy-count]").forEach((node) => (node.textContent = `${got.size} / ${TROPHIES.length}`));
-    };
-
-    const unlock = (id) => {
-        const trophy = TROPHIES.find((item) => item.id === id);
-        if (!trophy || got.has(id)) return;
-        got.add(id);
-        store.set("trophies", [...got]);
-        renderTrophies();
-        sfx.play("trophy");
-        toast(`TROPHY UNLOCKED ${got.size} / ${TROPHIES.length}`, trophy.title);
-    };
-    renderTrophies();
+    // 遊び要素（extras.js）が使う部品
+    window.NextUI = { toast, sound: (name) => sfx.play(name), emit };
 
     /* ---------- 数字（作品数・受賞数など）は、データから数える ---------- */
 
@@ -299,21 +339,40 @@
 
     /* ---------- トップの映像（スマホは軽い映像） ---------- */
 
+    // 通信量を抑える設定（データセーバー）の人と、アニメーション「なし」の人には、動画を流さず画像のままにする
     const heroVideo = $(".hero-video");
-    if (heroVideo) {
-        const start = () => {
-            if (calm()) return;
-            const small = matchMedia("(max-width: 960px)").matches;
-            const src = small ? heroVideo.dataset.srcSmall : heroVideo.dataset.src;
-            if (!src || heroVideo.getAttribute("src")) return;
+    const heroPause = $("[data-hero-pause]");
+    const saveData = Boolean(navigator.connection?.saveData);
+    let heroPausedByUser = false;
+    const startHero = () => {
+        if (!heroVideo || calm() || saveData || heroPausedByUser || document.hidden) return;
+        if (!heroVideo.getAttribute("src")) {
+            const src = matchMedia("(max-width: 960px)").matches ? heroVideo.dataset.srcSmall : heroVideo.dataset.src;
+            if (!src) return;
             heroVideo.src = src;
-            heroVideo.play().catch(() => {});
-        };
-        start();
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) heroVideo.pause();
-            else if (!calm() && heroVideo.getAttribute("src")) heroVideo.play().catch(() => {});
+        }
+        heroVideo.play().catch(() => {});
+    };
+    const syncHeroPause = () => {
+        if (!heroPause) return;
+        heroPause.hidden = saveData || calm();
+        heroPause.setAttribute("aria-pressed", String(heroPausedByUser));
+        heroPause.setAttribute("aria-label", heroPausedByUser ? "背景の動画を再生" : "背景の動画を一時停止");
+        heroPause.classList.toggle("is-paused", heroPausedByUser);
+    };
+    if (heroVideo) {
+        // 画像の読み込みと通信を取り合わないように、ページの表示が終わってから流す
+        if (document.readyState === "complete") setTimeout(startHero, 300);
+        else addEventListener("load", () => setTimeout(startHero, 300), { once: true });
+        document.addEventListener("visibilitychange", () => (document.hidden ? heroVideo.pause() : startHero()));
+        // ずっと動いているものは、見る人が止められるように（WCAG 2.2.2）
+        heroPause?.addEventListener("click", () => {
+            heroPausedByUser = !heroPausedByUser;
+            if (heroPausedByUser) heroVideo.pause();
+            else startHero();
+            syncHeroPause();
         });
+        syncHeroPause();
     }
 
     /* ---------- 最近の更新（トップ） ---------- */
@@ -328,6 +387,7 @@
             link.append(el("span", "tag-red", "NEW WORK"), el("span", "", latestWork.title));
             link.addEventListener("click", (event) => {
                 event.preventDefault();
+                emit("最近の更新: 作品");
                 openViewer(0);
             });
             news.append(link);
@@ -337,7 +397,9 @@
             link.href = latestNote.url;
             link.target = "_blank";
             link.rel = "noopener noreferrer";
-            link.append(el("span", "tag-ink", "NOTE"), el("span", "", String(latestNote.title || "").replace(/^「|」.*$/g, "")));
+            const noteTitle = el("span", "", String(latestNote.title || "").replace(/^「|」.*$/g, ""));
+            noteTitle.dataset.noTranslate = ""; // note の記事タイトルは訳さない
+            link.append(el("span", "tag-ink", "NOTE"), noteTitle);
             news.append(link);
         }
     }
@@ -368,13 +430,11 @@
     $$(".mode-card").forEach((card) =>
         card.addEventListener("click", () => {
             pickMode(card.dataset.mode);
-            unlock("mode");
         }),
     );
     const savedMode = store.get("mode", "");
     if (savedMode) pickMode(savedMode);
 
-    $("[data-trophy='start']")?.addEventListener("click", () => unlock("start"));
 
     /* ---------- メール（目的ごとに件名と本文のひな形を入れる） ---------- */
 
@@ -439,46 +499,117 @@
         dialog.addEventListener("close", () => sfx.play("close"));
     });
     $$("[data-open]").forEach((button) =>
-        button.addEventListener("click", () => openDialog(document.getElementById(button.dataset.open))),
+        button.addEventListener("click", () => {
+            openDialog(document.getElementById(button.dataset.open));
+            if (button.dataset.open === "options") emit("設定を開いた");
+        }),
     );
+    // ページ内の近道（JUMP）
+    $$(".jump a").forEach((link) => link.addEventListener("click", () => emit(`近道: ${link.textContent.trim()}`)));
 
     /* ---------- 設定画面 ---------- */
 
-    $$("[data-motion]").forEach((button) =>
-        button.addEventListener("click", () => {
-            settings.motion = button.dataset.motion;
-            store.set("motion", settings.motion);
+    const options = $("#options");
+    const MOTION_NOTES = {
+        default: "すべての動き（起動演出・カーソル・スクロール連動など）が出ます",
+        lite: "カーソル・カードの傾き・スクロール連動を止めて、軽く表示します",
+        none: "動きをすべて止めます",
+    };
+    const renderOptions = () => {
+        if (!options) return;
+        $$("[data-setting]", options).forEach((group) => {
+            $$("[role='radio']", group).forEach((button) => {
+                const on = settings[group.dataset.setting] === button.dataset.value;
+                button.setAttribute("aria-checked", String(on));
+                button.tabIndex = on ? 0 : -1;
+            });
+        });
+        const note = $("[data-note='motion']", options);
+        if (note) note.textContent = MOTION_NOTES[settings.motion] || "";
+        const range = $("#opt-volume", options);
+        const out = $("[data-volume-out]", options);
+        const mute = $("[data-mute]", options);
+        if (range) range.value = String(settings.volume);
+        if (out) out.textContent = settings.muted ? "OFF" : String(settings.volume);
+        if (mute) {
+            mute.setAttribute("aria-pressed", String(settings.muted));
+            mute.classList.toggle("is-muted", settings.muted);
+        }
+    };
+    const applyVolume = (video) => {
+        if (!video || video.classList.contains("hero-video")) return;
+        video.volume = settings.volume / 100;
+        video.muted = settings.muted || settings.volume === 0;
+    };
+    const changeSetting = (key, value) => {
+        if (settings[key] !== value) emit(`設定: ${key}=${value}`);
+        settings[key] = value;
+        saveSettings();
+        if (key === "motion") {
             applyMotion();
-            if (settings.motion === "calm") heroVideo?.pause();
-            else if (heroVideo) {
-                if (!heroVideo.getAttribute("src")) heroVideo.src = matchMedia("(max-width: 960px)").matches ? heroVideo.dataset.srcSmall : heroVideo.dataset.src;
-                heroVideo.play().catch(() => {});
+            if (calm()) heroVideo?.pause();
+            else {
+                startHero();
                 reveals.forEach((node) => node.classList.add("is-in"));
             }
-        }),
-    );
-    const volume = $("#opt-volume");
-    const volumeOut = $("[data-volume-out]");
-    if (volume) {
-        volume.value = String(settings.volume);
-        if (volumeOut) volumeOut.textContent = String(settings.volume);
-        volume.addEventListener("input", () => {
-            settings.volume = Number(volume.value);
-            if (volumeOut) volumeOut.textContent = volume.value;
+            syncHeroPause();
+        }
+        if (key === "lang") window.I18n?.setLang?.(value);
+        if (key === "sfx" && value === "on") sfx.play("select");
+        renderOptions();
+    };
+    if (options) {
+        $$("[data-setting]", options).forEach((group) => {
+            const radios = $$("[role='radio']", group);
+            radios.forEach((button, index) => {
+                button.addEventListener("click", () => changeSetting(group.dataset.setting, button.dataset.value));
+                // ← → で選び直せる（ラジオボタンと同じ操作）
+                button.addEventListener("keydown", (event) => {
+                    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+                    if (!step) return;
+                    event.preventDefault();
+                    const next = radios[(index + step + radios.length) % radios.length];
+                    changeSetting(group.dataset.setting, next.dataset.value);
+                    next.focus();
+                });
+            });
         });
-        volume.addEventListener("change", () => {
-            store.set("volume", settings.volume);
+        const range = $("#opt-volume", options);
+        range?.addEventListener("input", () => {
+            settings.volume = Number(range.value);
+            settings.muted = false;
+            $$(".movie video").forEach(applyVolume);
+            renderOptions();
+        });
+        range?.addEventListener("change", () => {
+            saveSettings();
+            emit(`設定: volume=${settings.volume}`);
             sfx.play("select");
         });
+        $("[data-mute]", options)?.addEventListener("click", () => {
+            settings.muted = !settings.muted;
+            saveSettings();
+            $$(".movie video").forEach(applyVolume);
+            renderOptions();
+        });
+        $("[data-reset]", options)?.addEventListener("click", () => {
+            Object.assign(settings, { motion: matchMedia("(prefers-reduced-motion: reduce)").matches ? "none" : "default", volume: DEFAULT_VOLUME, muted: false, sfx: "off" });
+            changeSetting("lang", "ja");
+            changeSetting("motion", settings.motion);
+        });
+        renderOptions();
     }
-    $("[data-sfx-demo]")?.addEventListener("click", () => {
-        ["click", "select", "open", "trophy"].forEach((name, i) => setTimeout(() => sfx.play(name), i * 420));
+    // 「音を鳴らしてみる」：設定で効果音が OFF のままでも、このボタンだけは鳴らして聞いてもらう
+    $("[data-sfx-demo]")?.addEventListener("click", (event) => {
+        ["click", "select", "open", "trophy"].forEach((name, i) => setTimeout(() => sfx.play(name, true), i * 420));
+        emit("技術デモ: 効果音");
+        const hint = event.currentTarget.parentElement.querySelector("[data-sfx-hint]");
+        if (hint) hint.textContent = settings.sfx === "on" ? "" : "サイト全体の効果音は、OPTIONS で ON にできます";
     });
 
     /* ---------- Main Works（タブ・映像・写真） ---------- */
 
     const tabs = $$(".stage-tab");
-    const seenStages = new Set();
     let activeTab = "shishito";
     const wipe = (label) => {
         if (calm()) return;
@@ -512,8 +643,6 @@
             if (!on && panel) stopMovie(panel);
             if (on && focus) tab.focus();
         });
-        seenStages.add(name);
-        if (seenStages.size >= 2) unlock("stage");
         if (scroll) $(".stage-tabs")?.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "start" });
     };
     tabs.forEach((tab, index) => {
@@ -526,8 +655,12 @@
             sfx.play("select");
         });
     });
-    seenStages.add("shishito");
-    $$("[data-go-tab]").forEach((button) => button.addEventListener("click", () => selectTab(button.dataset.goTab, { scroll: true })));
+    $$("[data-go-tab]").forEach((button) =>
+        button.addEventListener("click", () => {
+            if (button.dataset.goTab === "falien") emit("Falien へ: ししとうの下から");
+            selectTab(button.dataset.goTab, { scroll: true });
+        }),
+    );
     $$("[data-tab]").forEach((link) => link.addEventListener("click", () => selectTab(link.dataset.tab)));
 
     function stopMovie(scope) {
@@ -543,6 +676,7 @@
             const video = el("video");
             video.src = src;
             video.controls = true;
+            applyVolume(video);
             video.playsInline = true;
             video.setAttribute("aria-label", `${movie.dataset.title || ""}のプレイ映像`);
             movie.append(video);
@@ -550,7 +684,6 @@
             heroVideo?.pause();
             video.play().catch(() => {});
             video.focus();
-            unlock("movie");
         });
     });
 
@@ -562,7 +695,6 @@
         $("[data-lb='img']", lightbox).alt = alt || caption || "";
         $("[data-lb='caption']", lightbox).textContent = caption || "";
         openDialog(lightbox);
-        unlock("album");
     };
     document.addEventListener("click", (event) => {
         const photo = event.target.closest(".photo, .tl-photo");
@@ -570,10 +702,6 @@
         openPhoto(photo.dataset.photo, photo.dataset.caption, photo.querySelector("img")?.alt);
     });
 
-    // 遊びに行った
-    document.addEventListener("click", (event) => {
-        if (event.target.closest("[data-play]")) unlock("player");
-    });
 
     /* ---------- Other Works（作品カード・絞り込み・詳しい画面） ---------- */
 
@@ -619,7 +747,8 @@
         if (t.wip) badges.append(el("span", "badge", "WIP"));
         thumb.append(badges);
 
-        button.append(thumb, el("span", "work-title", work.title), el("span", "work-sub", `${work.genre || ""} ／ ${work.period || ""}`));
+        button.append(thumb, el("span", "work-title", work.title), el("span", "work-sub"));
+        button.lastChild.append(joined([work.genre, work.period]));
         button.setAttribute("aria-label", `${work.title}（${work.genre || ""}）の詳しい画面を開く`);
         item.append(button);
         grid?.append(item);
@@ -691,12 +820,16 @@
             ].filter(Boolean).map(([cls, text]) => el("span", cls, text)),
         );
         v("title").textContent = work.title;
-        v("meta").textContent = `${work.genre || ""} ／ ${work.period || ""}`;
+        v("meta").replaceChildren(joined([work.genre, work.period]));
         v("desc").textContent = work.description || "";
         v("tags").replaceChildren(
             ...String(work.tech || "").split(/\s+/).filter(Boolean).map((tech) => el("span", "", tech)),
             el("span", "is-line", Number(work.member) >= 2 ? `${work.member}人チーム` : "個人制作"),
-            el("span", "is-line", `担当：${work.role || "—"}`),
+            (() => {
+                const role = el("span", "is-line");
+                role.append(el("span", "", "担当："), el("span", "", work.role || "—"));
+                return role;
+            })(),
         );
         v("point-box").hidden = !work.point;
         v("point").textContent = work.point || "";
@@ -715,8 +848,10 @@
         v("prev").disabled = pos <= 0;
         v("next").disabled = pos < 0 || pos >= list.length - 1;
         history.replaceState(history.state, "", `#work=${idOf(work)}`);
+        v("play").dataset.title = work.title;
+        // アクセス解析（analytics.js）が「どの作品が見られたか」を数える
+        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: work.title } }));
         opened.add(work.title);
-        if (opened.size >= 3) unlock("hunter");
     }
 
     function openViewer(index) {
@@ -744,8 +879,9 @@
             const work = WORKS[current];
             if (!work) return;
             // 今のサイトにある作品ごとのページ（works/○○/）のリンクをコピーする
-            const url = new URL(`../works/${idOf(work)}/`, location.href).href;
+            const url = new URL(`${BASE}works/${idOf(work)}/`, location.href).href;
             const ok = await copyText(url);
+            if (ok) emit(`作品リンクをコピー: ${work.title}`);
             sfx.play("copy");
             v("copy").textContent = ok ? "コピーしました" : "コピーできませんでした";
             setTimeout(() => (v("copy").textContent = "リンクをコピー"), 1800);
@@ -762,12 +898,14 @@
         const match = location.hash.match(/^#work=([a-z0-9-]+)$/);
         if (!match) return;
         if (match[1] === "shishito" || match[1] === "falien") {
+            emit(`作品リンクから: ${match[1] === "falien" ? "Falien" : "ししとう"}`);
             selectTab(match[1]);
             $("#featured-works")?.scrollIntoView();
             return;
         }
         const index = WORKS.findIndex((work) => idOf(work) === match[1]);
         if (index < 0) return;
+        emit(`作品リンクから: ${WORKS[index].title}`);
         $("#other-works")?.scrollIntoView();
         openViewer(index);
     };
@@ -788,7 +926,10 @@
             const card = el("div", "tl-card");
             if (item.quest === "award") card.append(el("span", "tl-rare", "★ RARE"));
             if (item.quest === "now") card.append(el("span", "tl-rare", "NOW"));
-            card.append(el("h3", "", item.title || ""), el("p", "", (item.text || []).join("")));
+            // 1行ずつ別の文字にする（英語の辞書が1行ずつなので）
+            const text = el("p");
+            (item.text || []).forEach((line) => text.append(el("span", "", line)));
+            card.append(el("h3", "", item.title || ""), text);
             if (item.photo?.image) {
                 const button = el("button", "tl-photo");
                 button.type = "button";
@@ -876,40 +1017,12 @@
             }
             const time = el("time", "", article.date || "");
             if (index === 0) time.append(el("span", "tag-red", "NEW"));
-            link.append(box, time, el("b", "", article.title || ""), el("span", "go", "記事を読む →"));
+            const title = el("b", "", article.title || "");
+            title.dataset.noTranslate = ""; // note の記事タイトルは訳さない
+            link.append(box, time, title, el("span", "go", "記事を読む →"));
             li.append(link);
             articles.append(li);
         });
     }
 
-    /* ---------- 全部のセクションを見た・エンディング ---------- */
-
-    const allSections = $$("main > section[id]:not(#ending)");
-    const seen = new Set();
-    if ("IntersectionObserver" in window) {
-        const seenObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                seen.add(entry.target.id);
-                seenObserver.unobserve(entry.target);
-                if (seen.size >= allSections.length) unlock("explorer");
-            });
-        }, { rootMargin: "-40% 0px -40% 0px" });
-        allSections.forEach((section) => seenObserver.observe(section));
-
-        // エンディングはページのいちばん下にあって画面の真ん中まで来ないことがあるので、半分見えたら
-        const ending = $("#ending");
-        if (ending) {
-            const endObserver = new IntersectionObserver((entries) => {
-                if (!entries[0].isIntersecting) return;
-                endObserver.disconnect();
-                seen.add("ending");
-                unlock("clear");
-                const score = $("[data-ending-score]");
-                if (score) score.textContent = `TROPHY ${got.size} / ${TROPHIES.length} ・ 見た作品 ${opened.size}`;
-                if (seen.size >= allSections.length) unlock("explorer");
-            }, { threshold: 0.5 });
-            endObserver.observe(ending);
-        }
-    }
 })();

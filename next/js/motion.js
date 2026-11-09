@@ -5,7 +5,7 @@
    ・カーソル／クリックの火花／カードの傾き／ボタンの吸いつき
    ・スクロール連動（進み具合のバー・パララックス・Timeline の横移動）
    ・説明文は「くわしく」で開く（最初は短く見せる）
-   OPTIONS で「ひかえめ」にすると、ここの動きはすべて止まる
+   OPTIONS のアニメーション「なし」で全部、「軽量」で重い動きが止まる（boot.js / next.js が <html> にクラスを付ける）
 ======================================== */
 
 (() => {
@@ -15,7 +15,9 @@
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
     const desktop = matchMedia("(min-width: 961px)");
-    const calm = () => root.classList.contains("is-calm") || (reduced.matches && !root.classList.contains("is-motion"));
+    // なし：すべて止める／軽量：重い動き（カーソル・傾き・吸いつき・スクロール連動）だけ止める
+    const calm = () => root.classList.contains("motion-off");
+    const light = () => calm() || root.classList.contains("motion-lite");
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
     /* ---------- 起動演出 ---------- */
@@ -104,7 +106,8 @@
     });
 
     // 大きな見出し（下から出てくる）
-    const splitTargets = $$(".display, .ending-title, .sec-title-ja, .web-title");
+    // 英字の見出しだけ（日本語の見出しは、英語表示に切り替えたときに訳せるよう分けない）
+    const splitTargets = $$(".display, .ending-title, .web-title");
     splitTargets.forEach((heading) => {
         splitInto(heading, { mask: true });
         heading.setAttribute("data-split", "");
@@ -175,7 +178,7 @@
     let tlDistance = 0;
     const setupTimeline = () => {
         if (!timeline || !pin || !tlTrack) return;
-        const use = desktop.matches && !calm();
+        const use = desktop.matches && !light();
         timeline.classList.toggle("is-pinned", use);
         if (!use) {
             timeline.style.height = "";
@@ -220,7 +223,7 @@
             band.track.style.transform = `translate3d(${band.x}px, 0, 0)`;
         });
 
-        if (!still) {
+        if (!light()) {
             // トップ：スクロールで映像が少し寄り、文字が上へ抜ける／マウスで奥行き
             if (hero && heroBody && heroMedia) {
                 const h = hero.offsetHeight || 1;
@@ -254,6 +257,7 @@
                 });
             }
         } else {
+            if (timeline?.classList.contains("is-pinned") === false) tlTrack && (tlTrack.style.transform = "");
             [heroMedia, heroBody, heroName].forEach((node) => node && (node.style.transform = ""));
             if (heroBody) heroBody.style.opacity = "";
             parallax.forEach(([node]) => (node.style.translate = ""));
@@ -339,12 +343,12 @@
             if (!state.raf) state.raf = requestAnimationFrame(render);
         };
         card.addEventListener("pointerenter", (event) => {
-            if (event.pointerType !== "mouse" || calm()) return;
+            if (event.pointerType !== "mouse" || light()) return;
             rect = { ...card.getBoundingClientRect().toJSON(), stamp: scrollStamp };
             card.classList.add("is-tilting");
         });
         card.addEventListener("pointermove", (event) => {
-            if (event.pointerType !== "mouse" || calm()) return;
+            if (event.pointerType !== "mouse" || light()) return;
             if (!rect || rect.stamp !== scrollStamp) rect = { ...card.getBoundingClientRect().toJSON(), stamp: scrollStamp }; // スクロールした後は測り直す
             state.tx = clamp((event.clientX - rect.left) / rect.width - 0.5, -0.5, 0.5);
             state.ty = clamp((event.clientY - rect.top) / rect.height - 0.5, -0.5, 0.5);
@@ -376,11 +380,11 @@
             if (!state.raf) state.raf = requestAnimationFrame(render);
         };
         button.addEventListener("pointerenter", (event) => {
-            if (event.pointerType !== "mouse" || calm()) return;
+            if (event.pointerType !== "mouse" || light()) return;
             rect = { ...button.getBoundingClientRect().toJSON(), stamp: scrollStamp };
         });
         button.addEventListener("pointermove", (event) => {
-            if (event.pointerType !== "mouse" || calm()) return;
+            if (event.pointerType !== "mouse" || light()) return;
             if (!rect || rect.stamp !== scrollStamp) rect = { ...button.getBoundingClientRect().toJSON(), stamp: scrollStamp };
             state.tx = clamp((event.clientX - rect.left - rect.width / 2) * 0.15, -5, 5);
             state.ty = clamp((event.clientY - rect.top - rect.height / 2) * 0.2, -4, 4);
@@ -419,7 +423,7 @@
             requestAnimationFrame(loop);
         };
         const update = (under) => {
-            const on = !calm() && !document.querySelector("dialog[open]");
+            const on = !light() && !document.querySelector("dialog[open]");
             root.classList.toggle("has-cursor", on);
             if (!under?.closest) return;
             const target = under.closest("a, button, input, label, [role='tab']");
@@ -452,7 +456,7 @@
 
     const sparks = $("[data-sparks]");
     addEventListener("pointerdown", (event) => {
-        if (!sparks || calm()) return;
+        if (!sparks || light()) return;
         const target = event.target.closest("a, button, .work");
         if (!target || target.closest("dialog")) return;
         const ringEl = document.createElement("span");
@@ -484,10 +488,11 @@
     });
     addEventListener("load", setupTimeline);
     // OPTIONS で「ひかえめ」に切り替えたとき
-    let wasCalm = calm();
+    let wasLight = light();
     new MutationObserver(() => {
-        if (calm() === wasCalm) return;
-        wasCalm = calm();
+        if (light() === wasLight) return;
+        wasLight = light();
+        if (wasLight) root.classList.remove("has-cursor");
         setupTimeline();
     }).observe(root, { attributes: true, attributeFilter: ["class"] });
     requestAnimationFrame(frame);
