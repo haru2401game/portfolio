@@ -815,3 +815,170 @@ html.is-calm [data-reveal] { opacity: 1; transform: none; }
     .ending-score { text-align: left; }
     .ending-slash { width: 40%; }
 }
+
+/* ================================================================
+   動きを増やす（v2）：起動演出・文字の分割アニメーション・流れる帯・
+   カーソル・カードの傾き・スクロール連動・クリックの火花
+   文字を減らす：説明は「くわしく」で開く
+================================================================ */
+
+/* ---------- 起動演出 ---------- */
+
+.boot { display: none; }
+html.is-booting { overflow: hidden; }
+html.is-booting .boot { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.boot-panel { position: absolute; inset: 0; background: var(--red); }
+.boot-panel.is-b { background: var(--ink); clip-path: polygon(62% 0, 100% 0, 100% 100%, 38% 100%); }
+.boot-inner { position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; color: #fff; }
+.boot-logo { margin: 0; display: flex; gap: .25em; font-family: var(--display); font-style: italic; font-weight: 800; font-size: clamp(56px, 11vw, 150px); line-height: .9; }
+.boot-logo span { display: block; animation: boot-in .6s cubic-bezier(.2, .8, .2, 1) both; }
+.boot-logo span:last-child { animation-delay: .1s; -webkit-text-stroke: 2px #fff; color: transparent; }
+@keyframes boot-in { from { opacity: 0; transform: translateY(60%) skewX(-12deg); } }
+.boot-bar { width: min(420px, 70vw); height: 8px; background: rgba(255, 255, 255, .25); overflow: hidden; }
+.boot-bar span { display: block; height: 100%; width: 0; background: #fff; }
+.boot-text { margin: 0; font-family: var(--display); font-style: italic; font-weight: 700; letter-spacing: .3em; font-size: 16px; }
+.boot.is-leave .boot-inner { animation: boot-out-inner .35s ease forwards; }
+.boot.is-leave .boot-panel.is-a { animation: wipe-up .7s cubic-bezier(.7, 0, .2, 1) .15s forwards; }
+.boot.is-leave .boot-panel.is-b { animation: wipe-up .7s cubic-bezier(.7, 0, .2, 1) forwards; }
+@keyframes boot-out-inner { to { opacity: 0; transform: scale(1.08); } }
+@keyframes wipe-up { to { transform: translateY(-102%); } }
+
+/* ---------- ヘッダーの進み具合（HP バーのように） ---------- */
+
+.hd-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 4px; background: transparent; }
+.hd-progress span { display: block; height: 100%; width: 100%; background: var(--red); transform-origin: left; transform: scaleX(0); }
+
+/* ---------- 文字を1文字ずつ ---------- */
+
+.ch { display: inline-block; white-space: pre; }
+.split-mask { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 .06em .06em 0; margin-bottom: -.06em; }
+[data-split] .ch { transform: translateY(110%) rotate(6deg); transition: transform .7s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i) * 28ms); }
+[data-split].is-split-in .ch { transform: none; }
+
+/* トップの名前：落ちてきて弾む・乗せると跳ねる */
+.hero-name-en span { opacity: 1; transform: none; animation: none; }
+.hero-name-en .ch { animation: drop .8s cubic-bezier(.3, 1.5, .5, 1) both; animation-delay: calc(.15s + var(--i) * 45ms); }
+.hero-name-en .ch:hover { animation: hop .45s cubic-bezier(.3, 1.6, .5, 1); color: var(--red); }
+.hero-name-en .is-red .ch:hover { color: var(--ink); }
+@keyframes drop { from { opacity: 0; transform: translateY(-80%) rotate(-10deg); } }
+@keyframes hop { 40% { transform: translateY(-18%) rotate(-4deg); } }
+html.is-booting .hero-name-en .ch { animation-play-state: paused; }
+
+/* マウスに合わせて、映像と名前が少しずれて動く（奥行き） */
+.hero-media, .hero-name-en { will-change: transform; transition: transform .25s ease-out; }
+
+/* 見出しの下に赤い線が走る */
+.eyebrow { position: relative; display: inline-block; }
+.sec-head .eyebrow::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 100%; height: 2px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .8s cubic-bezier(.2, .8, .2, 1) .2s; }
+.sec-head.is-in .eyebrow::after { transform: scaleX(1); }
+
+/* ---------- 流れる帯 ---------- */
+
+.marquee { overflow: hidden; background: var(--red); color: #fff; transform: rotate(-2deg) scale(1.04); margin: -12px 0; position: relative; z-index: 2; padding: 14px 0; box-shadow: 0 10px 30px rgba(215, 38, 61, .25); }
+.marquee.is-ink { background: var(--ink); transform: rotate(1.5deg) scale(1.04); box-shadow: 0 10px 30px rgba(0, 0, 0, .2); }
+.marquee-track { display: flex; width: max-content; gap: 28px; align-items: center; will-change: transform; }
+.marquee-track span { font-family: var(--display); font-style: italic; font-weight: 800; font-size: clamp(28px, 4vw, 48px); line-height: 1; white-space: nowrap; letter-spacing: .02em; }
+.marquee-track i { font-style: normal; font-size: 24px; color: rgba(255, 255, 255, .7); }
+.marquee + .sec { border-top: 0; }
+
+/* ---------- カーソル（パソコン） ---------- */
+
+.cursor-ring { position: fixed; left: 0; top: 0; z-index: 90; width: 36px; height: 36px; margin: -18px 0 0 -18px; border: 2px solid var(--red); border-radius: 50%; pointer-events: none; display: none; align-items: center; justify-content: center; transition: width .2s ease, height .2s ease, margin .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease; mix-blend-mode: normal; }
+.cursor-ring span { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 14px; letter-spacing: .1em; color: #fff; opacity: 0; transition: opacity .15s ease; }
+html.has-cursor .cursor-ring { display: flex; }
+.cursor-ring.is-hover { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(215, 38, 61, .12); }
+.cursor-ring.is-label { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: var(--red); }
+.cursor-ring.is-label span { opacity: 1; }
+.cursor-ring.is-down { transform: scale(.85); }
+.cursor-ring.is-hidden { opacity: 0; }
+
+/* ---------- クリックの火花 ---------- */
+
+.sparks { position: fixed; inset: 0; pointer-events: none; z-index: 95; }
+.spark { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; background: var(--red); animation: spark .55s cubic-bezier(.2, .8, .2, 1) forwards; }
+.spark.is-ink { background: var(--ink); }
+.spark.is-ring { width: 10px; height: 10px; margin: -5px 0 0 -5px; background: transparent; border: 2px solid var(--red); border-radius: 50%; animation: ring-out .45s ease-out forwards; }
+@keyframes spark { to { transform: translate(var(--x), var(--y)) rotate(180deg) scale(.2); opacity: 0; } }
+@keyframes ring-out { to { transform: scale(6); opacity: 0; } }
+
+/* ---------- カードの傾き ---------- */
+
+.tilt { transform-style: preserve-3d; will-change: transform; }
+.tilt.is-tilting { transition: transform .08s linear !important; }
+.tilt-glare { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .45), transparent 55%); opacity: 0; transition: opacity .2s ease; }
+.tilt.is-tilting .tilt-glare { opacity: 1; }
+
+/* カードが順番に出てくる */
+.works-grid li { animation: none; }
+.works-grid li.is-wait { opacity: 0; transform: translateY(40px) scale(.96); }
+.works-grid li.is-show { opacity: 1; transform: none; transition: opacity .5s ease, transform .6s cubic-bezier(.2, .8, .2, 1); transition-delay: var(--d, 0ms); }
+
+/* 画像がゆっくりずれる（パララックス） */
+[data-parallax] { will-change: transform; }
+
+/* ---------- Timeline：縦にスクロールすると横に進む（パソコン） ---------- */
+
+.timeline.is-pinned { padding: 0; }
+.timeline.is-pinned .tl-pin { position: sticky; top: var(--header); height: calc(100vh - var(--header)); display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.timeline.is-pinned .tl-scroller { overflow: visible; scroll-snap-type: none; }
+.timeline.is-pinned .tl-track { will-change: transform; }
+.timeline.is-pinned .tl-ctrl .round { display: none; }
+.timeline.is-pinned .sec-head { margin-bottom: 24px; }
+.tl-item .tl-card { transition: transform .4s cubic-bezier(.2, .8, .2, 1), border-color .2s ease, opacity .4s ease; }
+.timeline.is-pinned .tl-item:not(.is-reached) .tl-card { opacity: .35; transform: translateY(16px); }
+.timeline.is-pinned .tl-item.is-reached .tl-node { animation: node-pop .4s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes node-pop { 50% { transform: scale(1.5); } }
+.tl-card p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ---------- 文字を減らす（くわしくは開いて読む） ---------- */
+
+.about-points { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.about-points li { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; background: var(--sand); border-radius: 8px; border-left: 0; }
+.about-points b { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 34px; line-height: 1; color: var(--red); }
+.about-points span { font-size: 13px; font-weight: 700; line-height: 1.5; }
+
+.more-toggle { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1.5px solid var(--ink); border-radius: 999px; background: #fff; font-size: 13px; font-weight: 900; cursor: pointer; }
+.more-toggle::after { content: "＋"; color: var(--red); transition: transform .25s ease; }
+.more-toggle[aria-expanded="true"]::after { transform: rotate(45deg); }
+.more-toggle:hover { background: var(--ink); color: #fff; }
+
+/* 技術の見どころ：最初は1行ずつ */
+.steps p { transition: max-height .4s ease; }
+.hl:not(.is-open) .steps p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* スキル：最初は名前と技術だけ */
+.skill-col:not(.is-open) .sk p, .skill-col:not(.is-open) .sk small { display: none; }
+.skill-col .more-toggle { margin-top: auto; }
+
+/* このサイトの技術・窓口：短く */
+.tech-card p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.purpose small { display: none; }
+.why-list li { grid-template-columns: auto 1fr; align-items: center; }
+.why-list li::before { grid-row: auto; }
+.why-list b { font-size: 16px; }
+.box-head p, .sec-lead { font-size: 15px; }
+
+@media (max-width: 960px) {
+    .about-points { grid-template-columns: 1fr 1fr 1fr; }
+    .about-points b { font-size: 26px; }
+    .marquee { transform: rotate(-2deg) scale(1.08); }
+}
+@media (max-width: 640px) {
+    .about-points { grid-template-columns: 1fr; }
+    .about-points li { flex-direction: row; align-items: baseline; gap: 12px; }
+}
+
+/* ひかえめのときは、動きの仕掛けを止める */
+html.is-calm .marquee-track { transform: none !important; }
+html.is-calm [data-split] .ch, html.is-calm .hero-name-en .ch { transform: none; animation: none; }
+html.is-calm .works-grid li.is-wait { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    html:not(.is-motion) [data-split] .ch, html:not(.is-motion) .hero-name-en .ch { transform: none; animation: none; }
+    html:not(.is-motion) .works-grid li.is-wait { opacity: 1; transform: none; }
+}
+.hero-name-en > span .split-word { display: inline-block; white-space: nowrap; }
+.hero-name-en > span .ch { display: inline-block; }
+main { overflow-x: clip; }
+@media (max-width: 640px) {
+    .boot-logo { flex-direction: column; align-items: center; font-size: 22vw; }
+}

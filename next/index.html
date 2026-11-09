@@ -21,11 +21,25 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,600;1,700;1,800&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap">
 <link rel="stylesheet" href="css/next.css">
+<script src="js/boot.js"></script>
 <link rel="preload" as="image" href="../images/index/Hero/poster.webp" fetchpriority="high">
 </head>
 <body>
 
 <a class="skip-link" href="#main">本文へ移動</a>
+
+<!-- 起動演出（タブを開いて最初の1回だけ。クリック・キーで飛ばせる） -->
+<div class="boot" data-boot aria-hidden="true">
+    <div class="boot-panel is-a"></div>
+    <div class="boot-panel is-b"></div>
+    <div class="boot-inner">
+        <p class="boot-logo"><span>HARUTA</span><span>NAGAYA</span></p>
+        <div class="boot-bar"><span data-boot-bar></span></div>
+        <p class="boot-text"><span data-boot-num>0</span>% LOADING</p>
+    </div>
+</div>
+<div class="cursor-ring" data-cursor aria-hidden="true"><span data-cursor-label></span></div>
+<div class="sparks" data-sparks aria-hidden="true"></div>
 
 <div class="beta-bar">
     <span><b>BETA</b> 新デザインの試作版です。気になる点を教えてください。</span>
@@ -51,6 +65,7 @@
     <button class="hd-menu" type="button" aria-controls="hd-nav" aria-expanded="false" aria-label="メニューを開く">
         <span></span><span></span><span></span>
     </button>
+    <div class="hd-progress" aria-hidden="true"><span data-progress></span></div>
 </header>
 
 <main id="main" tabindex="-1">
@@ -96,6 +111,10 @@
 
     <a class="press" href="#mode">SCROLL TO START</a>
 </section>
+
+<div class="marquee" aria-hidden="true" data-marquee>
+    <div class="marquee-track"><span>GAME PROGRAMMER</span><i>✦</i><span>UNITY / C# / C++</span><i>✦</i><span>IGCC GRAND PRIX</span><i>✦</i><span>TOKYO GAME SHOW 2026</span><i>✦</i><span>34 WORKS</span><i>✦</i></div>
+</div>
 
 <!-- ================= SELECT MODE ＋ 30秒まとめ ================= -->
 <section class="sec mode" id="mode" data-section="目的別の入口">
@@ -178,8 +197,12 @@
             <p class="eyebrow">ABOUT ／ GAME PROGRAMMER · AICHI, JAPAN</p>
             <h2 class="about-name">長屋 晴太 <i>NAGAYA HARUTA</i></h2>
             <p class="about-copy">ゲームをつくり、<em>心に残る体験</em>を届ける。</p>
-            <p class="about-text">愛知県豊橋市出身。名古屋のトライデントコンピュータ専門学校ゲームサイエンス学科でゲーム制作を学んでいます。ゲームプログラマーを目指して、入学してから個人とチームで30作品以上を制作してきました。</p>
-            <p class="about-text">チーム制作では、「ししとう」でリードプログラマー（東京ゲームショウ2026出展）、「Falien」で6か国・7人の国際チームのジェネラリスト（IGCCグランプリ）を担当しました。制作を通してさまざまな役割を経験し、チームでより良いゲームを作ることを大切にしています。</p>
+            <p class="about-text">愛知県豊橋市出身。トライデントコンピュータ専門学校で、ゲームプログラマーを目指して制作中。</p>
+            <ul class="about-points">
+                <li><b>30+</b><span>個人とチームで制作した作品</span></li>
+                <li><b>LEAD</b><span>「ししとう」リードプログラマー</span></li>
+                <li><b>7人</b><span>「Falien」6か国の国際チーム</span></li>
+            </ul>
             <dl class="about-meta">
                 <div><dt>BASE</dt><dd>TOYOHASHI, AICHI</dd></div>
                 <div><dt>FOCUS</dt><dd>PROGRAMMING / GAME DESIGN</dd></div>
@@ -465,6 +488,7 @@
 
 <!-- ================= TIMELINE ================= -->
 <section class="sec timeline" id="timeline" data-section="Timeline">
+  <div class="tl-pin" data-tl-pin>
     <div class="wrap">
         <div class="sec-head" data-reveal>
             <div><p class="eyebrow">WORLD MAP</p><h2 class="display">TIMELINE</h2></div>
@@ -479,6 +503,7 @@
         <button type="button" class="round" data-tl="1" aria-label="次へ">▶</button>
         <span class="tl-hint">横にスクロールすると、いまの挑戦まで進めます</span>
     </div>
+  </div>
 </section>
 
 <!-- ================= BLOG ================= -->
@@ -503,6 +528,10 @@
     </div>
 </section>
 
+<div class="marquee is-ink" aria-hidden="true" data-marquee>
+    <div class="marquee-track"><span>LET'S MAKE GAMES TOGETHER</span><i>✦</i><span>一緒にゲームを作りましょう</span><i>✦</i><span>LET'S MAKE GAMES TOGETHER</span><i>✦</i><span>一緒にゲームを作りましょう</span><i>✦</i></div>
+</div>
+
 <!-- ================= CONTACT ================= -->
 <section class="sec contact" id="contact" data-section="Contact">
     <div class="wrap contact-grid">
@@ -510,9 +539,9 @@
             <p class="eyebrow">WHY ME</p>
             <h3>一緒に作るなら、こんなことができます</h3>
             <ol class="why-list">
-                <li><b>遊びの手触りを、プログラムで形にする</b><p>「ししとう」では、手足を回して闘うプレイヤー操作を物理挙動で実装。アイデアを「触って面白い」ところまで作り込みます。</p></li>
-                <li><b>チームをまとめ、ひとつのゲームに仕上げる</b><p>「ししとう」ではリードプログラマー・チームリーダーとしてプロジェクト統合を担当。6か国7人の国際チーム（Falien）でも、シーンをつないで完成まで仕上げました。</p></li>
-                <li><b>作って、伝えるところまでやる</b><p>note で 270 本以上の記事を公開し、制作の過程を発信。このサイトも、生成AIと協力しながら設計・運用しています。</p></li>
+                <li><b>遊びの手触りを、プログラムで形にする</b></li>
+                <li><b>チームをまとめ、ひとつのゲームに仕上げる</b></li>
+                <li><b>作って、伝えるところまでやる</b></li>
             </ol>
         </div>
         <div class="contact-main">
@@ -630,5 +659,6 @@
 <script src="../data/timeline.js"></script>
 <script src="../data/blog.js"></script>
 <script src="js/next.js"></script>
+<script src="js/motion.js"></script>
 </body>
 </html>
