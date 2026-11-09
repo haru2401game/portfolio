@@ -313,8 +313,8 @@ button { font: inherit; color: inherit; }
 .jump a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: 14px; font-weight: 700; text-decoration: none; transition: background .15s ease, color .15s ease; }
 .jump a:hover { background: var(--ink); color: #fff; }
 
-.quick { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 18px; padding: clamp(24px, 3vw, 40px); background: var(--sand); border-radius: 12px; }
-.quick::after { content: ""; position: absolute; top: 0; right: 0; width: 200px; height: 100%; background: var(--red); clip-path: polygon(70% 0, 100% 0, 100% 100%, 20% 100%); }
+.quick { position: relative; display: flex; flex-direction: column; gap: 18px; padding: clamp(24px, 3vw, 40px); background: var(--sand); border-radius: 12px; }
+.quick::after { content: ""; position: absolute; top: 0; right: 0; width: 200px; height: 100%; background: var(--red); border-radius: 0 12px 12px 0; clip-path: polygon(70% 0, 100% 0, 100% 100%, 20% 100%); }
 .quick > * { position: relative; z-index: 1; }
 .quick-head { display: flex; align-items: center; gap: 14px; }
 .timer { padding: 1px 10px; background: var(--ink); color: #fff; font-family: var(--display); font-style: italic; font-size: 18px; }
@@ -350,8 +350,8 @@ button { font: inherit; color: inherit; }
 .about-meta dt { font-family: var(--display); font-style: italic; font-weight: 700; font-size: 14px; letter-spacing: .14em; color: var(--muted); }
 .about-meta dd { margin: 0; font-family: var(--display); font-style: italic; font-weight: 800; font-size: 20px; }
 
-.status { margin-top: 56px; display: flex; background: var(--ink); color: #fff; border-radius: var(--radius); overflow: hidden; }
-.status-head { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 20px 32px; background: var(--red); flex: none; }
+.status { margin-top: 56px; display: flex; background: var(--ink); color: #fff; border-radius: var(--radius); }
+.status-head { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 20px 32px; background: var(--red); flex: none; border-radius: var(--radius) 0 0 var(--radius); }
 .status-head b { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 26px; letter-spacing: .08em; }
 .status-head span { font-size: 13px; font-weight: 700; }
 .status-list { flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0; }
@@ -1174,3 +1174,11 @@ html.motion-off .peeker, html.motion-off .drifter, html.motion-off .card-pop, ht
     .ending-actions { justify-content: flex-start; }
     .play-continue { left: 14px; bottom: 76px; }
 }
+
+/* のぞくキャラの枠は、置いた箱のスタイル（「.about-meta div」など）を受けない */
+.peeker { margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important; }
+@media (max-width: 1180px) { .status-head { border-radius: var(--radius) var(--radius) 0 0; } }
+/* キャラの画像は、置いた箱の「img」のスタイル（写真の切り抜き・ふわふわ・アイコンの大きさなど）を受けない */
+.peeker > img.peeker-sprite { position: static !important; display: block !important; width: 100% !important; height: auto !important; max-width: none !important; object-fit: contain !important; clip-path: none !important; border-radius: 0 !important; background: none !important; animation: peek 9s cubic-bezier(.3, 1.4, .5, 1) var(--peek-delay) infinite !important; }
+.peeker.is-side > img.peeker-sprite { animation-name: peek-side !important; }
+.play-card > img.card-pop, .sns a > img.card-pop { position: absolute !important; width: 52px !important; height: auto !important; object-fit: contain !important; }

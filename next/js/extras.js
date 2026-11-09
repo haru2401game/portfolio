@@ -152,7 +152,7 @@
 
     const sprite = (file, className) => {
         const img = make("img", className);
-        img.loading = "lazy";
+        // 小さな画像（全員で数十KB）なので、すぐ読み込む（遅らせると、顔を出した瞬間にまだ空っぽのことがある）
         img.decoding = "async";
         img.src = `${BASE}images/character/${file}`;
         img.alt = "";
@@ -162,17 +162,18 @@
     };
 
     // のぞく：箱のふちから、ときどき顔を出す
+    // ・のぞく場所は「上に何も無い、ふちのはっきりした箱」だけにする（すき間や文字の上だと、途中で切れて見えるため）
+    // ・箱の上のふちから顔を出す（is-side は右のふちから）
     const PEEKERS = [
-        { host: ".hero-badges", file: "Koutei.png", x: "70%", w: 76, delay: 2 },
-        { host: ".about-photo", file: "Pensand.png", x: "64%", w: 88, delay: 1 },
-        { host: ".about-meta", file: "Penko.png", x: "30%", w: 64, delay: 4 },
-        { host: ".skill-col:nth-child(2)", file: "Openji.png", x: "62%", w: 56, delay: 5.5 },
-        { host: "#panel-shishito .sp-info", file: "Ojisand.png", x: "78%", w: 72, delay: 3 },
-        { host: ".filters", file: "Penzou.png", x: "86%", w: 60, delay: 6.5 },
-        { host: ".articles", file: "Penny.png", x: "86%", w: 76, delay: 2.5 },
+        { host: ".quick", file: "Koutei.png", x: "34%", w: 70, delay: 2 },
+        { host: ".about-photo", file: "Pensand.png", x: "60%", w: 80, delay: 1 },
+        { host: ".status", file: "Penko.png", x: "42%", w: 64, delay: 4 },
+        { host: "#panel-shishito .sp-info", file: "Ojisand.png", x: "78%", w: 50, delay: 3 },
+        { host: ".skill-col:nth-child(2)", file: "Openji.png", x: "66%", w: 60, delay: 5.5 },
+        { host: ".tech-card:nth-child(3)", file: "Penzou.png", x: "70%", w: 60, delay: 6.5 },
+        { host: ".play-card:nth-child(2)", file: "Machopen.png", x: "10%", w: 62, delay: 6 },
+        { host: ".blog-intro", file: "Penny.png", x: "68%", w: 64, delay: 2.5 },
         { host: ".tl-item.is-now .tl-card", file: "Chrono_0.png", side: true, y: "18%", w: 60, delay: 0.5 },
-        { host: ".play-grid", file: "Machopen.png", x: "6%", w: 76, delay: 6 },
-        { host: ".mail-bar", file: "Player.png", x: "86%", w: 60, delay: 3.5 },
         { host: ".ft", file: "Clone_0.png", x: "46%", w: 60, delay: 7.5 },
     ];
     PEEKERS.forEach((config) => {
@@ -200,6 +201,7 @@
         { section: ".play", file: "Ojisand.png", y: "70%", w: 58, d: 40, delay: -16, reverse: true },
         { section: ".blog", file: "Penko.png", y: "14%", w: 60, d: 50, delay: -30 },
         { section: ".contact", file: "RedFish.png", y: "72%", w: 54, d: 36, delay: -18 },
+        { section: ".contact", file: "Player.png", y: "18%", w: 50, d: 44, delay: -26, reverse: true },
     ];
     DRIFTERS.forEach((config) => {
         const section = $(config.section);
