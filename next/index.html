@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+    新デザインの試作版（A案：ゲームのタイトル画面風）
+    ・今のサイト（../index.html）とは別のページ。検索結果には出さない（noindex）
+    ・作品・経歴・ブログのデータは、今のサイトと同じ ../data/ を読み込む（データを1か所で直せば両方に反映）
+    ・アクセス解析は入れていない（試作の確認で数字が混ざらないように）
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://assets.st-note.com; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>長屋晴太｜ポートフォリオ（新デザイン試作版）</title>
+<meta name="description" content="長屋晴太（ゲームプログラマー志望・2028年卒）のポートフォリオ。新デザインの試作版です。">
+<link rel="canonical" href="https://haru2401game.github.io/portfolio/">
+<link rel="icon" href="../images/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,600;1,700;1,800&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap">
+<link rel="stylesheet" href="css/next.css">
+<link rel="preload" as="image" href="../images/index/Hero/poster.webp" fetchpriority="high">
+</head>
+<body>
+
+<a class="skip-link" href="#main">本文へ移動</a>
+
+<div class="beta-bar">
+    <span><b>BETA</b> 新デザインの試作版です。気になる点を教えてください。</span>
+    <a href="../">今のサイトを見る →</a>
+</div>
+
+<header class="hd" id="hd">
+    <a class="hd-logo" href="#top" aria-label="HARUTA NAGAYA PORTFOLIO（トップへ戻る）">
+        <img src="../images/favicon.webp" width="40" height="40" alt="">
+        <span>HARUTA NAGAYA <i>PORTFOLIO</i></span>
+    </a>
+    <nav class="hd-nav" id="hd-nav" aria-label="メインナビゲーション">
+        <a href="#featured-works">作品</a>
+        <a href="#what-i-can-do">スキル</a>
+        <a href="#timeline">経歴</a>
+        <a href="#blog">ブログ</a>
+        <a class="hd-contact" href="#contact">お問い合わせ</a>
+    </nav>
+    <button class="hd-options" type="button" data-open="options" aria-haspopup="dialog" aria-label="OPTIONS：設定（アニメーション・効果音・トロフィー）">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>
+        <span>OPTIONS</span>
+    </button>
+    <button class="hd-menu" type="button" aria-controls="hd-nav" aria-expanded="false" aria-label="メニューを開く">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= TITLE（トップ） ================= -->
+<section class="hero" id="top" data-section="トップ">
+    <div class="hero-media" aria-hidden="true">
+        <video class="hero-video" muted loop playsinline preload="none"
+            poster="../images/index/Hero/poster.webp"
+            data-src="../videos/index/Shishito.mp4"
+            data-src-small="../videos/index/Shishito-sm.mp4"></video>
+        <div class="hero-slash"></div>
+        <div class="hero-slash is-thin"></div>
+    </div>
+
+    <div class="hero-body">
+        <p class="chip-dark">ゲームプログラマー志望 ／ 2028年卒</p>
+        <h1 class="hero-name">
+            <span class="hero-name-en" aria-hidden="true"><span>HARUTA</span><span class="is-red">NAGAYA</span></span>
+            <span class="sr-only">長屋晴太（Haruta Nagaya）</span>
+        </h1>
+        <p class="hero-copy">遊びの発見を、<br class="sp">心に残る体験へ。</p>
+        <p class="hero-lead">企画からプログラムまで。アイデアを、遊べるかたちにしています。</p>
+
+        <nav class="hero-menu" aria-label="はじめる">
+            <a class="hero-menu-item is-main" href="#featured-works" data-trophy="start">
+                <svg class="cursor" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 2 L19 11 L4 20 Z"></path></svg>
+                <span>注目作品を見る</span>
+                <i>START</i>
+            </a>
+            <a class="hero-menu-item" href="#other-works"><span>すべての作品（<b data-count="works">34</b>）</span></a>
+            <a class="hero-menu-item" href="#contact"><span>お問い合わせ</span></a>
+        </nav>
+    </div>
+
+    <aside class="hero-side">
+        <div class="hero-news" aria-label="最近の更新" data-news></div>
+        <ul class="hero-badges" aria-label="主な実績">
+            <li><b class="tag-red">GRAND PRIX</b><span>IGCC グランプリ「Falien」</span></li>
+            <li><b class="tag-ink">TGS 2026</b><span>東京ゲームショウ2026 出展「ししとう」</span></li>
+        </ul>
+    </aside>
+
+    <a class="press" href="#mode">SCROLL TO START</a>
+</section>
+
+<!-- ================= SELECT MODE ＋ 30秒まとめ ================= -->
+<section class="sec mode" id="mode" data-section="目的別の入口">
+    <div class="wrap mode-grid">
+        <div class="mode-left" data-reveal>
+            <p class="eyebrow">SELECT MODE</p>
+            <h2 class="mode-title">どの目的で<br>ご覧になっていますか？</h2>
+            <div class="mode-list">
+                <a class="mode-card" href="#quick" data-mode="recruit">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M9 7V5h6v2"></path></svg>
+                    <span><b>採用担当の方</b><small>30秒まとめ → 代表作</small></span>
+                    <svg class="tri" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 2 L19 11 L4 20 Z"></path></svg>
+                </a>
+                <a class="mode-card" href="#featured-works" data-mode="game">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"></rect><path d="M7 10v5M4.5 12.5h5"></path><circle cx="16" cy="11.5" r="1"></circle><circle cx="18" cy="13.5" r="1"></circle></svg>
+                    <span><b>一緒にゲームを作りたい方</b><small>代表作 → 担当できること</small></span>
+                    <svg class="tri" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 2 L19 11 L4 20 Z"></path></svg>
+                </a>
+                <a class="mode-card" href="#web-works" data-mode="web">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"></path></svg>
+                    <span><b>Web制作のご依頼</b><small>制作したWebサイト → ご相談</small></span>
+                    <svg class="tri" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 2 L19 11 L4 20 Z"></path></svg>
+                </a>
+            </div>
+            <nav class="jump" aria-label="ページ内の近道">
+                <span>JUMP</span>
+                <a href="#other-works">作品一覧</a>
+                <a href="#play-games">遊べる作品</a>
+                <a href="#what-i-can-do">スキル</a>
+                <a href="#timeline">経歴</a>
+                <a href="#blog">ブログ</a>
+            </nav>
+        </div>
+
+        <div class="quick" id="quick" data-reveal>
+            <div class="quick-head"><span class="eyebrow-muted">QUICK GUIDE</span><b class="timer">0:30</b></div>
+            <h2 class="quick-title">30秒でわかる 長屋晴太</h2>
+            <div class="quick-grid">
+                <div class="q-box">
+                    <span class="q-label">01 目指す職種</span>
+                    <b class="q-big">ゲームプログラマー</b>
+                    <small>2028年3月卒業予定<br>トライデントコンピュータ専門学校 ゲームサイエンス学科</small>
+                </div>
+                <div class="q-box">
+                    <span class="q-label">02 得意な技術</span>
+                    <div class="tags"><span>Unity</span><span>C#</span><span>C++</span><span>DirectX</span><span class="is-line">GitHubでのチーム開発</span></div>
+                </div>
+                <div class="q-box">
+                    <span class="q-label">03 代表作</span>
+                    <a class="q-work" href="#featured-works" data-tab="shishito"><img src="../images/index/Hero/poster.webp" width="160" height="90" alt="" loading="lazy"><span><b>ししとう</b><small>リードプログラマー ／ TGS2026出展</small></span></a>
+                    <a class="q-work" href="#featured-works" data-tab="falien"><img src="../images/index/otherworks/Falien.webp" width="160" height="90" alt="" loading="lazy"><span><b>Falien</b><small>ジェネラリスト ／ IGCCグランプリ</small></span></a>
+                </div>
+                <div class="q-box">
+                    <span class="q-label">04 これまでの実績</span>
+                    <div class="q-stats">
+                        <span><b data-count="works">34</b> 作品</span>
+                        <span><b class="is-red" data-count="awards">5</b> 受賞</span>
+                        <span><b data-count="events">10</b> イベント</span>
+                        <span><b data-count="blog">274</b> ブログ</span>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-foot">
+                <a class="btn btn-red" href="#contact" data-mail="recruit">メールを送る</a>
+                <span>お仕事・採用に関するご連絡は、メールでお気軽にどうぞ。</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ABOUT ＋ STATUS ================= -->
+<section class="sec about" id="about" data-section="プロフィール">
+    <div class="wrap about-grid">
+        <div class="about-photo" data-reveal>
+            <div class="about-photo-bg" aria-hidden="true"></div>
+            <img src="../images/index/About/profile.webp" width="1000" height="945" alt="長屋晴太 プロフィール画像" loading="lazy">
+            <span class="about-photo-tag">CREATOR PROFILE 01</span>
+        </div>
+        <div class="about-body" data-reveal>
+            <p class="eyebrow">ABOUT ／ GAME PROGRAMMER · AICHI, JAPAN</p>
+            <h2 class="about-name">長屋 晴太 <i>NAGAYA HARUTA</i></h2>
+            <p class="about-copy">ゲームをつくり、<em>心に残る体験</em>を届ける。</p>
+            <p class="about-text">愛知県豊橋市出身。名古屋のトライデントコンピュータ専門学校ゲームサイエンス学科でゲーム制作を学んでいます。ゲームプログラマーを目指して、入学してから個人とチームで30作品以上を制作してきました。</p>
+            <p class="about-text">チーム制作では、「ししとう」でリードプログラマー（東京ゲームショウ2026出展）、「Falien」で6か国・7人の国際チームのジェネラリスト（IGCCグランプリ）を担当しました。制作を通してさまざまな役割を経験し、チームでより良いゲームを作ることを大切にしています。</p>
+            <dl class="about-meta">
+                <div><dt>BASE</dt><dd>TOYOHASHI, AICHI</dd></div>
+                <div><dt>FOCUS</dt><dd>PROGRAMMING / GAME DESIGN</dd></div>
+            </dl>
+        </div>
+    </div>
+    <div class="wrap">
+        <div class="status" id="achievements" data-reveal>
+            <div class="status-head"><b>PLAYER STATUS</b><span>CLASS：GAME PROGRAMMER</span></div>
+            <dl class="status-list">
+                <div><dt>Game Works</dt><dd data-count="works">34</dd></div>
+                <div><dt>Blog Articles</dt><dd data-count="blog">274</dd></div>
+                <div><dt>Awards</dt><dd class="is-red" data-count="awards">5</dd></div>
+                <div><dt>Events</dt><dd data-count="events">10</dd></div>
+                <div><dt>Internship</dt><dd data-count="interns">1</dd></div>
+                <div><dt>Years Developing</dt><dd data-count="years">2</dd></div>
+            </dl>
+        </div>
+    </div>
+</section>
+
+<!-- ================= MAIN WORKS ================= -->
+<section class="sec featured" id="featured-works" data-section="Main Works">
+    <div class="wrap">
+        <div class="sec-head" data-reveal>
+            <div><p class="eyebrow">STAGE SELECT</p><h2 class="display">MAIN WORKS</h2></div>
+            <p class="sec-lead">チームで作り、外で評価された2作品。選ぶと、遊び方・担当・技術の見どころへ進みます。</p>
+        </div>
+
+        <div class="stage-tabs" role="tablist" aria-label="Main Works" data-reveal>
+            <button class="stage-tab" id="tab-shishito" type="button" role="tab" aria-selected="true" aria-controls="panel-shishito">
+                <span class="stage-tab-img"><img src="../images/index/Hero/poster.webp" width="640" height="360" alt="" loading="lazy"><b class="stage-no">STAGE 01</b><em class="stage-flag">東京ゲームショウ2026 出展</em></span>
+                <span class="stage-tab-text"><svg class="cursor-down" viewBox="0 0 22 22" aria-hidden="true"><path d="M2 4 L20 4 L11 19 Z"></path></svg><span><b>ししとう</b><small>四肢を回して闘う 2D 格闘ゲーム</small></span><i>SELECT ▶</i></span>
+            </button>
+            <button class="stage-tab" id="tab-falien" type="button" role="tab" aria-selected="false" aria-controls="panel-falien" tabindex="-1">
+                <span class="stage-tab-img"><img src="../images/index/otherworks/Falien.webp" width="640" height="360" alt="" loading="lazy"><b class="stage-no">STAGE 02</b><em class="stage-flag is-red">IGCC グランプリ</em></span>
+                <span class="stage-tab-text"><svg class="cursor-down" viewBox="0 0 22 22" aria-hidden="true"><path d="M2 4 L20 4 L11 19 Z"></path></svg><span><b>Falien</b><small>足を付け替えて脱出する 2D アクション</small></span><i>SELECT ▶</i></span>
+            </button>
+        </div>
+
+        <!-- ししとう -->
+        <article class="stage-panel" id="panel-shishito" role="tabpanel" aria-labelledby="tab-shishito">
+            <div class="sp-top">
+                <div class="movie" data-video="../videos/index/Shishito-pv.mp4" data-title="ししとう">
+                    <img src="../images/index/Hero/poster.webp" width="1280" height="720" alt="ししとうのタイトル画面" loading="lazy">
+                    <button class="movie-play" type="button" aria-label="PLAY MOVIE：ししとうのプレイ映像（0:15・音声あり）"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M6 3 L19 11 L6 19 Z"></path></svg></button>
+                    <span class="movie-tag">PLAY MOVIE · 0:15 · 音声あり</span>
+                </div>
+                <div class="sp-info">
+                    <h3 class="sp-title">ししとう</h3>
+                    <dl class="sp-dl">
+                        <div><dt>ゲーム概要</dt><dd>四肢を回して闘う2D格闘ゲーム</dd></div>
+                        <div><dt>開発期間</dt><dd>2026年07月〜 制作中</dd></div>
+                        <div><dt>開発環境</dt><dd class="tags"><span>Unity</span><span>C#</span><span>Visual Studio</span><span>GitHub</span></dd></div>
+                        <div><dt>アピールポイント</dt><dd><ul><li>四肢を回して闘う新しい格闘ゲーム</li><li>遊ぶだけでなく見て面白いゲーム</li><li>東京ゲームショウ2026に出展</li></ul></dd></div>
+                    </dl>
+                    <a class="btn btn-red btn-wide" href="https://unityroom.com/games/shishito" target="_blank" rel="noopener noreferrer" data-play>▶ unityroom で遊ぶ</a>
+                </div>
+            </div>
+
+            <div class="box devlog">
+                <div class="box-head"><span class="eyebrow">DEV LOG</span><h4>技術の見どころ</h4><p>リードプログラマー・チームリーダーとして、ゲームの中心になるプレイヤーシステムを担当しました。</p></div>
+                <div class="hl">
+                    <p class="hl-title"><b class="tag-red">TECH HIGHLIGHT 01</b>四肢を回してキャラクターを操作するプレイヤーシステム</p>
+                    <ol class="steps">
+                        <li><b>課題</b><p>実装初期は Transform の Rotation で四肢を回していましたが、地面を押す力が足りず、画面の動きが小さく、キャラクターの動きも激しくなりませんでした。</p></li>
+                        <li><b>解決</b><p>回転の仕組みを Rigidbody の AddForce で特定の方向に力を加える方式に変更。回した手足で壁や床を強く押せるようになり、画面とキャラクターの激しい動きを表現できました。</p></li>
+                        <li class="is-result"><b>結果</b><p>手足を回すたびにキャラクターが大きく暴れる、見ていても笑える格闘ゲームになりました。ゲームジャムでは多くの方に笑ってもらえ、その後、東京ゲームショウ2026にも出展しました。</p></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="sp-cols">
+                <div class="box">
+                    <span class="eyebrow-muted">PARTY ／ チーム構成と担当</span>
+                    <div class="party"><span><b>3</b>プログラマー</span><span><b>1</b>プランナー</span><span><b>1</b>デザイナー</span></div>
+                    <small class="note">※ 初期メンバー</small>
+                    <span class="eyebrow">ROLE</span>
+                    <b class="role">リードプログラマー / チームリーダー</b>
+                    <span class="eyebrow-muted">自分で実装した部分</span>
+                    <div class="tags"><span>プレイヤーシステム</span><span>ロゴシーン</span><span>タイトルシーン</span><span>モードセレクト</span><span>キャラクター選択</span><span>リザルト</span><span class="is-red">プロジェクト統合</span></div>
+                </div>
+                <div class="box">
+                    <span class="eyebrow-muted">TOOLS &amp; FLOW ／ 開発環境とチーム開発</span>
+                    <div class="tags"><span>Unity 6000.3.17f1</span><span>C#</span><span>GitHub</span></div>
+                    <ol class="flow"><li>メンバーごとにブランチを作成</li><li>1つのタスクが完了した段階で main ブランチへコミット</li><li>適宜プロジェクトを統合</li></ol>
+                    <span class="eyebrow-muted">ACHIEVEMENTS</span>
+                    <ul class="trophy-list"><li>「学生チーム対抗ゲームジャム」で制作し、多くの方に笑ってもらえた</li><li>IGDA日本 スカラーシップ合格</li><li>東京ゲームショウ2026 インディーゲームコーナーに出展</li></ul>
+                </div>
+                <div class="box">
+                    <span class="eyebrow-muted">PHOTOS ／ 活動の記録</span>
+                    <div class="photos">
+                        <button class="photo" type="button" data-photo="../images/index/FeaturedWorks/gallery/gamejam.webp" data-caption="GAME JAM：学生チーム対抗ゲームジャムでの制作風景"><img src="../images/index/FeaturedWorks/gallery/gamejam.webp" width="1280" height="854" alt="学生チーム対抗ゲームジャムで、チームで「ししとう」を制作している様子" loading="lazy"><span>GAME JAM 制作風景</span></button>
+                        <button class="photo" type="button" data-photo="../images/index/FeaturedWorks/gallery/tgs2026.webp" data-caption="TGS 2026：IGDA日本ブースでの出展"><img src="../images/index/FeaturedWorks/gallery/tgs2026.webp" width="960" height="1280" alt="東京ゲームショウ2026のIGDA日本ブースで、「ししとう」のチラシを持つチームメンバー" loading="lazy"><span>TGS 2026 出展</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="next-stage" type="button" data-go-tab="falien">
+                <b class="tag-red">NEXT STAGE</b><span>次は、IGCC グランプリの「Falien」へ</span><i>GO ▶</i>
+            </button>
+        </article>
+
+        <!-- Falien -->
+        <article class="stage-panel" id="panel-falien" role="tabpanel" aria-labelledby="tab-falien" hidden>
+            <div class="sp-top">
+                <div class="movie" data-video="../videos/index/Falien.mp4" data-title="Falien">
+                    <img src="../images/index/otherworks/Falien.webp" width="1280" height="720" alt="Falienのタイトル画面" loading="lazy">
+                    <button class="movie-play" type="button" aria-label="PLAY MOVIE：Falienのプレイ映像（2:54・音声あり）"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M6 3 L19 11 L6 19 Z"></path></svg></button>
+                    <span class="movie-tag">PLAY MOVIE · 2:54 · 音声あり</span>
+                    <b class="movie-gp">GRAND PRIX</b>
+                </div>
+                <div class="sp-info">
+                    <h3 class="sp-title">Falien</h3>
+                    <dl class="sp-dl">
+                        <div><dt>ゲーム概要</dt><dd>宇宙人の足を付け替えて研究所から脱出する2Dアクション（1〜2人プレイ）</dd></div>
+                        <div><dt>開発期間</dt><dd>2026年09月 IGCCゲームジャム（約1週間）</dd></div>
+                        <div><dt>開発環境</dt><dd class="tags"><span>Unity 6</span><span>C#</span><span>GitHub</span><span>Discord</span></dd></div>
+                        <div><dt>アピールポイント</dt><dd><ul><li>いろいろな宇宙人の足を付け替えて進むアクション</li><li>6か国・7人の国際チームで約1週間で制作</li><li>IGCCゲームジャムでグランプリを受賞</li></ul></dd></div>
+                    </dl>
+                    <a class="btn btn-ink btn-wide" href="#contact" data-mail="game">✉ この作品について話を聞く</a>
+                </div>
+            </div>
+
+            <div class="box devlog">
+                <div class="box-head"><span class="eyebrow">DEV LOG</span><h4>技術の見どころ</h4><p>ジェネラリスト（総合管理）として、タイトルシーンの制作、各シーンの結合、3言語のローカライズを担当しました。</p></div>
+                <div class="hl">
+                    <p class="hl-title"><b class="tag-red">TECH HIGHLIGHT 01</b>パーツを分けて動かすタイトルシーン</p>
+                    <ol class="steps">
+                        <li><b>課題</b><p>タイトル画面を1枚絵で作ると、背景もキャラクターも一緒に固定され、画面に動きを付けることができませんでした。</p></li>
+                        <li><b>解決</b><p>背景の集中線とキャラクターを1枚絵から切り離し、それぞれ別のUIとして配置。パーツごとにアニメーションを付けられるようにしました。</p></li>
+                        <li class="is-result"><b>結果</b><p>背景とキャラクターが別々に動く、ゲームを始める前からゲームの勢いが伝わるタイトル画面になりました。</p></li>
+                    </ol>
+                </div>
+                <div class="hl">
+                    <p class="hl-title"><b class="tag-red">TECH HIGHLIGHT 02</b>自作フォントを使った3言語のローカライズ</p>
+                    <ol class="steps">
+                        <li><b>課題</b><p>国際チームのため日本語・英語・フランス語に対応したかったものの、既存のフォントでは言語によって対応していない文字がありました。</p></li>
+                        <li><b>解決</b><p>チームメンバーが自作したフォントを使い、3言語に対応するローカライズ処理を実装。翻訳で長くなる文章も、画面上で自然に見えるように調整しました。</p></li>
+                        <li class="is-result"><b>結果</b><p>ゲームの雰囲気に合ったフォントのまま、日本語・英語・フランス語の3言語で遊べるゲームになりました。</p></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="sp-cols">
+                <div class="box">
+                    <span class="eyebrow-muted">PARTY ／ チーム構成と担当</span>
+                    <div class="party"><span><b>7</b>メンバー</span><span><b>6</b>か国</span></div>
+                    <small class="note">日本・タイ・台湾・フィンランド・フランス・シンガポール</small>
+                    <span class="eyebrow">ROLE</span>
+                    <b class="role">ジェネラリスト（総合管理）</b>
+                    <span class="eyebrow-muted">自分で実装した部分</span>
+                    <div class="tags"><span>タイトルシーン</span><span>各シーンの結合</span><span class="is-red">ローカライズ（日・英・仏）</span></div>
+                </div>
+                <div class="box">
+                    <span class="eyebrow-muted">TOOLS &amp; FLOW ／ 開発環境とチーム開発</span>
+                    <div class="tags"><span>Unity 6</span><span>C#</span><span>GitHub</span><span>Discord</span></div>
+                    <ol class="flow"><li>英語でのやりとりを、画像・動画・プレイ映像で補って共有</li><li>進捗・完了した作業・次の作業を GitHub と Discord で共有</li><li>「何を作らないか」を決め、まず遊べる形を優先</li></ol>
+                    <blockquote class="review"><p>ゲームジャムの目的をよく理解している。PV動画やプレイ映像など、見ている人が笑えるゲームデザインですごく良い。</p><cite>IGCC 表彰式での講評より</cite></blockquote>
+                </div>
+                <div class="box">
+                    <span class="eyebrow-muted">PHOTOS ／ 活動の記録</span>
+                    <div class="photos">
+                        <button class="photo" type="button" data-photo="../images/index/FeaturedWorks/falien/team.webp" data-caption="TEAM：6か国・7人のチームでブース展示"><img src="../images/index/FeaturedWorks/falien/team.webp" width="1280" height="854" alt="IGCCの会場で、「Falien」の展示ブースの前でポーズをとるチームメンバー" loading="lazy"><span>TEAM ブース展示</span></button>
+                        <button class="photo" type="button" data-photo="../images/index/FeaturedWorks/falien/exhibit.webp" data-caption="PLAY：会場でのゲーム展示"><img src="../images/index/FeaturedWorks/falien/exhibit.webp" width="960" height="1280" alt="IGCCの会場で、「Falien」をノートPCで展示している様子" loading="lazy"><span>PLAY 会場での展示</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <a class="next-stage" href="#other-works">
+                <b class="tag-red">NEXT STAGE</b><span>ほかの作品も見る（ALL STAGES）</span><i>GO ▶</i>
+            </a>
+        </article>
+    </div>
+</section>
+
+<!-- ================= OTHER WORKS ================= -->
+<section class="sec works" id="other-works" data-section="Other Works">
+    <div class="wrap">
+        <div class="sec-head" data-reveal>
+            <div><p class="eyebrow">ALL STAGES · <span data-count="works">34</span></p><h2 class="display">OTHER WORKS</h2></div>
+            <div class="filters" role="group" aria-label="作品の絞り込み" data-filters>
+                <button type="button" aria-pressed="true" data-filter="all">すべて</button>
+                <button type="button" aria-pressed="false" data-filter="play" class="is-red">▶ 遊べる</button>
+                <button type="button" aria-pressed="false" data-filter="unity">Unity</button>
+                <button type="button" aria-pressed="false" data-filter="cpp">C++</button>
+                <button type="button" aria-pressed="false" data-filter="3d">3D</button>
+                <button type="button" aria-pressed="false" data-filter="team">TEAM</button>
+                <button type="button" aria-pressed="false" data-filter="rare">★ 受賞</button>
+            </div>
+        </div>
+        <p class="works-status" aria-live="polite" data-works-status></p>
+        <ul class="works-grid" data-works></ul>
+        <noscript><p>作品一覧を表示するには JavaScript を有効にしてください。</p></noscript>
+    </div>
+</section>
+
+<!-- ================= PLAY GAMES ＋ WEB WORKS ================= -->
+<section class="sec play" id="play-games" data-section="Play Games">
+    <div class="wrap">
+        <div class="sec-head" data-reveal>
+            <div><p class="eyebrow">PLAY GAMES</p><h2 class="display">PLAY NOW</h2></div>
+            <p class="sec-lead">公開中のゲームとWebサイトを、そのまま遊べます。</p>
+        </div>
+        <div class="play-grid" data-reveal>
+            <a class="play-card" href="https://unityroom.com/users/haru2401game" target="_blank" rel="noopener noreferrer" data-play>
+                <img src="../images/index/PlayGames/unityroom.webp" width="98" height="110" alt="" loading="lazy">
+                <span><b>unityroom</b><small>Unityで制作したWebゲームを公開しています。</small></span><i>遊びに行く ▶</i>
+            </a>
+            <a class="play-card" href="https://haru2401game.itch.io/" target="_blank" rel="noopener noreferrer" data-play>
+                <img src="../images/index/PlayGames/itchio.webp" width="216" height="215" alt="" loading="lazy">
+                <span><b>itch.io</b><small>海外向けにゲーム作品を公開しています。</small></span><i>遊びに行く ▶</i>
+            </a>
+            <a class="play-card" href="https://freegame-mugen.jp/cms/mt-cp.cgi?__mode=view&amp;blog_id=1&amp;id=12600" target="_blank" rel="noopener noreferrer" data-play>
+                <img src="../images/index/PlayGames/mugen.webp" width="100" height="100" alt="" loading="lazy">
+                <span><b>夢現</b><small>制作したゲームを公開しています。</small></span><i>遊びに行く ▶</i>
+            </a>
+        </div>
+
+        <a class="web-card" id="web-works" href="https://pocket-play-arcade-jp.dreamyfawn33.chatgpt.site/" target="_blank" rel="noopener noreferrer" data-reveal>
+            <span class="web-img"><img src="../images/index/WebWorks/pocket-play.webp" width="1200" height="512" alt="POCKET PLAY のトップ画面" loading="lazy"></span>
+            <span class="web-body">
+                <span class="eyebrow">WEB WORKS ／ BROWSER GAME SITE</span>
+                <b class="web-title">POCKET PLAY</b>
+                <span class="web-text">登録不要・スマホ対応で、80種類のミニゲームをすぐに遊べるブラウザゲームサイトです。</span>
+                <span class="tags"><span>カテゴリ・遊び方での絞り込み</span><span>ランキング・お気に入り・デイリーチャレンジ</span><span>スマホのタッチ操作に対応</span></span>
+                <small class="web-note">企画・ディレクションを担当し、サイトとゲームは生成AI（ChatGPT）で作成しました。</small>
+                <span class="web-go">サイトを見る →</span>
+            </span>
+        </a>
+    </div>
+</section>
+
+<!-- ================= WHAT I CAN DO ================= -->
+<section class="sec skills" id="what-i-can-do" data-section="What I Can Do">
+    <div class="wrap">
+        <div class="sec-head" data-reveal>
+            <div><p class="eyebrow">SKILL TREE</p><h2 class="display">WHAT I CAN DO</h2></div>
+            <p class="sec-lead">ゲーム制作でできること</p>
+        </div>
+        <div class="skill-grid">
+            <div class="skill-col is-main" data-reveal>
+                <div class="skill-head"><b class="skill-no">01</b><span><b>開発</b><small>ゲームを動かす仕組みを作る</small></span></div>
+                <div class="sk"><b>ゲームプログラミング</b><p>ゲームのルールやプレイヤー操作、敵の挙動、UIなど、ゲームを構成するシステムをプログラムできます。</p><small>例：「ししとう」のプレイヤーシステム、「POTION BERSERKER」のメインシステム</small><div class="tags"><span>C++</span><span>C#</span><span>Visual Studio</span></div></div>
+                <div class="sk"><b>Unity開発</b><p>2D・3Dゲーム制作を経験。ゲームシステム、UI、シーン管理、アニメーション制御などを実装できます。</p><small>例：「ししとう」「Falien」、3Dゲーム10本制作チャレンジ</small><div class="tags"><span>Unity</span><span>C#</span><span>2D</span><span>3D</span></div></div>
+                <div class="sk"><b>C++・DirectX開発</b><p>C++での2Dゲームに加えて、DirectXTKを使った3Dゲームの制作にも取り組んでいます。</p><small>例：「HOOKING BOX」「Over Fish」、DirectXTK の「Cube Runner」「HOOK SHIFT」</small><div class="tags"><span>C++</span><span>DirectXTK</span></div></div>
+            </div>
+            <div class="skill-col" data-reveal>
+                <div class="skill-head"><b class="skill-no">02</b><span><b>ゲーム制作</b><small>ゲームを完成させるための制作・設計</small></span></div>
+                <div class="sk"><b>ゲームシステム・UI制作</b><p>プレイヤー操作、ゲームルール、UI、シーン遷移など、遊べる状態にするためのシステム制作を経験しています。</p><small>例：「ししとう」のロゴ・タイトル・モードセレクト・キャラクター選択・リザルト</small><div class="tags"><span>Game System</span><span>UI</span><span>Scene Management</span></div></div>
+                <div class="sk"><b>チーム開発</b><p>プログラムだけでなく、プロジェクト統合やメンバー間の調整も経験しています。</p><small>例：「ししとう」「Falien」「POTION BERSERKER」などでプロジェクト統合を担当</small><div class="tags"><span>GitHub</span><span>Team Development</span><span>Project Integration</span></div></div>
+                <div class="sk"><b>遊びやすさの改善</b><p>実際に遊んだ人の視点を意識しながら、UIや操作方法、ゲームの分かりやすさを改善していきます。</p><div class="tags"><span>UX</span><span>UI Design</span><span>Game Improvement</span></div></div>
+            </div>
+            <div class="skill-col" data-reveal>
+                <div class="skill-head"><b class="skill-no">03</b><span><b>企画・発信</b><small>ゲームを考え、伝え、届ける</small></span></div>
+                <div class="sk"><b>ゲーム企画</b><p>ゲームのコンセプトやルール、遊びの面白さを考え、実際にゲームとして形にするところまで取り組んでいます。</p><small>例：個人制作の作品は、企画からプログラムまで1人で担当</small><div class="tags"><span>Game Planning</span><span>Game Design</span></div></div>
+                <div class="sk"><b>制作活動の発信</b><p>noteやSNSを通して、ゲーム制作の進捗や学んだこと、制作の裏側などを継続的に発信しています。</p><small>例：note で <span data-count="blog">274</span> 本の記事を公開</small><div class="tags"><span>note</span><span>SNS</span><span>Content Creation</span></div></div>
+                <div class="sk"><b>Web・ポートフォリオ制作</b><p>HTML・CSS・JavaScriptを使用して、自身の制作活動や作品を紹介するポートフォリオサイトを制作・運用しています。</p><small>例：このサイト（設計は自分、実装は生成AIと協力）</small><div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div></div>
+            </div>
+        </div>
+        <div class="next-bar" data-reveal><b class="tag-red">NEXT STAGE</b><span>いまは DirectXTK を使った3Dゲーム制作に挑戦中。2Dで身につけた「遊びの作り方」を、3Dにも広げていきます。</span></div>
+    </div>
+</section>
+
+<!-- ================= このサイトの技術 ================= -->
+<section class="sec tech" id="site-tech" data-section="このサイトの技術">
+    <div class="wrap">
+        <div class="sec-head" data-reveal>
+            <div><p class="eyebrow">BEHIND THE SCENES</p><h2 class="sec-title-ja">このサイトの技術</h2></div>
+            <p class="sec-lead">サイトの設計と、入れる機能の企画は長屋晴太。実装は生成AI（Claude）と協力して進め、仕組みを自分で説明できるところまで確かめています。</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card" data-reveal><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"></path><path d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"></path></svg></span><b>その場で作る効果音</b><p>音声ファイルは使わず、Web Audio API で波形を組み合わせて、操作ごとに違う音を鳴らしています。</p><div class="tags is-line"><span>Web Audio API</span></div><button class="btn btn-red" type="button" data-sfx-demo>▶ 音を鳴らしてみる</button></div>
+            <div class="tech-card" data-reveal><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"></rect><path d="M7 10v5M4.5 12.5h5"></path><circle cx="16" cy="11.5" r="1"></circle><circle cx="18" cy="13.5" r="1"></circle></svg></span><b>コントローラーで操作</b><p>Gamepad API で入力を読み、画面上の位置から「となりのボタン」を探してカーソルを動かします。</p><div class="tags is-line"><span>Gamepad API</span></div><small class="hint">今のサイトで使えます（試作版は未対応）</small></div>
+            <div class="tech-card" data-reveal><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"></path></svg></span><b>日本語 ⇄ English</b><p>自作の辞書と MutationObserver で、あとから出てくる通知まで含めて、ページ全体を切り替えます。</p><div class="tags is-line"><span>JavaScript</span><span>MutationObserver</span></div><small class="hint">今のサイトで使えます（試作版は未対応）</small></div>
+            <div class="tech-card" data-reveal><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></span><b>自作のアクセス解析</b><p>Cloudflare Workers と D1 で作成。Cookie や IP アドレスは保存せず、毎朝 Discord に日報が届きます。</p><div class="tags is-line"><span>Cloudflare Workers</span><span>D1</span></div></div>
+            <div class="tech-card" data-reveal><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2"></path></svg></span><b>作品データから自動集計</b><p>ステータス画面や実績の数字は、作品データと経歴から自動で数えています。作品を足すだけで、全部が更新されます。</p><div class="tags is-line"><span>JavaScript</span></div></div>
+            <div class="tech-card" data-reveal><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2"></circle><path d="M5 8l7 1.5L19 8M12 9.5V15M12 15l-3.5 6M12 15l3.5 6"></path></svg></span><b>だれでも使いやすく</b><p>文字のコントラスト・ボタンの名前・キーボード操作など、WCAG 2.1 AA の主な項目を点検して直しています。</p><div class="tags is-line"><span>WCAG 2.1 AA</span></div></div>
+        </div>
+        <a class="btn btn-ink" href="https://github.com/haru2401game" target="_blank" rel="noopener noreferrer">GitHub でソースコードを見る →</a>
+    </div>
+</section>
+
+<!-- ================= TIMELINE ================= -->
+<section class="sec timeline" id="timeline" data-section="Timeline">
+    <div class="wrap">
+        <div class="sec-head" data-reveal>
+            <div><p class="eyebrow">WORLD MAP</p><h2 class="display">TIMELINE</h2></div>
+            <div class="tl-legend"><span><i class="dot is-award"></i>受賞</span><span><i class="dot"></i>出来事</span><span><i class="dot is-photo"></i>写真あり</span></div>
+        </div>
+    </div>
+    <div class="tl-scroller" data-tl-scroller tabindex="0" aria-label="制作活動の歩み（横にスクロールできます）">
+        <ol class="tl-track" data-timeline></ol>
+    </div>
+    <div class="wrap tl-ctrl">
+        <button type="button" class="round" data-tl="-1" aria-label="前へ">◀</button>
+        <button type="button" class="round" data-tl="1" aria-label="次へ">▶</button>
+        <span class="tl-hint">横にスクロールすると、いまの挑戦まで進めます</span>
+    </div>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section class="sec blog" id="blog" data-section="Blog">
+    <div class="wrap">
+        <div class="sec-head" data-reveal>
+            <div><p class="eyebrow">DEV DIARY</p><h2 class="display">BLOG</h2></div>
+            <p class="sec-lead">ゲーム制作の学びを発信し続けています</p>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-intro" data-reveal>
+                <div class="blog-logo"><img src="../images/index/Blog/icon.webp" width="240" height="240" alt="HARU GAMES ロゴ" loading="lazy"><b>HARU GAMES（note）</b></div>
+                <p>ゲーム制作で学んだ技術や設計、制作の裏側、就職活動などを note で継続して発信しています。</p>
+                <p class="blog-count"><b data-count="blog">274</b><span>ARTICLES</span></p>
+                <a class="btn btn-red btn-wide" href="https://note.com/ha_03ru_01" target="_blank" rel="noopener noreferrer">note を見る →</a>
+            </div>
+            <div class="blog-latest">
+                <p class="latest-head"><b class="tag-red">LATEST</b><span>最新の記事</span></p>
+                <ul class="articles" data-articles></ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="sec contact" id="contact" data-section="Contact">
+    <div class="wrap contact-grid">
+        <div class="why" data-reveal>
+            <p class="eyebrow">WHY ME</p>
+            <h3>一緒に作るなら、こんなことができます</h3>
+            <ol class="why-list">
+                <li><b>遊びの手触りを、プログラムで形にする</b><p>「ししとう」では、手足を回して闘うプレイヤー操作を物理挙動で実装。アイデアを「触って面白い」ところまで作り込みます。</p></li>
+                <li><b>チームをまとめ、ひとつのゲームに仕上げる</b><p>「ししとう」ではリードプログラマー・チームリーダーとしてプロジェクト統合を担当。6か国7人の国際チーム（Falien）でも、シーンをつないで完成まで仕上げました。</p></li>
+                <li><b>作って、伝えるところまでやる</b><p>note で 270 本以上の記事を公開し、制作の過程を発信。このサイトも、生成AIと協力しながら設計・運用しています。</p></li>
+            </ol>
+        </div>
+        <div class="contact-main">
+            <div class="sec-head is-tight" data-reveal>
+                <div><p class="eyebrow">SEND A MESSAGE</p><h2 class="display">CONTACT</h2></div>
+                <p class="sec-lead">ご用件に合わせて、窓口を選んでください</p>
+            </div>
+            <div class="purpose-grid" data-reveal>
+                <div class="purpose" data-purpose="recruit">
+                    <span class="purpose-tag">RECRUIT</span><b>採用・インターンのご連絡</b>
+                    <p>選考・インターン・会社説明会などのご案内をお待ちしています。</p>
+                    <a class="btn btn-red" href="mailto:haru2401game@gmail.com" data-mail="recruit">採用・インターンのご連絡はこちら</a>
+                </div>
+                <div class="purpose" data-purpose="game">
+                    <span class="purpose-tag">GAME DEV</span><b>一緒にゲームを作りたい方</b>
+                    <p>ゲームジャムのチーム・個人／インディーの共同制作・開発のお手伝いなど、お気軽に声をかけてください。</p>
+                    <small>担当できること：Unity / C# / C++ のプログラム、シーンの結合・プロジェクト統合、ローカライズ</small>
+                    <a class="btn btn-ink" href="mailto:haru2401game@gmail.com" data-mail="game">ゲーム制作のお誘いはこちら</a>
+                </div>
+                <div class="purpose" data-purpose="web">
+                    <span class="purpose-tag">WEB</span><b>Web制作のご依頼</b>
+                    <p>紹介サイト・ポートフォリオ・ブラウザゲームのサイトなど、まずはお気軽にご相談ください。内容をうかがい、条件は個別に決めます。</p>
+                    <small>担当できること：サイトの企画・設計と、生成AIを活用した HTML・CSS・JavaScript での制作</small>
+                    <a class="btn btn-ink" href="mailto:haru2401game@gmail.com" data-mail="web">Web制作の相談はこちら</a>
+                </div>
+            </div>
+            <div class="mail-bar" data-reveal>
+                <span class="eyebrow-muted">MAIL</span>
+                <span class="mail-addr">haru2401game [at] gmail.com</span>
+                <button class="btn btn-line" type="button" data-copy-mail>コピー</button>
+                <a class="btn btn-ink" href="mailto:haru2401game@gmail.com">メールを送る</a>
+            </div>
+            <p class="reply-note">いただいたご連絡は、内容を確認して順にお返事します。</p>
+            <ul class="sns" data-reveal>
+                <li><a href="https://github.com/haru2401game" target="_blank" rel="noopener noreferrer"><img src="../images/index/Contact/Github.webp" width="128" height="133" alt="" loading="lazy"><span><b>GitHub</b><small>ソースコード公開</small></span></a></li>
+                <li><a href="https://www.youtube.com/@haru_game2401" target="_blank" rel="noopener noreferrer"><img src="../images/index/Contact/Youtube.webp" width="128" height="127" alt="" loading="lazy"><span><b>YouTube</b><small>制作ゲームのプレイ動画</small></span></a></li>
+                <li><a href="https://x.com/haru2401game" target="_blank" rel="noopener noreferrer"><img src="../images/index/Contact/X.webp" width="128" height="128" alt="" loading="lazy"><span><b>X</b><small>ゲーム制作の進捗発信</small></span></a></li>
+                <li><a href="https://www.tiktok.com/@haru2401game" target="_blank" rel="noopener noreferrer"><img src="../images/index/Contact/Tiktok.webp" width="128" height="127" alt="" loading="lazy"><span><b>TikTok</b><small>制作活動の紹介</small></span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=61573110660387" target="_blank" rel="noopener noreferrer"><img src="../images/index/Contact/Facebook.webp" width="128" height="125" alt="" loading="lazy"><span><b>Facebook</b><small>活動記録</small></span></a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ENDING ================= -->
+<section class="ending" id="ending" data-section="エンディング">
+    <div class="ending-slash" aria-hidden="true"></div>
+    <div class="wrap ending-inner">
+        <h2 class="ending-title">THANK YOU<br>FOR PLAYING!</h2>
+        <div class="ending-side">
+            <p class="ending-score" data-ending-score></p>
+            <a class="ending-continue" href="#top">CONTINUE? ▲ TOP</a>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer class="ft">
+    <p>実装：長屋晴太（生成AI「Claude」と協力）</p>
+    <p>© 2026 Haruta Nagaya ／ <a href="../">今のサイトを見る</a></p>
+</footer>
+
+<!-- 作品の詳しい画面 -->
+<dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+    <div class="viewer-media">
+        <img data-v="img" src="data:," alt="">
+        <div class="viewer-badges" data-v="badges"></div>
+        <button class="close" type="button" data-close aria-label="閉じる"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+    </div>
+    <div class="viewer-body">
+        <div class="viewer-head"><h3 id="viewer-title" data-v="title"></h3><span data-v="meta"></span></div>
+        <p class="viewer-desc" data-v="desc"></p>
+        <div class="tags" data-v="tags"></div>
+        <div class="viewer-point" data-v="point-box"><span class="eyebrow">TECH POINT</span><p data-v="point"></p></div>
+        <div class="viewer-actions">
+            <a class="btn btn-red" data-v="play" href="#" target="_blank" rel="noopener noreferrer" data-play>▶ 遊ぶ</a>
+            <a class="btn btn-line" data-v="link" href="#" target="_blank" rel="noopener noreferrer">詳細を見る（note）</a>
+            <button class="btn btn-line" type="button" data-v="copy">リンクをコピー</button>
+            <span class="viewer-nav"><button class="round" type="button" data-v="prev" aria-label="前の作品">◀</button><span data-v="pos"></span><button class="round" type="button" data-v="next" aria-label="次の作品">▶</button></span>
+        </div>
+    </div>
+</dialog>
+
+<!-- 写真の拡大 -->
+<dialog class="lightbox" id="lightbox" aria-label="写真の拡大">
+    <img data-lb="img" src="data:," alt="">
+    <p data-lb="caption"></p>
+    <button class="close" type="button" data-close aria-label="閉じる"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+</dialog>
+
+<!-- 設定 -->
+<dialog class="options" id="options" aria-labelledby="options-title">
+    <div class="options-head"><h2 id="options-title">OPTIONS</h2><button class="close is-small" type="button" data-close aria-label="閉じる"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button></div>
+    <div class="opt">
+        <span class="opt-label" id="opt-motion">ANIMATION ／ アニメーション</span>
+        <div class="seg" role="group" aria-labelledby="opt-motion">
+            <button type="button" data-motion="on" aria-pressed="true">オン</button>
+            <button type="button" data-motion="calm" aria-pressed="false">ひかえめ</button>
+        </div>
+    </div>
+    <div class="opt">
+        <label class="opt-label" for="opt-volume">SOUND ／ 効果音の音量</label>
+        <div class="vol"><input id="opt-volume" type="range" min="0" max="100" step="10" value="40"><output for="opt-volume" data-volume-out>40</output></div>
+    </div>
+    <div class="opt">
+        <span class="opt-label">TROPHY ／ トロフィー <b data-trophy-count>0 / 0</b></span>
+        <ul class="trophies" data-trophies></ul>
+    </div>
+</dialog>
+
+<div class="toasts" aria-live="polite" data-toasts></div>
+
+<script src="../data/works.js"></script>
+<script src="../data/timeline.js"></script>
+<script src="../data/blog.js"></script>
+<script src="js/next.js"></script>
+</body>
+</html>
