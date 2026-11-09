@@ -740,7 +740,9 @@ window.I18N_EN = {
         "すべてのセクションを見る": "See every section",
         "エンディングまでたどり着く": "Reach the ending",
         "PLAYER STATUS を見てみよう": "Check out PLAYER STATUS",
-        "全ステージを見た": "Viewed every stage"
+        "全ステージを見た": "Viewed every stage",
+        "作品をたたむ": "Show fewer works",
+        "これまでの歩みをたたむ": "Hide earlier events"
     },
     "patterns": [
         [
@@ -874,6 +876,14 @@ window.I18N_EN = {
         [
             "^(.+)のプレイ映像$",
             "{t1} gameplay video"
+        ],
+        [
+            "^すべての作品を見る（あと (\\d+) 作品）$",
+            "View all works ({1} more)"
+        ],
+        [
+            "^これまでの歩みを見る（あと (\\d+) 件）$",
+            "Show earlier events ({1} more)"
         ]
     ]
 };

@@ -1234,3 +1234,13 @@ html.motion-off .tl-item .tl-node { transform: none !important; }
     .tl-item.is-now .peeker.is-side { left: auto !important; right: 16px; top: auto; bottom: 100%; width: 44px; height: 32px; }
     .tl-item.is-now .peeker.is-side > img.peeker-sprite { scale: 1 1; animation-name: peek !important; translate: 0 102%; }
 }
+
+/* ---------- 長い一覧をたたむ（Other Works・Timeline） ---------- */
+.works-grid li.is-folded, .tl-item.is-folded { display: none; }
+.works-more { display: flex; margin: 32px auto 0; min-width: min(360px, 100%); }
+.works-more[hidden] { display: none; }
+.tl-more { display: flex; margin: 0 auto 28px; min-width: min(360px, calc(100% - var(--gutter) * 2)); position: relative; z-index: 1; }
+.works-more::after, .tl-more::after { content: "▼"; font-size: 11px; margin-left: 4px; transition: transform .2s ease; }
+.tl-more::after { content: "▲"; }
+.works-more[aria-expanded="true"]::after { transform: rotate(180deg); }
+.tl-more[aria-expanded="true"]::after { transform: rotate(180deg); }

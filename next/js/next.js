@@ -783,15 +783,51 @@
 
     // 絞り込み
     const filters = $$("[data-filter]");
+    // 作品が多いので、最初は数段だけ見せて、残りは「すべての作品を見る」で開く（下のセクションまで見てもらいやすく）
+    const FOLD_AT = () => (matchMedia("(max-width: 640px)").matches ? 6 : matchMedia("(max-width: 1180px)").matches ? 9 : 12);
+    let worksOpen = false;
+    const moreWorks = el("button", "btn btn-ink works-more");
+    moreWorks.type = "button";
+    moreWorks.setAttribute("aria-controls", "works-grid");
+    if (grid) {
+        grid.id = "works-grid";
+        grid.after(moreWorks);
+    }
+    const foldWorks = () => {
+        const shownCards = cards.filter(({ item }) => !item.classList.contains("is-hidden"));
+        const limit = FOLD_AT();
+        shownCards.forEach(({ item }, index) => item.classList.toggle("is-folded", !worksOpen && index >= limit));
+        cards.filter(({ item }) => item.classList.contains("is-hidden")).forEach(({ item }) => item.classList.remove("is-folded"));
+        const rest = shownCards.length - limit;
+        moreWorks.hidden = rest <= 0;
+        moreWorks.setAttribute("aria-expanded", String(worksOpen));
+        moreWorks.textContent = worksOpen ? "作品をたたむ" : `すべての作品を見る（あと ${rest} 作品）`;
+    };
+    moreWorks.addEventListener("click", () => {
+        worksOpen = !worksOpen;
+        foldWorks();
+        emit(worksOpen ? "もっと見る: 作品" : "たたむ: 作品");
+        if (worksOpen) {
+            // 開いたときは、新しく出てきた1枚目へ
+            const first = cards.find(({ item }) => !item.classList.contains("is-hidden") && Number(item.dataset.order) === FOLD_AT());
+            first?.item.querySelector(".work")?.focus({ preventScroll: true });
+        } else if (moreWorks.getBoundingClientRect().top < 0 || moreWorks.getBoundingClientRect().top > innerHeight) {
+            // たたんだときに、ボタンが画面の外なら作品の見出しへ戻る
+            $("#other-works")?.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "start" });
+        }
+    });
+    addEventListener("resize", () => foldWorks());
+
     const applyFilter = (name) => {
         let shown = 0;
         cards.forEach(({ item, traits: t }) => {
             const on = name === "all" || t[name];
             item.classList.toggle("is-hidden", !on);
-            if (on) shown += 1;
+            if (on) item.dataset.order = String(shown++);
         });
         filters.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.filter === name)));
         if (status) status.textContent = name === "all" ? `${shown} 作品（Main Works の2作品は上で紹介）` : `${shown} 作品を表示中`;
+        foldWorks();
     };
     filters.forEach((button) => button.addEventListener("click", () => applyFilter(button.dataset.filter)));
     applyFilter("all");
@@ -855,6 +891,12 @@
     }
 
     function openViewer(index) {
+        // たたんでいる作品を開いたとき（作品ごとのリンクなど）は、一覧も開いておく（閉じたあと、その作品に戻れるように）
+        const card = cards.find(({ work }) => work === WORKS[index]);
+        if (card?.item.classList.contains("is-folded")) {
+            worksOpen = true;
+            foldWorks();
+        }
         fillViewer(index);
         openDialog(viewer);
     }
@@ -966,6 +1008,33 @@
             li.append(card);
             track.append(li);
         });
+
+        // 経歴も長いので、最初は新しい出来事だけ見せて、それより前は「これまでの歩みを見る」で開く
+        const SHOW_RECENT = 5;
+        const tlItems = $$(".tl-item", track);
+        const older = tlItems.slice(0, Math.max(0, tlItems.length - SHOW_RECENT));
+        if (older.length) {
+            const moreTl = el("button", "btn btn-line tl-more");
+            moreTl.type = "button";
+            moreTl.setAttribute("aria-controls", "timeline-track");
+            track.id = "timeline-track";
+            let tlOpen = false;
+            const render = () => {
+                older.forEach((item) => item.classList.toggle("is-folded", !tlOpen));
+                moreTl.setAttribute("aria-expanded", String(tlOpen));
+                moreTl.textContent = tlOpen ? "これまでの歩みをたたむ" : `これまでの歩みを見る（あと ${older.length} 件）`;
+            };
+            moreTl.addEventListener("click", () => {
+                tlOpen = !tlOpen;
+                // 開いても閉じても、ボタンが画面の同じ位置に残るようにする（上に出来事が増えて画面が飛ばないように）
+                const before = moreTl.getBoundingClientRect().top;
+                render();
+                scrollBy({ top: moreTl.getBoundingClientRect().top - before, behavior: "instant" });
+                emit(tlOpen ? "もっと見る: 経歴" : "たたむ: 経歴");
+            });
+            track.before(moreTl);
+            render();
+        }
 
         const scroller = $("[data-tl-scroller]");
         const ctrl = $$("[data-tl]");
