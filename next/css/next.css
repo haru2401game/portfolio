@@ -388,6 +388,19 @@ button { font: inherit; color: inherit; }
 .stage-tab[aria-selected="false"] .cursor-down { visibility: hidden; }
 
 .stage-panel { display: flex; flex-direction: column; gap: 24px; animation: panel-in .45s ease; }
+.stage-panel[hidden] { display: none; }
+/* ステージを切り替えたとき：赤い帯が画面を横切ってから、中身が出てくる */
+.stage-panel { position: relative; }
+.stage-panel.is-enter { animation: panel-in .5s cubic-bezier(.2, .8, .2, 1) .18s both; }
+.stage-wipe { position: fixed; inset: 0; z-index: 70; pointer-events: none; display: flex; align-items: center; justify-content: center; background: var(--red); clip-path: polygon(-30% 0, -10% 0, -30% 100%, -50% 100%); }
+.stage-wipe b { font-family: var(--display); font-style: italic; font-weight: 800; font-size: clamp(56px, 10vw, 140px); color: #fff; line-height: 1; }
+.stage-wipe.is-run { animation: stage-wipe .75s cubic-bezier(.7, 0, .3, 1) forwards; }
+@keyframes stage-wipe {
+    0% { clip-path: polygon(-30% 0, -10% 0, -30% 100%, -50% 100%); }
+    45%, 55% { clip-path: polygon(-10% 0, 130% 0, 110% 100%, -30% 100%); }
+    100% { clip-path: polygon(130% 0, 150% 0, 130% 100%, 110% 100%); }
+}
+html.is-calm .stage-wipe { display: none; }
 @keyframes panel-in { from { opacity: 0; transform: translateY(16px); } }
 .sp-top { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 24px; }
 .movie { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--ink); aspect-ratio: 16 / 9; align-self: start; }

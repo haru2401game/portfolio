@@ -479,13 +479,36 @@
 
     const tabs = $$(".stage-tab");
     const seenStages = new Set();
+    let activeTab = "shishito";
+    const wipe = (label) => {
+        if (calm()) return;
+        const layer = el("div", "stage-wipe");
+        layer.setAttribute("aria-hidden", "true");
+        layer.append(el("b", "", label));
+        document.body.append(layer);
+        requestAnimationFrame(() => layer.classList.add("is-run"));
+        setTimeout(() => layer.remove(), 900);
+    };
     const selectTab = (name, { scroll = false, focus = false } = {}) => {
+        const changed = name !== activeTab;
+        activeTab = name;
+        if (changed) {
+            const tab = document.getElementById(`tab-${name}`);
+            wipe(tab?.querySelector(".stage-no")?.textContent || "STAGE");
+        }
         tabs.forEach((tab) => {
             const on = tab.id === `tab-${name}`;
             tab.setAttribute("aria-selected", String(on));
             tab.tabIndex = on ? 0 : -1;
             const panel = document.getElementById(tab.getAttribute("aria-controls"));
-            if (panel) panel.hidden = !on;
+            if (panel) {
+                panel.hidden = !on;
+                if (on && changed) {
+                    panel.classList.remove("is-enter");
+                    void panel.offsetWidth; // アニメーションを最初から
+                    panel.classList.add("is-enter");
+                }
+            }
             if (!on && panel) stopMovie(panel);
             if (on && focus) tab.focus();
         });
