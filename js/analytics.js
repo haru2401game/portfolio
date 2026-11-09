@@ -95,8 +95,8 @@
         if (document.referrer && new URL(document.referrer).hostname !== location.hostname) {
             referrer = document.referrer;
         }
-        // 作品ごとのページ（works/○○/）を通って来たときは、そのページが渡した「来た元のドメイン」を使う
-        // （js/work-redirect.js。ドメインだけで、URL の残りの部分は受け取らない）。使ったら URL から消す
+        // URL に ?from=○○ が付いていたら、それを「来た元」として使う（例：名刺・展示の QR コードは ?from=qr）
+        // 英数字・点・ハイフンだけを受け取り、使ったら URL から消す
         const params = new URLSearchParams(location.search);
         const from = params.get("from") || "";
         if (from) {
