@@ -81,6 +81,8 @@
             el("p", "work-member", `${members}人`),
             el("p", "work-role", work.role || ""),
             el("p", "work-description", work.description || ""),
+            // 技術のポイント：カードには出さず（CSS で隠す）、作品の詳しい画面で「TECH POINT」として出す（main.js）
+            el("p", "work-point", work.point || ""),
         );
 
         const href = safeLink(work.link);
@@ -99,6 +101,7 @@
         addEnglish(work.genre, en.genre);
         addEnglish(work.role, en.role);
         addEnglish(work.description, en.description);
+        addEnglish(work.point, en.point);
         addEnglish(`${members}人`, members === 1 ? "Solo" : `${members} people`);
     });
 

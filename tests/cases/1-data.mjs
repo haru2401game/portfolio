@@ -120,7 +120,7 @@ export const tests = [
             works.forEach((work, index) => {
                 if (!work.en) problems.push(`${nameOf(work, index)}: en がありません`);
                 else {
-                    const missing = ["alt", "genre", "role", "description"].filter((key) => !String(work.en[key] || "").trim());
+                    const missing = ["alt", "genre", "role", "description", ...(work.point ? ["point"] : [])].filter((key) => !String(work.en[key] || "").trim());
                     if (missing.length) problems.push(`${nameOf(work, index)}: en の ${missing.join("・")} がありません`);
                 }
             });

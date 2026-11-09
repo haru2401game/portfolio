@@ -24,8 +24,10 @@
       id           作品ごとのリンク（…/portfolio/#work=○○）の ○○ の部分（英小文字・数字・ハイフン）
                    省略すると英語のタイトル（なければタイトル）から自動で作る（例：HOOK SHIFT → hook-shift）
                    リンクを貼ったあとでタイトルを変えるときは、元の名前を id に書くとリンクが切れない
+      point        技術のポイント（1〜2文）。作品の詳しい画面と作品ページに「TECH POINT」として出る
+                   何を実装したか・何を工夫したか・何を学んだかを、採用担当やゲームを作る仲間に向けて書く
       en           英語表示用（省略したところは日本語のまま表示される）
-                   { title, alt, genre, role, description }
+                   { title, alt, genre, role, description, point }
    ※ 書き方の詳しい手順は README の「作品を追加するとき」
 ======================================== */
 
@@ -40,6 +42,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "3Dゲーム制作10本制作チャレンジ 5作目",
+        point: "2D作品「RETURN RECORD」の「過去の自分を再生する」仕組みを3Dに発展。時間・位置・回転・アニメーションの状態を記録し、分身が過去の動きをなぞって再生する。",
         link: "https://note.com/ha_03ru_01/n/n4856ae56b137",
         size: [698, 389],
         en: {
@@ -47,6 +50,7 @@ window.WORKS = [
             genre: "3D action puzzle game",
             role: "Design & programming",
             description: "3D Game Challenge (10 games) — game 5",
+            point: "Expanded the \"replay your past self\" system from my 2D game RETURN RECORD into 3D. Time, position, rotation and animation state are recorded, and a clone replays your past movements.",
         },
     },
     {
@@ -59,6 +63,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "3Dゲーム制作10本制作チャレンジ 4作目",
+        point: "一人称視点の移動とマウスでの視点操作を実装。画面全体に暗い色を重ねる演出で、マップを作り直さずに夜の病院の不気味さを出した。",
         link: "https://note.com/ha_03ru_01/n/naa18b31fa392",
         size: [699, 390],
         en: {
@@ -66,6 +71,7 @@ window.WORKS = [
             genre: "3D horror-style exploration game",
             role: "Design & programming",
             description: "3D Game Challenge (10 games) — game 4",
+            point: "Implemented first-person movement and mouse look. A dark overlay across the whole screen creates the eerie night-hospital mood without rebuilding the map.",
         },
     },
     {
@@ -78,6 +84,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "3Dゲーム制作10本制作チャレンジ 3作目",
+        point: "三人称カメラと、画面中央の照準から Raycast を飛ばす射撃判定を実装。敵の頭上の体力バーを常にカメラへ向け、撃破数を GameManager で管理してクリアとゲームオーバーにつないだ。",
         link: "https://note.com/ha_03ru_01/n/nb949db0e85d2",
         size: [707, 395],
         en: {
@@ -85,6 +92,7 @@ window.WORKS = [
             genre: "3D action shooter",
             role: "Design & programming",
             description: "3D Game Challenge (10 games) — game 3",
+            point: "Implemented a third-person camera and raycast shooting from the screen-center reticle. Enemy health bars always face the camera, and a GameManager tracks kills to trigger the clear and game-over screens.",
         },
     },
     {
@@ -97,6 +105,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "3Dゲーム制作10本制作チャレンジ 2作目",
+        point: "スライド中は見た目だけでなく当たり判定の高さと中心位置も変え、天井の低いゲートをくぐれるようにした。落下時に戻るチェックポイントも実装。",
         link: "https://note.com/ha_03ru_01/n/nae25602d44ca",
         size: [704, 394],
         en: {
@@ -104,6 +113,7 @@ window.WORKS = [
             genre: "3D action",
             role: "Design & programming",
             description: "3D Game Challenge (10 games) — game 2",
+            point: "While sliding, the collider height and center change along with the visuals, so you can pass under low gates. Also implemented checkpoints that respawn you after a fall.",
         },
     },
     {
@@ -116,6 +126,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "3Dゲーム制作10本制作チャレンジ 1作目",
+        point: "3D制作チャレンジの1作目。プレイヤー操作・追従カメラ・攻撃エフェクト・近づくと追ってくる敵AI・撃破によるクリア判定を実装した。",
         link: "https://note.com/ha_03ru_01/n/n63dea3e2ef11",
         size: [1280, 660],
         en: {
@@ -123,6 +134,7 @@ window.WORKS = [
             genre: "3D action",
             role: "Design & programming",
             description: "3D Game Challenge (10 games) — game 1",
+            point: "The first entry in my 3D challenge: player control, a follow camera, attack effects, enemy AI that chases you when close, and a clear condition when all enemies are defeated.",
         },
     },
     {
@@ -135,6 +147,7 @@ window.WORKS = [
         member: 3,
         role: "ゲームプログラム全て",
         description: "リズムに合わせて雪だるまが投げてくるものをぱくぱくしよう！",
+        point: "譜面データを ScriptableObject で管理し、後から調整しやすい設計に。ノーツの到着タイミングを計算して Perfect / Good / Miss の判定幅を調整した。",
         link: "https://note.com/ha_03ru_01/n/n7bfc5f61a7a6?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/snowpakupaku",
         preview: "videos/previews/snow-pakupaku.mp4",
@@ -144,6 +157,7 @@ window.WORKS = [
             genre: "2D rhythm game",
             role: "All game programming",
             description: "Chomp whatever the snowman throws at you — in time with the rhythm!",
+            point: "Chart data is managed with ScriptableObjects so it is easy to tune later. Note arrival timing is calculated to fine-tune the Perfect / Good / Miss windows.",
         },
     },
     {
@@ -156,6 +170,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "ワイヤーアクションを駆使してステージを攻略する3Dアクションゲーム",
+        point: "シード値から床・壁・障害物を配置してステージを自動生成する仕組みを実装。同じシード値なら同じステージになり、手作業でのステージデータ作りが不要になった。",
         link: "https://note.com/ha_03ru_01/n/nc707a412117b?magazine_key=md93091202e8f",
         size: [1280, 659],
         preview: "videos/previews/hook-shift.mp4",
@@ -164,6 +179,7 @@ window.WORKS = [
             genre: "3D grappling-hook action game",
             role: "Design & programming",
             description: "A 3D action game where you clear stages with grappling-hook moves",
+            point: "Implemented seed-based stage generation that places floors, walls and obstacles. The same seed always gives the same stage, so stage data no longer has to be built by hand.",
         },
     },
     {
@@ -176,6 +192,7 @@ window.WORKS = [
         member: 4,
         role: "プログラム全般 統合作業",
         description: "あなたはただの村人です。勇者がいないので魔王討伐に向かうことになった。魔王によって町中危険だが、魔王を倒さなければならないのだ。",
+        point: "4人チームで、GitHub でバージョン管理をしながら、プログラム全般とプロジェクトの統合を担当した。",
         link: "https://note.com/ha_03ru_01/n/n8e6cd286cfa8?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/bakarpg",
         size: [1280, 719],
@@ -186,6 +203,7 @@ window.WORKS = [
             genre: "2D action × silly game",
             role: "General programming, integration",
             description: "You are just a villager. With no hero around, it's up to you to defeat the Demon King. The whole town is dangerous now — but the Demon King must fall.",
+            point: "On a 4-person team, I handled most of the programming and project integration, using GitHub for version control.",
         },
     },
     {
@@ -198,6 +216,7 @@ window.WORKS = [
         member: 4,
         role: "タイピングシステム プロジェクト統合",
         description: "制限時間内に出てきた文字をタイピングし続けて打ち切れ！",
+        point: "ゲームの中心になるゲームシーンを担当。初めて Unity に触る後輩がいたため unitypackage で各シーンを統合し、1週間で大きな問題なくまとめた。",
         link: "https://note.com/ha_03ru_01/n/n47b5ed59d663?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/connetype",
         preview: "videos/previews/connetype.mp4",
@@ -206,6 +225,7 @@ window.WORKS = [
             genre: "2D typing game",
             role: "Typing system, project integration",
             description: "Keep typing every word that appears before time runs out!",
+            point: "I built the core game scene. Because a teammate was new to Unity, we merged each scene with unitypackages and finished in one week without major issues.",
         },
     },
     {
@@ -218,12 +238,14 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム(未完成)",
         description: "世界の管理人となりコンソール(コマンド)を用いて世界に干渉していく",
+        point: "住人8人の会話をデータ化してランダムに流す仕組み（ENTITY LOG）を実装し、同じ文が続かないように制御。管理クラスが増えて設計が破綻し未完成に終わり、設計の大切さを学んだ作品。",
         link: "https://note.com/ha_03ru_01/n/n58070ab2bba9?magazine_key=md93091202e8f",
         en: {
             alt: "NULL title screen",
             genre: "2D observation simulation game",
             role: "Design & programming (unfinished)",
             description: "Become the world's administrator and shape it through a command console",
+            point: "Implemented ENTITY LOG, which plays data-driven conversations from 8 residents at random without repeating lines. Manager classes multiplied until the design broke down and the game was left unfinished, which taught me the importance of architecture.",
         },
     },
     {
@@ -236,6 +258,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム(未完成)",
         description: "爆弾を連鎖させ、大量爆破で高得点を狙う爽快2Dアクションゲーム。",
+        point: "2日・1人で、タイトルからゲーム、リザルトまでのゲームループと、unityroom の API を使ったスコアランキングを実装した。",
         link: "https://note.com/ha_03ru_01/n/n6a656458dd0b?magazine_key=md93091202e8f",
         size: [734, 410],
         preview: "videos/previews/datonator.mp4",
@@ -244,6 +267,7 @@ window.WORKS = [
             genre: "2D action game",
             role: "Design & programming (unfinished)",
             description: "A satisfying 2D action game — chain bombs into huge explosions for a high score.",
+            point: "Built solo in 2 days: a full title-to-game-to-result loop and a score ranking using the unityroom API.",
         },
     },
     {
@@ -256,12 +280,14 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム(未完成)",
         description: "弾幕を支配し、敵を殲滅せよ。",
+        point: "敵の弾を長押しで捕まえ、離すと跳ね返すパリィを実装。跳ね返した弾は近くの敵を追尾させ、必ず当たるようにした。",
         link: "https://note.com/ha_03ru_01/n/nc176f2e49dfd?magazine_key=md93091202e8f",
         en: {
             alt: "PARRY FIELD title screen",
             genre: "2D bullet-hell action game",
             role: "Design & programming (unfinished)",
             description: "Master the barrage and wipe out the enemy.",
+            point: "Implemented a parry that catches enemy bullets while you hold the button and fires them back on release. Returned bullets home in on the nearest enemy so they always hit.",
         },
     },
     {
@@ -274,6 +300,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "障害物を避けてハイスコアを目指せ！",
+        point: "C++ と DirectXTK で、モデルを外部データに頼らずに生成。3Dオブジェクトの描画・移動・衝突判定とシーン遷移を実装し、設計の見直しに重点を置いた。",
         link: "https://note.com/ha_03ru_01/n/n15dd2477b00c?magazine_key=md93091202e8f",
         size: [771, 429],
         en: {
@@ -281,6 +308,7 @@ window.WORKS = [
             genre: "3D runner",
             role: "Design & programming",
             description: "Dodge obstacles and go for a high score!",
+            point: "Built with C++ and DirectXTK, generating models in code instead of loading external files. Implemented 3D rendering, movement, collision and scene transitions, with a focus on reworking the architecture.",
         },
     },
     {
@@ -293,12 +321,14 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "PongGameをDirectXTKで制作",
+        point: "DirectX に慣れるため、以前作った Pong を作り直した。継承とコンポーネント指向を取り入れ、設計を意識して書いた。",
         link: "https://note.com/ha_03ru_01/n/n6456f9312d12?magazine_key=md93091202e8f",
         en: {
             alt: "DirectX Pong Game title screen",
             genre: "2D action game",
             role: "Design & programming",
             description: "Pong built with DirectXTK",
+            point: "Rebuilt my earlier Pong game to get used to DirectX, applying inheritance and a component-based design.",
         },
     },
     {
@@ -311,6 +341,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム(未完成)",
         description: "あなたのガーデンを華やかにしていこう！",
+        point: "初めてのスマホ対応。画面の大きさや比率の違いで UI が小さく見える問題を、実機で何度も確かめながら操作しやすいレイアウトに直した。",
         link: "https://note.com/ha_03ru_01/n/n80febf736af3?magazine_key=md93091202e8f",
         size: [445, 262],
         en: {
@@ -318,6 +349,7 @@ window.WORKS = [
             genre: "2D idle game",
             role: "Design & programming (unfinished)",
             description: "Make your garden bloom!",
+            point: "My first smartphone game. UI looked too small on different screen sizes and ratios, so I kept testing on real devices and reworked the layout until it was easy to use.",
         },
     },
     {
@@ -330,6 +362,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "「おもて」と「うら」の世界を切り替えてゴールを目指せ！",
+        point: "初めての3Dゲーム。Unity 1週間ゲームジャムに出した作品を、ブラッシュアップして完成させた。",
         link: "https://note.com/ha_03ru_01/n/nff3f1333e39e?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/flipmaze",
         size: [892, 494],
@@ -339,6 +372,7 @@ window.WORKS = [
             genre: "3D action game",
             role: "Design & programming",
             description: "Flip between the front and back worlds to reach the goal!",
+            point: "My first 3D game, originally made for the Unity 1-week game jam and then polished into a finished release.",
         },
     },
     {
@@ -351,6 +385,7 @@ window.WORKS = [
         member: 3,
         role: "企画・プログラム",
         description: "表示されたコマンドを素早く入力して高得点を狙おう！",
+        point: "専門学校とゲーム企業の合同ゲームジャムで制作した、初めての3Dプロジェクト。Animator でオブジェクトのアニメーションを管理する方法を学び、UI 制作が好きになったきっかけの作品。",
         link: "https://note.com/ha_03ru_01/n/n7b288af74c72?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/figure_sequence",
         en: {
@@ -358,6 +393,7 @@ window.WORKS = [
             genre: "3D command-input game",
             role: "Design & programming",
             description: "Enter the commands on screen as fast as you can for a high score!",
+            point: "My first 3D project, made at a joint game jam between schools and game companies. I learned to manage object animation with the Animator, and it is where I fell in love with UI work.",
         },
     },
     {
@@ -370,6 +406,7 @@ window.WORKS = [
         member: 3,
         role: "メインシステム プロジェクト統合",
         description: "自分だけの薬を研究せよ。",
+        point: "3人チームで約1か月、メインシステムとプロジェクトの統合を担当。チーム制作のトラブルを経験し、余裕を持ったスケジュールの大切さを学んだ。",
         link: "https://note.com/ha_03ru_01/n/n4d445c76c48d?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/potionberserker",
         size: [899, 498],
@@ -379,6 +416,7 @@ window.WORKS = [
             genre: "2D roguelike action game",
             role: "Core systems, project integration",
             description: "Research a potion all your own.",
+            point: "On a 3-person team over about a month, I handled the core systems and project integration. Team setbacks taught me the value of a schedule with breathing room.",
         },
     },
     {
@@ -391,6 +429,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム・スプライトデザイン",
         description: "時計塔の全てのコアを起動し、最深部のメインクロックを起動せよ。",
+        point: "C++ で、前作で断念したステージギミックを実装。前作はすべてのコードを main.cpp に書いていたが、今作はオブジェクト指向で設計した。",
         link: "https://note.com/ha_03ru_01/n/n34b32cee13f3?magazine_key=md93091202e8f",
         size: [893, 501],
         preview: "videos/previews/return-record.mp4",
@@ -399,6 +438,7 @@ window.WORKS = [
             genre: "2D puzzle action game",
             role: "Design, programming & sprite art",
             description: "Activate every core in the clock tower and start the main clock at its depths.",
+            point: "In C++, I implemented the stage gimmicks I had given up on in my previous game. Instead of putting all the code in main.cpp, I designed it with object-oriented principles.",
         },
     },
     {
@@ -411,6 +451,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム・スプライトデザイン",
         description: "連打で敵を倒せ！稼いだGoldでステータスやその他諸々を強化しよう！",
+        point: "初めて unityroom のランキング機能を実装した作品。企画・プログラム・スプライトを1人で担当した。",
         link: "https://note.com/ha_03ru_01/n/neaa4a2950aa8?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/clickhero",
         size: [898, 506],
@@ -420,6 +461,7 @@ window.WORKS = [
             genre: "2D clicker game",
             role: "Design, programming & sprite art",
             description: "Mash to defeat enemies! Spend the gold you earn to power up your stats and more!",
+            point: "My first game with a unityroom online ranking. I did the design, programming and sprites myself.",
         },
     },
     {
@@ -432,6 +474,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "猫を操作してゴールまで辿り着こう！",
+        point: "授業課題として1人・約7日で制作。タイトルからクリアまでのゲームループを完成させた。",
         link: "https://note.com/ha_03ru_01/n/n50c07166d03d?magazine_key=md93091202e8f",
         en: {
             title: "I'm Feline Like Jumping!",
@@ -439,6 +482,7 @@ window.WORKS = [
             genre: "2D action game",
             role: "Design & programming",
             description: "Guide the cat all the way to the goal!",
+            point: "A class assignment made solo in about 7 days, with a complete game loop from title to goal.",
         },
     },
     {
@@ -451,6 +495,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "ある日、ぺんぎんの「ぺんさんど」がばらばらになっちゃった！？体のパーツをもとに戻してあげよう!",
+        point: "前日に思いついたアイデアを、1人・1日で遊べる形にした作品。",
         link: "https://note.com/ha_03ru_01/n/n742d34cb5a6d?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/penpuzzle",
         en: {
@@ -459,6 +504,7 @@ window.WORKS = [
             genre: "2D puzzle game",
             role: "Design & programming",
             description: "One day, Pensand the penguin fell to pieces!? Put his body parts back together!",
+            point: "An idea I had the day before, turned into a playable game solo in a single day.",
         },
     },
     {
@@ -471,6 +517,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム・スプライトデザイン",
         description: "魚たちが人間に復讐！？迫りくる魚たちを捌き地上を守る！一人の海パン小僧の物語です。",
+        point: "4日で作る予定だったゲームを約2か月かけて改修し、学内コンペと企業向けプレゼンで発表して企業賞を受賞した。",
         link: "https://note.com/ha_03ru_01/n/n747c82964bb2?magazine_key=md93091202e8f",
         size: [899, 501],
         preview: "videos/previews/over-fish.mp4",
@@ -479,6 +526,7 @@ window.WORKS = [
             genre: "2D tower-defense action game",
             role: "Design, programming & sprite art",
             description: "The fish are taking revenge on humans!? Fillet the oncoming fish and defend the land — the story of one boy in swim trunks.",
+            point: "A game planned as a 4-day project that I kept improving for about 2 months, then presented at a school competition and to companies, winning a company award.",
         },
     },
     {
@@ -491,12 +539,14 @@ window.WORKS = [
         member: 4,
         role: "プログラム",
         description: "危険な海を泳いでより深い海を目指せ！",
+        point: "ゲームジャム（テーマ「うみ」）で、4人チームの唯一のプログラマーとしてゲーム部分を1人で実装した。",
         link: "https://note.com/ha_03ru_01/n/n63a8a306dfa0?magazine_key=md93091202e8f",
         en: {
             alt: "Aqua Leap title screen",
             genre: "2D side-scrolling action game",
             role: "Programming",
             description: "Swim through dangerous waters and dive ever deeper!",
+            point: "Made at a game jam with the theme \"sea\". As the only programmer on a 4-person team, I implemented the whole game myself.",
         },
     },
     {
@@ -509,6 +559,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "連打でエネルギーをためて遠くまで走り抜けろ！",
+        point: "Unity 1週間ゲームジャムで1人・約5日で制作。連打でためたエネルギーで走り、距離と討伐数をリザルトで表示する。",
         link: "https://note.com/ha_03ru_01/n/n7dbf4a5e937c?magazine_key=md93091202e8f",
         en: {
             title: "Pen Overkill",
@@ -516,6 +567,7 @@ window.WORKS = [
             genre: "2D button-mashing game",
             role: "Design & programming",
             description: "Mash to build up energy and run as far as you can!",
+            point: "Made solo in about 5 days for the Unity 1-week game jam. Mash to charge energy and run, with distance and defeats shown on the results screen.",
         },
     },
     {
@@ -528,6 +580,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム・スプライトデザイン",
         description: "敵を倒し、稼ぎ、強くなるローグライク。",
+        point: "1人で約1か月、プログラムに加えてゲーム内の絵もすべて自分で描いた2Dアクションローグライク。",
         link: "https://note.com/ha_03ru_01/n/nfeb962afd5e9?magazine_key=md93091202e8f",
         size: [906, 504],
         preview: "videos/previews/deep-dungeon.mp4",
@@ -536,6 +589,7 @@ window.WORKS = [
             genre: "2D roguelike action game",
             role: "Design, programming & sprite art",
             description: "A roguelike: defeat enemies, earn, get stronger.",
+            point: "A 2D action roguelike I made solo over about a month, drawing all of the in-game art as well as programming it.",
         },
     },
     {
@@ -548,6 +602,7 @@ window.WORKS = [
         member: 4,
         role: "メインシステム プロジェクト統合",
         description: "このゲームの主人公は、『ぺんさんど』という名前のペンギンです。 ぺんさんどの目標は、“皇帝ペンギン様に褒められること”。 それ以外、何もいりません。",
+        point: "4人チームで、メインシステムとプロジェクトの統合を担当。ゲームジャムの期間後も制作を続け、遊べる形に仕上げた。",
         link: "https://note.com/ha_03ru_01/n/n13d809da18bd?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/penkoutei",
         size: [908, 509],
@@ -558,6 +613,7 @@ window.WORKS = [
             genre: "2D action game",
             role: "Core systems, project integration",
             description: "The hero of this game is a penguin named Pensand. Pensand's only goal is “to be praised by the Emperor Penguin.” Nothing else matters.",
+            point: "On a 4-person team, I handled the core systems and project integration, and kept working after the game jam to get it to a playable state.",
         },
     },
     {
@@ -570,6 +626,7 @@ window.WORKS = [
         member: 6,
         role: "ミニゲーム「避けて！天使ちゃん」システム ホームシーンシステム プロジェクト統合",
         description: "このゲームは、見習い天使の「クレア」が相棒の「ぺんさんど」とともに大天使を目指していくゲームとなっています。",
+        point: "タイトル・ストーリー・ミニゲーム選択・エンディングのシステムと、ミニゲーム「避けて！天使ちゃん」を担当。書き方の違うメンバーのミニゲームを一つずつ読み解いて改修し、1本のゲームに統合した。",
         link: "https://note.com/ha_03ru_01/n/n94d8500da7e4?magazine_key=md93091202e8f",
         play: "https://unityroom.com/games/ganbareangel",
         preview: "videos/previews/angel.mp4",
@@ -579,6 +636,7 @@ window.WORKS = [
             genre: "2D multi-ending adventure game",
             role: "“Dodge It, Little Angel!” mini-game system, home scene system, project integration",
             description: "In this game, Claire, an apprentice angel, works toward becoming an archangel together with her partner Pensand.",
+            point: "I built the title, story, minigame select and ending systems plus the \"Dodge, Little Angel!\" minigame, then read through and reworked each teammate's minigame to integrate them into one game.",
         },
     },
     {
@@ -591,6 +649,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "四角い世界を主人公が駆け回る！ジャンプやワイヤーなどを駆使してゴールを目指そう。",
+        point: "2Dアクションに、マウス操作のワイヤーを組み合わせて実装。参考にできるコードがない中、生成AIも使いながら、コードを理解して不具合を直した。",
         link: "https://note.com/ha_03ru_01/n/n36e279aba87e?magazine_key=md93091202e8f",
         size: [1280, 709],
         preview: "videos/previews/hooking-box.mp4",
@@ -599,6 +658,7 @@ window.WORKS = [
             genre: "2D grappling-hook action game",
             role: "Design & programming",
             description: "Race around a square world! Use jumps and your grappling hook to reach the goal.",
+            point: "Combined 2D action with a mouse-controlled grappling wire. With no reference code to follow, I used generative AI as a helper but fixed the bugs by understanding the code myself.",
         },
     },
     {
@@ -611,6 +671,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "PongGameをC++で制作",
+        point: "授業の課題に、AI対戦と2人対戦のモード選択を自分で追加。速度が上がる「ブーストショット」と、乱数で数秒後に消える偽物の玉を出す「フェイクショット」を実装した。",
         link: "https://note.com/ha_03ru_01/n/n612f7d9ff7b3?magazine_key=md93091202e8f",
         size: [1280, 725],
         en: {
@@ -618,6 +679,7 @@ window.WORKS = [
             genre: "2D action game",
             role: "Design & programming",
             description: "Pong built with C++",
+            point: "On top of the class assignment, I added a choice between playing against AI or another player, plus a speed-up \"boost shot\" and a \"fake shot\" that spawns decoy balls which vanish after a random few seconds.",
         },
     },
     {
@@ -630,6 +692,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "自分の駒を3つ一直線に並べたら勝利",
+        point: "C++ で、3×3の二次元配列で盤面を管理し、縦・横・斜めの勝利と引き分けを判定した。",
         link: "https://note.com/ha_03ru_01/n/n0cef8a71d489?magazine_key=md93091202e8f",
         size: [771, 812],
         en: {
@@ -638,6 +701,7 @@ window.WORKS = [
             genre: "2D game",
             role: "Design & programming",
             description: "Get three of your marks in a row to win",
+            point: "In C++, the board is a 3x3 two-dimensional array, with checks for row, column and diagonal wins and for draws.",
         },
     },
     {
@@ -650,6 +714,7 @@ window.WORKS = [
         member: 1,
         role: "企画・プログラム",
         description: "ランダムに出現する的を射抜け！",
+        point: "C++ の関数とマウス入力を学びながら作った、最初期の作品。エラー文の読み解きには生成AIも活用した。",
         link: "https://note.com/ha_03ru_01/n/n756536be75a8?magazine_key=md93091202e8f",
         size: [1280, 717],
         en: {
@@ -657,6 +722,7 @@ window.WORKS = [
             genre: "2D game",
             role: "Design & programming",
             description: "Hit the targets that pop up at random!",
+            point: "One of my very first games, made while learning C++ functions and mouse input. I used generative AI to help me understand error messages.",
         },
     },
 ];

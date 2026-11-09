@@ -267,6 +267,27 @@ video {
     font-size: 15px;
 }
 
+.wp-point {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    border-left: 4px solid var(--blue);
+    border-radius: 0 12px 12px 0;
+    background: #eef8fd;
+}
+
+.wp-point p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.wp-point .wp-point-label {
+    margin-bottom: 4px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .14em;
+}
+
 .wp-stats {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

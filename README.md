@@ -28,7 +28,7 @@
 
 | セクション | 内容 |
 |---|---|
-| 実績バッジ（トップ） | IGCC グランプリ・TGS 出展・作品数（自動）を一画面目に表示 |
+| 実績バッジ（トップ） | IGCC グランプリ・TGS 出展・作品数（自動）を一画面目に表示。その下の「UPDATE」に、いちばん新しい作品と note の最新記事を自動で表示 |
 | SELECT MODE | 採用担当・ゲーム制作の仲間・Web制作のご依頼、目的ごとの入口。選んだ目的は Contact の窓口で「おすすめ」として強調 |
 | 30秒でわかる 長屋晴太 | 目指す職種・得意な技術・代表作・実績を1枚にまとめたカード。スマホでは下に「JUMP」（作品一覧・遊べる作品・スキル・経歴・ブログへの近道）が出る |
 | About | プロフィール |
@@ -301,6 +301,7 @@ npm test         # 自動テスト
         member: 1,
         role: "企画・プログラム",
         description: "ひとこと説明",
+        point: "技術のポイント（何を実装・工夫したか。1〜2文）",
         link: "https://note.com/ha_03ru_01/n/記事のID",
         // ここから下は、なくてもよい
         play: "https://unityroom.com/games/ゲームのID",   // ブラウザで遊べる場所
@@ -310,6 +311,7 @@ npm test         # 自動テスト
             genre: "2D action game",
             role: "Design & programming",
             description: "One-line description in English",
+            point: "Tech point in English",
         },
     },
 ```

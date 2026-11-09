@@ -2003,6 +2003,10 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
                     <h3 id="work-viewer-title" data-wv="title"></h3>
                     <p class="work-viewer-genre" data-wv="genre"></p>
                     <p class="work-viewer-desc" data-wv="desc"></p>
+                    <div class="work-viewer-point" data-wv="point-box" hidden>
+                        <span class="work-viewer-point-label">TECH POINT</span>
+                        <p data-wv="point"></p>
+                    </div>
                     <dl class="work-viewer-stats">
                         <div><dt>DATE</dt><dd data-wv="date"></dd></div>
                         <div><dt>TEAM</dt><dd data-wv="team"></dd></div>
@@ -2143,6 +2147,11 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         Object.entries(fields).forEach(([name, selector]) => {
             part(name).textContent = textOf(card, selector);
         });
+
+        // 技術のポイント（data/works.js の point）
+        const point = textOf(card, ".work-point");
+        part("point").textContent = point;
+        part("point-box").hidden = !point;
 
         part("tools").replaceChildren(...textOf(card, ".work-tech").split(/\s+/).filter(Boolean).map((tool) => make("li", "", tool)));
 
@@ -2430,6 +2439,55 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
             if (tab && tab.getAttribute("aria-selected") !== "true") tab.click();
         });
     });
+})();
+
+/* ========================================
+   トップの「最近の更新」（UPDATE）
+   ・いちばん新しい作品（data/works.js の先頭）と、note の最新記事（data/blog.js）を1行ずつ出す
+   ・作品を足す・note を書くと自動で変わるので、ここを書き換える必要はない
+   ・今も作り続けていることが、トップを開いた瞬間に伝わるようにする（2026/11）
+======================================== */
+
+(() => {
+    const hero = document.querySelector(".hero-content");
+    const anchor = hero?.querySelector(".hero-index");
+    if (!hero || !anchor) return;
+
+    const items = [];
+
+    const card = document.querySelector(".works-list .work-card[data-work-id]");
+    const work = Array.isArray(window.WORKS) ? window.WORKS[0] : null;
+    if (card && work) {
+        const link = make("a", "hero-news-item");
+        link.href = `#work=${card.dataset.workId}`;
+        link.append(make("b", "", "NEW WORK"), make("span", "hero-news-date", work.period || ""), make("span", "hero-news-title", work.title || ""));
+        // その場で作品の詳しい画面を開く（作品リンクから来た人とは分けて数える）
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            emitPlayEvent("最近の更新: 作品");
+            document.getElementById("other-works")?.scrollIntoView({ behavior: "auto" });
+            card.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        });
+        items.push(link);
+    }
+
+    const article = window.BLOG_DATA?.articles?.[0];
+    if (article?.url && /^https:\/\/note\.com\//.test(article.url)) {
+        const link = make("a", "hero-news-item");
+        link.href = article.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.dataset.noTranslate = "";
+        link.append(make("b", "", "NOTE"), make("span", "hero-news-date", article.date || ""), make("span", "hero-news-title", article.title || ""));
+        items.push(link);
+    }
+
+    if (!items.length) return;
+    const box = make("div", "hero-news");
+    box.setAttribute("role", "group");
+    box.setAttribute("aria-label", "最近の更新");
+    box.append(decor(make("span", "hero-news-label", "UPDATE")), ...items);
+    anchor.before(box);
 })();
 
 /* ========================================

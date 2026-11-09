@@ -467,6 +467,70 @@ section:not(.hero) {
     line-height: 2;
 }
 
+/* トップの「最近の更新」（js/main.js）：いちばん新しい作品と note の最新記事 */
+.hero-news {
+    display: grid;
+    gap: 6px;
+    max-width: 520px;
+    margin-top: 22px;
+}
+
+.hero-news-label {
+    color: #00739e;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .18em;
+}
+
+.hero-news-item {
+    display: flex;
+    min-width: 0;
+    min-height: 36px;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 6px;
+    border: 2px solid var(--ui-line, #e1e7ef);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .9);
+    color: var(--ui-ink, #111713);
+    font-size: 13px;
+    text-decoration: none;
+    transition: border-color .2s ease, transform .15s ease;
+}
+
+.hero-news-item:hover {
+    border-color: #00a3e0;
+    transform: translateX(2px);
+}
+
+.hero-news-item b {
+    flex: none;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #111713;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: .1em;
+}
+
+.hero-news-item:first-of-type b {
+    background: var(--red-strong, #d6363d);
+}
+
+.hero-news-date {
+    flex: none;
+    color: var(--ui-sub, #5b6560);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.hero-news-title {
+    overflow: hidden;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .hero-actions {
     display: flex;
     align-items: center;
@@ -7237,6 +7301,39 @@ footer.has-peeker {
     color: #00739e;
     font-size: .9rem;
     font-weight: 750;
+}
+
+/* 技術のポイント：カードには出さない（作品の詳しい画面だけで出す） */
+.work-card .work-point {
+    display: none;
+}
+
+.work-viewer-point {
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    border-left: 4px solid #00739e;
+    border-radius: 0 12px 12px 0;
+    background: #eef8fd;
+}
+
+.work-viewer-point[hidden] {
+    display: none;
+}
+
+.work-viewer-point-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #00739e;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .16em;
+}
+
+.work-viewer-point p {
+    margin: 0;
+    color: var(--ui-ink, #111713);
+    font-size: .9rem;
+    line-height: 1.8;
 }
 
 .work-viewer-desc {

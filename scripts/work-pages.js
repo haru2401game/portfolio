@@ -121,6 +121,7 @@ const fromData = (work) => {
         role: work.role,
         tech: work.tech,
         description: work.description,
+        point: work.point || "",
         award: awards.get(normalizeTitle(work.title)) || "",
         play: /^https:\/\//i.test(String(work.play || "")) ? String(work.play).trim() : "",
         note: /^https:\/\//i.test(String(work.link || "")) ? String(work.link).trim() : "",
@@ -154,8 +155,11 @@ const pageOf = (work, index) => {
     const tech = Array.isArray(work.tech) ? work.tech : String(work.tech || "").split(/\s+/).filter(Boolean);
     const title = `${work.title}（${work.genre}）｜長屋晴太のポートフォリオ`;
     const cardTitle = `${work.title}｜長屋晴太のポートフォリオ`;
+    // 文の終わりに「。」などがなければ付ける（説明とポイントがつながって読みにくくならないように）
+    const sentence = (text) => (text && !/[。．.！!？?」]$/.test(text.trim()) ? `${text.trim()}。` : text || "");
     const summary = [
-        work.description,
+        sentence(work.description),
+        work.point || "",
         `${work.genre}・${work.team}・${work.period}。担当：${work.role}。`,
         work.award ? `${work.award}。` : "",
         "ゲームプログラマー志望・長屋晴太の作品。",
@@ -263,7 +267,7 @@ ${work.preview ? `            <video data-src="../../${escape(work.preview)}" mu
             <h1>${escape(work.title)}</h1>
             <p class="wp-genre">${escape(work.genre)}</p>
 ${work.award ? `            <p class="wp-award">🏆 ${escape(work.award)}</p>\n` : ""}            <p class="wp-desc">${escape(work.description)}</p>
-
+${work.point ? `            <div class="wp-point">\n                <p class="wp-point-label">TECH POINT（技術のポイント）</p>\n                <p>${escape(work.point)}</p>\n            </div>\n` : ""}
             <dl class="wp-stats">
                 <div><dt>DATE（制作時期）</dt><dd>${escape(work.period)}</dd></div>
                 <div><dt>TEAM（人数）</dt><dd>${escape(work.team)}</dd></div>
