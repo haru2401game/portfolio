@@ -5,7 +5,8 @@
        BETA のあいだ：クラシック＝トップ（./）、新デザイン＝next/
        本番に切り替えたあと（npm run launch）：新デザイン＝トップ、クラシック＝classic.html
    ・選んだデザインは pa-settings.design に覚えて、次に開いたときもそのデザインへ（ページを描く前に移動）
-   ・切り替えるときは「CHANGE DESIGN」の読み込み演出 → 移動 → 着いた側で幕が開く
+   ・切り替えるときは「CHANGE DESIGN」の読み込み演出 → 移動 → 着いた側で幕が開く → そのデザインらしい最初の動き
+     （新デザイン：赤い帯がサッと入り、文字と写真がまっすぐ並ぶ／クラシック：画面が光って、文字が弾んで出てくる）
      アニメーション「なし」のときは、演出なしで移動する
    ・見た目は css/design-switch.css（両方のデザインで共通）
 ======================================== */
@@ -63,6 +64,18 @@
 
     /* ---------- 2. 着いたとき：幕が開く ---------- */
 
+    // 幕が開いたあとの「最初の動き」（見た目は css/design-switch.css の html.ds-enter）
+    // delay：動き始めるまでの秒数。アニメーション「なし」「軽量」のときは出さない
+    const enter = (delay) => {
+        if (root.classList.contains("motion-off") || root.classList.contains("motion-lite")) return;
+        root.style.setProperty("--ds-d", `${delay}s`);
+        root.classList.add("ds-enter");
+        setTimeout(() => {
+            root.classList.remove("ds-enter");
+            root.style.removeProperty("--ds-d");
+        }, (delay + 2.6) * 1000);
+    };
+
     let arriving = false;
     try {
         arriving = sessionStorage.getItem(ARRIVE_KEY) === current;
@@ -81,6 +94,9 @@
             /* ignore */
         }
         setTimeout(() => root.classList.remove("ds-arrive"), 1400);
+        enter(0.8); // 赤い幕が上へ抜けるのに合わせて動き出す
+    } else if (current === "new" && !location.hash) {
+        enter(0.05); // 新デザインは、普通に開いたときも最初の動きを出す
     }
 
     /* ---------- 3. 切り替える ---------- */
