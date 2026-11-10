@@ -409,6 +409,8 @@
         { id: "continue", icon: "💾", title: "セーブデータ", text: "「つづきから」で再開した", hint: "また遊びに来てね" },
         { id: "gamepad", icon: "🎮", title: "コントローラー派", text: "ゲームパッドでサイトを操作した", hint: "コントローラーをつないでみよう" },
         { id: "share", icon: "📣", title: "シェアありがとう", text: "クリアの結果をシェアした", hint: "エンディングで結果をシェアしてみよう" },
+        { id: "minigame", icon: "💡", title: "アイデアキャッチ", text: "トップのミニゲームを最後まで遊んだ", hint: "トップの画面で「遊んでみる」を押そう" },
+        { id: "minigame300", icon: "🥇", title: "ハイスコアラー", text: "ミニゲームで300点以上とった", hint: "ミニゲームで300点を目指そう" },
     ];
 
     let unlocked = localData.get("pa-trophy", {});
@@ -459,6 +461,7 @@
         queue.push({ trophy, n: count() });
         showNext();
         renderOpener();
+        renderExplore(true);
         if (room?.open) renderRoom();
         if (count() === TROPHIES.length) emitPlayEvent("トロフィー コンプリート");
     };
@@ -538,6 +541,85 @@
         endingActions.append(button);
     }
     renderOpener();
+
+    /* ---------- 探索率（画面の左下）
+       トロフィーをどれだけ集めたかを「探索率」として出し、まだのトロフィーのヒントを順番に見せる
+       （キャラ探し・隠しコマンド・ミニゲームなど、隠れた遊びに気づいてもらうため）
+       押すとトロフィー一覧。右の「−」で小さくたためる（たたんだことはブラウザに覚える） ---------- */
+
+    const explore = make("div", "explore");
+    const exploreMain = make("button", "explore-main");
+    exploreMain.type = "button";
+    const ring = make("span", "explore-ring");
+    const ringText = make("b");
+    ring.append(ringText);
+    const exploreBody = make("span", "explore-body");
+    const hintLine = make("span", "explore-hint");
+    exploreBody.append(make("small", "", "探索率"), hintLine);
+    exploreMain.append(ring, exploreBody);
+    exploreMain.addEventListener("click", () => {
+        openRoom();
+        emitPlayEvent("探索率を開いた");
+    });
+    const exploreToggle = make("button", "explore-toggle");
+    exploreToggle.type = "button";
+    explore.append(exploreMain, exploreToggle);
+    const setMin = (min) => {
+        explore.classList.toggle("is-min", min);
+        exploreToggle.textContent = min ? "＋" : "−";
+        exploreToggle.setAttribute("aria-label", min ? "探索率のヒントを広げる" : "探索率のヒントをたたむ");
+        exploreToggle.setAttribute("aria-expanded", String(!min));
+        localData.set("pa-explore-min", min);
+    };
+    exploreToggle.addEventListener("click", () => setMin(!explore.classList.contains("is-min")));
+    setMin(localData.get("pa-explore-min", false) === true);
+    document.body.append(explore);
+
+    let hintIndex = 0;
+    const showHint = () => {
+        const left = TROPHIES.filter((t) => !unlocked[t.id] && t.hint);
+        hintLine.replaceChildren();
+        if (!left.length) {
+            hintLine.append(make("span", "", "コンプリート！ 遊んでくれてありがとう"));
+            return;
+        }
+        const trophy = left[hintIndex % left.length];
+        hintLine.append(make("span", "", "ヒント："), make("span", "", trophy.hint));
+    };
+    function renderExplore(up = false) {
+        const n = count();
+        const percent = Math.round((n / TROPHIES.length) * 100);
+        ring.style.setProperty("--p", String(n / TROPHIES.length));
+        ringText.textContent = `${percent}%`;
+        exploreMain.setAttribute("aria-label", `探索率 ${percent}%（トロフィー ${n} / ${TROPHIES.length}）。押すとトロフィー一覧を開きます`);
+        showHint();
+        if (up) {
+            explore.classList.remove("is-up");
+            void explore.offsetWidth;
+            explore.classList.add("is-up");
+        }
+    }
+    renderExplore();
+    // ヒントは 7 秒ごとに入れ替える（たたんでいるとき・画面が裏のときは止める）
+    setInterval(() => {
+        if (document.hidden || explore.classList.contains("is-min")) return;
+        hintLine.classList.add("is-out");
+        setTimeout(() => {
+            hintIndex += 1;
+            showHint();
+            hintLine.classList.remove("is-out");
+        }, 300);
+    }, 7000);
+    // トップのボタンや「最近の更新」と重ならないよう、少しスクロールしてから（しなくても 8 秒後に）出す
+    const showExplore = () => {
+        explore.classList.add("is-shown");
+        window.removeEventListener("scroll", onExploreScroll);
+    };
+    const onExploreScroll = () => {
+        if (window.scrollY > 200) showExplore();
+    };
+    window.addEventListener("scroll", onExploreScroll, { passive: true });
+    setTimeout(showExplore, 8000);
 
     /* ---------- 解除の条件 ---------- */
 

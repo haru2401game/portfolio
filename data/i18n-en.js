@@ -798,7 +798,32 @@ window.I18N_EN = {
         "プロフィール": "Profile",
         "作品一覧（": "All works (",
         "できること": "What I can do",
-        "Falienのゲーム画面": "Falien gameplay screen"
+        "Falienのゲーム画面": "Falien gameplay screen",
+        "遊んでみる": "Play now",
+        "30秒ミニゲーム": "30-second mini game",
+        "💡アイデアと⭐ひらめきを集めて、🐛バグはよけよう！": "Catch 💡ideas and ⭐sparks, and dodge the 🐛bugs!",
+        "← → キー ／ マウス・指を左右に動かして移動": "Move with ← → keys, or slide your mouse / finger",
+        "ミニゲーム「IDEA CATCH」": "Mini game \"IDEA CATCH\"",
+        "ミニゲームを閉じる": "Close the mini game",
+        "もう一度": "Play again",
+        "やめる": "Quit",
+        "点": "pts",
+        "ハイスコア更新！": "New high score!",
+        "神プレイ！ 一緒にゲームを作りましょう！": "Godlike! Let's make games together!",
+        "ナイス！ アイデアをたくさん形にできました": "Nice! You turned lots of ideas into reality",
+        "いい調子！ もう一度でハイスコアを狙おう": "Good going! Try again for a high score",
+        "まずは1回クリア！ 次はもっと集めよう": "First clear! Catch even more next time",
+        "探索率": "Explored",
+        "ヒント：": "Hint: ",
+        "探索率のヒントをたたむ": "Collapse exploration hints",
+        "探索率のヒントを広げる": "Expand exploration hints",
+        "コンプリート！ 遊んでくれてありがとう": "Complete! Thanks for playing",
+        "アイデアキャッチ": "Idea Catcher",
+        "トップのミニゲームを最後まで遊んだ": "Played the mini game at the top to the end",
+        "トップの画面で「遊んでみる」を押そう": "Press \"Play now\" on the top screen",
+        "ハイスコアラー": "High Scorer",
+        "ミニゲームで300点以上とった": "Scored 300+ in the mini game",
+        "ミニゲームで300点を目指そう": "Aim for 300 points in the mini game"
     },
     "patterns": [
         [
@@ -944,6 +969,22 @@ window.I18N_EN = {
         [
             "^(.+)のプレイ映像を再生（(\\d+):(\\d+)・音声あり）$",
             "Play the {t1} gameplay video ({2}:{3}, with sound)"
+        ],
+        [
+            "^ライフ (\\d+)$",
+            "Lives {1}"
+        ],
+        [
+            "^ハイスコア (\\d+)$",
+            "High score {1}"
+        ],
+        [
+            "^(\\d+)点。ハイスコア (\\d+)点。$",
+            "{1} points. High score {2} points."
+        ],
+        [
+            "^探索率 (\\d+)%（トロフィー (\\d+) / (\\d+)）。押すとトロフィー一覧を開きます$",
+            "Explored {1}% (trophies {2} / {3}). Opens the trophy list"
         ]
     ]
 };

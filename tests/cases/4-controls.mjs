@@ -253,4 +253,43 @@ export const tests = [
             expect(count === "42", `前回の数（42）ではなく「${count}」が表示されています`);
         },
     },
+    {
+        name: "トップの「遊んでみる」でミニゲームが始まり、← → で動いて、Esc で閉じる",
+        async run({ open, expect }) {
+            const { page, errors } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
+            await page.click(".mg-open", { force: true });
+            await page.waitForTimeout(300);
+            expect(await page.evaluate(() => !document.querySelector(".mg")?.hidden), "「遊んでみる」を押しても、ゲームの画面が出ません");
+            await page.click(".mg-panel .mg-btn", { force: true });
+            await page.waitForTimeout(2700); // 3・2・1・GO
+            const time = () => page.evaluate(() => Number(document.querySelector(".mg-time b").textContent));
+            const before = await time();
+            await page.keyboard.down("ArrowLeft");
+            await page.waitForTimeout(1200);
+            await page.keyboard.up("ArrowLeft");
+            expect((await time()) < before, "ゲームが始まらず、時間が減りません");
+            await page.keyboard.press("Escape");
+            await page.waitForTimeout(200);
+            expect(await page.evaluate(() => document.querySelector(".mg").hidden), "Esc でゲームの画面が閉じません");
+            expect(await page.evaluate(() => document.activeElement?.classList.contains("mg-open")), "閉じたあと、「遊んでみる」ボタンにフォーカスが戻りません");
+            expect(!errors.length, `エラーが出ました: ${errors[0]}`);
+        },
+    },
+    {
+        name: "探索率が表示され、トロフィーを解除すると上がり、押すとトロフィー一覧が開く",
+        async run({ open, expect }) {
+            const { page } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
+            await page.evaluate(() => window.scrollTo(0, 400));
+            await page.waitForTimeout(600);
+            const percent = () => page.evaluate(() => document.querySelector(".explore-ring b")?.textContent);
+            expect(await page.evaluate(() => document.querySelector(".explore")?.classList.contains("is-shown")), "スクロールしても探索率が出ません");
+            const before = await percent();
+            await page.evaluate(() => window.PlayTrophy.unlock("photo"));
+            await page.waitForTimeout(200);
+            expect((await percent()) !== before, `トロフィーを解除しても探索率が変わりません（${before}）`);
+            await page.click(".explore-main");
+            await page.waitForTimeout(300);
+            expect(await page.evaluate(() => document.querySelector(".trophy-room")?.open), "探索率を押しても、トロフィー一覧が開きません");
+        },
+    },
 ];

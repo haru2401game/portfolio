@@ -1,0 +1,165 @@
+/* ========================================
+   ミニゲーム「IDEA CATCH」（js/minigame.js）と、探索率の表示（js/play.js）
+   クラシック（遊べるポートフォリオ）だけで使う
+======================================== */
+
+/* ---------- 「遊んでみる」ボタン（トップの画面の上） ---------- */
+
+.mg-open {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 6px 22px 6px 8px;
+    border: 3px solid #fff;
+    border-radius: 999px;
+    background: #ffb300;
+    color: #111713;
+    box-shadow: 0 6px 0 #c98a00, 0 14px 28px rgba(30, 45, 70, .25);
+    cursor: pointer;
+    transform: translateX(-50%);
+    transition: transform .2s cubic-bezier(.3, 1.6, .5, 1), box-shadow .2s ease;
+    animation: mg-call 2.4s ease-in-out infinite;
+}
+.mg-open:hover { transform: translateX(-50%) translateY(-3px) scale(1.04); }
+.mg-open:active { transform: translateX(-50%) translateY(4px); box-shadow: 0 2px 0 #c98a00, 0 8px 16px rgba(30, 45, 70, .25); }
+.mg-open-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #111713; color: #fff; font-size: 14px; }
+.mg-open-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; }
+.mg-open-text b { font-size: 16px; font-weight: 900; }
+.mg-open-text small { font-size: 11px; font-weight: 700; opacity: .8; }
+@keyframes mg-call { 0%, 70%, 100% { translate: 0 0; } 80% { translate: 0 -6px; } 90% { translate: 0 0; } }
+.motion-lite .mg-open, .motion-off .mg-open { animation: none; }
+.hero-screen.is-playing-game { animation: none !important; transform: none !important; }
+.hero-screen.is-playing-game .mg-open, .hero-screen.is-playing-game .hero-pause { visibility: hidden; }
+
+/* ---------- ゲームの画面 ---------- */
+
+.mg {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    overflow: hidden;
+    border: 6px solid #fff;
+    border-radius: 24px;
+    background: #dff3ff;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    color: #111713;
+    outline: none;
+}
+.mg[hidden] { display: none; }
+.mg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: none; }
+.mg-hud { position: absolute; left: 10px; right: 54px; top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; pointer-events: none; }
+.mg-hud > span { display: inline-flex; align-items: baseline; gap: 6px; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, .88); font-weight: 900; }
+.mg-hud small { font-size: 10px; letter-spacing: .1em; color: #5a6460; }
+.mg-hud b { font-size: 16px; font-variant-numeric: tabular-nums; }
+.mg-life { color: #ff5a5f; letter-spacing: .1em; }
+.mg-combo:empty { display: none; }
+.mg-combo { color: #fff; background: #ff5a5f !important; font-size: 12px; }
+.mg-close { position: absolute; right: 8px; top: 8px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(17, 23, 19, .78); color: #fff; font-size: 20px; line-height: 1; cursor: pointer; }
+.mg-close:hover { background: #ff5a5f; }
+
+.mg-count { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font-size: clamp(48px, 10vw, 96px); font-weight: 900; color: #006ea8; text-shadow: 0 5px 0 #fff, 0 10px 0 #ffd54a; pointer-events: none; }
+.mg-count.is-tick { animation: mg-tick .55s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes mg-tick { 0% { transform: scale(2.2); opacity: 0; } 60% { transform: scale(.92); opacity: 1; } 100% { transform: none; } }
+
+.mg-panel {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: min(88%, 420px);
+    padding: 18px 20px 20px;
+    border: 3px solid #111713;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 6px 0 #111713;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    animation: mg-panel .4s cubic-bezier(.3, 1.4, .5, 1);
+}
+.mg-panel[hidden] { display: none; }
+@keyframes mg-panel { from { opacity: 0; transform: translate(-50%, -40%) scale(.9); } }
+.mg-panel p { margin: 0; }
+.mg-title { font-size: 26px; font-weight: 900; letter-spacing: .04em; color: #006ea8; }
+.mg-rule { margin-top: 6px !important; font-size: 14px; font-weight: 700; line-height: 1.6; }
+.mg-keys { margin-top: 4px !important; font-size: 12px; color: #5a6460; }
+.mg-result { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin-top: 4px !important; }
+.mg-result b { font-size: 44px; font-weight: 900; line-height: 1.1; }
+.mg-rank { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: #ffb300; font-size: 24px; font-weight: 900; align-self: center; }
+.mg-best { font-size: 13px; font-weight: 700; color: #5a6460; }
+.mg-best.is-new { color: #ff5a5f; }
+.mg-comment { margin-top: 6px !important; font-size: 13px; }
+.mg-actions { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+.mg-btn { min-height: 44px; margin-top: 12px; padding: 0 22px; border: 2px solid #111713; border-radius: 999px; background: #fff; font-weight: 900; font-size: 15px; cursor: pointer; }
+.mg-actions .mg-btn { margin-top: 0; }
+.mg-btn.is-main { background: #006ea8; border-color: #006ea8; color: #fff; box-shadow: 0 4px 0 #004c74; }
+.mg-btn:hover { filter: brightness(1.08); }
+.mg-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (max-width: 600px) {
+    .mg-open { bottom: 14px; min-height: 46px; padding: 4px 16px 4px 6px; }
+    .mg-open-icon { width: 30px; height: 30px; }
+    .mg-open-text b { font-size: 14px; }
+    .mg { border-width: 4px; border-radius: 18px; }
+    .mg-hud { left: 6px; top: 6px; right: 46px; gap: 4px; }
+    .mg-hud > span { padding: 1px 7px; }
+    .mg-hud b { font-size: 13px; }
+    .mg-close { width: 36px; height: 36px; right: 5px; top: 5px; }
+    .mg-panel { padding: 10px 12px 12px; border-radius: 14px; }
+    .mg-title { font-size: 18px; }
+    .mg-rule { font-size: 12px; }
+    .mg-keys { display: none; }
+    .mg-result b { font-size: 30px; }
+    .mg-rank { width: 30px; height: 30px; font-size: 18px; }
+    .mg-comment { display: none; }
+    .mg-btn { min-height: 40px; margin-top: 8px; padding: 0 16px; font-size: 13px; }
+    .mg-actions { margin-top: 8px; }
+}
+
+/* ---------- 探索率（画面の左下。押すとトロフィー一覧） ---------- */
+
+.explore {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 880;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    max-width: min(360px, calc(100vw - 120px));
+    padding: 4px;
+    border: 2px solid #111713;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 4px 0 #111713, 0 14px 30px rgba(30, 45, 70, .15);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity .4s ease, transform .5s cubic-bezier(.3, 1.4, .5, 1);
+}
+.explore.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+.using-gamepad .explore { display: none; }
+.explore-main { display: flex; align-items: center; gap: 10px; min-height: 44px; min-width: 0; padding: 0 10px 0 0; border: 0; border-radius: 999px; background: none; cursor: pointer; text-align: left; font: inherit; color: inherit; }
+.explore-ring { --p: 0; flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: conic-gradient(#ffb300 calc(var(--p) * 1turn), #eef1ec 0); transition: --p .8s ease; }
+.explore-ring b { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; font-size: 11px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.explore-body { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }
+.explore-body small { font-size: 10px; font-weight: 900; letter-spacing: .08em; color: #006ea8; }
+.explore-hint { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 700; transition: opacity .3s ease; }
+.explore-hint.is-out { opacity: 0; }
+.explore-toggle { flex: none; width: 32px; height: 32px; margin-right: 4px; border: 0; border-radius: 50%; background: #eef1ec; cursor: pointer; font-weight: 900; color: #111713; }
+.explore-toggle:hover { background: #ffb300; }
+.explore.is-min .explore-body { display: none; }
+.explore.is-min .explore-main { padding-right: 0; }
+.explore.is-min { gap: 0; }
+.explore.is-min .explore-toggle { width: 24px; height: 24px; margin: 0 2px 0 -6px; font-size: 11px; }
+.explore.is-up .explore-ring { animation: explore-up .7s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes explore-up { 40% { transform: scale(1.3) rotate(-8deg); } }
+.motion-off .explore.is-up .explore-ring { animation: none; }
+
+@media (max-width: 600px) {
+    .explore { left: 12px; bottom: 12px; max-width: calc(100vw - 100px); }
+    .explore-ring { width: 40px; height: 40px; }
+    .explore-ring b { width: 31px; height: 31px; font-size: 10px; }
+}
