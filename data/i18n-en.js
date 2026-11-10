@@ -849,7 +849,20 @@ window.I18N_EN = {
         "新しいデザイン（NEW）で見る →": "View the new design (NEW) →",
         "GAME CLEAR!": "GAME CLEAR!",
         "スキルを3つ習得しよう": "Learn 3 skill sets",
-        "ゲームのような BGM が流れます（音量は上の「音量」と同じ）": "Plays game-style background music (uses the volume setting above)"
+        "ゲームのような BGM が流れます（音量は上の「音量」と同じ）": "Plays game-style background music (uses the volume setting above)",
+        "🖼 結果を画像にする": "🖼 Make a result image",
+        "リザルト画像": "Result image",
+        "この画像は、この端末の中で作りました（どこにも送っていません）。": "This image was made on your device (nothing was sent anywhere).",
+        "画像を保存": "Save image",
+        "2周目へようこそ！ NEW GAME+ では、隠しクエストが出てくるよ。": "Welcome to your second run! In NEW GAME+, hidden quests appear.",
+        "隠しクエスト出現！": "Hidden quests unlocked!",
+        "隠しコマンドを見つけよう（ヒント：昔のゲームの有名なコマンド）": "Find the secret command (hint: a famous code from classic games)",
+        "作品を10個開こう": "Open 10 works",
+        "隠れているキャラを8体見つけよう": "Find 8 hidden characters",
+        "トロフィーを10個集めよう": "Collect 10 trophies",
+        "エンディングでランク S を取ろう": "Get rank S at the ending",
+        "次に来たときは NEW GAME+。隠しクエストが出てくるよ": "Next time you visit: NEW GAME+, with hidden quests",
+        "ヒント：ポートフォリオに遊びに来よう": "Hint: Come visit the portfolio"
     },
     "patterns": [
         [
@@ -1019,6 +1032,18 @@ window.I18N_EN = {
         [
             "^作品図鑑 (\\d+) / (\\d+)$",
             "Works dex {1} / {2}"
+        ],
+        [
+            "^クリア結果：ランク ([SABC])、プレイタイム ([0-9:]+)$",
+            "Clear result: rank {1}, play time {2}"
+        ],
+        [
+            "^2周目（NEW GAME\\+）。レベル (\\d+)「(.+)」。次のレベルまで (\\d+) EXP。押すと冒険の記録を開きます$",
+            "Second run (NEW GAME+). Level {1} \"{t2}\". {3} EXP to next level. Opens your adventure log"
+        ],
+        [
+            "^2周目（NEW GAME\\+）。レベル (\\d+)「(.+)」。最大レベルです。押すと冒険の記録を開きます$",
+            "Second run (NEW GAME+). Level {1} \"{t2}\". Max level. Opens your adventure log"
         ]
     ]
 };

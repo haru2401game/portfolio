@@ -328,4 +328,53 @@ export const tests = [
             expect(!(await page.evaluate(() => document.querySelector(".party-dialog").open)), "「いいえ」で閉じません");
         },
     },
+    {
+        name: "エンディングの「結果を画像にする」で、リザルト画像（1200×630）ができて見られる",
+        async run({ open, expect }) {
+            const { page, errors } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
+            await page.evaluate(() => document.getElementById("ending").scrollIntoView({ behavior: "instant" }));
+            await page.waitForTimeout(400);
+            await page.click(".ending-result-card", { force: true });
+            await page.waitForFunction(() => document.querySelector(".result-card-dialog")?.open, null, { timeout: 5000 }).catch(() => {});
+            const state = await page.evaluate(async () => {
+                const image = document.querySelector(".result-card-image");
+                if (image && !image.complete) await new Promise((resolve) => image.addEventListener("load", resolve, { once: true }));
+                return { open: document.querySelector(".result-card-dialog")?.open, src: image?.getAttribute("src")?.slice(0, 22), w: image?.naturalWidth, h: image?.naturalHeight, alt: image?.alt };
+            });
+            expect(state.open, "リザルト画像の画面が開きません");
+            expect(state.src === "data:image/png;base64,", "リザルト画像が PNG になっていません");
+            expect(state.w === 1200 && state.h === 630, `リザルト画像の大きさが違います（${state.w}×${state.h}）`);
+            expect(/ランク [SABC]/.test(state.alt || ""), `画像の説明（alt）にランクがありません（${state.alt}）`);
+            await page.click("[data-result-close]");
+            expect(!(await page.evaluate(() => document.querySelector(".result-card-dialog").open)), "「閉じる」で閉じません");
+            expect(errors.length === 0, errors.join("\n"));
+        },
+    },
+    {
+        name: "一度クリアした人は 2周目（NEW GAME+）になり、隠しクエストが出る",
+        async run({ open, expect }) {
+            const { page } = await open("/", {
+                wait: 800,
+                init: () => {
+                    if (sessionStorage.getItem("__plus")) return;
+                    sessionStorage.setItem("__plus", "1");
+                    sessionStorage.setItem("pa-classic-intro", "1");
+                    localStorage.setItem("pa-exp", JSON.stringify({ exp: 300, done: ["stage:ending"], visits: 2, level: 5 }));
+                },
+            });
+            const state = await page.evaluate(() => ({
+                plus: document.documentElement.classList.contains("is-plus"),
+                hud: document.querySelector(".lv-hud")?.textContent || "",
+                quests: window.PlayLevel.quests(),
+            }));
+            expect(state.plus, "クリアしたことがあるのに、2周目（is-plus）になっていません");
+            expect(state.hud.includes("NEW GAME+"), "Lv の表示に「NEW GAME+」がありません");
+            expect(state.quests.length && state.quests.every((quest) => quest.plus), "隠しクエストが先に出ていません");
+
+            // まだクリアしていない人は、ふつうの1周目
+            const first = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
+            const normal = await first.page.evaluate(() => ({ plus: document.documentElement.classList.contains("is-plus"), quests: window.PlayLevel.quests() }));
+            expect(!normal.plus && normal.quests.every((quest) => !quest.plus), "クリアしていないのに 2周目になっています");
+        },
+    },
 ];

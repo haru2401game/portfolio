@@ -392,25 +392,17 @@ export const tests = [
         },
     },
     {
-        name: "BETA 版では、アクセス解析を送らない",
-        run: withPage(async ({ openNext, target, expect }) => {
-            if (target !== "/next/") return; // 本番に切り替えたあとは送ってよい
-            const { page } = await openNext({ init: () => {
-                try {
-                    sessionStorage.setItem("next-booted", "1");
-                } catch {
-                    /* ignore */
-                }
-                window.__beacons = 0;
-                const original = navigator.sendBeacon?.bind(navigator);
-                navigator.sendBeacon = (url, data) => {
-                    if (/collect/.test(url)) window.__beacons += 1;
-                    return original ? original(url, data) : true;
-                };
-            } });
-            await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
-            await page.evaluate(() => window.dispatchEvent(new Event("pagehide")));
-            expect((await page.evaluate(() => window.__beacons)) === 0, "BETA 版なのにアクセス解析を送っています");
+        name: "新デザインでもアクセス解析が動き、どちらのデザインかが分かる（新旧を比べるため）",
+        run: withPage(async ({ openNext, expect }) => {
+            const { page } = await openNext();
+            const state = await page.evaluate(() => ({
+                off: Boolean(document.querySelector('meta[name="pa-analytics"][content="off"]')),
+                design: document.documentElement.dataset.design,
+                script: Boolean(document.querySelector('script[src*="analytics.js"]')),
+            }));
+            expect(!state.off, "新デザインで、アクセス解析が止められています（新旧を比べられません）");
+            expect(state.script, "新デザインに analytics.js が読み込まれていません");
+            expect(state.design === "new", `<html data-design> が new ではありません（${state.design}）`);
         }),
     },
 ];

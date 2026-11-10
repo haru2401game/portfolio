@@ -145,3 +145,4 @@ for (const name of CLASSIC_TESTS) {
 
 console.log("新デザインをトップページに切り替えました。");
 console.log("続けて  npm run assets  →  npm test  を実行してから push してください。");
+console.log("アクセス解析（portfolio-analytics）の src/index.js の MAIN_DESIGN も \"new\" に変えて push してください（セクション一覧の並び順のため）。");

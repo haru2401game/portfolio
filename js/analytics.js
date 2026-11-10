@@ -13,7 +13,7 @@
 
     if (!ENDPOINT) return;
 
-    // BETA 版のページ（<meta name="pa-analytics" content="off">）では送らない。本番に切り替えると、この印は消える
+    // <meta name="pa-analytics" content="off"> のページでは送らない（今は使っていない。必要になったときの止め方）
     if (document.querySelector('meta[name="pa-analytics"][content="off"]')) return;
 
     try {
@@ -62,6 +62,11 @@
         return true;
     };
 
+    // どちらのデザインで見られたか（新デザイン new／クラシック classic）。新旧を比べるため
+    // トップは <html data-design>、作品ページ・404 は <html data-look>（js/look.js）
+    const root = document.documentElement;
+    const design = ["new", "classic"].includes(root.dataset.design) ? root.dataset.design : ["new", "classic"].includes(root.dataset.look) ? root.dataset.look : "";
+
     /* ---------- 送信（まとめて送る） ---------- */
 
     const queue = [];
@@ -71,7 +76,7 @@
         clearTimeout(timer);
         timer = 0;
         if (!queue.length) return;
-        const body = JSON.stringify({ s: session, w: window.innerWidth, events: queue.splice(0, 20) });
+        const body = JSON.stringify({ s: session, w: window.innerWidth, d: design, events: queue.splice(0, 20) });
         const blob = new Blob([body], { type: "text/plain" });
         if (!(navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, blob))) {
             fetch(ENDPOINT, { method: "POST", body, keepalive: true, mode: "no-cors" }).catch(() => {});

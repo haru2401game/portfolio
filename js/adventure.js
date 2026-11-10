@@ -60,6 +60,11 @@
     }
     const persist = () => localData.set("pa-exp", { exp, done: [...done].slice(-600), visits, level: levelOf(exp) });
 
+    // 2周目（NEW GAME+）：前の訪問までにエンディングまで来たことがある人
+    // （同じ訪問の中でクリアしたときは、次に来たときから）
+    const plus = done.has("stage:ending");
+    if (plus) document.documentElement.classList.add("is-plus");
+
     const state = () => {
         const level = levelOf(exp);
         const max = level >= NEED.length;
@@ -83,6 +88,7 @@
     hudBar.append(hudFill);
     const hudText = make("small", "lv-hud-text");
     hud.append(hudLevel, hudBar, hudText);
+    if (plus) hud.append(make("span", "lv-hud-plus", "NEW GAME+"));
     hud.addEventListener("click", () => {
         window.PlayTrophy?.open();
         emitPlayEvent("冒険の記録を開いた");
@@ -95,7 +101,7 @@
         hudLevel.textContent = `Lv.${now.level}`;
         hudFill.style.transform = `scaleX(${now.rate})`;
         hudText.textContent = now.next === null ? "MAX" : `${now.exp} EXP`;
-        hud.setAttribute("aria-label", `レベル ${now.level}「${now.title}」。${now.next === null ? "最大レベルです" : `次のレベルまで ${now.next} EXP`}。押すと冒険の記録を開きます`);
+        hud.setAttribute("aria-label", `${plus ? "2周目（NEW GAME+）。" : ""}レベル ${now.level}「${now.title}」。${now.next === null ? "最大レベルです" : `次のレベルまで ${now.next} EXP`}。押すと冒険の記録を開きます`);
     };
     renderHud();
 
@@ -449,13 +455,27 @@
         await waitUntil(() => !document.querySelector(".play-continue"), 14000);
         if (window.scrollY < 400) {
             // 2回目からは「おかえり」
-            if (visits >= 2 && exp > 0) say("top", ["Player", "PLAYER", `おかえり！ 前回は Lv.${lastLevel} まで進んだね。続きを楽しんでいってね。`]);
+            if (plus && !done.has("plus:start")) say("top", ["Player", "PLAYER", "2周目へようこそ！ NEW GAME+ では、隠しクエストが出てくるよ。"]);
+            else if (visits >= 2 && exp > 0) say("top", ["Player", "PLAYER", `おかえり！ 前回は Lv.${lastLevel} まで進んだね。続きを楽しんでいってね。`]);
             else say("top");
             await wait(400);
             await waitUntil(() => !talking(), 15000);
         }
         await wait(500);
         window.ShowSettingsHint?.();
+        // 2周目に入った最初の1回：「NEW GAME+」を大きく出して、隠しクエストを知らせる
+        if (plus && !done.has("plus:start")) {
+            done.add("plus:start");
+            persist();
+            await wait(600);
+            const banner = make("div", "lv-up is-clear is-plus");
+            banner.setAttribute("role", "status");
+            banner.append(make("small", "", "2ND PLAY"), make("b", "", "NEW GAME+"), make("span", "", "隠しクエスト出現！"));
+            showCenter(banner, 2600, "powerup");
+            await wait(2800);
+            const hidden = activeQuests().find((quest) => quest.plus);
+            if (hidden) notice("HIDDEN QUEST ", hidden.text, "quest");
+        }
         // 初めての人には、受けたクエストをひとつ知らせる（設定の案内が消えるころに）
         if (visits <= 1 && !countOf("quest:")) {
             await wait(3500);
@@ -483,10 +503,20 @@
         { id: "cast3", text: "隠れているキャラを3体見つけよう", goal: 3, now: () => countOf("cast:") },
         { id: "contact", text: "最後のステージ「Contact」までたどり着こう", goal: 1, now: () => (done.has("reach:contact") ? 1 : 0) },
     ];
+    // 2周目（NEW GAME+）だけの隠しクエスト。ふつうのクエストが残っていても、こちらを先に出す
+    const PLUS_QUESTS = [
+        { id: "plus-konami", text: "隠しコマンドを見つけよう（ヒント：昔のゲームの有名なコマンド）", goal: 1, now: () => (done.has("konami") ? 1 : 0) },
+        { id: "plus-works10", text: "作品を10個開こう", goal: 10, now: () => countOf("work:") },
+        { id: "plus-cast8", text: "隠れているキャラを8体見つけよう", goal: 8, now: () => countOf("cast:") },
+        { id: "plus-trophy10", text: "トロフィーを10個集めよう", goal: 10, now: () => window.PlayTrophy?.count?.() || 0 },
+        { id: "plus-rank-s", text: "エンディングでランク S を取ろう", goal: 1, now: () => (window.PlayResult?.().rank === "S" ? 1 : 0) },
+    ].map((quest) => ({ ...quest, plus: true }));
+    if (plus) QUESTS.unshift(...PLUS_QUESTS);
     const QUEST_EXP = 40;
     const ACTIVE = 3;
     const activeQuests = () => QUESTS.filter((quest) => !done.has(`quest:${quest.id}`)).slice(0, ACTIVE);
-    window.PlayLevel.quests = () => activeQuests().map((quest) => ({ text: quest.text, now: Math.min(quest.goal, quest.now()), goal: quest.goal }));
+    window.PlayLevel.quests = () => activeQuests().map((quest) => ({ text: quest.text, now: Math.min(quest.goal, quest.now()), goal: quest.goal, plus: Boolean(quest.plus) }));
+    window.PlayLevel.plus = plus;
     window.PlayLevel.questsDone = () => countOf("quest:");
     window.PlayLevel.questsTotal = QUESTS.length;
 
@@ -647,6 +677,8 @@
             banner.setAttribute("role", "status");
             banner.append(make("small", "", "GAME CLEAR!"), make("b", "", `Lv.${now.level}`), make("span", "", now.title));
             setTimeout(() => showCenter(banner, 2800, "stage"), 900);
+            // 初めてクリアした人に、2周目があることを知らせる
+            if (!plus) setTimeout(() => notice("NEXT ", "次に来たときは NEW GAME+。隠しクエストが出てくるよ", "quest"), 4200);
         }, { threshold: 0.25 });
         endWatch.observe(ending);
     }

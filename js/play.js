@@ -403,7 +403,7 @@
     ======================================== */
 
     const TROPHIES = [
-        { id: "start", icon: "▶", title: "PRESS START", text: "ポートフォリオに遊びに来た", hint: "" },
+        { id: "start", icon: "▶", title: "PRESS START", text: "ポートフォリオに遊びに来た", hint: "ポートフォリオに遊びに来よう" },
         { id: "achievements", icon: "★", title: "実績チェック", text: "制作実績をチェックした", hint: "Achievements を見てみよう" },
         { id: "works5", icon: "🎮", title: "作品ハンター", text: "作品の詳細を5作品見た", hint: "Other Works のカードを押してみよう" },
         { id: "photo", icon: "📷", title: "思い出アルバム", text: "写真を拡大して見た", hint: "写真を押してみよう" },
@@ -504,11 +504,13 @@
         if (questBox) {
             questBox.hidden = !window.PlayLevel?.quests;
             const head = make("p", "trophy-quests-head");
-            head.append(make("b", "", "QUEST"), make("small", "", `達成 ${window.PlayLevel?.questsDone?.() || 0} / ${window.PlayLevel?.questsTotal || 0}`));
+            head.append(make("b", "", window.PlayLevel?.plus ? "QUEST · NEW GAME+" : "QUEST"), make("small", "", `達成 ${window.PlayLevel?.questsDone?.() || 0} / ${window.PlayLevel?.questsTotal || 0}`));
             const items = quests.length
                 ? quests.map((quest) => {
-                      const item = make("li", quest.now >= quest.goal ? "is-done" : "");
-                      item.append(make("span", "trophy-quest-box", quest.now >= quest.goal ? "✔" : ""), make("span", "trophy-quest-text", quest.text), make("small", "", `${quest.now} / ${quest.goal}`));
+                      const item = make("li", `${quest.now >= quest.goal ? "is-done" : ""}${quest.plus ? " is-hidden-quest" : ""}`.trim());
+                      const text = make("span", "trophy-quest-text", quest.text);
+                      if (quest.plus) text.prepend(make("b", "trophy-quest-tag", "HIDDEN"), " ");
+                      item.append(make("span", "trophy-quest-box", quest.now >= quest.goal ? "✔" : ""), text, make("small", "", `${quest.now} / ${quest.goal}`));
                       return item;
                   })
                 : [make("li", "is-done", "すべてのクエストを達成しました！")];
@@ -687,6 +689,23 @@
             Math.min(cast, 14) +                 // 最大 14
             Math.min(playTime / 300, 1) * 20;    // 5分で最大 20
         return { points, sections, cast };
+    };
+
+    // 結果の数字（js/result-card.js が、シェア用の画像を作るのに使う）
+    window.PlayResult = () => {
+        const { points, sections, cast } = score();
+        const result = RANKS.find((r) => points >= r.min);
+        return {
+            rank: result.rank,
+            time: `${String(Math.floor(playTime / 60)).padStart(2, "0")}:${String(playTime % 60).padStart(2, "0")}`,
+            sections,
+            stagesTotal: stages.length,
+            works: seenWorks.size,
+            cast,
+            trophies: count(),
+            trophiesTotal: TROPHIES.length,
+            adventure: window.PlayLevel?.summary?.() || null,
+        };
     };
 
     let rankBox = null;
