@@ -316,6 +316,7 @@
         clearTimeout(hideTimer);
         box.hidden = false;
         requestAnimationFrame(() => box.classList.add("is-show"));
+        sound("open");
         // 英語表示のときは、i18n.js が source を訳し終えるのを少し待ってから、1文字ずつ出す
         setTimeout(() => {
             const full = source.textContent;
@@ -334,7 +335,7 @@
                     }
                 }, 38);
             }
-            hideTimer = setTimeout(hide, 3500 + Array.from(full).length * 60);
+            hideTimer = setTimeout(hide, 5000 + Array.from(full).length * 70);
         }, 60);
     };
 
