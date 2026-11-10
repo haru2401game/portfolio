@@ -844,7 +844,12 @@ window.I18N_EN = {
         "はい（メールを開く）": "Yes (open email)",
         "いいえ": "No",
         "また いつでも 声をかけてね！": "Feel free to reach out anytime!",
-        "はるが 仲間に くわわった！": "Haru joined your party!"
+        "はるが 仲間に くわわった！": "Haru joined your party!",
+        "採用担当の方へ：落ち着いたデザインでもご覧いただけます": "For recruiters: this portfolio is also available in a calm design",
+        "新しいデザイン（NEW）で見る →": "View the new design (NEW) →",
+        "GAME CLEAR!": "GAME CLEAR!",
+        "スキルを3つ習得しよう": "Learn 3 skill sets",
+        "ゲームのような BGM が流れます（音量は上の「音量」と同じ）": "Plays game-style background music (uses the volume setting above)"
     },
     "patterns": [
         [
@@ -1010,6 +1015,10 @@ window.I18N_EN = {
         [
             "^達成 (\\d+) / (\\d+)$",
             "Done {1} / {2}"
+        ],
+        [
+            "^作品図鑑 (\\d+) / (\\d+)$",
+            "Works dex {1} / {2}"
         ]
     ]
 };

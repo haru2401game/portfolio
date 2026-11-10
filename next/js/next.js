@@ -116,7 +116,14 @@
     const settings = readSettings();
     const saveSettings = () => {
         try {
-            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+            // ほかの項目（デザインの切り替え・BGM など）を消さないように混ぜて保存する
+            let saved = {};
+            try {
+                saved = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+            } catch {
+                saved = {};
+            }
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ...saved, ...settings }));
         } catch {
             /* 保存できなくても、このページの間は効く */
         }

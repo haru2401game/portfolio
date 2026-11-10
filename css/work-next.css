@@ -1,0 +1,280 @@
+/* ========================================
+   work-next.css：作品ごとのページ（works/）の「新デザイン」の見た目
+   ・トップで新デザインを選んでいる人だけに効く（js/look.js が <html data-look="new"> を付ける）
+   ・トップの新デザインと同じ、白地 × 赤 × 黒。角は丸めず、影も付けない。大きな英字の見出しと赤い斜めの帯
+   ・動きは「開いたときに1回だけ、静かに」。クラシックの「弾む・沈む」は使わない
+======================================== */
+
+html[data-look="new"] {
+    --n-red: #c8102e;
+    --n-red-dark: #a00d25;
+    --n-ink: #222222;
+    --n-text: #333333;
+    --n-muted: #616161;
+    --n-gray: #f2f2f2;
+    --n-line: #e2e2e2;
+    --n-display: "Archivo", "Noto Sans JP", system-ui, sans-serif;
+    --n-ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+html[data-look="new"] body {
+    position: relative;
+    overflow-x: hidden;
+    background: #fff;
+    color: var(--n-text);
+    line-height: 1.85;
+}
+
+/* 左の赤い斜めの帯（トップの Hero と同じモチーフ）。写真の後ろから、下と左に少しのぞく */
+html[data-look="new"] body::before {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    z-index: -1;
+    width: min(44vw, 620px);
+    height: 560px;
+    background: var(--n-red);
+    clip-path: polygon(0 0, 100% 0, 58% 100%, 0 100%);
+    content: "";
+}
+
+html[data-look="new"] :focus-visible { outline-color: var(--n-red); }
+html[data-look="new"] ::selection { background: var(--n-red); color: #fff; }
+
+/* ---------- ヘッダー ---------- */
+
+html[data-look="new"] .wp-header {
+    max-width: 1180px;
+    padding: 20px 24px;
+}
+html[data-look="new"] .wp-brand {
+    font-family: var(--n-display);
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: .02em;
+    color: var(--n-ink);
+}
+html[data-look="new"] .wp-brand img { border-radius: 0; }
+html[data-look="new"] .wp-brand small { color: var(--n-muted); font-family: var(--n-display); font-size: 9px; letter-spacing: .3em; }
+html[data-look="new"] .wp-back {
+    border: 0;
+    border-radius: 0;
+    background: var(--n-ink);
+    box-shadow: none;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    transition: background .2s var(--n-ease);
+}
+html[data-look="new"] .wp-back:hover { background: var(--n-red); }
+
+/* ---------- 本文 ---------- */
+
+html[data-look="new"] .wp-main { max-width: 1180px; padding: 12px 24px 64px; }
+html[data-look="new"] .wp-crumbs { color: var(--n-muted); font-size: 12px; letter-spacing: .04em; }
+html[data-look="new"] .wp-crumbs a { color: var(--n-ink); }
+html[data-look="new"] .wp-crumbs li + li::before { content: "/"; }
+
+html[data-look="new"] .wp-card,
+html[data-look="new"] .wp-card.is-rare {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 0 48px;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+}
+html[data-look="new"] .wp-media { align-self: start; background: #111; }
+html[data-look="new"] .wp-media img,
+html[data-look="new"] .wp-media video { max-height: 560px; }
+html[data-look="new"] .wp-badges { top: 0; left: 0; gap: 0; }
+html[data-look="new"] .wp-badges span,
+html[data-look="new"] .wp-badges .is-award,
+html[data-look="new"] .wp-badges .is-team,
+html[data-look="new"] .wp-badges .is-play {
+    padding: 5px 12px;
+    border-radius: 0;
+    background: var(--n-ink);
+    box-shadow: none;
+    color: #fff;
+    font-family: var(--n-display);
+    font-weight: 700;
+}
+html[data-look="new"] .wp-badges .is-award { background: var(--n-red); }
+
+html[data-look="new"] .wp-info { padding: 8px 0 0; }
+html[data-look="new"] .wp-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--n-red);
+    font-family: var(--n-display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .2em;
+}
+html[data-look="new"] .wp-kicker::before { width: 32px; height: 2px; background: var(--n-red); content: ""; }
+html[data-look="new"] .wp-info h1 {
+    margin-top: 10px;
+    color: var(--n-ink);
+    font-family: var(--n-display);
+    font-size: clamp(2rem, 4.2vw, 3.4rem);
+    letter-spacing: -.03em;
+    line-height: 1.05;
+}
+html[data-look="new"] .wp-genre { margin-top: 12px; color: var(--n-muted); font-size: 14px; font-weight: 700; }
+html[data-look="new"] .wp-award { border-radius: 0; background: var(--n-red); color: #fff; }
+html[data-look="new"] .wp-desc { color: var(--n-text); }
+html[data-look="new"] .wp-point { border-left-color: var(--n-red); border-radius: 0; background: var(--n-gray); }
+html[data-look="new"] .wp-point .wp-point-label { color: var(--n-red); font-family: var(--n-display); }
+
+html[data-look="new"] .wp-stats { gap: 0; border-top: 1px solid var(--n-line); }
+html[data-look="new"] .wp-stats div {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--n-line);
+    border-radius: 0;
+    background: none;
+}
+html[data-look="new"] .wp-stats dt { color: var(--n-muted); font-family: var(--n-display); font-weight: 700; }
+html[data-look="new"] .wp-stats dd { color: var(--n-ink); }
+
+/* ボタン：黒い四角。乗せると赤が左から満ちる */
+html[data-look="new"] .wp-button,
+html[data-look="new"] .wp-button.is-play,
+html[data-look="new"] .wp-button.is-note,
+html[data-look="new"] .wp-button.is-portfolio {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    justify-content: space-between;
+    min-height: 56px;
+    padding: 0 22px;
+    border: 1px solid var(--n-ink);
+    border-radius: 0;
+    background: var(--n-ink);
+    box-shadow: none;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: .04em;
+    transition: color .3s var(--n-ease), border-color .3s var(--n-ease);
+}
+html[data-look="new"] .wp-button.is-portfolio { background: #fff; color: var(--n-ink); }
+html[data-look="new"] .wp-button::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--n-red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s var(--n-ease);
+    content: "";
+}
+html[data-look="new"] .wp-button::after { font-family: var(--n-display); content: "→"; }
+html[data-look="new"] .wp-author .wp-button::after { content: none; }
+html[data-look="new"] .wp-button:hover { transform: none; border-color: var(--n-red); color: #fff; }
+html[data-look="new"] .wp-button:hover::before { transform: scaleX(1); }
+html[data-look="new"] .wp-button:active { transform: none; }
+
+/* ---------- 前後の作品 ---------- */
+
+html[data-look="new"] .wp-pager { gap: 0; margin-top: 56px; border-top: 1px solid var(--n-ink); border-bottom: 1px solid var(--n-line); }
+html[data-look="new"] .wp-pager a {
+    min-height: 88px;
+    padding: 18px 20px;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    transition: background .25s var(--n-ease), color .25s var(--n-ease);
+}
+html[data-look="new"] .wp-pager a + a { border-left: 1px solid var(--n-line); }
+html[data-look="new"] .wp-pager a:hover { background: var(--n-ink); color: #fff; }
+html[data-look="new"] .wp-pager a:hover small { color: #bbb; }
+html[data-look="new"] .wp-pager small { color: var(--n-muted); font-family: var(--n-display); letter-spacing: .14em; }
+html[data-look="new"] .wp-pager b { margin-top: 4px; font-size: 18px; }
+
+/* ---------- 作った人：黒い帯 ---------- */
+
+html[data-look="new"] .wp-author {
+    margin-top: 56px;
+    padding: 32px;
+    border: 0;
+    border-radius: 0;
+    background: var(--n-ink);
+    color: #fff;
+}
+html[data-look="new"] .wp-author h2 { color: #fff; font-size: 18px; }
+html[data-look="new"] .wp-author p { color: #cfcfcf; }
+html[data-look="new"] .wp-author .wp-button.is-portfolio { border-color: #fff; background: #fff; color: var(--n-ink); }
+html[data-look="new"] .wp-author .wp-button.is-portfolio:hover { border-color: var(--n-red); color: #fff; }
+
+html[data-look="new"] .wp-footer {
+    background: var(--n-ink);
+    color: #9a9a9a;
+    font-family: var(--n-display);
+    letter-spacing: .2em;
+    border-top: 1px solid #3a3a3a;
+}
+
+/* ---------- 開いたときの動き（1回だけ） ---------- */
+
+@keyframes wn-rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: none; }
+}
+@keyframes wn-curtain {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+@keyframes wn-band {
+    from { transform: translateX(-30%); opacity: 0; }
+    to { transform: none; opacity: 1; }
+}
+html[data-look="new"] body::before { animation: wn-band .9s var(--n-ease) both; }
+/* 写真そのものは動かさず、上の黒い幕が右へ抜ける（写真を切り抜きから出すと、表示の速さ（LCP）が遅く数えられるため） */
+html[data-look="new"] .wp-media::after {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: var(--n-ink);
+    transform-origin: right;
+    pointer-events: none;
+    content: "";
+    animation: wn-curtain .8s .15s cubic-bezier(.7, 0, .2, 1) both;
+}
+html[data-look="new"] .wp-kicker,
+html[data-look="new"] .wp-info h1,
+html[data-look="new"] .wp-genre,
+html[data-look="new"] .wp-desc,
+html[data-look="new"] .wp-point,
+html[data-look="new"] .wp-stats,
+html[data-look="new"] .wp-actions { animation: wn-rise .7s var(--n-ease) both; }
+html[data-look="new"] .wp-info h1 { animation-delay: .25s; }
+html[data-look="new"] .wp-genre { animation-delay: .32s; }
+html[data-look="new"] .wp-desc { animation-delay: .4s; }
+html[data-look="new"] .wp-point { animation-delay: .46s; }
+html[data-look="new"] .wp-stats { animation-delay: .52s; }
+html[data-look="new"] .wp-actions { animation-delay: .58s; }
+html[data-look="new"] .wp-kicker { animation-delay: .18s; }
+
+/* ---------- スマホ ---------- */
+
+@media (max-width: 760px) {
+    html[data-look="new"] body::before { top: 120px; width: 70vw; height: 230px; }
+    html[data-look="new"] .wp-header { padding: 14px 16px; }
+    html[data-look="new"] .wp-main { padding: 4px 16px 40px; }
+    html[data-look="new"] .wp-card,
+    html[data-look="new"] .wp-card.is-rare { grid-template-columns: 1fr; gap: 24px; }
+    html[data-look="new"] .wp-media img,
+    html[data-look="new"] .wp-media video { max-height: 300px; }
+    html[data-look="new"] .wp-pager b { font-size: 15px; }
+    html[data-look="new"] .wp-author { padding: 24px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html[data-look="new"] *,
+    html[data-look="new"] body::before { animation: none !important; transition: none !important; }
+    html[data-look="new"] .wp-media::after { display: none; }
+}

@@ -114,6 +114,9 @@ html.ds-arrive::after {
 @keyframes ds-mask-up { from { clip-path: inset(0 0 100% 0); transform: translateY(40px); } to { clip-path: inset(0 0 -20% 0); } }
 @keyframes ds-dot { 0% { opacity: 0; transform: scale(0); } 60% { opacity: 1; transform: scale(1.6); } }
 @keyframes ds-frame-in { from { opacity: 0; transform: translateY(40px) scale(.94); } }
+/* トップの映像：映像そのものは動かさず、上にかぶせた赤い幕が右へ抜けて見せる
+   （映像を透明や切り抜きの状態から動かすと、ブラウザが「一番大きな表示（LCP）」を演出が終わるまで数えず、表示が遅いと判定されるため） */
+@keyframes ds-curtain-off { 0% { transform: scaleX(1); transform-origin: right; } 100% { transform: scaleX(0); transform-origin: right; } }
 @keyframes ds-count-glow { 0% { background-color: #c8102e; } 100% { background-color: #222222; } }
 
 html[data-design="new"].ds-enter .hd { animation: ds-drop .6s cubic-bezier(.2, .8, .2, 1) var(--ds-d, 0s) both; }
@@ -126,7 +129,15 @@ html[data-design="new"].ds-enter .hero-copy { animation: ds-up .7s cubic-bezier(
 html[data-design="new"].ds-enter .hero-lead { animation: ds-up .7s cubic-bezier(.2, .8, .2, 1) calc(var(--ds-d, 0s) + .55s) both; }
 html[data-design="new"].ds-enter .hero-actions { animation: ds-up .7s cubic-bezier(.2, .8, .2, 1) calc(var(--ds-d, 0s) + .65s) both; }
 html[data-design="new"].ds-enter .hero-news { animation: ds-fade .8s ease calc(var(--ds-d, 0s) + .85s) both; }
-html[data-design="new"].ds-enter .hero-frame.is-main { animation: ds-left .9s cubic-bezier(.2, .8, .2, 1) calc(var(--ds-d, 0s) + .35s) both; }
+html[data-design="new"].ds-enter .hero-frame.is-main::after {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: var(--ink, #222);
+    pointer-events: none;
+    content: "";
+    animation: ds-curtain-off .7s cubic-bezier(.7, 0, .2, 1) calc(var(--ds-d, 0s) + .4s) both;
+}
 html[data-design="new"].ds-enter .hero-frame.is-photo { animation: ds-frame-in .8s cubic-bezier(.2, .8, .2, 1) calc(var(--ds-d, 0s) + .55s) both; }
 html[data-design="new"].ds-enter .hero-frame.is-sub { animation: ds-frame-in .8s cubic-bezier(.2, .8, .2, 1) calc(var(--ds-d, 0s) + .7s) both; }
 html[data-design="new"].ds-enter .hero-badges { animation: ds-up .7s cubic-bezier(.2, .8, .2, 1) calc(var(--ds-d, 0s) + .9s) both; }

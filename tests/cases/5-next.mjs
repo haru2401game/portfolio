@@ -365,6 +365,33 @@ export const tests = [
         }),
     },
     {
+        name: "作品ごとのページと 404 も、新デザインを選んでいる人には新デザインで出る",
+        async run({ open, expect }) {
+            for (const [pathname, design, look] of [
+                ["/works/falien/", { design: "new" }, "new"],
+                ["/works/falien/", { design: "classic" }, "classic"],
+                ["/portfolio/404.html", { design: "new" }, "new"],
+                ["/portfolio/404.html", { design: "classic" }, "classic"],
+            ]) {
+                const { page, errors } = await open(pathname, { settings: design });
+                const state = await page.evaluate(() => {
+                    const shown = (selector) => {
+                        const element = document.querySelector(selector);
+                        return Boolean(element && element.getClientRects().length);
+                    };
+                    return { look: document.documentElement.dataset.look, nf: shown(".nf"), game: shown("#game"), card: getComputedStyle(document.querySelector(".wp-card") || document.body).borderRadius };
+                });
+                expect(state.look === look, `${pathname}（${design.design}）の見た目が ${state.look} になっています`);
+                if (pathname.includes("404")) {
+                    expect(state.nf === (look === "new") && state.game === (look === "classic"), `${pathname}（${look}）で出る中身が違います（新:${state.nf} ゲーム:${state.game}）`);
+                } else if (look === "new") {
+                    expect(state.card === "0px", "新デザインの作品ページなのに、カードの角が丸いままです");
+                }
+                expect(errors.length === 0, errors.join("\n"));
+            }
+        },
+    },
+    {
         name: "BETA 版では、アクセス解析を送らない",
         run: withPage(async ({ openNext, target, expect }) => {
             if (target !== "/next/") return; // 本番に切り替えたあとは送ってよい

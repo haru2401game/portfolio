@@ -40,6 +40,8 @@
         return level;
     };
     const titleOf = (level) => TITLES.filter(([from]) => level >= from).pop()[1];
+    // シェアの文（訳されない）で使う英語の称号
+    const TITLES_EN = { "見習いプレイヤー": "Rookie Player", "ゲーム好き": "Game Lover", "作品ハンター": "Work Hunter", "熟練プレイヤー": "Skilled Player", "ゲームマスター": "Game Master", "伝説のプレイヤー": "Legendary Player" };
 
     const saved = localData.get("pa-exp", null);
     const data = saved && typeof saved === "object" && !Array.isArray(saved) ? saved : {};
@@ -64,6 +66,7 @@
         return {
             level,
             title: titleOf(level),
+            titleEn: TITLES_EN[titleOf(level)],
             exp,
             next: max ? null : NEED[level] - exp,
             rate: max ? 1 : (exp - NEED[level - 1]) / (NEED[level] - NEED[level - 1]),
@@ -122,15 +125,33 @@
         setTimeout(() => pop.remove(), 1100);
     };
 
+    // 画面の真ん中に大きく出すもの（LEVEL UP!・GAME CLEAR!）は、1つずつ順番に
+    const centerQueue = [];
+    let centerBusy = false;
+    const showCenter = (banner, ms, sfx) => {
+        centerQueue.push({ banner, ms, sfx });
+        const next = () => {
+            if (centerBusy || !centerQueue.length) return;
+            centerBusy = true;
+            const item = centerQueue.shift();
+            document.body.append(item.banner);
+            if (item.sfx) sound(item.sfx);
+            setTimeout(() => {
+                item.banner.remove();
+                centerBusy = false;
+                setTimeout(next, 200);
+            }, item.ms);
+        };
+        next();
+    };
+
     // レベルアップの演出（画面の真ん中に大きく）
     const levelUp = (level) => {
-        sound("powerup");
         emitPlayEvent(`レベルアップ: Lv.${level}`);
         const banner = make("div", "lv-up");
         banner.setAttribute("role", "status");
         banner.append(make("small", "", "LEVEL UP!"), make("b", "", `Lv.${level}`), make("span", "", titleOf(level)));
-        document.body.append(banner);
-        setTimeout(() => banner.remove(), still() ? 1800 : 2200);
+        showCenter(banner, still() ? 1800 : 2200, "powerup");
         hud.classList.remove("is-up");
         void hud.offsetWidth;
         hud.classList.add("is-up");
@@ -177,14 +198,29 @@
     const notice = (label, text, tone, sfx) => document.dispatchEvent(new CustomEvent("play:notify", { detail: { label, text, tone, sound: sfx } }));
     const clearBanner = (section, index) => notice(`STAGE ${String(index + 1).padStart(2, "0")} CLEAR! `, nameOf(section), "stage", "stage");
 
-    // セクションの最後が画面の上の方まで来たら「読み終えた」
+    // そのセクションを画面で見ていた時間（メニューで一気に飛んだときに、通り過ぎただけのステージまでクリアにしないため）
+    const seenMs = {};
+    let seenAt = performance.now();
+    setInterval(() => {
+        const now = performance.now();
+        const step = Math.min(1000, now - seenAt);
+        seenAt = now;
+        if (document.hidden) return;
+        stages.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8 && rect.bottom > window.innerHeight * 0.2) seenMs[section.id] = (seenMs[section.id] || 0) + step;
+        });
+    }, 300);
+    const SEEN_ENOUGH = 1500;
+
+    // セクションの最後が画面の上の方まで来たら「読み終えた」（少しでも見ていたステージだけ）
     const checkClear = () => {
         stages.forEach((section, index) => {
             if (section.id === "ending") return;
             const key = `stage:${section.id}`;
             if (done.has(key)) return;
             const rect = section.getBoundingClientRect();
-            if (rect.height && rect.bottom < window.innerHeight * 0.55 && rect.bottom > -window.innerHeight) {
+            if (rect.height && rect.bottom < window.innerHeight * 0.55 && (seenMs[section.id] || 0) >= SEEN_ENOUGH) {
                 if (gain(key, 20)) clearBanner(section, index);
             }
         });
@@ -397,14 +433,38 @@
         stages.forEach((section) => watcher.observe(section));
     }
     // 最初のあいさつ（トップを見ているとき。登場演出のあと）
-    if (!location.hash && window.scrollY < 200) {
-        setTimeout(() => {
-            if (window.scrollY >= 400) return;
+    /* ---------- 最初の数秒の流れ（通知が一度に重ならないよう、1本の流れにする）
+       READY?（クラシックの登場演出）→ つづきから（2回目の人）→ 案内役のあいさつ → 設定の案内 → 最初のクエスト ---------- */
+
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const waitUntil = async (check, limit) => {
+        const end = performance.now() + limit;
+        while (!check() && performance.now() < end) await wait(250);
+    };
+    const talking = () => !box.hidden;
+    const opening = async () => {
+        // 登場演出（READY? と、トップが弾んで出る動き）が終わるまで
+        await wait(root().classList.contains("cl-intro") ? 2800 : 1400);
+        // 「つづきから」のカードが出ているあいだは待つ
+        await waitUntil(() => !document.querySelector(".play-continue"), 14000);
+        if (window.scrollY < 400) {
             // 2回目からは「おかえり」
             if (visits >= 2 && exp > 0) say("top", ["Player", "PLAYER", `おかえり！ 前回は Lv.${lastLevel} まで進んだね。続きを楽しんでいってね。`]);
             else say("top");
-        }, 2600);
-    }
+            await wait(400);
+            await waitUntil(() => !talking(), 15000);
+        }
+        await wait(500);
+        window.ShowSettingsHint?.();
+        // 初めての人には、受けたクエストをひとつ知らせる（設定の案内が消えるころに）
+        if (visits <= 1 && !countOf("quest:")) {
+            await wait(3500);
+            const first = activeQuests()[0];
+            if (first) notice("NEW QUEST ", first.text, "quest");
+        }
+    };
+    const root = () => document.documentElement;
+    if (!location.hash && window.scrollY < 200) setTimeout(() => opening(), 0);
 
     /* ========================================
        5. クエスト（今やること3つ）
@@ -418,7 +478,7 @@
         { id: "map", text: "経歴のワールドマップを見よう", goal: 1, now: () => (done.has("map") ? 1 : 0) },
         { id: "photo", text: "写真を拡大して見よう", goal: 1, now: () => countOf("photo:") },
         { id: "play", text: "遊べる作品を開いてみよう", goal: 1, now: () => countOf("play:") },
-        { id: "skill", text: "できること（スキル）をくわしく見よう", goal: 1, now: () => countOf("skill:") },
+        { id: "skill", text: "スキルを3つ習得しよう", goal: 3, now: () => countOf("skill:") },
         { id: "stage5", text: "ステージを5つクリアしよう", goal: 5, now: () => countOf("stage:") },
         { id: "cast3", text: "隠れているキャラを3体見つけよう", goal: 3, now: () => countOf("cast:") },
         { id: "contact", text: "最後のステージ「Contact」までたどり着こう", goal: 1, now: () => (done.has("reach:contact") ? 1 : 0) },
@@ -453,17 +513,6 @@
     });
     // 横スクロールで眺めたときも（ページが自動で動かすスクロールは数えないよう、人の操作だけ）
     ["wheel", "touchstart", "pointerdown"].forEach((type) => document.querySelector(".world-map-scroll")?.addEventListener(type, () => gain("map", 10), { once: true, passive: true }));
-    document.addEventListener("play:event", (event) => {
-        const name = event.detail?.name || "";
-        if (name.startsWith("くわしく: ")) gain(`skill:${name.slice(6)}`, 5);
-    });
-    // 最初の訪問では、受けたクエストをひとつ知らせる
-    if (visits <= 1 && !countOf("quest:")) {
-        setTimeout(() => {
-            const first = activeQuests()[0];
-            if (first) notice("NEW QUEST ", first.text, "quest");
-        }, 9000);
-    }
 
     /* ========================================
        6. ▶ の選択カーソル（RPG のメニューのように、選んでいるものの左に ▶）
@@ -566,6 +615,94 @@
         party.showModal();
         yes.focus();
     }, true);
+
+    /* ========================================
+       8. エンディング：冒険のゴール
+          ・エンディングに着いたら「GAME CLEAR!」と、到達したレベル・称号
+          ・ランクの欄（play.js）に、レベル・クリアしたステージ・クエストも出す（window.PlayLevel.summary）
+          ・スタッフロールの「AND YOU」に、見てくれた人のレベルと称号
+    ======================================== */
+
+    const STAGE_TOTAL = stages.filter((section) => section.id !== "ending").length;
+    window.PlayLevel.summary = () => ({ ...state(), stages: countOf("stage:") - (done.has("stage:ending") ? 1 : 0), stagesTotal: STAGE_TOTAL, quests: countOf("quest:"), questsTotal: QUESTS.length });
+
+    const credit = Array.from(document.querySelectorAll(".credits-list dt")).find((dt) => dt.textContent.trim() === "AND YOU")?.nextElementSibling;
+    const youLine = make("span", "credits-you");
+    credit?.append(make("br"), youLine);
+    const renderCredit = () => {
+        const now = state();
+        youLine.replaceChildren(make("b", "", `Lv.${now.level}`), document.createTextNode(" "), make("span", "", now.title));
+    };
+    renderCredit();
+
+    const ending = document.getElementById("ending");
+    if (ending && "IntersectionObserver" in window) {
+        const endWatch = new IntersectionObserver((entries) => {
+            if (!entries[0].isIntersecting) return;
+            endWatch.disconnect();
+            gain("stage:ending", 50);
+            renderCredit();
+            const now = state();
+            const banner = make("div", "lv-up is-clear");
+            banner.setAttribute("role", "status");
+            banner.append(make("small", "", "GAME CLEAR!"), make("b", "", `Lv.${now.level}`), make("span", "", now.title));
+            setTimeout(() => showCenter(banner, 2800, "stage"), 900);
+        }, { threshold: 0.25 });
+        endWatch.observe(ending);
+    }
+    // レベルが上がったら、スタッフロールの称号も合わせる
+    hud.addEventListener("animationend", renderCredit);
+
+    /* ========================================
+       9. 作品のアイテム図鑑・スキル習得
+          ・作品一覧の見出しに「図鑑 12 / 32」、開いたことのある作品のカードに「GET」の印
+          ・「What I Can Do」の3つのスキルセットを、それぞれ少し見ていると「SKILL GET」
+    ======================================== */
+
+    const workCards = () => Array.from(document.querySelectorAll(".works-list .work-card"));
+    const cardTitle = (card) => card.dataset.title || card.querySelector("h3")?.textContent.replace(/\s+/g, " ").trim() || "";
+    const dex = make("span", "dex-count");
+    document.querySelector("#other-works .section-title")?.append(dex);
+    const renderDex = () => {
+        const cards = workCards();
+        let got = 0;
+        cards.forEach((card) => {
+            const has = done.has(`work:${cardTitle(card)}`);
+            if (has) got += 1;
+            card.classList.toggle("is-collected", has);
+            if (has && !card.querySelector(".dex-mark")) card.append(decor(make("span", "dex-mark", "GET")));
+        });
+        dex.replaceChildren(make("small", "", "ITEM DEX"), make("b", "", `${got} / ${cards.length}`));
+        dex.setAttribute("aria-label", `作品図鑑 ${got} / ${cards.length}`);
+    };
+    renderDex();
+    document.addEventListener("work-viewer:open", () => setTimeout(renderDex, 50));
+
+    // スキル：「What I Can Do」の3つのスキルセットを、それぞれ少し見ていたら習得（スマホはタブで切り替えて見る）
+    const skillSets = Array.from(document.querySelectorAll("#what-i-can-do .can-do-category"));
+    const skillName = (set) => set.querySelector(".can-do-category-title h3")?.textContent.replace(/\s+/g, " ").trim() || "";
+    const learn = (set) => {
+        const name = skillName(set);
+        if (!name || !gain(`skill:${name}`, 10)) return;
+        notice("SKILL GET ", name, "stage", "powerup");
+    };
+    if ("IntersectionObserver" in window && skillSets.length) {
+        const timers = new Map();
+        const skillWatch = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                const set = entry.target;
+                // スマホのタブで隠れているスキルセットは数えない
+                const visible = entry.isIntersecting && set.offsetParent !== null && getComputedStyle(set).display !== "none";
+                clearTimeout(timers.get(set));
+                if (visible) timers.set(set, setTimeout(() => learn(set), 1200));
+            });
+        }, { threshold: 0.35 });
+        skillSets.forEach((set) => skillWatch.observe(set));
+        document.addEventListener("click", (event) => {
+            if (!event.target.closest?.(".can-do-tabs button")) return;
+            setTimeout(() => skillSets.filter((set) => set.classList.contains("is-mobile-current")).forEach((set) => setTimeout(() => learn(set), 1200)), 50);
+        });
+    }
 
     checkClear();
     checkQuests();

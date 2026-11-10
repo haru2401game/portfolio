@@ -143,6 +143,8 @@ const playLabel = (url) => {
 
 const assets = {
     css: `css/work-page.css?v=${hashOf("css/work-page.css")}`,
+    cssNew: `css/work-next.css?v=${hashOf("css/work-next.css")}`,
+    look: `js/look.js?v=${hashOf("js/look.js")}`,
     page: `js/work-page.js?v=${hashOf("js/work-page.js")}`,
     analytics: `js/analytics.js?v=${hashOf("js/analytics.js")}`,
 };
@@ -205,7 +207,7 @@ const pageOf = (work, index) => {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' ${ANALYTICS}; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' ${ANALYTICS}; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>${escape(title)}</title>
 <meta name="description" content="${escape(summary)}">
@@ -233,7 +235,9 @@ const pageOf = (work, index) => {
 
 <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon.png">
+<script src="../../${assets.look}"></script>
 <link rel="stylesheet" href="../../${assets.css}">
+<link rel="stylesheet" href="../../${assets.cssNew}">
 <script type="application/ld+json">
 ${jsonLd(data)}
 </script>

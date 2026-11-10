@@ -198,7 +198,8 @@ const settings = (() => {
     };
 })();
 
-const saveSettings = () => localData.set(SETTINGS_KEY, settings);
+// 保存するときは、ほかのファイルが同じ pa-settings に入れた項目（デザインの切り替え・BGM など）を消さないように混ぜる
+const saveSettings = () => localData.set(SETTINGS_KEY, { ...(localData.get(SETTINGS_KEY, {}) || {}), ...settings });
 
 // 動画の音量（作品の動画は、作ったときと設定を変えたときにこれを通す）
 function applyVolume(video) {
@@ -1223,7 +1224,11 @@ function setLanguage(lang) {
         timer = setTimeout(hide, 9000);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    if (!mobile) setTimeout(show, 1800);
+    // 冒険（adventure.js）があるときは、案内役の「ようこそ」のあとに順番に出してもらう（通知が一度に重ならないように）
+    window.ShowSettingsHint = () => {
+        if (!mobile) show();
+    };
+    if (!mobile) setTimeout(() => !window.PlayLevel && show(), 1800);
 
     close.addEventListener("click", hide);
     settingsButton.addEventListener("click", hide);

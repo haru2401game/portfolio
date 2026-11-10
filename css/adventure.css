@@ -316,3 +316,27 @@ body:has(.rpg-talk.is-show) .achievement-toast { bottom: calc(var(--talk-h, 160p
 @media (max-width: 600px) {
     body:has(.rpg-talk.is-show) .achievement-toast { bottom: calc(var(--talk-h, 120px) + 36px); }
 }
+
+/* ---------- エンディング：冒険の結果 ---------- */
+
+.ending-adventure { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; width: 100%; margin-top: 10px; padding-top: 10px; border-top: 2px dashed currentColor; }
+.ending-adventure b { padding: 2px 10px; border-radius: 999px; background: #006ea8; color: #fff; font-weight: 900; }
+.ending-adventure-title { font-weight: 900; }
+.ending-adventure small { flex-basis: 100%; font-weight: 700; opacity: .85; }
+.credits-you b { margin-right: 4px; color: #ffb300; }
+.lv-up.is-clear small { color: #22a34a; font-size: 18px; }
+.ending-rank { flex-wrap: wrap; }
+
+/* ---------- 採用担当の方へ：新しいデザインへの案内（SELECT MODE の下） ---------- */
+
+.mode-select-calm { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 12px 0 0; padding: 10px 14px; border: 2px dashed #9aa3a0; border-radius: 14px; background: rgba(255, 255, 255, .7); font-size: 13px; font-weight: 700; color: #3c4541; }
+.mode-select-calm a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; background: #111713; color: #fff; text-decoration: none; font-weight: 900; }
+.mode-select-calm a:hover { background: #c8102e; }
+
+/* ---------- 作品のアイテム図鑑 ---------- */
+
+.dex-count { display: inline-flex; align-items: baseline; gap: 8px; margin-top: 8px; padding: 4px 14px; border: 2px solid #111713; border-radius: 999px; background: #fff; box-shadow: 0 3px 0 #111713; }
+.dex-count small { font-size: 10px; font-weight: 900; letter-spacing: .14em; color: #006ea8; }
+.dex-count b { font-size: 15px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.work-card { position: relative; }
+.dex-mark { position: absolute; right: 10px; top: 10px; z-index: 3; padding: 2px 10px; border: 2px solid #111713; border-radius: 999px; background: #ffd54a; font-size: 11px; font-weight: 900; letter-spacing: .1em; color: #111713; transform: rotate(6deg); pointer-events: none; }

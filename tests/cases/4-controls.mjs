@@ -283,14 +283,14 @@ export const tests = [
         name: "ステージに入ると案内役のキャラが話し、「ガイドを出さない」で止められる",
         async run({ open, expect }) {
             const { page } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
-            await page.evaluate(() => document.getElementById("about").scrollIntoView());
+            await page.evaluate(() => document.getElementById("about").scrollIntoView({ behavior: "instant" }));
             await page.waitForTimeout(1600);
             const talk = () => page.evaluate(() => { const box = document.querySelector(".rpg-talk"); return { shown: Boolean(box && !box.hidden && box.classList.contains("is-show")), name: box?.querySelector(".rpg-name")?.textContent }; });
             const first = await talk();
             expect(first.shown, "ステージに入っても、案内役のキャラが話しません");
             await page.click(".rpg-off");
             await page.waitForTimeout(400);
-            await page.evaluate(() => document.getElementById("timeline").scrollIntoView());
+            await page.evaluate(() => document.getElementById("timeline").scrollIntoView({ behavior: "instant" }));
             await page.waitForTimeout(1600);
             expect(!(await talk()).shown, "「ガイドを出さない」を押したのに、次のステージでも話しています");
         },
@@ -317,7 +317,7 @@ export const tests = [
         name: "Contact の窓口ボタンで「仲間にしますか？」が出て、「いいえ」で閉じる",
         async run({ open, expect }) {
             const { page } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
-            await page.evaluate(() => document.getElementById("contact").scrollIntoView());
+            await page.evaluate(() => document.getElementById("contact").scrollIntoView({ behavior: "instant" }));
             await page.waitForTimeout(300);
             await page.click("#contact .purpose-button >> nth=0", { force: true });
             await page.waitForTimeout(400);

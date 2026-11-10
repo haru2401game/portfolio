@@ -23,6 +23,11 @@
 
     const showNext = () => {
         if (noticeBusy || !notices.length) return;
+        // 設定の案内（⚙ OPTIONS の吹き出し）が出ているあいだは、重ならないように待つ
+        if (document.querySelector(".settings-hint.is-shown")) {
+            setTimeout(showNext, 500);
+            return;
+        }
         noticeBusy = true;
         const { label, text, image, tone, sound } = notices.shift();
         if (sound) window.PlaySfx?.(sound);
@@ -577,7 +582,7 @@
     /* ---------- 解除の条件 ---------- */
 
     // PRESS START：開いた瞬間に出すと、スマホでは通知がトップのボタンに重なるので、
-    // 最初にスクロールしたとき（スクロールしなければ8秒後）に解除する
+    // 最初にスクロールしたとき（スクロールしなければ20秒後）に解除する
     const pressStart = () => {
         window.removeEventListener("scroll", onFirstScroll);
         clearTimeout(startTimer);
@@ -587,7 +592,8 @@
         if (window.scrollY > 120) pressStart();
     };
     window.addEventListener("scroll", onFirstScroll, { passive: true });
-    const startTimer = setTimeout(pressStart, 8000);
+    // （最初の数秒は「READY?」→ 案内役のあいさつ → 設定の案内…と順番に出るので、スクロールしないときは少し遅めに）
+    const startTimer = setTimeout(pressStart, 20000);
 
     // 作品の詳細（ポップアップ）を5作品
     const seenWorks = new Set(sessionData.get("pa-works", []));
@@ -704,6 +710,17 @@
         const comment = make("span", "", result.text);
         body.append(time, detail, comment);
         rankBox.append(badge, body);
+        // 冒険（adventure.js）の結果：レベル・称号・クリアしたステージ・クエスト
+        const adventure = window.PlayLevel?.summary?.();
+        if (adventure) {
+            const line = make("span", "ending-adventure");
+            line.append(
+                make("b", "", `Lv.${adventure.level}`),
+                make("span", "ending-adventure-title", adventure.title),
+                make("small", "", `STAGE CLEAR ${adventure.stages} / ${adventure.stagesTotal} · QUEST ${adventure.quests} / ${adventure.questsTotal} · ${adventure.exp} EXP`),
+            );
+            rankBox.append(line);
+        }
     };
 
     /* ========================================
@@ -721,10 +738,11 @@
         const mm = String(Math.floor(playTime / 60)).padStart(2, "0");
         const ss = String(playTime % 60).padStart(2, "0");
         const trophies = `${count()}/${TROPHIES.length}`;
+        const adventure = window.PlayLevel?.summary?.();
         const lines = window.I18n?.lang === "en"
-            ? ["I played through Haruta Nagaya's game-style portfolio 🎮", `RANK ${result.rank} (PLAY TIME ${mm}:${ss})`, `🏆 Trophies ${trophies}`]
-            : ["長屋晴太さんのポートフォリオを遊んでみた🎮", `RANK ${result.rank}（PLAY TIME ${mm}:${ss}）`, `🏆 トロフィー ${trophies}`];
-        return [...lines, `#${SHARE_TAG}`].join("\n");
+            ? ["I played through Haruta Nagaya's game-style portfolio 🎮", adventure && `⭐ Lv.${adventure.level} ${adventure.titleEn} (QUEST ${adventure.quests}/${adventure.questsTotal})`, `RANK ${result.rank} (PLAY TIME ${mm}:${ss})`, `🏆 Trophies ${trophies}`]
+            : ["長屋晴太さんのポートフォリオを遊んでみた🎮", adventure && `⭐ Lv.${adventure.level} ${adventure.title}（クエスト ${adventure.quests}/${adventure.questsTotal}）`, `RANK ${result.rank}（PLAY TIME ${mm}:${ss}）`, `🏆 トロフィー ${trophies}`];
+        return [...lines.filter(Boolean), `#${SHARE_TAG}`].join("\n");
     };
 
     if (ending) {

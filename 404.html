@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex">
 <title>GAME OVER | 長屋晴太 Portfolio</title>
 <link rel="icon" type="image/png" sizes="32x32" href="/portfolio/images/favicon-32.png">
+<script src="/portfolio/js/look.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&family=Noto+Sans+JP:wght@400..900&display=swap">
@@ -203,6 +204,122 @@
             animation: none;
         }
     }
+
+    /* ========== 新デザイン（トップで新デザインを選んでいる人。js/look.js が <html data-look="new"> を付ける） ========== */
+    .nf { display: none; }
+    html[data-look="new"] body > main:not(.nf) { display: none; }
+    html[data-look="new"] body {
+        position: relative;
+        display: block;
+        overflow-x: hidden;
+        padding: 0;
+        background: #fff;
+        color: #222;
+        text-align: left;
+    }
+    html[data-look="new"] body::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        width: min(40vw, 600px);
+        height: 100%;
+        background: #c8102e;
+        clip-path: polygon(42% 0, 100% 0, 100% 100%, 0 100%);
+        content: "";
+        animation: nf-band 1s cubic-bezier(.22, .61, .36, 1) both;
+    }
+    html[data-look="new"] .nf {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: min(1180px, 100% - 48px);
+        min-height: 100vh;
+        min-height: 100dvh;
+        margin: 0 auto;
+        padding: 48px 0;
+    }
+    .nf-kicker {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0;
+        color: #c8102e;
+        font-family: "Archivo", "Inter", sans-serif;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .24em;
+    }
+    .nf-kicker::before { width: 40px; height: 2px; background: currentColor; content: ""; }
+    .nf h1 {
+        margin: 14px 0 0;
+        color: #222;
+        font-family: "Archivo", "Inter", sans-serif;
+        font-size: clamp(64px, 13vw, 200px);
+        font-weight: 900;
+        letter-spacing: -.05em;
+        line-height: .85;
+        text-shadow: none;
+        animation: none;
+    }
+    .nf h1 span { display: block; }
+    .nf-message { margin: 28px 0 0; font-size: 18px; font-weight: 700; }
+    .nf-sub { margin: 8px 0 0; color: #616161; font-size: 14px; line-height: 1.9; }
+    .nf-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+    .nf-button {
+        position: relative;
+        z-index: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-width: 240px;
+        min-height: 56px;
+        padding: 0 22px;
+        overflow: hidden;
+        border: 1px solid #222;
+        background: #222;
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color .3s, border-color .3s;
+    }
+    .nf-button.is-sub { background: #fff; color: #222; }
+    .nf-button::before {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: #c8102e;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform .35s cubic-bezier(.22, .61, .36, 1);
+        content: "";
+    }
+    .nf-button::after { font-family: "Archivo", sans-serif; content: "→"; }
+    .nf-button:hover { border-color: #c8102e; color: #fff; }
+    .nf-button:hover::before { transform: scaleX(1); }
+    .nf-button:focus-visible { outline: 3px solid #c8102e; outline-offset: 3px; }
+    .nf-foot { margin: 48px 0 0; color: #9a9a9a; font-family: "Archivo", "Inter", sans-serif; font-size: 11px; letter-spacing: .24em; }
+    html[data-look="new"] .nf-kicker,
+    html[data-look="new"] .nf h1 span,
+    html[data-look="new"] .nf-message,
+    html[data-look="new"] .nf-sub,
+    html[data-look="new"] .nf-actions { animation: nf-rise .8s cubic-bezier(.22, .61, .36, 1) both; }
+    html[data-look="new"] .nf h1 span:nth-child(1) { animation-delay: .1s; }
+    html[data-look="new"] .nf h1 span:nth-child(2) { animation-delay: .2s; }
+    html[data-look="new"] .nf-message { animation-delay: .35s; }
+    html[data-look="new"] .nf-sub { animation-delay: .42s; }
+    html[data-look="new"] .nf-actions { animation-delay: .5s; }
+    @keyframes nf-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    @keyframes nf-band { from { opacity: 0; transform: translateX(30%); } to { opacity: 1; transform: none; } }
+    @media (max-width: 760px) {
+        html[data-look="new"] body::before { width: 48vw; height: 120px; }
+        .nf-button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        html[data-look="new"] *,
+        html[data-look="new"] body::before { animation: none !important; transition: none !important; }
+    }
 </style>
 </head>
 <body>
@@ -227,6 +344,18 @@
         <a class="button is-primary" href="/portfolio/">▶ CONTINUE（トップへ）</a>
         <a class="button" href="/portfolio/#other-works">作品一覧を見る</a>
     </div>
+</main>
+
+<main class="nf" aria-labelledby="nf-title">
+    <p class="nf-kicker">ERROR 404</p>
+    <h1 id="nf-title"><span>PAGE</span><span>NOT FOUND.</span></h1>
+    <p class="nf-message">お探しのページは見つかりませんでした。</p>
+    <p class="nf-sub">URLが間違っているか、ページが移動した可能性があります。</p>
+    <div class="nf-actions">
+        <a class="nf-button" href="/portfolio/">トップページへ</a>
+        <a class="nf-button is-sub" href="/portfolio/#other-works">作品を見る</a>
+    </div>
+    <p class="nf-foot">HARUTA NAGAYA — GAME PROGRAMMER PORTFOLIO</p>
 </main>
 
 <script>
@@ -293,9 +422,17 @@
         document.querySelector(".game-tip").innerHTML = "<kbd>SPACE</kbd> / <kbd>↑</kbd> / tap to jump. Don't jump for the flying fish — let them pass overhead.";
         set(".actions .is-primary", "▶ CONTINUE (back to top)");
         set(".actions .button:not(.is-primary)", "View all works");
+        set(".nf-message", "The page you were looking for could not be found.");
+        set(".nf-sub", "The URL may be wrong, or the page may have moved.");
+        set(".nf-button", "Back to top");
+        set(".nf-button.is-sub", "View works");
     }
 
     (() => {
+        if (document.documentElement.dataset.look === "new") {
+            document.title = EN ? "Page Not Found | Haruta Nagaya Portfolio" : "ページが見つかりません | 長屋晴太 Portfolio";
+            return;
+        } // 新デザインではミニゲームを出さない（動かさない）
         const canvas = document.getElementById("game");
         const ctx = canvas.getContext("2d");
         const scoreEl = document.getElementById("score");

@@ -13,6 +13,7 @@
      5. next/index.html は「トップへ移動しました」のページにする（BETA の住所を知っている人のため）
      6. 今のデザイン用のテスト（tests/cases/2〜4）を tests/classic/ にしまう（新デザインは 5-next.mjs が確かめる）
      7. 今のトップページを classic.html として残す（OPTIONS の「デザイン」・フッターから切り替えられる。検索には出さない）
+     8. 作品ごとのページ・404 の「何も選んでいない人に見せるデザイン」を新デザインにする（js/look.js）
 
    元に戻すとき：切り替えたコミットを  git revert  する（前のトップページは Git の履歴に残っている）
 ======================================== */
@@ -59,7 +60,7 @@ if (!/<meta name="pa-design-new" content="next\/">/.test(currentTop)) problems.p
 const classic = currentTop
     .replace('<meta name="pa-design-new" content="next/">', '<meta name="pa-design-new" content="./">')
     .replace(/(<meta charset="UTF-8">)/i, '$1\n<meta name="robots" content="noindex">')
-    .replace(/(href="next\/" data-design-link)/, 'href="./" data-design-link');
+    .replace(/href="next\/" data-design-link/g, 'href="./" data-design-link');
 
 page = page
     .replace('data-base="../"', 'data-base=""')
@@ -89,6 +90,9 @@ for (const [from, to] of COPIES) {
     }
 }
 
+const LOOK = path.join(ROOT, "js", "look.js");
+if (!exists(LOOK) || !read(LOOK).includes('const DEFAULT = "classic";')) problems.push('js/look.js に const DEFAULT = "classic"; がありません');
+
 if (problems.length) {
     console.log("本番に切り替えられません:");
     problems.forEach((problem) => console.log(`  - ${problem}`));
@@ -105,6 +109,7 @@ if (check) {
 fs.writeFileSync(path.join(ROOT, "classic.html"), classic);
 fs.writeFileSync(path.join(ROOT, "index.html"), page);
 for (const [from, to] of COPIES) fs.copyFileSync(from, to);
+fs.writeFileSync(LOOK, read(LOOK).replace('const DEFAULT = "classic";', 'const DEFAULT = "new";'));
 
 fs.writeFileSync(source, `<!DOCTYPE html>
 <html lang="ja" data-launched="1">
