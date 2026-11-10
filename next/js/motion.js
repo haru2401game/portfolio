@@ -132,3 +132,48 @@
         $$("[data-filter], .works-more").forEach((button) => button.addEventListener("click", () => workItems.forEach((item) => item.classList.add("is-show"))));
     }
 })();
+
+/* ========================================
+   おしゃれな見せ方（新デザインだけの動き。クラシックの「弾む・光る」とは分ける）
+   ・見出し：英字が下からせり上がる → 赤い線が左から引かれる → 日本語がそっと出る
+   ・写真：幕が開くように横から現れて、少し引いた位置に落ち着く
+   ・アニメーション「なし」のときは何もしない（最初から全部見える）
+======================================== */
+(() => {
+    const root = document.documentElement;
+    if (root.classList.contains("motion-off") || !("IntersectionObserver" in window)) return;
+    const targets = Array.from(document.querySelectorAll(
+        ".sec-title-row, .stage-tab-img, .movie, .about-photo, .web-img, .tl-photo, .article-img, .photo, .q-work, .blog-intro, .next-bar, .next-stage"
+    ));
+    targets.forEach((node) => node.classList.add("fx"));
+    root.classList.add("fx-ready");
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("fx-in");
+            observer.unobserve(entry.target);
+        });
+    }, { rootMargin: "0px 0px -10% 0px" });
+    targets.forEach((node) => observer.observe(node));
+    // 速くスクロールして通り過ぎたものも、取り残さずに見せる（画面より上にあるものは出しておく）
+    let checking = false;
+    addEventListener("scroll", () => {
+        if (checking) return;
+        checking = true;
+        setTimeout(() => {
+            checking = false;
+            targets.forEach((node) => {
+                if (node.classList.contains("fx-in")) return;
+                const rect = node.getBoundingClientRect();
+                if (rect.height && rect.top < innerHeight * 0.9) {
+                    node.classList.add("fx-in");
+                    observer.unobserve(node);
+                }
+            });
+        }, 200);
+    }, { passive: true });
+    // 「なし」に切り替えたら、まだ出ていないものもすぐ見せる
+    new MutationObserver(() => {
+        if (root.classList.contains("motion-off")) targets.forEach((node) => node.classList.add("fx-in"));
+    }).observe(root, { attributes: true, attributeFilter: ["class"] });
+})();

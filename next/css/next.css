@@ -805,3 +805,65 @@ html.motion-off .tl-item .tl-node { scale: 1 !important; }
 
 /* 英語表示：英字の見出しと日本語のラベルが同じ意味になるので、日本語側（訳したもの）は出さない */
 html[lang="en"] .hd-nav a span, html[lang="en"] .sec-ja { display: none; }
+
+/* ================================================================
+   おしゃれな見せ方（js/motion.js が .fx を付け、画面に入ると .fx-in）
+   クラシックの「弾む・光る」と分けて、マスク・線・幕のような、静かで上質な動きにする
+================================================================ */
+:root { --fx-ease: cubic-bezier(.77, 0, .18, 1); }
+
+/* 見出し：英字がせり上がる → 赤い線が引かれる → 日本語が出る */
+html.fx-ready .sec-title-row.fx .display { clip-path: inset(0 0 100% 0); transform: translateY(40%); transition: clip-path 1s var(--fx-ease), transform 1s var(--fx-ease); }
+html.fx-ready .sec-title-row.fx::after { transform: scaleX(0); transform-origin: left; transition: transform 1.1s var(--fx-ease) .35s; }
+html.fx-ready .sec-title-row.fx .sec-ja { opacity: 0; transform: translateY(8px); transition: opacity .6s ease .55s, transform .6s ease .55s; }
+html.fx-ready .sec-title-row.fx-in .display { clip-path: inset(0 0 -15% 0); transform: none; }
+html.fx-ready .sec-title-row.fx-in::after { transform: scaleX(1); }
+html.fx-ready .sec-title-row.fx-in .sec-ja { opacity: 1; transform: none; }
+
+/* 写真：幕が開くように左から現れ、少し大きい状態から落ち着く */
+html.fx-ready .fx:is(.stage-tab-img, .movie, .about-photo, .web-img, .tl-photo, .article-img, .photo) { clip-path: inset(0 100% 0 0); transition: clip-path 1.2s var(--fx-ease); }
+html.fx-ready .fx:is(.stage-tab-img, .movie, .web-img, .tl-photo, .article-img, .photo) img,
+html.fx-ready .about-photo.fx img { scale: 1.18; transition: scale 1.6s var(--fx-ease), transform .8s var(--ease); }
+html.fx-ready .fx-in:is(.stage-tab-img, .movie, .about-photo, .web-img, .tl-photo, .article-img, .photo) { clip-path: inset(0 0 0 0); }
+html.fx-ready .fx-in:is(.stage-tab-img, .movie, .web-img, .tl-photo, .article-img, .photo) img,
+html.fx-ready .about-photo.fx-in img { scale: 1; }
+/* プロフィール写真の後ろの赤い板は、写真より少し遅れて横からすべり込む */
+html.fx-ready .about-photo.fx::before { transform: translateX(-40px); opacity: 0; transition: transform 1s var(--fx-ease) .5s, opacity .6s ease .5s; }
+html.fx-ready .about-photo.fx-in::before { transform: none; opacity: 1; }
+/* 幕が開ききったら、写真の下の文字（写真のキャプション）も見えるように */
+html.fx-ready .photo.fx { clip-path: inset(0 100% -40px 0); }
+html.fx-ready .photo.fx-in { clip-path: inset(0 0 -40px 0); }
+
+/* 帯（いま挑戦中・次の作品へ・ブログ）：左から伸びる */
+html.fx-ready .fx:is(.next-bar, .next-stage, .blog-intro) { clip-path: inset(0 100% 0 0); transition: clip-path 1s var(--fx-ease), background-color .25s var(--ease); }
+html.fx-ready .fx-in:is(.next-bar, .next-stage, .blog-intro) { clip-path: inset(0 0 0 0); }
+html.fx-ready .q-work.fx { opacity: 0; transform: translateX(-16px); transition: opacity .6s ease .2s, transform .8s var(--fx-ease) .2s; }
+html.fx-ready .q-work.fx + .q-work.fx { transition-delay: .35s; }
+html.fx-ready .q-work.fx-in { opacity: 1; transform: none; }
+
+/* ボタン：色が左から塗り替わる（パッと変わらず、すっと流れる） */
+.btn-ink, .btn-red, .btn-gray, .btn-white, .hd-nav a.hd-contact {
+    background-image: linear-gradient(var(--sweep, var(--red)), var(--sweep, var(--red)));
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 0% 100%;
+    transition: background-size .45s var(--fx-ease), color .3s ease;
+}
+.btn-ink { --sweep: var(--red); }
+.btn-red, .btn-gray, .btn-white, .hd-nav a.hd-contact { --sweep: var(--ink); }
+.btn-ink:hover, .btn-red:hover, .btn-gray:hover, .btn-white:hover, .hd-nav a.hd-contact:hover { background-size: 100% 100%; }
+.btn-ink:hover { background-color: var(--ink); }
+.btn-red:hover, .hd-nav a.hd-contact:hover { background-color: var(--red); }
+.btn-gray:hover { background-color: var(--gray); color: #fff; }
+.btn-white:hover { background-color: #fff; color: #fff; }
+.blog-intro .btn-ink { --sweep: #fff; }
+.blog-intro .btn-ink:hover { background-color: var(--red); color: var(--ink); }
+.mail-bar .btn-ink { --sweep: #fff; }
+.mail-bar .btn-ink:hover { background-color: var(--red); color: var(--ink); }
+
+/* 作品カード：乗せると写真がゆっくり寄り、下に赤い線が伸びる */
+.work { position: relative; }
+.work::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--fx-ease); }
+.work:hover::after, .work:focus-visible::after { transform: scaleX(1); }
+
+html.motion-off .fx, html.motion-off .fx * { clip-path: none !important; opacity: 1 !important; transform: none !important; scale: 1 !important; }
