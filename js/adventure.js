@@ -97,14 +97,25 @@
     renderHud();
 
     // 「+10 EXP」の文字（押した場所、なければ Lv 表示の下）
+    const pops = [];
     const floatText = (text, x, y, tone = "") => {
         if (still()) return;
         const pop = decor(make("span", `exp-pop${tone ? ` is-${tone}` : ""}`, text));
+        // 場所の指定がないときは、Lv の札の右どなり（ヘッダーの下のお知らせと重ならないように）
         if (x === undefined) {
             const rect = hud.getBoundingClientRect();
-            x = rect.left + rect.width / 2;
-            y = rect.bottom + 8;
+            x = rect.right + 48;
+            y = rect.top + rect.height / 2 - 10;
         }
+        // まだ消えていない「+EXP」の近くに出るときは、横にずらす（画面の外に出るときは左へ）
+        const now = performance.now();
+        const near = pops.filter((p) => now - p.at < 1100 && Math.abs(p.x - x) < 90 && Math.abs(p.y - y) < 60);
+        if (near.length) {
+            const right = Math.max(...near.map((p) => p.x)) + 96;
+            x = right < window.innerWidth - 50 ? right : Math.min(...near.map((p) => p.x)) - 96;
+        }
+        pops.push({ x, y, at: now });
+        while (pops.length > 8) pops.shift();
         pop.style.left = `${x}px`;
         pop.style.top = `${y}px`;
         document.body.append(pop);
@@ -130,6 +141,8 @@
     document.addEventListener("pointerdown", (event) => {
         lastPoint = { x: event.clientX, y: event.clientY, at: performance.now() };
     }, true);
+    let pendingExp = 0;
+    let pendingTimer = 0;
     const gain = (key, amount) => {
         if (!key || done.has(key)) return false;
         done.add(key);
@@ -137,8 +150,14 @@
         exp += amount;
         persist();
         renderHud();
-        const near = lastPoint && performance.now() - lastPoint.at < 1500 ? lastPoint : null;
-        floatText(`+${amount} EXP`, near?.x, near ? near.y - 18 : undefined);
+        // 同じ瞬間にいくつももらったときは、まとめて1つの「+○○ EXP」にする（文字が重ならないように）
+        pendingExp += amount;
+        clearTimeout(pendingTimer);
+        pendingTimer = setTimeout(() => {
+            const near = lastPoint && performance.now() - lastPoint.at < 1500 ? lastPoint : null;
+            floatText(`+${pendingExp} EXP`, near?.x, near ? near.y - 18 : undefined);
+            pendingExp = 0;
+        }, 400);
         const after = levelOf(exp);
         if (after > before) setTimeout(() => levelUp(after), 350);
         checkQuests();
@@ -154,14 +173,9 @@
     // ステージの名前：見出し（英字の大きな見出し）。なければ最初の見出し
     const nameOf = (section) => (section.querySelector(":scope > .section-title h2") || section.querySelector("h2"))?.textContent.replace(/\s+/g, " ").trim() || section.id;
 
-    const clearBanner = (section, index) => {
-        const banner = make("div", "stage-clear");
-        banner.setAttribute("role", "status");
-        banner.append(make("small", "", `STAGE ${String(index + 1).padStart(2, "0")}`), make("b", "", "CLEAR!"), make("span", "", nameOf(section)));
-        document.body.append(banner);
-        setTimeout(() => banner.remove(), 2000);
-        sound("stage");
-    };
+    // お知らせは、ヘッダーの下の1か所（play.js のお知らせ）に順番に出す（ほかの通知と重ならないように）
+    const notice = (label, text, tone, sfx) => document.dispatchEvent(new CustomEvent("play:notify", { detail: { label, text, tone, sound: sfx } }));
+    const clearBanner = (section, index) => notice(`STAGE ${String(index + 1).padStart(2, "0")} CLEAR! `, nameOf(section), "stage", "stage");
 
     // セクションの最後が画面の上の方まで来たら「読み終えた」
     const checkClear = () => {
@@ -300,6 +314,10 @@
     off.type = "button";
     box.append(face, body, close, off);
     document.body.append(box);
+    // トロフィーの通知（右下）を、会話ウィンドウの高さの分だけ上に逃がす（文字が増えて高くなっても合わせる。css/adventure.css）
+    if ("ResizeObserver" in window) {
+        new ResizeObserver(() => document.documentElement.style.setProperty("--talk-h", `${box.offsetHeight}px`)).observe(box);
+    }
 
     let typing = 0;
     let hideTimer = 0;
@@ -412,14 +430,7 @@
     window.PlayLevel.questsDone = () => countOf("quest:");
     window.PlayLevel.questsTotal = QUESTS.length;
 
-    const questBanner = (quest) => {
-        const banner = make("div", "stage-clear is-quest");
-        banner.setAttribute("role", "status");
-        banner.append(make("small", "", "QUEST"), make("b", "", "CLEAR!"), make("span", "", quest.text));
-        document.body.append(banner);
-        setTimeout(() => banner.remove(), 2400);
-        sound("trophy");
-    };
+    const questBanner = (quest) => notice(`QUEST CLEAR! +${QUEST_EXP} EXP `, quest.text, "quest", "trophy");
     let checkingQuests = false;
     function checkQuests() {
         if (checkingQuests) return;
@@ -428,13 +439,13 @@
         activeQuests().forEach((quest) => {
             if (quest.now() < quest.goal) return;
             // 演出が重ならないよう、STAGE CLEAR のあとに少しずらして出す
-            if (gain(`quest:${quest.id}`, QUEST_EXP)) setTimeout(() => questBanner(quest), 900);
+            if (gain(`quest:${quest.id}`, QUEST_EXP)) questBanner(quest);
         });
         checkingQuests = false;
         // 新しく出てきたクエストを、ヘッダーの下のお知らせで知らせる
         activeQuests()
             .filter((quest) => !before.includes(quest.id))
-            .forEach((quest, i) => setTimeout(() => document.dispatchEvent(new CustomEvent("play:notify", { detail: { label: "NEW QUEST ", text: quest.text } })), 2600 + i * 2900));
+            .forEach((quest) => notice("NEW QUEST ", quest.text, "quest"));
     }
     // 経験値にはならないけれど、クエストの手がかりになること
     document.addEventListener("click", (event) => {
@@ -450,7 +461,7 @@
     if (visits <= 1 && !countOf("quest:")) {
         setTimeout(() => {
             const first = activeQuests()[0];
-            if (first) document.dispatchEvent(new CustomEvent("play:notify", { detail: { label: "NEW QUEST ", text: first.text } }));
+            if (first) notice("NEW QUEST ", first.text, "quest");
         }, 9000);
     }
 
@@ -529,7 +540,7 @@
     });
     no.addEventListener("click", () => {
         party.close();
-        document.dispatchEvent(new CustomEvent("play:notify", { detail: { label: "PARTY ", text: "また いつでも 声をかけてね！" } }));
+        notice("PARTY ", "また いつでも 声をかけてね！");
     });
     yes.addEventListener("click", () => {
         const link = pendingLink;
@@ -537,7 +548,7 @@
         if (!link) return;
         gain(`mail:${link.dataset.mail || "mail"}`, 20);
         sound("powerup");
-        document.dispatchEvent(new CustomEvent("play:notify", { detail: { label: "PARTY ", text: "はるが 仲間に くわわった！" } }));
+        notice("PARTY ", "はるが 仲間に くわわった！", "stage");
         emitPlayEvent(`仲間にする: ${link.dataset.mail || "mail"}`);
         setTimeout(() => (window.location.href = link.href), 250);
     });

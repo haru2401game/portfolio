@@ -24,7 +24,8 @@
     const showNext = () => {
         if (noticeBusy || !notices.length) return;
         noticeBusy = true;
-        const { label, text, image, tone } = notices.shift();
+        const { label, text, image, tone, sound } = notices.shift();
+        if (sound) window.PlaySfx?.(sound);
         noticeBox.replaceChildren();
         noticeBox.dataset.tone = tone || "";
         if (image) {
@@ -38,13 +39,15 @@
         body.append(b, document.createTextNode(text));
         noticeBox.append(body);
         noticeBox.classList.add("is-show");
+        // 次のお知らせが待っているときは、少し早めに入れ替える（並びすぎないように）
+        const showFor = notices.length ? 2000 : 2600;
         setTimeout(() => {
             noticeBox.classList.remove("is-show");
             setTimeout(() => {
                 noticeBusy = false;
                 showNext();
             }, 350);
-        }, 2600);
+        }, showFor);
     };
 
     const notify = (notice) => {

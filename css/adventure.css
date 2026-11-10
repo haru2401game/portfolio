@@ -297,3 +297,22 @@
 @keyframes menu-cursor-inline { 50% { transform: translateX(4px); } }
 .party-choices .party-yes { background: #ffd54a; box-shadow: 0 4px 0 #111713; }
 .party-choices button:hover { filter: brightness(1.04); }
+
+/* ================================================================
+   通知が重ならないように
+   ・短いお知らせ（STAGE CLEAR・QUEST・キャラを見つけた など）は、ヘッダーの下の1か所に順番に出す
+   ・トロフィーの通知（右下）は、案内役の会話ウィンドウが出ている間は、その上に逃がす
+   ・ヘッダーの右下の「STAGE ○○ ▶」（入ったステージの表示）は、STAGE CLEAR と重なるので出さない
+================================================================ */
+.play-notice[data-tone="stage"] { background: #ffd54a; }
+.play-notice[data-tone="quest"] { background: #ffe2c2; }
+.play-notice[data-tone="quest"] b { color: #c2410c; }
+.stage-bar-chip { display: none !important; }
+body:has(.rpg-talk.is-show) .achievement-toast { bottom: calc(var(--talk-h, 160px) + 56px); }
+@media (max-width: 768px) {
+    /* スマホは Lv の札の下に出す */
+    .play-notice { top: 130px; }
+}
+@media (max-width: 600px) {
+    body:has(.rpg-talk.is-show) .achievement-toast { bottom: calc(var(--talk-h, 120px) + 36px); }
+}
