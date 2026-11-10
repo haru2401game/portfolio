@@ -254,42 +254,45 @@ export const tests = [
         },
     },
     {
-        name: "トップの「遊んでみる」でミニゲームが始まり、← → で動いて、Esc で閉じる",
+        name: "見て回ると経験値がたまり（作品を開くと増える）、Lv 表示を押すと冒険の記録が開く",
         async run({ open, expect }) {
             const { page, errors } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
-            await page.click(".mg-open", { force: true });
-            await page.waitForTimeout(300);
-            expect(await page.evaluate(() => !document.querySelector(".mg")?.hidden), "「遊んでみる」を押しても、ゲームの画面が出ません");
-            await page.click(".mg-panel .mg-btn", { force: true });
-            await page.waitForTimeout(2700); // 3・2・1・GO
-            const time = () => page.evaluate(() => Number(document.querySelector(".mg-time b").textContent));
-            const before = await time();
-            await page.keyboard.down("ArrowLeft");
-            await page.waitForTimeout(1200);
-            await page.keyboard.up("ArrowLeft");
-            expect((await time()) < before, "ゲームが始まらず、時間が減りません");
+            const exp = () => page.evaluate(() => window.PlayLevel?.state().exp);
+            expect(await page.evaluate(() => /^Lv\.\d+$/.test(document.querySelector(".lv-hud-level")?.textContent || "")), "ヘッダーに Lv が表示されていません");
+            await showWorks(page);
+            const thumb = page.locator(".works-list .work-card:not([hidden]) .work-thumb").first();
+            const before = await exp();
+            await thumb.click();
+            await page.waitForTimeout(400);
+            expect((await exp()) > before, `作品を開いても経験値が増えません（${before}）`);
             await page.keyboard.press("Escape");
-            await page.waitForTimeout(200);
-            expect(await page.evaluate(() => document.querySelector(".mg").hidden), "Esc でゲームの画面が閉じません");
-            expect(await page.evaluate(() => document.activeElement?.classList.contains("mg-open")), "閉じたあと、「遊んでみる」ボタンにフォーカスが戻りません");
+            await page.waitForTimeout(300);
+            const again = await exp();
+            await thumb.click();
+            await page.waitForTimeout(300);
+            expect((await exp()) === again, "同じ作品を開き直しても経験値が増えています（1回だけのはず）");
+            await page.keyboard.press("Escape");
+            await page.waitForTimeout(300);
+            await page.click(".lv-hud");
+            await page.waitForTimeout(300);
+            expect(await page.evaluate(() => document.querySelector(".trophy-room")?.open && /Lv\.\d+/.test(document.querySelector(".trophy-level")?.textContent || "")), "Lv 表示を押しても、レベルつきの冒険の記録が開きません");
             expect(!errors.length, `エラーが出ました: ${errors[0]}`);
         },
     },
     {
-        name: "探索率が表示され、トロフィーを解除すると上がり、押すとトロフィー一覧が開く",
+        name: "ステージに入ると案内役のキャラが話し、「ガイドを出さない」で止められる",
         async run({ open, expect }) {
             const { page } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
-            await page.evaluate(() => window.scrollTo(0, 400));
-            await page.waitForTimeout(600);
-            const percent = () => page.evaluate(() => document.querySelector(".explore-ring b")?.textContent);
-            expect(await page.evaluate(() => document.querySelector(".explore")?.classList.contains("is-shown")), "スクロールしても探索率が出ません");
-            const before = await percent();
-            await page.evaluate(() => window.PlayTrophy.unlock("photo"));
-            await page.waitForTimeout(200);
-            expect((await percent()) !== before, `トロフィーを解除しても探索率が変わりません（${before}）`);
-            await page.click(".explore-main");
-            await page.waitForTimeout(300);
-            expect(await page.evaluate(() => document.querySelector(".trophy-room")?.open), "探索率を押しても、トロフィー一覧が開きません");
+            await page.evaluate(() => document.getElementById("about").scrollIntoView());
+            await page.waitForTimeout(1600);
+            const talk = () => page.evaluate(() => { const box = document.querySelector(".rpg-talk"); return { shown: Boolean(box && !box.hidden && box.classList.contains("is-show")), name: box?.querySelector(".rpg-name")?.textContent }; });
+            const first = await talk();
+            expect(first.shown, "ステージに入っても、案内役のキャラが話しません");
+            await page.click(".rpg-off");
+            await page.waitForTimeout(400);
+            await page.evaluate(() => document.getElementById("timeline").scrollIntoView());
+            await page.waitForTimeout(1600);
+            expect(!(await talk()).shown, "「ガイドを出さない」を押したのに、次のステージでも話しています");
         },
     },
 ];

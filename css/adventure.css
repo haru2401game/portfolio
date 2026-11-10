@@ -1,0 +1,215 @@
+/* ========================================
+   冒険（js/adventure.js）：レベル・経験値・STAGE CLEAR・案内役のキャラ・押したときの手ざわり
+   クラシック（遊べるポートフォリオ）だけで使う
+======================================== */
+
+/* ---------- ヘッダーの Lv 表示（ヘッダーの左下に、タグのようにぶら下げる） ---------- */
+
+.lv-hud {
+    position: absolute;
+    left: clamp(24px, 5vw, 76px);
+    top: calc(100% + 8px);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 4px 12px 4px 4px;
+    border: 2px solid var(--ui-line, #111713);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 3px 0 var(--ui-line, #111713);
+    color: var(--ui-ink, #111713);
+    cursor: pointer;
+    font: inherit;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.lv-hud:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--ui-line, #111713); }
+.lv-hud:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ui-line, #111713); }
+.lv-hud-level { display: grid; place-items: center; min-width: 46px; height: 28px; padding: 0 6px; border-radius: 999px; background: #006ea8; color: #fff; font-size: 13px; font-weight: 900; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.lv-hud-bar { position: relative; width: 80px; height: 10px; overflow: hidden; border: 2px solid var(--ui-line, #111713); border-radius: 999px; background: #eef1ec; }
+.lv-hud-bar span { position: absolute; inset: 0; background: linear-gradient(90deg, #ffb300, #ffd54a); transform-origin: left; transition: transform .6s cubic-bezier(.3, 1.4, .5, 1); }
+.lv-hud-text { font-size: 11px; font-weight: 900; letter-spacing: .04em; color: #4d5652; font-variant-numeric: tabular-nums; }
+.lv-hud.is-up .lv-hud-level { animation: lv-hud-up .8s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes lv-hud-up { 30% { transform: scale(1.35) rotate(-6deg); background: #ffb300; color: #111713; } }
+
+@media (max-width: 768px) {
+    .lv-hud { left: 12px; top: calc(100% + 6px); gap: 6px; min-height: 36px; padding: 3px 10px 3px 3px; }
+    .lv-hud-level { min-width: 40px; height: 26px; font-size: 12px; }
+    .lv-hud-bar { width: 52px; height: 8px; }
+}
+
+/* ---------- 冒険の記録（トロフィー一覧）の上のレベル ---------- */
+
+.trophy-level { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 10px; }
+.trophy-level[hidden] { display: none; }
+.trophy-level b { padding: 2px 10px; border-radius: 999px; background: #006ea8; color: #fff; font-weight: 900; }
+.trophy-level span { font-weight: 900; }
+.trophy-level small { color: #4d5652; font-weight: 700; }
+
+/* ---------- +EXP の文字 ---------- */
+
+.exp-pop {
+    position: fixed;
+    z-index: 2000;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    color: #006ea8;
+    text-shadow: 0 2px 0 #fff, 0 0 6px #fff;
+    pointer-events: none;
+    white-space: nowrap;
+    transform: translate(-50%, 0);
+    animation: exp-pop 1.1s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+@keyframes exp-pop { 0% { opacity: 0; transform: translate(-50%, 6px) scale(.6); } 20% { opacity: 1; transform: translate(-50%, -6px) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -40px) scale(1); } }
+
+/* ---------- LEVEL UP!（画面の真ん中） ---------- */
+
+.lv-up {
+    position: fixed;
+    left: 50%;
+    top: 42%;
+    z-index: 2100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 18px 40px 20px;
+    border: 3px solid #111713;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 8px 0 #111713, 0 24px 60px rgba(30, 45, 70, .25);
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    max-width: calc(100vw - 24px);
+    text-align: center;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: lv-up 2.2s cubic-bezier(.3, 1.4, .5, 1) forwards;
+}
+.lv-up small { font-size: 15px; font-weight: 900; letter-spacing: .2em; color: #ff5a5f; }
+.lv-up b { font-size: 56px; font-weight: 900; line-height: 1; color: #006ea8; text-shadow: 0 4px 0 #ffd54a; }
+.lv-up span { font-size: 14px; font-weight: 900; }
+@keyframes lv-up {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(.4) rotate(-6deg); }
+    18% { opacity: 1; transform: translate(-50%, -50%) scale(1.08) rotate(2deg); }
+    28% { transform: translate(-50%, -50%) scale(1) rotate(0); }
+    82% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -60%) scale(.96); }
+}
+
+/* ---------- STAGE CLEAR!（右上から） ---------- */
+
+.stage-clear {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    z-index: 1150;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    gap: 0 8px;
+    padding: 10px 18px 12px;
+    border: 3px solid #111713;
+    border-radius: 16px;
+    background: #ffd54a;
+    box-shadow: 0 5px 0 #111713;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    pointer-events: none;
+    max-width: calc(100vw - 24px);
+    transform-origin: top right;
+    animation: stage-clear 2s cubic-bezier(.3, 1.4, .5, 1) forwards;
+}
+.stage-clear small { font-size: 11px; font-weight: 900; letter-spacing: .14em; }
+.stage-clear b { font-size: 22px; font-weight: 900; color: #111713; }
+.stage-clear span { grid-column: 1 / -1; font-size: 12px; font-weight: 700; }
+@keyframes stage-clear {
+    0% { opacity: 0; transform: translateY(-24px) scale(.7) rotate(-4deg); }
+    18% { opacity: 1; transform: translateY(4px) scale(1.06) rotate(1deg); }
+    26% { transform: none; }
+    85% { opacity: 1; transform: none; }
+    100% { opacity: 0; transform: translateY(-12px) scale(.96); }
+}
+
+
+/* ---------- 案内役のキャラ（RPG の会話ウィンドウ・左下） ---------- */
+
+.rpg-talk {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 1100;
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 4px 12px;
+    width: min(460px, calc(100vw - 120px));
+    padding: 12px 12px 10px;
+    border: 3px solid #111713;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 6px 0 #111713, 0 18px 40px rgba(30, 45, 70, .18);
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    opacity: 0;
+    transform: translateY(24px) scale(.96);
+    transition: opacity .25s ease, transform .35s cubic-bezier(.3, 1.4, .5, 1);
+}
+.rpg-talk.is-show { opacity: 1; transform: none; }
+.rpg-talk[hidden] { display: none; }
+.rpg-face { grid-row: 1 / span 2; width: 56px; height: 56px; padding: 4px; border: 2px solid #111713; border-radius: 12px; background: #e3f3ff; object-fit: contain; image-rendering: pixelated; }
+.rpg-talk.is-show .rpg-face { animation: rpg-bob 1.2s ease-in-out infinite; }
+@keyframes rpg-bob { 50% { transform: translateY(-3px); } }
+.rpg-body { position: relative; min-width: 0; cursor: pointer; }
+.rpg-name { display: inline-block; margin-bottom: 2px; padding: 0 8px; border-radius: 6px; background: #111713; color: #fff; font-size: 11px; font-weight: 900; letter-spacing: .12em; }
+.rpg-source { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; }
+.rpg-line { min-height: 3.2em; margin: 0; padding-right: 10px; font-size: 14px; font-weight: 700; line-height: 1.6; color: #111713; }
+.rpg-more { position: absolute; right: 0; bottom: 0; font-size: 10px; color: #006ea8; animation: rpg-more 1s steps(2) infinite; }
+@keyframes rpg-more { 50% { opacity: 0; } }
+.rpg-close { width: 32px; height: 32px; border: 0; border-radius: 50%; background: #eef1ec; cursor: pointer; font-size: 18px; font-weight: 900; line-height: 1; color: #111713; }
+.rpg-close:hover { background: #ffb300; }
+.rpg-off { grid-column: 2 / -1; justify-self: end; min-height: 28px; padding: 0 4px; border: 0; background: none; cursor: pointer; font-size: 11px; font-weight: 700; color: #4d5652; text-decoration: underline; text-underline-offset: 3px; }
+.rpg-off:hover { color: #111713; }
+.using-gamepad .rpg-talk { bottom: 72px; }
+
+@media (max-width: 600px) {
+    .rpg-talk { left: 10px; bottom: 10px; width: calc(100vw - 84px); grid-template-columns: 44px minmax(0, 1fr) auto; gap: 2px 8px; padding: 8px 8px 6px; border-radius: 14px; }
+    .rpg-face { width: 44px; height: 44px; padding: 2px; }
+    .rpg-line { min-height: 0; font-size: 12px; }
+    .rpg-close { width: 28px; height: 28px; font-size: 15px; }
+    .stage-clear { right: 12px; top: 84px; padding: 8px 14px 10px; }
+    .stage-clear b { font-size: 18px; }
+    .lv-up { padding: 14px 28px 16px; }
+    .lv-up b { font-size: 44px; }
+}
+
+/* ---------- 押したときの手ざわり（沈む）・ITEM GET ---------- */
+
+.is-pressed { translate: 0 3px; filter: brightness(.96); transition: translate .06s ease, filter .06s ease; }
+.item-get {
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 20px 10px;
+    border: 3px solid #111713;
+    border-radius: 16px;
+    background: #ffd54a;
+    box-shadow: 0 5px 0 #111713;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    pointer-events: none;
+    transform: translateX(-50%);
+    animation: item-get 1.7s cubic-bezier(.3, 1.4, .5, 1) forwards;
+}
+.item-get b { font-size: 20px; font-weight: 900; letter-spacing: .06em; }
+.item-get small { max-width: 60vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 700; }
+@keyframes item-get {
+    0% { opacity: 0; transform: translateX(-50%) translateY(20px) scale(.5); }
+    20% { opacity: 1; transform: translateX(-50%) translateY(-6px) scale(1.1); }
+    30% { transform: translateX(-50%) scale(1); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-16px); }
+}
+.motion-off .exp-pop, .motion-off .item-get { display: none; }
+.motion-off .is-pressed { translate: none; }

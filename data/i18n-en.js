@@ -799,31 +799,24 @@ window.I18N_EN = {
         "作品一覧（": "All works (",
         "できること": "What I can do",
         "Falienのゲーム画面": "Falien gameplay screen",
-        "遊んでみる": "Play now",
-        "30秒ミニゲーム": "30-second mini game",
-        "💡アイデアと⭐ひらめきを集めて、🐛バグはよけよう！": "Catch 💡ideas and ⭐sparks, and dodge the 🐛bugs!",
-        "← → キー ／ マウス・指を左右に動かして移動": "Move with ← → keys, or slide your mouse / finger",
-        "ミニゲーム「IDEA CATCH」": "Mini game \"IDEA CATCH\"",
-        "ミニゲームを閉じる": "Close the mini game",
-        "もう一度": "Play again",
-        "やめる": "Quit",
-        "点": "pts",
-        "ハイスコア更新！": "New high score!",
-        "神プレイ！ 一緒にゲームを作りましょう！": "Godlike! Let's make games together!",
-        "ナイス！ アイデアをたくさん形にできました": "Nice! You turned lots of ideas into reality",
-        "いい調子！ もう一度でハイスコアを狙おう": "Good going! Try again for a high score",
-        "まずは1回クリア！ 次はもっと集めよう": "First clear! Catch even more next time",
-        "探索率": "Explored",
-        "ヒント：": "Hint: ",
-        "探索率のヒントをたたむ": "Collapse exploration hints",
-        "探索率のヒントを広げる": "Expand exploration hints",
-        "コンプリート！ 遊んでくれてありがとう": "Complete! Thanks for playing",
-        "アイデアキャッチ": "Idea Catcher",
-        "トップのミニゲームを最後まで遊んだ": "Played the mini game at the top to the end",
-        "トップの画面で「遊んでみる」を押そう": "Press \"Play now\" on the top screen",
-        "ハイスコアラー": "High Scorer",
-        "ミニゲームで300点以上とった": "Scored 300+ in the mini game",
-        "ミニゲームで300点を目指そう": "Aim for 300 points in the mini game"
+        "ようこそ、はるのポートフォリオへ！ スクロールして冒険をはじめよう。": "Welcome to Haru's portfolio! Scroll down to start the adventure.",
+        "まずはここで、はるのことを30秒でつかんでね！": "Start here to get to know Haru in 30 seconds!",
+        "ここはプロフィールのステージ。どんな人か見ていこう！": "This is the profile stage. Let's see who Haru is!",
+        "これまでの実績だよ。数字はぜんぶ作品データから数えているんだ。": "Here are the achievements. Every number is counted from the works data.",
+        "代表作のステージ！ 動画を再生すると、経験値ももらえるよ。": "The main works stage! Play a video to earn EXP too.",
+        "作品がたくさん！ カードを開くと「アイテムGET」だ。": "So many works! Open a card for an \"ITEM GET\".",
+        "ここでは実際に遊べるよ。気になったらプレイしてみて！": "You can actually play here. Give one a try!",
+        "はるのステータス画面だよ。できることを確かめていこう。": "This is Haru's status screen. Let's check the skills.",
+        "これまでの冒険の記録だよ。ワールドマップもあるよ。": "This is the record of the journey so far. There's a world map too.",
+        "ゲーム制作の学びを、note で発信し続けているんだ。": "Haru keeps sharing game-dev lessons on note.",
+        "いよいよ最後のステージ！ 一緒にゲームを作る仲間を募集中だよ。": "The final stage! Haru is looking for teammates to make games with.",
+        "ここまで来たきみは、もう立派なプレイヤーだ！": "You made it this far — you're a true player now!",
+        "見習いプレイヤー": "Rookie Player",
+        "ゲーム好き": "Game Lover",
+        "熟練プレイヤー": "Skilled Player",
+        "ゲームマスター": "Game Master",
+        "伝説のプレイヤー": "Legendary Player",
+        "ガイドを出さない": "Hide the guide"
     },
     "patterns": [
         [
@@ -971,20 +964,16 @@ window.I18N_EN = {
             "Play the {t1} gameplay video ({2}:{3}, with sound)"
         ],
         [
-            "^ライフ (\\d+)$",
-            "Lives {1}"
+            "^次のレベルまで (\\d+) EXP$",
+            "{1} EXP to next level"
         ],
         [
-            "^ハイスコア (\\d+)$",
-            "High score {1}"
+            "^レベル (\\d+)「(.+)」。次のレベルまで (\\d+) EXP。押すと冒険の記録を開きます$",
+            "Level {1} \"{t2}\". {3} EXP to next level. Opens your adventure log"
         ],
         [
-            "^(\\d+)点。ハイスコア (\\d+)点。$",
-            "{1} points. High score {2} points."
-        ],
-        [
-            "^探索率 (\\d+)%（トロフィー (\\d+) / (\\d+)）。押すとトロフィー一覧を開きます$",
-            "Explored {1}% (trophies {2} / {3}). Opens the trophy list"
+            "^レベル (\\d+)「(.+)」。最大レベルです。押すと冒険の記録を開きます$",
+            "Level {1} \"{t2}\". Max level. Opens your adventure log"
         ]
     ]
 };
