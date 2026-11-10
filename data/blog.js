@@ -1,6 +1,13 @@
 window.BLOG_DATA = {
-    "articleCount": 275,
+    "articleCount": 276,
     "articles": [
+        {
+            "title": "「ゲーム制作もWeb制作も、楽しい理由は同じだった」 はる日記#276",
+            "date": "2026.11.10",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/334387249/rectangle_large_type_2_c2e5743b5d0aa199021d5a657321ddbc.png?fit=bounds&quality=85&width=1280",
+            "summary": "私はゲームプログラマーを目指して、個人制作やチーム制作、ゲームジャムなどでさまざまなゲームを作ってきました。 そんな私ですが、最近はポートフォリオサイトを作り始めたことをきっかけに、Web制作の楽しさ...",
+            "url": "https://note.com/ha_03ru_01/n/n199a0362e906"
+        },
         {
             "title": "「頭の良いPDCAよりアホなDDDDという話」 はる日記#275",
             "date": "2026.10.29",
@@ -14,13 +21,6 @@ window.BLOG_DATA = {
             "thumbnail": "https://assets.st-note.com/production/uploads/images/332019313/rectangle_large_type_2_17ec36645b38aa5106a6abd4131aa14f.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 皆様お久しぶりです。ゲームクリエイターを目指しているはるです。 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n9963645ee641"
-        },
-        {
-            "title": "「ポートフォリオサイトをリニューアル！1本のゲームのように遊べるサイトを作ってみた」 はる日記#273",
-            "date": "2026.10.24",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/332020128/rectangle_large_type_2_683b3f55a27d9dfb658d8d65a7061daa.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 こんにちは！ ゲームプログラマーを目指している専門学生のはるです！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n6bd60f23ec6e"
         }
     ]
 };
