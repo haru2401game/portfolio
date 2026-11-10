@@ -141,12 +141,14 @@ html[data-design="new"].ds-enter .status-list div:nth-child(6) { --i: 5; }
 /* ---------- クラシック：ゲームのタイトル画面のように、画面が光って文字がポンポン弾んで出てくる ---------- */
 
 @keyframes ds-pop { 0% { opacity: 0; transform: translateY(30px) scale(.6); } 60% { opacity: 1; transform: translateY(-6px) scale(1.06); } 100% { transform: none; } }
-@keyframes ds-flash { 0% { filter: brightness(2.4) saturate(.4); transform: scale(1.12); } 100% { filter: none; transform: none; } }
+@keyframes ds-screen-pop { 0% { opacity: 0; transform: translateY(40px) scale(.7) rotate(-3deg); } 60% { opacity: 1; transform: translateY(-8px) scale(1.04) rotate(1deg); } 100% { opacity: 1; transform: none; } }
+@keyframes ds-flash { 0% { filter: brightness(2.2) saturate(.4); } 100% { filter: none; } }
 @keyframes ds-wiggle { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-4deg) scale(1.08); } 40% { transform: rotate(3deg) scale(1.08); } 60% { transform: rotate(-2deg); } }
 @keyframes ds-bounce-drop { 0% { transform: translateY(-110%); } 70% { transform: translateY(8%); } 100% { transform: none; } }
 
 html[data-design="classic"].ds-enter .header { animation: ds-bounce-drop .7s cubic-bezier(.3, 1.3, .5, 1) var(--ds-d, 0s) both; }
-html[data-design="classic"].ds-enter .hero-screen { animation: ds-flash 1s cubic-bezier(.2, .8, .2, 1) var(--ds-d, 0s) both; }
+/* 動画の画面も、名前や見出しと同じタイミングで「ポン」と出てから、一瞬光る（最初から置いてあると、止まった画面に見えるので） */
+html[data-design="classic"].ds-enter .hero-screen { animation: ds-screen-pop .75s cubic-bezier(.3, 1.4, .5, 1) calc(var(--ds-d, 0s) + .35s) both, ds-flash .9s cubic-bezier(.2, .8, .2, 1) calc(var(--ds-d, 0s) + .6s) both; }
 html[data-design="classic"].ds-enter .hero-content > * { animation: ds-pop .6s cubic-bezier(.3, 1.4, .5, 1) calc(var(--ds-d, 0s) + .2s + var(--i, 0) * .1s) both; }
 html[data-design="classic"].ds-enter .hero-content > :nth-child(2) { --i: 1; }
 html[data-design="classic"].ds-enter .hero-content > :nth-child(3) { --i: 2; }
