@@ -216,14 +216,15 @@ h1, h2, h3, h4 { color: var(--ink); }
 .hero-news a { max-width: 100%; }
 .hero-news a span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 34ch; }
 
-.hero-media { position: relative; height: clamp(520px, 52vw, 680px); }
-.hero-frame { position: absolute; overflow: hidden; background: #ddd; box-shadow: 0 30px 60px rgba(0, 0, 0, .25); }
+/* 写真は重ねずに、少しずらして並べる（大きな映像 → 下に写真2枚 → 実績） */
+.hero-media { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.hero-frame { position: relative; overflow: hidden; background: #ddd; box-shadow: 0 24px 48px rgba(0, 0, 0, .22); }
 .hero-frame img, .hero-frame video { width: 100%; height: 100%; object-fit: cover; }
-.hero-frame.is-main { right: 0; top: 0; width: 88%; aspect-ratio: 16 / 9.6; transform-origin: center top; }
-.hero-frame.is-photo { left: 0; top: 46%; width: 42%; aspect-ratio: 5 / 6; }
+.hero-frame.is-main { grid-column: 1 / -1; margin-left: 10%; aspect-ratio: 16 / 9; transform-origin: center top; }
+.hero-frame.is-photo { aspect-ratio: 4 / 3; }
 .hero-frame.is-photo img { object-position: center 40%; }
-.hero-frame.is-sub { right: 4%; top: 58%; width: 46%; aspect-ratio: 16 / 10; }
-.hero-badges { position: absolute; right: 4%; bottom: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; margin: 0; padding: 0; list-style: none; color: #fff; text-align: right; }
+.hero-frame.is-sub { aspect-ratio: 4 / 3; margin-top: 36px; }
+.hero-badges { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; color: #fff; text-align: right; }
 .hero-badges li { display: flex; flex-direction: column; line-height: 1.4; }
 .hero-badges b { font-family: var(--display); font-weight: 800; font-size: 12px; letter-spacing: .18em; color: rgba(255, 255, 255, .85); }
 .hero-badges span { font-weight: 700; font-size: 15px; }
@@ -732,12 +733,11 @@ html.motion-off .tl-item .tl-node { scale: 1 !important; }
     .hero-band { display: none; }
     .hero-media::before { content: ""; position: absolute; left: calc(var(--gutter) * -1); right: calc(var(--gutter) * -1); top: 30%; bottom: -120px; background: var(--red); clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%); }
     .hero-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 48px; }
-    /* スマホ・タブレット：写真は重ねずに並べる（大きな映像 → 写真2枚 → 実績） */
-    .hero-media { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; height: auto; }
-    .hero-frame, .hero-frame.is-main, .hero-frame.is-photo, .hero-frame.is-sub { position: relative; inset: auto; width: auto; box-shadow: 0 16px 32px rgba(0, 0, 0, .2); }
-    .hero-frame.is-main { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-    .hero-frame.is-photo, .hero-frame.is-sub { aspect-ratio: 4 / 3; }
-    .hero-badges { position: relative; inset: auto; grid-column: 1 / -1; align-items: flex-start; gap: 10px; margin-top: 8px; text-align: left; }
+    /* スマホ・タブレット：映像は横いっぱい、実績は左寄せ */
+    .hero-media { gap: 12px; }
+    .hero-frame.is-main { margin-left: 0; }
+    .hero-frame.is-sub { margin-top: 0; }
+    .hero-badges { align-items: flex-start; gap: 10px; text-align: left; }
     .mode-grid, .about-grid, .sp-top, .web-card, .blog-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); }
     .about-photo { max-width: 420px; margin-right: 24px; }
     .sp-cols, .skill-grid, .tech-grid, .play-grid { grid-template-columns: minmax(0, 1fr); }
