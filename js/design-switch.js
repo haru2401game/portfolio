@@ -7,6 +7,7 @@
    ・選んだデザインは pa-settings.design に覚えて、次に開いたときもそのデザインへ（ページを描く前に移動）
    ・切り替えるときは「CHANGE DESIGN」の読み込み演出 → 移動 → 着いた側で幕が開く → そのデザインらしい最初の動き
      （新デザイン：赤い帯がサッと入り、文字と写真がまっすぐ並ぶ／クラシック：画面が光って、文字が弾んで出てくる）
+   ・普通に開いたときも同じ最初の動きを出す。クラシックはタブで最初の1回だけ「READY?」の演出から始まる
      アニメーション「なし」のときは、演出なしで移動する
    ・見た目は css/design-switch.css（両方のデザインで共通）
 ======================================== */
@@ -95,8 +96,25 @@
         }
         setTimeout(() => root.classList.remove("ds-arrive"), 1400);
         enter(0.8); // 赤い幕が上へ抜けるのに合わせて動き出す
-    } else if (current === "new" && !location.hash) {
-        enter(0.05); // 新デザインは、普通に開いたときも最初の動きを出す
+    } else if (!location.hash) {
+        // 普通に開いたときも、そのデザインらしい最初の動きを出す（ページ内のリンク #○○ で開いたときは、その場所をすぐ見せたいので出さない）
+        // クラシックは、タブで最初の1回だけ「READY?」→ 丸く閉じる演出のあとに始まる（ゲームの始まりのように）
+        let intro = false;
+        if (current === "classic" && !root.classList.contains("motion-off") && !root.classList.contains("motion-lite")) {
+            try {
+                intro = !sessionStorage.getItem("pa-classic-intro");
+                sessionStorage.setItem("pa-classic-intro", "1");
+            } catch {
+                intro = false;
+            }
+        }
+        if (intro) {
+            root.classList.add("cl-intro");
+            setTimeout(() => root.classList.remove("cl-intro"), 1500);
+            enter(1.1);
+        } else {
+            enter(0.2);
+        }
     }
 
     /* ---------- 3. 切り替える ---------- */

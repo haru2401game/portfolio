@@ -156,3 +156,32 @@ html[data-design="classic"].ds-enter .hero-content > :nth-child(6) { --i: 5; }
 html[data-design="classic"].ds-enter .hero-mark { display: inline-block; animation: ds-wiggle .7s ease calc(var(--ds-d, 0s) + .9s) both; }
 
 html.motion-off.ds-enter *, html.motion-lite.ds-enter * { animation: none !important; }
+
+/* ---------- クラシックを開いたとき（タブで最初の1回）：ゲームの始まりのように「READY?」→ 丸く閉じて画面が始まる ---------- */
+
+@keyframes cl-iris { 0%, 55% { clip-path: circle(150% at 50% 50%); } 100% { clip-path: circle(0% at 50% 50%); } }
+@keyframes cl-ready { 0% { opacity: 0; transform: scale(.3) rotate(-8deg); } 25% { opacity: 1; transform: scale(1.15) rotate(3deg); } 40% { transform: scale(.95) rotate(-1deg); } 50%, 100% { transform: none; } }
+html.cl-intro::before,
+html.cl-intro::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    pointer-events: none;
+    animation: cl-iris 1.4s cubic-bezier(.6, 0, .3, 1) both;
+}
+html.cl-intro::before { background: radial-gradient(circle at 30% 30%, #fff7d6, transparent 55%), linear-gradient(135deg, #e3f3ff, #fefcf4 60%, #ffe9ec); }
+html.cl-intro::after {
+    content: "READY?";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    font-weight: 900;
+    font-size: clamp(48px, 11vw, 132px);
+    letter-spacing: -.02em;
+    color: #006ea8;
+    text-shadow: 0 6px 0 #ffd54a;
+    animation: cl-ready 1.4s cubic-bezier(.3, 1.4, .5, 1) both, cl-iris 1.4s cubic-bezier(.6, 0, .3, 1) both;
+}
+html.motion-off.cl-intro::before, html.motion-off.cl-intro::after, html.motion-lite.cl-intro::before, html.motion-lite.cl-intro::after { display: none; }
