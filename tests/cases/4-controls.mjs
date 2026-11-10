@@ -295,4 +295,37 @@ export const tests = [
             expect(!(await talk()).shown, "「ガイドを出さない」を押したのに、次のステージでも話しています");
         },
     },
+    {
+        name: "冒険の記録にクエストが3つ出て、作品を3つ開くと達成になる",
+        async run({ open, expect }) {
+            const { page } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
+            const quests = () => page.evaluate(() => window.PlayLevel.quests().map((quest) => quest.text));
+            expect((await quests()).length === 3, "クエストが3つ出ていません");
+            expect((await quests()).includes("作品を3つ開こう"), "「作品を3つ開こう」のクエストがありません");
+            await showWorks(page);
+            for (let i = 0; i < 3; i++) {
+                await page.locator(".works-list .work-card:not([hidden]) .work-thumb").nth(i).click();
+                await page.waitForTimeout(250);
+                await page.keyboard.press("Escape");
+                await page.waitForTimeout(250);
+            }
+            expect(!(await quests()).includes("作品を3つ開こう"), "作品を3つ開いても、クエストが達成になりません");
+            expect(await page.evaluate(() => window.PlayLevel.questsDone()) >= 1, "達成したクエストの数が増えていません");
+        },
+    },
+    {
+        name: "Contact の窓口ボタンで「仲間にしますか？」が出て、「いいえ」で閉じる",
+        async run({ open, expect }) {
+            const { page } = await open("/", { wait: 800, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
+            await page.evaluate(() => document.getElementById("contact").scrollIntoView());
+            await page.waitForTimeout(300);
+            await page.click("#contact .purpose-button >> nth=0", { force: true });
+            await page.waitForTimeout(400);
+            expect(await page.evaluate(() => document.querySelector(".party-dialog")?.open), "窓口ボタンを押しても「仲間にしますか？」が出ません");
+            expect(await page.evaluate(() => document.activeElement?.classList.contains("party-yes")), "「はい」にフォーカスがありません");
+            await page.click(".party-no");
+            await page.waitForTimeout(300);
+            expect(!(await page.evaluate(() => document.querySelector(".party-dialog").open)), "「いいえ」で閉じません");
+        },
+    },
 ];

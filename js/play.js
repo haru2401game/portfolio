@@ -490,6 +490,24 @@
                 levelLine.replaceChildren(make("b", "", `Lv.${level.level}`), make("span", "", level.title), make("small", "", level.next === null ? "MAX" : `次のレベルまで ${level.next} EXP`));
             }
         }
+        // いま受けているクエスト（adventure.js）
+        const questBox = room.querySelector(".trophy-quests");
+        const quests = window.PlayLevel?.quests?.() || [];
+        if (questBox) {
+            questBox.hidden = !window.PlayLevel?.quests;
+            const head = make("p", "trophy-quests-head");
+            head.append(make("b", "", "QUEST"), make("small", "", `達成 ${window.PlayLevel?.questsDone?.() || 0} / ${window.PlayLevel?.questsTotal || 0}`));
+            const items = quests.length
+                ? quests.map((quest) => {
+                      const item = make("li", quest.now >= quest.goal ? "is-done" : "");
+                      item.append(make("span", "trophy-quest-box", quest.now >= quest.goal ? "✔" : ""), make("span", "trophy-quest-text", quest.text), make("small", "", `${quest.now} / ${quest.goal}`));
+                      return item;
+                  })
+                : [make("li", "is-done", "すべてのクエストを達成しました！")];
+            const list = make("ul", "trophy-quest-list");
+            list.append(...items);
+            questBox.replaceChildren(head, list);
+        }
         room.querySelector(".trophy-count").textContent = `${n} / ${TROPHIES.length}`;
         room.querySelector(".trophy-gauge span").style.transform = `scaleX(${n / TROPHIES.length})`;
     };
@@ -512,11 +530,13 @@
             head.append(h, n, close);
             const levelLine = make("p", "trophy-level");
             levelLine.hidden = true;
+            const questBox = make("div", "trophy-quests");
+            questBox.hidden = true;
             const gauge = make("div", "trophy-gauge");
             gauge.append(make("span"));
             const list = make("ul", "trophy-list");
             const note = make("p", "trophy-note", "トロフィーの記録は、このブラウザにだけ保存されます。");
-            room.append(head, levelLine, gauge, list, note);
+            room.append(head, levelLine, questBox, gauge, list, note);
             room.addEventListener("click", (event) => { if (event.target === room) room.close(); });
             document.body.append(room);
         }

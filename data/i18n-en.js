@@ -322,7 +322,7 @@ window.I18N_EN = {
         "NEXT STAGE": "NEXT STAGE",
         "いまは DirectXTK を使った3Dゲーム制作に挑戦中。2Dで身につけた「遊びの作り方」を、3Dにも広げていきます。": "I'm now taking on 3D game development with DirectXTK, bringing what I learned about making fun in 2D into 3D.",
         "ご用件に合わせて、窓口を選んでください": "Pick the option that fits your message",
-        "採用・インターンのご連絡": "Recruiting & internships",
+        "採用・インターンのご連絡": "Recruiting / internships",
         "選考・インターン・会社説明会などのご案内をお待ちしています。": "I'd love to hear about openings, internships and company info sessions.",
         "インターン・選考のご連絡はこちら": "Contact me about recruiting",
         "ゲームジャムのチーム・個人／インディーの共同制作・開発のお手伝いなど、お気軽に声をかけてください。": "Game jam teams, indie co-development, or help with your project — feel free to reach out.",
@@ -816,7 +816,35 @@ window.I18N_EN = {
         "熟練プレイヤー": "Skilled Player",
         "ゲームマスター": "Game Master",
         "伝説のプレイヤー": "Legendary Player",
-        "ガイドを出さない": "Hide the guide"
+        "ガイドを出さない": "Hide the guide",
+        "ようこそ、はるのポートフォリオへ！ 左上の Lv を押すと、クエストを確認できるよ。": "Welcome to Haru's portfolio! Press the Lv badge at the top left to check your quests.",
+        "もうベテランだね！ ここは30秒でおさらいできるよ。": "You're a veteran now! Here's a 30-second recap.",
+        "何度も来てくれてありがとう！ はるのことは、もうくわしいね。": "Thanks for coming back again and again! You know Haru well by now.",
+        "作品ハンターのきみなら、技術の見どころも読んでいけるはず！": "A work hunter like you can surely dig into the tech highlights too!",
+        "まだ開いていない作品もあるかも？ 図鑑のように集めてみて！": "There may be works you haven't opened yet. Collect them like a dex!",
+        "そろそろ遊ぶ側から、作る側にどう？ なんてね！": "How about switching from playing games to making them? Just kidding!",
+        "冒険の記録は、これからもどんどん増えていくよ。": "The adventure log will keep growing from here.",
+        "ここまで育ったきみなら、はるの最高の仲間になれるよ！": "Having come this far, you'd make Haru's best teammate!",
+        "見事だ……！ きみこそ、真のプレイヤーだ！": "Splendid...! You are the true player!",
+        "Main Works の動画を見よう": "Watch a Main Works video",
+        "作品を3つ開こう": "Open 3 works",
+        "経歴のワールドマップを見よう": "Check the world map in the timeline",
+        "写真を拡大して見よう": "Zoom in on a photo",
+        "遊べる作品を開いてみよう": "Open a playable work",
+        "できること（スキル）をくわしく見よう": "Read the details of a skill",
+        "ステージを5つクリアしよう": "Clear 5 stages",
+        "隠れているキャラを3体見つけよう": "Find 3 hidden characters",
+        "最後のステージ「Contact」までたどり着こう": "Reach the final stage, \"Contact\"",
+        "すべてのクエストを達成しました！": "All quests complete!",
+        "はるを仲間にしますか？": "Recruit Haru to your party?",
+        "窓口：": "Purpose: ",
+        "ゲーム制作のお誘い": "Game-dev invitation",
+        "Web制作のご相談": "Web project inquiry",
+        "メールで連絡します": "Contact by email",
+        "はい（メールを開く）": "Yes (open email)",
+        "いいえ": "No",
+        "また いつでも 声をかけてね！": "Feel free to reach out anytime!",
+        "はるが 仲間に くわわった！": "Haru joined your party!"
     },
     "patterns": [
         [
@@ -974,6 +1002,14 @@ window.I18N_EN = {
         [
             "^レベル (\\d+)「(.+)」。最大レベルです。押すと冒険の記録を開きます$",
             "Level {1} \"{t2}\". Max level. Opens your adventure log"
+        ],
+        [
+            "^おかえり！ 前回は Lv\\.(\\d+) まで進んだね。続きを楽しんでいってね。$",
+            "Welcome back! Last time you reached Lv.{1}. Enjoy picking up where you left off."
+        ],
+        [
+            "^達成 (\\d+) / (\\d+)$",
+            "Done {1} / {2}"
         ]
     ]
 };
