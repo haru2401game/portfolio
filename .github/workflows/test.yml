@@ -1,0 +1,59 @@
+# push したら、自動テスト（tests/ の Playwright）を GitHub 上で動かす
+# 失敗すると GitHub からメールが届き、リポジトリの「Actions」タブに赤い × が付く
+# 失敗したときの画面（tests/results/）は、その実行の「Artifacts」からダウンロードできる
+
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# 同じブランチで続けて push したら、古いほうの実行は止める
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    permissions:
+      contents: read
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+        cache: npm
+        cache-dependency-path: tests/package-lock.json
+
+    - name: Install test tools
+      working-directory: tests
+      run: npm ci
+
+    - name: Install browser (Chromium)
+      working-directory: tests
+      run: npx playwright install --with-deps chromium
+
+    # 日本語と英字のフォント（無いと文字の幅が変わり、はみ出しのテストが実際と違う結果になる）
+    - name: Install fonts
+      run: sudo apt-get update -q && sudo apt-get install -y -q fonts-noto-cjk fonts-inter
+
+    - name: Run tests
+      run: npm test
+
+    - name: Upload screenshots of failures
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: tests/results/
+        if-no-files-found: ignore
+        retention-days: 7
