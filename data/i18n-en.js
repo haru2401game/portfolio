@@ -864,7 +864,13 @@ window.I18N_EN = {
         "次に来たときは NEW GAME+。隠しクエストが出てくるよ": "Next time you visit: NEW GAME+, with hidden quests",
         "ヒント：ポートフォリオに遊びに来よう": "Hint: Come visit the portfolio",
         "新デザインの試作版です。": "This is a beta of the new design.",
-        "気になる点を教えてください。": "Feedback welcome."
+        "気になる点を教えてください。": "Feedback welcome.",
+        "NEW モードで見る →": "View in NEW mode →",
+        "▶ NEW モードで見る": "▶ View in NEW mode",
+        "CLASSIC モードで見る": "View in CLASSIC mode",
+        "遊びながら見られる CLASSIC モードに切り替えます。いつでも戻せます": "Switch to CLASSIC mode, a portfolio you can play through. You can switch back anytime",
+        "表示モード": "Display mode",
+        "落ち着いて読める NEW モードに切り替えます（いつでも戻せます）": "Switch to NEW mode, a calm layout for reading (you can switch back anytime)"
     },
     "patterns": [
         [

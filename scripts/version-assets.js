@@ -49,7 +49,7 @@ for (const page of ["index.html", "404.html", "classic.html"]) {
     update(page, TARGET, (whole, attr, file) => (fs.existsSync(path.join(ROOT, file)) ? `${attr}="${file}?v=${hashOf(file)}"` : whole));
 }
 
-// 3. 新デザイン（BETA 版の next/index.html）。住所は next/ から見た場所（../js/… は今のサイトと共通のファイル）
+// 3. NEW モード（next/index.html）。住所は next/ から見た場所（../js/… は今のサイトと共通のファイル）
 const NEXT_TARGET = /(src|href)="((?:\.\.\/)?(?:js\/[\w-]+\.js|css\/[\w-]+\.css|data\/(?:works|timeline)\.js))(\?v=[0-9a-f]*)?"/g;
 if (fs.existsSync(path.join(ROOT, "next/index.html"))) {
     update("next/index.html", NEXT_TARGET, (whole, attr, file) => {

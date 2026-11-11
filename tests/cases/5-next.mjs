@@ -1,19 +1,15 @@
 /* ========================================
-   5. 新デザイン（next/）
-   BETA 版のあいだは /next/ を、本番に切り替えたあと（npm run launch）はトップ（/）を確かめる
+   5. NEW モード（next/）
+   トップ（CLASSIC モード）と並ぶ、もう一つの正式なモード
 ======================================== */
 
 import fs from "node:fs";
 import path from "node:path";
 
-export const title = "5. 新デザイン";
+export const title = "5. NEW モード";
 
-// 切り替え前は next/index.html が本体。切り替え後は「移動しました」のページになり、トップが本体
-const pageOf = (siteDir) => {
-    const next = path.join(siteDir, "next", "index.html");
-    if (!fs.existsSync(next)) return null;
-    return fs.readFileSync(next, "utf8").includes('data-launched="1"') ? "/" : "/next/";
-};
+// NEW モードの住所（next/ が無いときは、確かめるものが無いので合格にする）
+const pageOf = (siteDir) => (fs.existsSync(path.join(siteDir, "next", "index.html")) ? "/next/" : null);
 
 // （前のデザインの起動演出の印。今は使っていないが、古い保存が残っていても動くことを確かめる）
 function skipBoot() {
@@ -92,7 +88,7 @@ const findJapanese = (page) =>
         return [...found];
     });
 
-// 新デザインが無いとき（まだ作っていない／消した）は、確かめるものが無いので合格にする
+// NEW モードが無いとき（まだ作っていない／消した）は、確かめるものが無いので合格にする
 const withPage = (run) => async (helpers) => {
     const target = pageOf(helpers.siteDir);
     if (!target) return;
@@ -100,19 +96,6 @@ const withPage = (run) => async (helpers) => {
 };
 
 export const tests = [
-    {
-        name: "本番に切り替えられる状態になっている（npm run launch の確認）",
-        async run({ siteDir, expect }) {
-            const { execFileSync } = await import("node:child_process");
-            let output = "";
-            try {
-                output = execFileSync("node", [path.join(siteDir, "scripts", "launch-next.js"), "--check"], { encoding: "utf8" });
-            } catch (error) {
-                output = `${error.stdout || ""}${error.stderr || ""}`;
-                expect(false, output.trim());
-            }
-        },
-    },
     {
         name: "パソコンの大きさで、エラーなく開ける",
         run: withPage(async ({ openNext, scrollThrough, noErrors, expect }) => {
@@ -365,7 +348,7 @@ export const tests = [
         }),
     },
     {
-        name: "作品ごとのページと 404 も、新デザインを選んでいる人には新デザインで出る",
+        name: "作品ごとのページと 404 も、NEW モードを選んでいる人にはNEW モードで出る",
         async run({ open, expect }) {
             for (const [pathname, design, look] of [
                 ["/works/falien/", { design: "new" }, "new"],
@@ -385,14 +368,14 @@ export const tests = [
                 if (pathname.includes("404")) {
                     expect(state.nf === (look === "new") && state.game === (look === "classic"), `${pathname}（${look}）で出る中身が違います（新:${state.nf} ゲーム:${state.game}）`);
                 } else if (look === "new") {
-                    expect(state.card === "0px", "新デザインの作品ページなのに、カードの角が丸いままです");
+                    expect(state.card === "0px", "NEW モードの作品ページなのに、カードの角が丸いままです");
                 }
                 expect(errors.length === 0, errors.join("\n"));
             }
         },
     },
     {
-        name: "新デザインでもアクセス解析が動き、どちらのデザインかが分かる（新旧を比べるため）",
+        name: "NEW モードでもアクセス解析が動き、どちらのデザインかが分かる（新旧を比べるため）",
         run: withPage(async ({ openNext, expect }) => {
             const { page } = await openNext();
             const state = await page.evaluate(() => ({
@@ -400,8 +383,8 @@ export const tests = [
                 design: document.documentElement.dataset.design,
                 script: Boolean(document.querySelector('script[src*="analytics.js"]')),
             }));
-            expect(!state.off, "新デザインで、アクセス解析が止められています（新旧を比べられません）");
-            expect(state.script, "新デザインに analytics.js が読み込まれていません");
+            expect(!state.off, "NEW モードで、アクセス解析が止められています（新旧を比べられません）");
+            expect(state.script, "NEW モードに analytics.js が読み込まれていません");
             expect(state.design === "new", `<html data-design> が new ではありません（${state.design}）`);
         }),
     },

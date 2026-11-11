@@ -1,5 +1,5 @@
 /* ========================================
-   新デザイン（採用担当の方・大人の方向け）
+   NEW モード（採用担当の方・大人の方向け）
    ゲーム会社の採用サイトのような、白地 × 赤 × 黒。大きな英字の見出しと、赤い斜めの帯・黒い帯で見せる
    動きは小さく。遊び要素（キャラクター・トロフィー・効果音）はクラシックだけに置く
 ======================================== */
@@ -137,17 +137,6 @@ h1, h2, h3, h4 { color: var(--ink); }
 /* スクロールで出てくる（短く、少しだけ） */
 [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .8s var(--ease); }
 [data-reveal].is-in { opacity: 1; transform: none; }
-
-/* ---------- 試作版の帯 ---------- */
-
-.beta-bar {
-    display: flex; align-items: center; justify-content: center; gap: 6px 16px; flex-wrap: wrap;
-    padding: 8px var(--gutter);
-    background: var(--ink); color: #f2f2f2;
-    font-size: 12px;
-}
-.beta-bar b { font-family: var(--display); color: var(--red-light); letter-spacing: .16em; margin-right: 6px; }
-.beta-bar a { display: inline-flex; align-items: center; min-height: 28px; color: #fff; }
 
 /* ---------- ヘッダー ---------- */
 
@@ -800,7 +789,6 @@ html.motion-off .tl-item .tl-node { scale: 1 !important; }
     .toasts { left: 14px; right: 14px; bottom: 14px; }
     .toast { width: auto; }
     .gamepad-guide { max-width: calc(100% - 32px); }
-    .beta-bar { font-size: 11px; }
 }
 
 /* 英語表示：英字の見出しと日本語のラベルが同じ意味になるので、日本語側（訳したもの）は出さない */
@@ -869,11 +857,8 @@ html.fx-ready .q-work.fx-in { opacity: 1; transform: none; }
 html.motion-off .fx, html.motion-off .fx * { clip-path: none !important; opacity: 1 !important; transform: none !important; scale: 1 !important; }
 
 /* ---------- スマホの第一印象（2026/11）
-   ・BETA の帯は1行に（長い文はスマホでは出さない）
    ・トップの映像が最初の画面に少し見えるように、「最近の更新」は映像の下へ ---------- */
 @media (max-width: 760px) {
-    .beta-bar { flex-wrap: nowrap; gap: 10px; padding-block: 4px; white-space: nowrap; }
-    .beta-more { display: none; }
     .hero-grid { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
     .hero-body { display: contents; }
     .hero-display, .hero-name, .hero-copy, .hero-lead { align-self: flex-start; }

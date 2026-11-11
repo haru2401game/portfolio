@@ -2,8 +2,7 @@
    design-switch.js：デザインの切り替え（NEW ⇄ CLASSIC）
    ・新デザインと、今までのデザイン（クラシック）の両方で <head> から読み込む
    ・どちらのページかは <html data-design="new|classic">、もう片方の住所は <meta name="pa-design-○○" content="住所">
-       BETA のあいだ：クラシック＝トップ（./）、新デザイン＝next/
-       本番に切り替えたあと（npm run launch）：新デザイン＝トップ、クラシック＝classic.html
+       CLASSIC モード＝トップ（./）、NEW モード＝next/（2つを並べる「二刀流」。どちらも正式なモード）
    ・選んだデザインは pa-settings.design に覚えて、次に開いたときもそのデザインへ（ページを描く前に移動）
    ・切り替えるときは「CHANGE DESIGN」の読み込み演出 → 移動 → 着いた側で幕が開く → そのデザインらしい最初の動き
      （新デザイン：赤い帯がサッと入り、文字と写真がまっすぐ並ぶ／クラシック：画面が光って、文字が弾んで出てくる）
@@ -17,7 +16,7 @@
     const current = root.dataset.design === "new" ? "new" : "classic";
     const other = current === "new" ? "classic" : "new";
     const LABEL = { new: "NEW MODE", classic: "CLASSIC MODE" };
-    const NAME = { new: "新デザイン", classic: "クラシック" };
+    const NAME = { new: "NEW モード", classic: "CLASSIC モード" };
     const ARRIVE_KEY = "pa-design-arrive";
 
     const urlOf = (design) => {
@@ -188,12 +187,12 @@
             const row = document.createElement("div");
             row.className = "settings-row";
             row.innerHTML = `
-                <h3 class="settings-label" id="settings-design">デザイン</h3>
+                <h3 class="settings-label" id="settings-design">表示モード</h3>
                 <div class="settings-choices" role="radiogroup" aria-labelledby="settings-design" data-design-switch>
                     <button type="button" role="radio" data-value="new">NEW</button>
                     <button type="button" role="radio" data-value="classic">CLASSIC</button>
                 </div>
-                <p class="settings-note">新しいデザインに切り替えます（いつでも戻せます）</p>`;
+                <p class="settings-note">落ち着いて読める NEW モードに切り替えます（いつでも戻せます）</p>`;
             classicPanel.prepend(row);
         }
 

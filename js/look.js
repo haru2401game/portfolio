@@ -7,7 +7,7 @@
 ======================================== */
 
 (() => {
-    const DEFAULT = "classic"; // 何も選んでいない人に見せるデザイン（新デザインを本番にしたら npm run launch が "new" に変える）
+    const DEFAULT = "classic"; // 何も選んでいない人に見せるモード（トップと同じ CLASSIC）
     let design = "";
     try {
         design = (JSON.parse(localStorage.getItem("pa-settings")) || {}).design || "";

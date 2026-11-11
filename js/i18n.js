@@ -126,8 +126,8 @@
         if (loading) return loading;
         loading = new Promise((resolve) => {
             const script = document.createElement("script");
-            // 新デザインの BETA 版（next/）は1つ上のフォルダから読む（<html data-base="../">）
-            script.src = (root.dataset.base || "") + "data/i18n-en.js?v=47e42e41";
+            // NEW モード（next/）は1つ上のフォルダから読む（<html data-base="../">）
+            script.src = (root.dataset.base || "") + "data/i18n-en.js?v=beab0af8";
             script.onload = () => {
                 const data = window.I18N_EN || {};
                 // 作品の英語（data/works.js の en）は、作品データの方を優先する（js/works.js が集めたもの）
