@@ -274,7 +274,7 @@ Canvas で描くランゲームです。
 
 ### 7. 品質の確認
 
-`tests/` に自動テスト（69項目。うち NEW モード用 21項目）があります。Playwright（ブラウザを自動で操作するツール）でページを開き、次のことを確かめます。
+`tests/` に自動テスト（70項目。うち NEW モード用 21項目）があります。Playwright（ブラウザを自動で操作するツール）でページを開き、次のことを確かめます。
 
 - 作品データ（`data/works.js`）の書き忘れ・画像や動画のファイル切れ・リンク切れ
 - 検索エンジン向けの情報（`index.html` の構造化データ）の書き間違い
@@ -336,6 +336,7 @@ npm test         # 自動テスト
         // ここから下は、なくてもよい
         play: "https://unityroom.com/games/ゲームのID",   // ブラウザで遊べる場所
         preview: "videos/previews/名前.mp4",
+        learned: "この作品で学んだこと（1〜3文。作品ページに「LEARNED」として出る）",
         en: {
             alt: "Title screen of ...",
             genre: "2D action game",
@@ -348,6 +349,13 @@ npm test         # 自動テスト
 
 3. 保存して、ブラウザでページを開き直して確認する
 4. `npm run assets` を動かす（作品ごとのページ `works/<リンク名>/` ができる）
+
+作品ごとのページ（`works/<リンク名>/`）には、次の欄が自動で付きます。
+
+- **SCREENSHOTS（ゲーム画面）**：`images/works/<リンク名>/shot-1.webp` 〜 `shot-3.webp` を置くと並ぶ（16:9 がおすすめ。プレイ映像のある作品は、映像から切り出したものを置いてある）
+- **RELATED（関連する作品）**：使った技術・2D/3D・チームかどうかが近い作品を3つ、自動で選ぶ
+- **LEARNED（この作品で学んだこと）**：`learned` を書いた作品だけ
+- 代表作（ししとう・Falien）は、プレイ映像・技術の見どころ（課題 → 解決 → 結果）・チーム開発・写真も載る（`scripts/work-pages.js` の `MAIN_WORKS`）
 5. 自動テストを動かす（`npm test`）。書き忘れやファイル名の間違いがあれば教えてくれる
 
 - 自動で付くもの：STAGE 番号・作品数・TEAM ×人数（`member` が2以上）・WIP（`role` に「未完成」）・▶ PLAYABLE と「▶ unityroom で遊ぶ」ボタン（`play` を書いたとき）・絞り込み（`tech` に Unity / C++ / DirectX、`genre` に 3D）・スキル集計

@@ -77,6 +77,30 @@ export const tests = [
         },
     },
     {
+        name: "作品ページに、代表作の技術の見どころ・ゲーム画面・関連作品が出る",
+        async run({ open, expect }) {
+            const { page, errors } = await open("/works/shishito/");
+            const main = await page.evaluate(() => ({
+                points: document.querySelectorAll(".wp-dev-point").length,
+                video: Boolean(document.querySelector(".wp-movie video[src]")),
+                shots: document.querySelectorAll(".wp-shot-list img").length,
+                related: [...document.querySelectorAll(".wp-related-list a")].map((a) => a.getAttribute("href")),
+            }));
+            expect(main.points >= 1, "ししとうのページに「技術の見どころ」がありません");
+            expect(main.video, "ししとうのページにプレイ映像がありません");
+            expect(main.shots === 3, `ししとうのページのゲーム画面が ${main.shots} 枚です（3枚のはず）`);
+            expect(main.related.length === 3 && !main.related.some((href) => href.includes("shishito")), `関連作品がおかしい（${main.related.join(", ")}）`);
+            // 関連作品のリンク先が、ちゃんとある
+            for (const href of main.related) {
+                const res = await page.request.get(new URL(href, page.url()).href);
+                expect(res.ok(), `関連作品のリンク先が開けません：${href}`);
+            }
+            await page.evaluate(() => document.querySelectorAll("img[loading=lazy]").forEach((img) => (img.loading = "eager")));
+            await page.waitForTimeout(600);
+            expect(errors.length === 0, errors.join("\n"));
+        },
+    },
+    {
         name: "存在しないページでは 404 ページが出る",
         async run({ open, noErrors, expect }) {
             const { page, errors } = await open("/no-such-page.html");

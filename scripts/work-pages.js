@@ -16,6 +16,9 @@
    ・リンク名（○○）の作り方は js/works.js の idOf と同じ（変えるときは両方そろえる）
    ・data/works.js から消した作品のページは、自動で消す
    ・作ったページは直接書き換えない（次に作り直したときに消えるため）
+   ・スクリーンショット：images/works/○○/shot-1.webp 〜 shot-3.webp があれば「SCREENSHOTS」として並べる（○○ はリンク名）
+   ・関連作品：使った技術・2D/3D・チームかどうかが近い作品を3つ、自動で選んで並べる
+   ・学んだこと：data/works.js に learned を書いた作品だけ「LEARNED（学んだこと）」を出す
 ======================================== */
 
 const fs = require("fs");
@@ -47,6 +50,25 @@ const MAIN_WORKS = [
         award: "東京ゲームショウ2026 インディーゲームコーナー出展・IGDA日本 スカラーシップ",
         play: "https://unityroom.com/games/shishito",
         main: true,
+        // ここから下は代表作だけ（トップの「技術の見どころ」と同じ内容）
+        movie: { src: "videos/index/Shishito.mp4", poster: "images/index/Hero/poster.webp", label: "プレイ映像（15秒・音声あり）" },
+        lead: "リードプログラマー・チームリーダーとして、ゲームの中心になるプレイヤーシステムを担当しました。",
+        points: [
+            {
+                title: "四肢を回してキャラクターを操作するプレイヤーシステム",
+                problem: "実装初期は Transform の Rotation で四肢を回していましたが、地面を押す力が足りず、画面の動きが小さく、キャラクターの動きも激しくなりませんでした。",
+                solution: "回転の仕組みを Rigidbody の AddForce で特定の方向に力を加える方式に変更。回した手足で壁や床を強く押せるようになり、画面とキャラクターの激しい動きを表現できました。",
+                result: "手足を回すたびにキャラクターが大きく暴れる、見ていても笑える格闘ゲームになりました。ゲームジャムでは多くの方に笑ってもらえ、その後、東京ゲームショウ2026にも出展しました。",
+            },
+        ],
+        teamDetail: "5人（プログラマー3・プランナー1・デザイナー1）※初期メンバー",
+        implemented: ["プレイヤーシステム", "ロゴシーン", "タイトルシーン", "モードセレクト", "キャラクター選択", "リザルト", "プロジェクト統合"],
+        workflow: ["メンバーごとにブランチを作成", "1つのタスクが完了した段階で main ブランチへコミット", "適宜プロジェクトを統合"],
+        results: ["「学生チーム対抗ゲームジャム」で制作し、多くの方に笑ってもらえた", "IGDA日本 スカラーシップ合格", "東京ゲームショウ2026 インディーゲームコーナーに出展"],
+        photos: [
+            ["images/index/FeaturedWorks/gallery/gamejam.webp", "学生チーム対抗ゲームジャムで、チームで「ししとう」を制作している様子", "ゲームジャムでの制作風景"],
+            ["images/index/FeaturedWorks/gallery/tgs2026.webp", "東京ゲームショウ2026のIGDA日本ブースで、「ししとう」のチラシを持つチームメンバー", "TGS 2026 出展"],
+        ],
     },
     {
         id: "falien",
@@ -63,6 +85,30 @@ const MAIN_WORKS = [
         description: "宇宙人の足を付け替えて研究所から脱出する2Dアクション。6か国・7人の国際チームで約1週間で制作し、IGCCゲームジャムでグランプリを受賞しました。",
         award: "IGCCゲームジャム グランプリ",
         main: true,
+        movie: { src: "videos/index/Falien.mp4", poster: "images/index/otherworks/Falien.webp", label: "プレイ映像（2分54秒・音声あり）" },
+        lead: "ジェネラリスト（総合管理）として、タイトルシーンの制作、各シーンの結合、3言語のローカライズを担当しました。",
+        points: [
+            {
+                title: "パーツを分けて動かすタイトルシーン",
+                problem: "タイトル画面を1枚絵で作ると、背景もキャラクターも一緒に固定され、画面に動きを付けることができませんでした。",
+                solution: "背景の集中線とキャラクターを1枚絵から切り離し、それぞれ別のUIとして配置。パーツごとにアニメーションを付けられるようにしました。",
+                result: "背景とキャラクターが別々に動く、ゲームを始める前からゲームの勢いが伝わるタイトル画面になりました。",
+            },
+            {
+                title: "自作フォントを使った3言語のローカライズ",
+                problem: "国際チームのため日本語・英語・フランス語に対応したかったものの、既存のフォントでは言語によって対応していない文字がありました。",
+                solution: "チームメンバーが自作したフォントを使い、3言語に対応するローカライズ処理を実装。翻訳で長くなる文章も、画面上で自然に見えるように調整しました。",
+                result: "ゲームの雰囲気に合ったフォントのまま、日本語・英語・フランス語の3言語で遊べるゲームになりました。",
+            },
+        ],
+        teamDetail: "7人・6か国（日本・タイ・台湾・フィンランド・フランス・シンガポール）",
+        implemented: ["タイトルシーン", "各シーンの結合", "ローカライズ（日・英・仏）"],
+        workflow: ["英語でのやりとりを、画像・動画・プレイ映像で補って共有", "進捗・完了した作業・次の作業を GitHub と Discord で共有", "「何を作らないか」を決め、まず遊べる形を優先"],
+        quote: ["ゲームジャムの目的をよく理解している。PV動画やプレイ映像など、見ている人が笑えるゲームデザインですごく良い。", "IGCC 表彰式での講評より"],
+        photos: [
+            ["images/index/FeaturedWorks/falien/team.webp", "IGCCの会場で、「Falien」の展示ブースの前でポーズをとるチームメンバー", "チームでのブース展示"],
+            ["images/index/FeaturedWorks/falien/exhibit.webp", "IGCCの会場で、「Falien」をノートPCで展示している様子", "会場での展示"],
+        ],
     },
 ];
 
@@ -126,10 +172,32 @@ const fromData = (work) => {
         play: /^https:\/\//i.test(String(work.play || "")) ? String(work.play).trim() : "",
         note: /^https:\/\//i.test(String(work.link || "")) ? String(work.link).trim() : "",
         preview: work.preview || "",
+        learned: String(work.learned || "").trim(),
     };
 };
 
 const works = [...MAIN_WORKS, ...load("data/works.js", "WORKS").map(fromData)].filter((work) => work.id);
+
+// スクリーンショット（images/works/○○/shot-1.webp 〜 shot-3.webp。あるものだけ）
+const shotsOf = (work) => [1, 2, 3].map((n) => `images/works/${work.id}/shot-${n}.webp`).filter((file) => fs.existsSync(path.join(ROOT, file)));
+
+// 関連作品：技術・2D/3D・チームかどうかが近いものから3つ（同じくらいなら、制作時期が近いもの）
+const techSet = (work) => new Set((Array.isArray(work.tech) ? work.tech : String(work.tech || "").split(/\s+/)).map((t) => t.toLowerCase()).filter((t) => t && t !== "github" && !t.startsWith("visual")));
+const dimOf = (work) => (/3D/.test(work.genre) ? "3d" : "2d");
+const periodNum = (work) => Number(String(work.period).replace(/[^0-9]/g, "").slice(0, 6)) || 0;
+const relatedOf = (work) => {
+    const mine = techSet(work);
+    return works
+        .filter((other) => other.id !== work.id)
+        .map((other) => {
+            const shared = [...techSet(other)].filter((t) => mine.has(t)).length;
+            const score = shared * 3 + (dimOf(other) === dimOf(work) ? 2 : 0) + ((other.member > 1) === (work.member > 1) ? 1 : 0) + (other.main ? 1 : 0);
+            return { other, score, gap: Math.abs(periodNum(other) - periodNum(work)) };
+        })
+        .sort((a, b) => b.score - a.score || a.gap - b.gap)
+        .slice(0, 3)
+        .map(({ other }) => other);
+};
 
 const playLabel = (url) => {
     let host = "";
@@ -147,6 +215,64 @@ const assets = {
     look: `js/look.js?v=${hashOf("js/look.js")}`,
     page: `js/work-page.js?v=${hashOf("js/work-page.js")}`,
     analytics: `js/analytics.js?v=${hashOf("js/analytics.js")}`,
+};
+
+// 代表作の「技術の見どころ」・プレイ映像・写真、全作品のスクリーンショット・学んだこと
+const sectionsOf = (work) => {
+    const out = [];
+    if (work.movie) {
+        out.push(`
+    <section class="wp-section wp-movie" aria-labelledby="movie-title">
+        <h2 class="wp-h2" id="movie-title"><span>MOVIE</span>${escape(work.movie.label)}</h2>
+        <video controls preload="none" playsinline poster="../../${escape(work.movie.poster)}" src="../../${escape(work.movie.src)}" aria-label="${escape(work.title)}のプレイ映像"></video>
+    </section>`);
+    }
+    if (work.points) {
+        const points = work.points.map((point, i) => `
+            <article class="wp-dev-point">
+                <h3><span>POINT ${String(i + 1).padStart(2, "0")}</span>${escape(point.title)}</h3>
+                <div class="wp-psr">
+                    <div><b>課題</b><p>${escape(point.problem)}</p></div>
+                    <div><b>解決</b><p>${escape(point.solution)}</p></div>
+                    <div><b>結果</b><p>${escape(point.result)}</p></div>
+                </div>
+            </article>`).join("");
+        const list = (items) => `<ul class="wp-list">${items.map((item) => `<li>${escape(item)}</li>`).join("")}</ul>`;
+        out.push(`
+    <section class="wp-section wp-dev" aria-labelledby="dev-title">
+        <h2 class="wp-h2" id="dev-title"><span>DEVELOPMENT</span>技術の見どころ</h2>
+        <p class="wp-lead">${escape(work.lead)}</p>${points}
+        <div class="wp-team">
+            <div>
+                <h3 class="wp-h3">TEAM ／ チーム構成と担当</h3>
+                <p>${escape(work.teamDetail)}</p>
+                <h3 class="wp-h3">自分で実装した部分</h3>
+                <ul class="wp-tags">${work.implemented.map((item) => `<li>${escape(item)}</li>`).join("")}</ul>
+            </div>
+            <div>
+                <h3 class="wp-h3">TOOLS &amp; WORKFLOW ／ チーム開発</h3>
+                ${list(work.workflow)}
+${work.results ? `                <h3 class="wp-h3">RESULTS ／ 成果</h3>\n                ${list(work.results)}\n` : ""}${work.quote ? `                <blockquote class="wp-quote"><p>${escape(work.quote[0])}</p><cite>${escape(work.quote[1])}</cite></blockquote>\n` : ""}            </div>
+        </div>
+        <ul class="wp-photos">${work.photos.map(([src, alt, caption]) => `<li><figure><img src="../../${escape(src)}" alt="${escape(alt)}" loading="lazy"><figcaption>${escape(caption)}</figcaption></figure></li>`).join("")}</ul>
+    </section>`);
+    }
+    const shots = shotsOf(work);
+    if (shots.length) {
+        out.push(`
+    <section class="wp-section wp-shots" aria-labelledby="shots-title">
+        <h2 class="wp-h2" id="shots-title"><span>SCREENSHOTS</span>ゲーム画面</h2>
+        <ul class="wp-shot-list">${shots.map((src, i) => `<li><a href="../../${escape(src)}" target="_blank" rel="noopener"><img src="../../${escape(src)}" alt="${escape(work.title)}のゲーム画面 ${i + 1}" loading="lazy"></a></li>`).join("")}</ul>
+    </section>`);
+    }
+    if (work.learned) {
+        out.push(`
+    <section class="wp-section wp-learned" aria-labelledby="learned-title">
+        <h2 class="wp-h2" id="learned-title"><span>LEARNED</span>この作品で学んだこと</h2>
+        <p>${escape(work.learned)}</p>
+    </section>`);
+    }
+    return out.join("\n");
 };
 
 const pageOf = (work, index) => {
@@ -284,11 +410,18 @@ ${work.play ? `                <a class="wp-button is-play featured-play" href="
             </div>
         </div>
     </article>
-
+${sectionsOf(work)}
     <nav class="wp-pager" aria-label="ほかの作品">
         <a class="is-prev" href="../${escape(prev.id)}/"><small>← 前の作品</small><b>${escape(prev.title)}</b></a>
         <a class="is-next" href="../${escape(next.id)}/"><small>次の作品 →</small><b>${escape(next.title)}</b></a>
     </nav>
+
+    <section class="wp-section wp-related" aria-labelledby="related-title">
+        <h2 class="wp-h2" id="related-title"><span>RELATED</span>関連する作品</h2>
+        <ul class="wp-related-list">
+${relatedOf(work).map((other) => `            <li><a href="../${escape(other.id)}/"><img src="../../${escape(other.image)}" width="320" height="180" alt="" loading="lazy"><span><small>${escape(other.genre)}</small><b>${escape(other.title)}</b></span></a></li>`).join("\n")}
+        </ul>
+    </section>
 
     <section class="wp-author" aria-labelledby="author-title">
         <div>

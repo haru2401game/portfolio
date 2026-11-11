@@ -33,8 +33,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon.png">
 <script src="../../js/look.js?v=d6efbb20"></script>
-<link rel="stylesheet" href="../../css/work-page.css?v=7905bd96">
-<link rel="stylesheet" href="../../css/work-next.css?v=b9a01b87">
+<link rel="stylesheet" href="../../css/work-page.css?v=10b3c456">
+<link rel="stylesheet" href="../../css/work-next.css?v=1016dc98">
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -128,10 +128,56 @@
         </div>
     </article>
 
+    <section class="wp-section wp-movie" aria-labelledby="movie-title">
+        <h2 class="wp-h2" id="movie-title"><span>MOVIE</span>プレイ映像（15秒・音声あり）</h2>
+        <video controls preload="none" playsinline poster="../../images/index/Hero/poster.webp" src="../../videos/index/Shishito.mp4" aria-label="ししとうのプレイ映像"></video>
+    </section>
+
+    <section class="wp-section wp-dev" aria-labelledby="dev-title">
+        <h2 class="wp-h2" id="dev-title"><span>DEVELOPMENT</span>技術の見どころ</h2>
+        <p class="wp-lead">リードプログラマー・チームリーダーとして、ゲームの中心になるプレイヤーシステムを担当しました。</p>
+            <article class="wp-dev-point">
+                <h3><span>POINT 01</span>四肢を回してキャラクターを操作するプレイヤーシステム</h3>
+                <div class="wp-psr">
+                    <div><b>課題</b><p>実装初期は Transform の Rotation で四肢を回していましたが、地面を押す力が足りず、画面の動きが小さく、キャラクターの動きも激しくなりませんでした。</p></div>
+                    <div><b>解決</b><p>回転の仕組みを Rigidbody の AddForce で特定の方向に力を加える方式に変更。回した手足で壁や床を強く押せるようになり、画面とキャラクターの激しい動きを表現できました。</p></div>
+                    <div><b>結果</b><p>手足を回すたびにキャラクターが大きく暴れる、見ていても笑える格闘ゲームになりました。ゲームジャムでは多くの方に笑ってもらえ、その後、東京ゲームショウ2026にも出展しました。</p></div>
+                </div>
+            </article>
+        <div class="wp-team">
+            <div>
+                <h3 class="wp-h3">TEAM ／ チーム構成と担当</h3>
+                <p>5人（プログラマー3・プランナー1・デザイナー1）※初期メンバー</p>
+                <h3 class="wp-h3">自分で実装した部分</h3>
+                <ul class="wp-tags"><li>プレイヤーシステム</li><li>ロゴシーン</li><li>タイトルシーン</li><li>モードセレクト</li><li>キャラクター選択</li><li>リザルト</li><li>プロジェクト統合</li></ul>
+            </div>
+            <div>
+                <h3 class="wp-h3">TOOLS &amp; WORKFLOW ／ チーム開発</h3>
+                <ul class="wp-list"><li>メンバーごとにブランチを作成</li><li>1つのタスクが完了した段階で main ブランチへコミット</li><li>適宜プロジェクトを統合</li></ul>
+                <h3 class="wp-h3">RESULTS ／ 成果</h3>
+                <ul class="wp-list"><li>「学生チーム対抗ゲームジャム」で制作し、多くの方に笑ってもらえた</li><li>IGDA日本 スカラーシップ合格</li><li>東京ゲームショウ2026 インディーゲームコーナーに出展</li></ul>
+            </div>
+        </div>
+        <ul class="wp-photos"><li><figure><img src="../../images/index/FeaturedWorks/gallery/gamejam.webp" alt="学生チーム対抗ゲームジャムで、チームで「ししとう」を制作している様子" loading="lazy"><figcaption>ゲームジャムでの制作風景</figcaption></figure></li><li><figure><img src="../../images/index/FeaturedWorks/gallery/tgs2026.webp" alt="東京ゲームショウ2026のIGDA日本ブースで、「ししとう」のチラシを持つチームメンバー" loading="lazy"><figcaption>TGS 2026 出展</figcaption></figure></li></ul>
+    </section>
+
+    <section class="wp-section wp-shots" aria-labelledby="shots-title">
+        <h2 class="wp-h2" id="shots-title"><span>SCREENSHOTS</span>ゲーム画面</h2>
+        <ul class="wp-shot-list"><li><a href="../../images/works/shishito/shot-1.webp" target="_blank" rel="noopener"><img src="../../images/works/shishito/shot-1.webp" alt="ししとうのゲーム画面 1" loading="lazy"></a></li><li><a href="../../images/works/shishito/shot-2.webp" target="_blank" rel="noopener"><img src="../../images/works/shishito/shot-2.webp" alt="ししとうのゲーム画面 2" loading="lazy"></a></li><li><a href="../../images/works/shishito/shot-3.webp" target="_blank" rel="noopener"><img src="../../images/works/shishito/shot-3.webp" alt="ししとうのゲーム画面 3" loading="lazy"></a></li></ul>
+    </section>
     <nav class="wp-pager" aria-label="ほかの作品">
         <a class="is-prev" href="../aim-master/"><small>← 前の作品</small><b>AIM MASTER</b></a>
         <a class="is-next" href="../falien/"><small>次の作品 →</small><b>Falien</b></a>
     </nav>
+
+    <section class="wp-section wp-related" aria-labelledby="related-title">
+        <h2 class="wp-h2" id="related-title"><span>RELATED</span>関連する作品</h2>
+        <ul class="wp-related-list">
+            <li><a href="../falien/"><img src="../../images/index/otherworks/Falien.webp" width="320" height="180" alt="" loading="lazy"><span><small>2Dアクションゲーム（1〜2人プレイ）</small><b>Falien</b></span></a></li>
+            <li><a href="../snow-pakupaku/"><img src="../../images/index/otherworks/snowpakupaku.webp" width="320" height="180" alt="" loading="lazy"><span><small>2Dリズムゲーム</small><b>スノーぱくぱく</b></span></a></li>
+            <li><a href="../just-a-villager-but-ill-beat-the-demon-king/"><img src="../../images/index/otherworks/maou.webp" width="320" height="180" alt="" loading="lazy"><span><small>2Dアクション × バカゲー</small><b>ただの村人ですが、魔王倒します。</b></span></a></li>
+        </ul>
+    </section>
 
     <section class="wp-author" aria-labelledby="author-title">
         <div>

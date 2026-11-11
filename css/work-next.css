@@ -218,6 +218,71 @@ html[data-look="new"] .wp-footer {
     border-top: 1px solid #3a3a3a;
 }
 
+/* ---------- 追加の欄（プレイ映像・技術の見どころ・ゲーム画面・学んだこと・関連作品） ---------- */
+
+html[data-look="new"] .wp-section {
+    margin-top: 64px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+}
+html[data-look="new"] .wp-h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--n-ink);
+    color: var(--n-ink);
+    font-size: 15px;
+}
+html[data-look="new"] .wp-h2 span {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--n-ink);
+    font-family: var(--n-display);
+    font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 900;
+    letter-spacing: -.02em;
+}
+html[data-look="new"] .wp-h3 { color: var(--n-red); font-family: var(--n-display); }
+html[data-look="new"] .wp-movie video { border-radius: 0; }
+html[data-look="new"] .wp-lead { color: var(--n-ink); font-size: 17px; }
+html[data-look="new"] .wp-dev-point h3 { color: var(--n-ink); font-size: 18px; }
+html[data-look="new"] .wp-dev-point h3 span {
+    border-radius: 0;
+    background: var(--n-red);
+    box-shadow: none;
+    color: #fff;
+    font-family: var(--n-display);
+}
+html[data-look="new"] .wp-psr div { border-radius: 0; background: var(--n-gray); }
+html[data-look="new"] .wp-psr div:last-child { background: var(--n-ink); color: #fff; }
+html[data-look="new"] .wp-psr b { color: var(--n-red); }
+html[data-look="new"] .wp-psr div:last-child b { color: #ff6b7d; }
+html[data-look="new"] .wp-tags li { border: 0; border-radius: 0; background: var(--n-ink); color: #fff; }
+html[data-look="new"] .wp-list li::before { border-radius: 0; background: var(--n-red); }
+html[data-look="new"] .wp-quote { border-left-color: var(--n-red); border-radius: 0; background: var(--n-gray); }
+html[data-look="new"] .wp-photos figure,
+html[data-look="new"] .wp-shot-list a { border: 0; border-radius: 0; }
+html[data-look="new"] .wp-photos figcaption { border-radius: 0; background: var(--n-ink); }
+html[data-look="new"] .wp-shot-list a:hover { transform: none; opacity: .85; }
+html[data-look="new"] .wp-related-list a {
+    border: 0;
+    border-top: 2px solid var(--n-ink);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    transition: color .25s var(--n-ease);
+}
+html[data-look="new"] .wp-related-list a:hover { transform: none; color: var(--n-red); }
+html[data-look="new"] .wp-related-list span { padding: 10px 0 0; }
+html[data-look="new"] .wp-related-list b { font-family: var(--n-display); font-size: 16px; }
+html[data-look="new"] .wp-related-list small { color: var(--n-red); }
+
 /* ---------- 開いたときの動き（1回だけ） ---------- */
 
 @keyframes wn-rise {
@@ -271,6 +336,8 @@ html[data-look="new"] .wp-kicker { animation-delay: .18s; }
     html[data-look="new"] .wp-media video { max-height: 300px; }
     html[data-look="new"] .wp-pager b { font-size: 15px; }
     html[data-look="new"] .wp-author { padding: 24px 20px; }
+    html[data-look="new"] .wp-section { margin-top: 48px; }
+    html[data-look="new"] .wp-related-list span { padding: 0 0 0 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
