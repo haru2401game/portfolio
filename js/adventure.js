@@ -418,7 +418,9 @@
                     }
                 }, 38);
             }
-            hideTimer = setTimeout(hide, 5000 + Array.from(full).length * 70);
+            // 読み終わるころに閉じる（スマホは画面をふさぐので、少し早めに）
+            const phone = window.matchMedia?.("(max-width: 600px)").matches;
+            hideTimer = setTimeout(hide, phone ? 3200 + Array.from(full).length * 55 : 5000 + Array.from(full).length * 70);
         }, 60);
     };
 

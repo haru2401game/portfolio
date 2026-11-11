@@ -11796,3 +11796,54 @@ main:focus {
 
     .next-stage-left { font-size: 12px; }
 }
+
+/* ========================================
+   スマホの第一印象（2026/11）
+   ・開いた最初の画面に「ゲームの画面（ししとうの映像）」が入るように、見出しのすぐ下に映像を出す
+     （前は文字とバッジとボタンが続き、映像はスクロールしないと見えなかった）
+   ・実績バッジは小さくして横に並べ、縦の長さを詰める
+======================================== */
+
+@media (max-width: 600px) {
+    .hero {
+        gap: 0;
+        padding-top: 104px;
+    }
+
+    .hero-content {
+        display: contents;
+    }
+
+    .hero-eyebrow { order: 1; }
+    .hero-content h1 { order: 2; }
+    .hero-lead { order: 3; }
+    .hero-screen {
+        order: 4;
+        grid-row: auto;
+        margin: 18px 0 4px;
+    }
+    .hero-badges { order: 5; }
+    .hero-actions { order: 6; }
+    .hero-news { order: 7; }
+    .hero-index { order: 8; }
+
+    .hero-lead {
+        margin-top: 10px;
+        line-height: 1.75;
+    }
+
+    .hero-badges {
+        gap: 6px;
+        margin-top: 14px;
+    }
+
+    .hero-badges li {
+        padding: 4px 10px;
+        font-size: 11px;
+        box-shadow: 0 2px 0 var(--ui-line);
+    }
+
+    .hero-actions {
+        margin-top: 16px;
+    }
+}

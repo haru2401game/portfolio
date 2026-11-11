@@ -867,3 +867,16 @@ html.fx-ready .q-work.fx-in { opacity: 1; transform: none; }
 .work:hover::after, .work:focus-visible::after { transform: scaleX(1); }
 
 html.motion-off .fx, html.motion-off .fx * { clip-path: none !important; opacity: 1 !important; transform: none !important; scale: 1 !important; }
+
+/* ---------- スマホの第一印象（2026/11）
+   ・BETA の帯は1行に（長い文はスマホでは出さない）
+   ・トップの映像が最初の画面に少し見えるように、「最近の更新」は映像の下へ ---------- */
+@media (max-width: 760px) {
+    .beta-bar { flex-wrap: nowrap; gap: 10px; padding-block: 4px; white-space: nowrap; }
+    .beta-more { display: none; }
+    .hero-grid { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+    .hero-body { display: contents; }
+    .hero-display, .hero-name, .hero-copy, .hero-lead { align-self: flex-start; }
+    .hero-media { order: 1; width: 100%; margin-top: 32px; }
+    .hero-news { order: 2; margin-top: 40px; }
+}

@@ -862,7 +862,9 @@ window.I18N_EN = {
         "トロフィーを10個集めよう": "Collect 10 trophies",
         "エンディングでランク S を取ろう": "Get rank S at the ending",
         "次に来たときは NEW GAME+。隠しクエストが出てくるよ": "Next time you visit: NEW GAME+, with hidden quests",
-        "ヒント：ポートフォリオに遊びに来よう": "Hint: Come visit the portfolio"
+        "ヒント：ポートフォリオに遊びに来よう": "Hint: Come visit the portfolio",
+        "新デザインの試作版です。": "This is a beta of the new design.",
+        "気になる点を教えてください。": "Feedback welcome."
     },
     "patterns": [
         [
