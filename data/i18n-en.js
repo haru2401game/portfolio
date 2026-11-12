@@ -871,7 +871,9 @@ window.I18N_EN = {
         "遊びながら見られる CLASSIC モードに切り替えます。いつでも戻せます": "Switch to CLASSIC mode, a portfolio you can play through. You can switch back anytime",
         "表示モード": "Display mode",
         "落ち着いて読める NEW モードに切り替えます（いつでも戻せます）": "Switch to NEW mode, a calm layout for reading (you can switch back anytime)",
-        "落ち着いて読める": "Calm layout"
+        "落ち着いて読める": "Calm layout",
+        "OPTIONS：設定（表示モード・アニメーション・音量・言語）。NEW モードを追加しました": "OPTIONS: settings (display mode, animation, volume, language). NEW mode added",
+        "新しい項目": "New item"
     },
     "patterns": [
         [

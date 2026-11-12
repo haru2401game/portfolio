@@ -187,7 +187,7 @@
             const row = document.createElement("div");
             row.className = "settings-row";
             row.innerHTML = `
-                <h3 class="settings-label" id="settings-design">表示モード</h3>
+                <h3 class="settings-label" id="settings-design">表示モード<span class="settings-new is-inline" aria-label="新しい項目">NEW</span></h3>
                 <div class="settings-choices" role="radiogroup" aria-labelledby="settings-design" data-design-switch>
                     <button type="button" role="radio" data-value="new">NEW</button>
                     <button type="button" role="radio" data-value="classic">CLASSIC</button>

@@ -55,10 +55,10 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <script src="js/settings-boot.js?v=bf22bc21"></script>
 <!-- モードの切り替え（NEW ⇄ CLASSIC）。NEW モードの住所は下の meta（next/） -->
 <meta name="pa-design-new" content="next/">
-<script src="js/design-switch.js?v=2a7e7f3b"></script>
-<link rel="stylesheet" href="css/design-switch.css?v=314edbbf">
+<script src="js/design-switch.js?v=9c99a422"></script>
+<link rel="stylesheet" href="css/design-switch.css?v=b0d8b955">
 
-<link rel="stylesheet" href="css/style.css?v=2ff5a410">
+<link rel="stylesheet" href="css/style.css?v=33bed107">
 <link rel="stylesheet" href="css/adventure.css?v=0d91cf06">
 
 <!-- 検索エンジン向けの情報（構造化データ）。Google が「誰のどんなページか」を正しく理解して、検索結果に出しやすくなる
@@ -145,9 +145,11 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
         class="settings-button"
         type="button"
         aria-haspopup="dialog"
-        aria-label="OPTIONS：設定（アニメーション・音量・言語）">
+        aria-label="OPTIONS：設定（表示モード・アニメーション・音量・言語）。NEW モードを追加しました">
         <span class="settings-button-icon" aria-hidden="true">⚙</span>
         <span class="settings-button-text" aria-hidden="true">OPTIONS</span>
+        <!-- NEW モードを追加したことを知らせる印（OPTIONS の中の「表示モード」にも付いている） -->
+        <span class="settings-new" aria-hidden="true">NEW</span>
     </button>
 
     <button
@@ -197,8 +199,6 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
     <!-- Catch Copy -->
     <div class="hero-content">
         <p class="hero-eyebrow"><b class="hero-name">長屋晴太</b>ゲームプログラマー志望 / 2028年卒</p>
-        <!-- 表示モード：いまは CLASSIC。落ち着いて読める NEW モードもあることを、控えめに知らせる（押すと切り替え演出つきで移動） -->
-        <p class="hero-mode"><span class="hero-mode-label">MODE</span><span class="hero-mode-now">CLASSIC</span><a class="hero-mode-new" href="next/" data-design-link>NEW<small>落ち着いて読める</small><span aria-hidden="true">→</span></a></p>
         <h1><span class="hero-mark">遊びの発見</span>を、<br>心に残る体験へ。</h1>
         <p class="hero-lead">
             企画からプログラムまで。<br>
@@ -1950,7 +1950,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <script src="js/gamepad.js?v=365db478"></script>
 <script src="js/adventure.js?v=d2ade7a4"></script>
 <script src="js/result-card.js?v=4dc9d24c"></script>
-<script src="js/i18n.js?v=18724da4"></script>
+<script src="js/i18n.js?v=a792081b"></script>
 
 </body>
 </html>

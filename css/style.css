@@ -11848,78 +11848,55 @@ main:focus {
     }
 }
 
+
 /* ========================================
-   表示モードの案内（トップの名前の横）
-   ・CLASSIC がふつうのモード。NEW モードもあることを、小さなタグで知らせる（邪魔にならない大きさ）
-   ・押すと js/design-switch.js が切り替えの演出をして NEW モードへ
+   NEW の印（OPTIONS のボタンと、OPTIONS の中の「表示モード」）
+   ・NEW モードを追加したことを知らせる。ゲームのメニューの「NEW!」のような赤い札
 ======================================== */
 
-.hero-mode {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin: -14px 0 24px;
-    padding: 4px 4px 4px 12px;
-    border: 2px solid var(--ui-line);
+.settings-button {
+    position: relative;
+}
+
+.settings-new {
+    position: absolute;
+    top: -9px;
+    right: -10px;
+    padding: 1px 6px 2px;
+    border: 2px solid #fff;
     border-radius: 999px;
-    background: #fff;
-    box-shadow: 0 3px 0 var(--ui-line);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .08em;
-    vertical-align: top;
-}
-
-.hero-mode-label {
-    color: var(--ui-sub);
-}
-
-.hero-mode-now {
-    padding: 3px 9px;
-    border-radius: 999px;
-    background: var(--ui-ink, #111713);
-    color: #fff;
-}
-
-.hero-mode-new {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    min-height: 26px;
-    padding: 2px 10px;
-    border-radius: 999px;
-    color: #c8102e;
-    text-decoration: none;
-    transition: background .15s ease, color .15s ease;
-}
-
-.hero-mode-new small {
-    color: var(--ui-sub);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .02em;
-}
-
-.hero-mode-new:hover,
-.hero-mode-new:focus-visible {
     background: #c8102e;
+    box-shadow: 0 2px 0 #8c0b20;
     color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    pointer-events: none;
+    transform: rotate(8deg);
+    animation: settings-new-pop 2.4s ease-in-out infinite;
 }
 
-.hero-mode-new:hover small,
-.hero-mode-new:focus-visible small {
-    color: #fff;
+.settings-new.is-inline {
+    position: static;
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: 2px;
+    transform: rotate(-4deg);
+    animation: none;
 }
 
-@media (max-width: 600px) {
-    .hero-eyebrow { order: 1; }
-    .hero-mode {
-        order: 1;
-        justify-self: start;
-        margin: -16px 0 4px;
+@keyframes settings-new-pop {
+    0%, 84%, 100% { transform: rotate(8deg) scale(1); }
+    90% { transform: rotate(8deg) scale(1.18); }
+}
+
+html.motion-off .settings-new {
+    animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .settings-new {
+        animation: none;
     }
-}
-
-@media (max-width: 360px) {
-    .hero-mode-new small { display: none; }
 }
