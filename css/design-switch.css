@@ -166,6 +166,7 @@ html[data-design="classic"].ds-enter .hero-content > :nth-child(3) { --i: 2; }
 html[data-design="classic"].ds-enter .hero-content > :nth-child(4) { --i: 3; }
 html[data-design="classic"].ds-enter .hero-content > :nth-child(5) { --i: 4; }
 html[data-design="classic"].ds-enter .hero-content > :nth-child(6) { --i: 5; }
+html[data-design="classic"].ds-enter .hero-content > :nth-child(n+7) { --i: 6; }
 html[data-design="classic"].ds-enter .hero-mark { display: inline-block; animation: ds-wiggle .7s ease calc(var(--ds-d, 0s) + .9s) both; }
 
 html.motion-off.ds-enter *, html.motion-lite.ds-enter * { animation: none !important; }

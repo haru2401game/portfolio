@@ -377,4 +377,18 @@ export const tests = [
             expect(!normal.plus && normal.quests.every((quest) => !quest.plus), "クリアしていないのに 2周目になっています");
         },
     },
+    {
+        name: "トップの「MODE CLASSIC ／ NEW」から NEW モードへ移れる",
+        async run({ open, expect }) {
+            const { page } = await open("/", { wait: 800, settings: { motion: "none" }, init: () => sessionStorage.setItem("pa-classic-intro", "1") });
+            const pill = await page.evaluate(() => {
+                const link = document.querySelector(".hero-mode-new");
+                const box = link?.getBoundingClientRect();
+                return { href: link?.getAttribute("href"), top: box ? Math.round(box.top) : null };
+            });
+            expect(pill.href && pill.top !== null && pill.top < 400, `トップの見える場所に NEW モードへの案内がありません（${JSON.stringify(pill)}）`);
+            await Promise.all([page.waitForURL(/\/next\//, { timeout: 5000 }).catch(() => {}), page.click(".hero-mode-new")]);
+            expect(/\/next\//.test(page.url()), `押しても NEW モードへ移りません（${page.url()}）`);
+        },
+    },
 ];

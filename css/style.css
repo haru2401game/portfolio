@@ -11847,3 +11847,79 @@ main:focus {
         margin-top: 16px;
     }
 }
+
+/* ========================================
+   表示モードの案内（トップの名前の横）
+   ・CLASSIC がふつうのモード。NEW モードもあることを、小さなタグで知らせる（邪魔にならない大きさ）
+   ・押すと js/design-switch.js が切り替えの演出をして NEW モードへ
+======================================== */
+
+.hero-mode {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: -14px 0 24px;
+    padding: 4px 4px 4px 12px;
+    border: 2px solid var(--ui-line);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 3px 0 var(--ui-line);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    vertical-align: top;
+}
+
+.hero-mode-label {
+    color: var(--ui-sub);
+}
+
+.hero-mode-now {
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--ui-ink, #111713);
+    color: #fff;
+}
+
+.hero-mode-new {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 26px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    color: #c8102e;
+    text-decoration: none;
+    transition: background .15s ease, color .15s ease;
+}
+
+.hero-mode-new small {
+    color: var(--ui-sub);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .02em;
+}
+
+.hero-mode-new:hover,
+.hero-mode-new:focus-visible {
+    background: #c8102e;
+    color: #fff;
+}
+
+.hero-mode-new:hover small,
+.hero-mode-new:focus-visible small {
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .hero-eyebrow { order: 1; }
+    .hero-mode {
+        order: 1;
+        justify-self: start;
+        margin: -16px 0 4px;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-mode-new small { display: none; }
+}
