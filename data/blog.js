@@ -1,6 +1,13 @@
 window.BLOG_DATA = {
-    "articleCount": 276,
+    "articleCount": 277,
     "articles": [
+        {
+            "title": "「【Unity】ボス戦を作ってゲームループを完成させるまで ― アニメーション3つのボスをどう戦わせたか」 はる日記#277",
+            "date": "2026.11.12",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/335108826/rectangle_large_type_2_c2d6d63117490fc1b4372b55bb015c05.png?fit=bounds&quality=85&width=1280",
+            "summary": "現在3Dゲーム作品6本目として、Unityで3DアクションRPG「EMBER FALL」を作っています。 前回までに、プレイヤーの移動・攻撃、雑魚敵、レベルアップ、スキルツリー、セーブ機能までを作りま...",
+            "url": "https://note.com/ha_03ru_01/n/ne182fb52c96a"
+        },
         {
             "title": "「ゲーム制作もWeb制作も、楽しい理由は同じだった」 はる日記#276",
             "date": "2026.11.10",
@@ -14,13 +21,6 @@ window.BLOG_DATA = {
             "thumbnail": "https://assets.st-note.com/production/uploads/images/332018106/rectangle_large_type_2_e76c7c32e11d7c9c919503ba093e94ca.png?fit=bounds&quality=85&width=1280",
             "summary": "「はじめに」 皆様こんにちは。ゲームクリエイターを目指しているはるです！ 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n9d09ae35d9de"
-        },
-        {
-            "title": "「いつからか自分で考えられなくなっていた」 はる日記#274",
-            "date": "2026.10.28",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/332019313/rectangle_large_type_2_17ec36645b38aa5106a6abd4131aa14f.png?fit=bounds&quality=85&width=1280",
-            "summary": "「はじめに」 皆様お久しぶりです。ゲームクリエイターを目指しているはるです。 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n9963645ee641"
         }
     ]
 };
