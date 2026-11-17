@@ -11,7 +11,8 @@
                                作品ごとのページ（scripts/work-pages.js）も一緒に作り直す
      node scripts/version-assets.js --check … 番号が古くないか確かめるだけ（自動テストが使う）
 
-   ※ data/blog.js は毎日自動で更新されるので対象外
+   ・ページに書いてある作品数・note の記事数（JavaScript が動く前の表示と、SNS のカードの説明文）も、データにそろえる
+   ※ data/blog.js は毎日自動で更新されるので、バージョン番号と自動テストの対象外（記事数は書きかえるだけ）
 ======================================== */
 
 const fs = require("fs");
@@ -56,6 +57,41 @@ if (fs.existsSync(path.join(ROOT, "next/index.html"))) {
         const real = path.join("next", file);
         return fs.existsSync(path.join(ROOT, real)) ? `${attr}="${file}?v=${hashOf(real)}"` : whole;
     });
+}
+
+// 4. ページに書いてある数字（JavaScript が動く前の表示・SNS のカードの説明文）を、データにそろえる
+//    ・作品数：data/works.js の作品＋代表作2本（作品を足したら、ここも自動でそろう。自動テストも確かめる）
+//    ・note の記事数：data/blog.js（毎日自動で更新されるので、ここでは書きかえるだけで、自動テストでは確かめない）
+//    ※ ページを開いたあとは、どちらも JavaScript が同じデータから数字を入れ直す
+const vm = require("vm");
+const loadWindow = (file) => {
+    const window = {};
+    try {
+        vm.runInNewContext(fs.readFileSync(path.join(ROOT, file), "utf8"), { window });
+    } catch {
+        /* 読めないときは、数字をそろえない */
+    }
+    return window;
+};
+const works = loadWindow("data/works.js").WORKS;
+const blog = loadWindow("data/blog.js").BLOG_DATA;
+const workTotal = Array.isArray(works) ? works.length + 2 : 0;
+const blogCount = Number(blog?.articleCount) || 0;
+for (const page of ["index.html", "next/index.html"]) {
+    if (!fs.existsSync(path.join(ROOT, page))) continue;
+    if (workTotal) {
+        update(page, /(data-summary-stat="gameCount">|data-count="works">)\d+(<)/g, (whole, head, tail) => `${head}${workTotal}${tail}`);
+        update(page, /(など|のポートフォリオ。|・)\d+(作品)/g, (whole, head, tail) => `${head}${workTotal}${tail}`);
+    }
+    if (blogCount && !check) {
+        const full = path.join(ROOT, page);
+        const before = fs.readFileSync(full, "utf8");
+        const after = before.replace(/(data-summary-stat="blogCount">|data-count="blog">)\d+(<)/g, (whole, head, tail) => `${head}${blogCount}${tail}`);
+        if (after !== before) {
+            fs.writeFileSync(full, after);
+            outdated.push(`${page}（note の記事数）`);
+        }
+    }
 }
 
 if (check) {

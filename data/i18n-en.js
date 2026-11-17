@@ -320,7 +320,7 @@ window.I18N_EN = {
         "note で": "On note I've published ",
         "本以上の記事を公開し、制作の過程を発信。このサイトも、生成AIと協力しながら設計・運用しています。": "+ articles about my process. I also designed and run this site, building it together with generative AI.",
         "NEXT STAGE": "NEXT STAGE",
-        "いまは DirectXTK を使った3Dゲーム制作に挑戦中。2Dで身につけた「遊びの作り方」を、3Dにも広げていきます。": "I'm now taking on 3D game development with DirectXTK, bringing what I learned about making fun in 2D into 3D.",
+        "いまは Unity で3Dゲームを10本作るチャレンジに取り組んでいます。2Dで身につけた「遊びの作り方」を、3Dにも広げていきます。": "I'm now working on a challenge to make 10 3D games in Unity, bringing what I learned about making fun in 2D into 3D.",
         "ご用件に合わせて、窓口を選んでください": "Pick the option that fits your message",
         "採用・インターンのご連絡": "Recruiting / internships",
         "選考・インターン・会社説明会などのご案内をお待ちしています。": "I'd love to hear about openings, internships and company info sessions.",
@@ -581,7 +581,6 @@ window.I18N_EN = {
         "例：「ししとう」のロゴ・タイトル・モードセレクト・キャラクター選択・リザルトの各シーン": "e.g. the logo, title, mode select, character select and results scenes in SHISHITO",
         "例：「ししとう」「Falien」「POTION BERSERKER」などでプロジェクト統合を担当": "e.g. handled project integration on SHISHITO, Falien, POTION BERSERKER and more",
         "例：個人制作の作品は、企画からプログラムまで1人で担当": "e.g. on solo projects I handle everything from design to programming",
-        "例：note で250本以上の記事を公開": "e.g. more than 250 articles published on note",
         "例：このサイト（設計は自分、実装は生成AIと協力）。しくみは下の「このサイトの技術」で紹介しています": "e.g. this site (designed by me, built together with generative AI) — see “How this site works” below",
         "チーム構成と開発環境を見る": "Show team & tools",
         "チーム構成と開発環境を閉じる": "Hide team & tools",
@@ -1055,6 +1054,18 @@ window.I18N_EN = {
         [
             "^2周目（NEW GAME\\+）。レベル (\\d+)「(.+)」。最大レベルです。押すと冒険の記録を開きます$",
             "Second run (NEW GAME+). Level {1} \"{t2}\". Max level. Opens your adventure log"
+        ],
+        [
+            "^NOW ▶ 3D CHALLENGE #(\\d+) 制作中$",
+            "NOW ▶ 3D CHALLENGE #{1} in progress"
+        ],
+        [
+            "^(\\d+)本中(\\d+)本目を制作中$",
+            "Working on game {2} of {1}"
+        ],
+        [
+            "^(\\d+)本中(\\d+)本完成$",
+            "{2} of {1} games finished"
         ]
     ]
 };

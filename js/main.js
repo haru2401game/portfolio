@@ -1553,9 +1553,12 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
     const total = Number(progress.dataset.challengeTotal) || 10;
     const numbers = new Set();
+    let making = 0; // 制作中（role に「未完成」＝ WIP の印）の作品の番号
     document.querySelectorAll(".work-card h3").forEach((title) => {
         const match = title.textContent.match(/3D\s*CHALLENGE\s*#\s*(\d+)/i);
-        if (match) numbers.add(Number(match[1]));
+        if (!match) return;
+        numbers.add(Number(match[1]));
+        if (title.closest(".work-card")?.querySelector(".is-wip")) making = Math.max(making, Number(match[1]));
     });
 
     const done = Math.min(numbers.size, total);
@@ -1563,7 +1566,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
     progress.querySelector("[data-challenge-count]").textContent = done;
     bar.setAttribute("aria-valuenow", done);
-    bar.setAttribute("aria-valuetext", `${total}本中${done}本完成`);
+    bar.setAttribute("aria-valuetext", making ? `${total}本中${done}本目を制作中` : `${total}本中${done}本完成`);
     bar.style.setProperty("--challenge-total", total);
 
     for (let i = 1; i <= total; i += 1) {
@@ -1575,9 +1578,12 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     }
 
     progress.classList.toggle("is-complete", done >= total);
-    progress.querySelector("[data-challenge-next]").textContent = done >= total
-        ? "COMPLETE! 10本制作達成"
-        : `NEXT ▶ 3D CHALLENGE #${String(done + 1).padStart(2, "0")} 制作中`;
+    // 制作中の作品があるときは「NOW ▶ #06 制作中」、全部できあがっているときは「NEXT ▶ 次の番号 制作中」
+    progress.querySelector("[data-challenge-next]").textContent = making
+        ? `NOW ▶ 3D CHALLENGE #${String(making).padStart(2, "0")} 制作中`
+        : done >= total
+            ? "COMPLETE! 10本制作達成"
+            : `NEXT ▶ 3D CHALLENGE #${String(done + 1).padStart(2, "0")} 制作中`;
 
     observeShow([progress]);
 })();

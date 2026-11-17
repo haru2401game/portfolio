@@ -33,7 +33,7 @@
 | SELECT MODE | 採用担当・ゲーム制作の仲間・Web制作のご依頼、目的ごとの入口。選んだ目的は Contact の窓口で「おすすめ」として強調 |
 | 30秒でわかる 長屋晴太 | 目指す職種・得意な技術・代表作・実績を1枚にまとめたカード。スマホでは下に「JUMP」（作品一覧・遊べる作品・スキル・経歴・ブログへの近道）が出る |
 | About | プロフィール |
-| Achievements | 作品数・ブログ記事数・受賞数などの実績（数字はページ内から自動で集計） |
+| Achievements | 作品数・ブログ記事数・受賞数などの実績（数字はページ内から自動で集計。note 記事数は `data/blog.js` の件数が元。クラシック・NEW・日英のどこでも同じ数字になる） |
 | Main Works | 代表作2本（ししとう／Falien）をタブで切り替え。動画は押すと再生（最初は画像なので通信量が少ない）。技術の見どころ（課題→解決→結果）、チーム構成、写真 |
 | Other Works | その他の作品。ゲームカセット風のカード、絞り込み（「▶ 遊べる」など）、詳細ポップアップ（ブラウザで遊べる作品は「▶ unityroom で遊ぶ」ボタン）。14作品はプレイ映像つき（PC はカーソルを乗せると、スマホは画面の中ほどに来ると流れる） |
 | Play Games | 実際に遊べるサイト（unityroom など）へのリンクと、制作した Web サイト（WEB WORKS：POCKET PLAY） |
@@ -188,7 +188,7 @@ portfolio/
 │   └── profile.json      ページから数えられない数字（イベント参加数など）
 ├── scripts/
 │   ├── update-note.js    note の記事を取得するスクリプト
-│   ├── version-assets.js CSS・JS にバージョン番号を付ける（npm run assets。next/ も対象）
+│   ├── version-assets.js CSS・JS にバージョン番号を付ける＋ページに書いた作品数・note記事数をデータに合わせる（npm run assets。next/ も対象）
 │   └── work-pages.js     作品ごとのページ（works/）と sitemap.xml を作る（npm run assets でも一緒に動く）
 ├── next/                 NEW モード（https://haru2401game.github.io/portfolio/next/ ）
 │   ├── index.html        新デザインのページ本体（データ・画像は今のサイトと共通）
@@ -348,7 +348,8 @@ npm test         # 自動テスト
 ```
 
 3. 保存して、ブラウザでページを開き直して確認する
-4. `npm run assets` を動かす（作品ごとのページ `works/<リンク名>/` ができる）
+4. `npm run assets` を動かす（作品ごとのページ `works/<リンク名>/` ができる。ページに書いてある作品数も自動で合わせる）
+   - サムネイルがまだ無いときは、仮の画像を同じ名前で置いておき、本物ができたら同じ名前で上書きする（例：3D CHALLENGE #06 は `images/index/otherworks/3DGame6.webp`、1280×720 の WebP）
 
 作品ごとのページ（`works/<リンク名>/`）には、次の欄が自動で付きます。
 

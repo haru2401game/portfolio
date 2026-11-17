@@ -34,6 +34,28 @@
 
 window.WORKS = [
     {
+        title: "3D CHALLENGE #06",
+        // サムネイルは仮の画像（「画像準備中」）。本物ができたら、同じ名前 3DGame6.webp で上書きするだけでよい
+        image: "images/index/otherworks/3DGame6.webp",
+        alt: "3Dゲーム6本目「EMBER FALL」のサムネイル",
+        genre: "3DアクションRPG",
+        tech: "Unity C# Github",
+        period: "2026/10 ~ 11",
+        member: 1,
+        role: "企画・プログラム(未完成)",
+        description: "3Dゲーム制作10本制作チャレンジ 6作目「EMBER FALL」",
+        point: "雑魚とボスでクラスを分け、IDamageable インターフェースでつないだ。ボスのAIは状態ごとに処理を分け、攻撃の進み具合を Animator の再生位置ではなく経過時間で計算することで、連続攻撃が一瞬で終わる不具合を解決した。",
+        link: "https://note.com/ha_03ru_01/n/ne182fb52c96a",
+        size: [1280, 720],
+        en: {
+            alt: "Thumbnail of 3D game #6, EMBER FALL",
+            genre: "3D action RPG",
+            role: "Design & programming (in progress)",
+            description: "3D Game Challenge (10 games) — game 6, EMBER FALL",
+            point: "Split regular enemies and the boss into separate classes connected through an IDamageable interface. The boss AI handles each state separately, and attack progress is calculated from elapsed time instead of the Animator's playback position, which fixed a bug where combo attacks ended instantly.",
+        },
+    },
+    {
         title: "3D CHALLENGE #05",
         image: "images/index/otherworks/3DGame5.webp",
         alt: "3Dゲーム5本目のタイトル画面",
