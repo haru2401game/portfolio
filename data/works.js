@@ -35,7 +35,6 @@
 window.WORKS = [
     {
         title: "3D CHALLENGE #06",
-        // サムネイルは仮の画像（「画像準備中」）。本物ができたら、同じ名前 3DGame6.webp で上書きするだけでよい
         image: "images/index/otherworks/3DGame6.webp",
         alt: "3Dゲーム6本目「EMBER FALL」のサムネイル",
         genre: "3DアクションRPG",
