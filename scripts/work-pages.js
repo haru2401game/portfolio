@@ -37,8 +37,8 @@ const MAIN_WORKS = [
     {
         id: "shishito",
         title: "ししとう",
-        image: "images/index/Hero/poster.webp",
-        size: [703, 397],
+        image: "images/index/otherworks/Shishito.webp", // プレイ映像のタイトル画面から切り出した 1280×720
+        size: [1280, 720],
         alt: "ししとうのタイトル画面",
         genre: "2D格闘ゲーム",
         period: "2026/07 ~ 制作中",
@@ -51,7 +51,7 @@ const MAIN_WORKS = [
         play: "https://unityroom.com/games/shishito",
         main: true,
         // ここから下は代表作だけ（トップの「技術の見どころ」と同じ内容）
-        movie: { src: "videos/index/Shishito.mp4", poster: "images/index/Hero/poster.webp", label: "プレイ映像（15秒・音声あり）" },
+        movie: { src: "videos/index/Shishito.mp4", poster: "images/index/otherworks/Shishito.webp", label: "プレイ映像（15秒・音声あり）" },
         lead: "リードプログラマー・チームリーダーとして、ゲームの中心になるプレイヤーシステムを担当しました。",
         points: [
             {
