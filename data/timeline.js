@@ -13,7 +13,9 @@
      photo      写真 { image: 画像, alt: 説明, size: [横, 縦], caption: 拡大したときの説明, position: "50% 30%"（見せたい位置・なくてもよい） }
      note       写真の代わりに note 記事を出す（クリックで記事が開く）
                 { url: 記事のURL, title: 記事のタイトル, image: サムネイル画像, size: [横, 縦] }
-                ※ photo と note は、どちらか1つだけ書く
+     link       写真の代わりに動画などのリンクを出す（YouTube など。クリックで開く）
+                { url: URL, label: "YouTube で見る" などボタンの文字, image: サムネイル画像, size: [横, 縦] }
+                ※ photo・note・link は、どれか1つだけ書く
      challenge  進捗バー { name: 表示名, total: 目標の本数, label: 読み上げ用の説明 }（"now" の出来事だけ）
      en         英語 { title: "...", text: ["...", "..."], caption: "...", alt: "..." }（書かない項目は日本語のまま）
 ======================================== */
@@ -166,6 +168,21 @@ window.TIMELINE = [
             title: "【学園祭】ゲーム展示に企画運営、全身青タイツまで。全力で楽しんだ学園祭を振り返る",
             image: "https://assets.st-note.com/production/uploads/images/336828559/rectangle_large_type_2_fa8e27aaba6eca31569f9a989a66b4e3.png?fit=bounds&quality=85&width=640",
             size: [1280, 670],
+        },
+    },
+    {
+        date: "2026.11",
+        title: "ハルコレ2026 敗者復活戦に進出",
+        text: [
+            "ガクハマ「ゲーム制作」にはまった！で応募",
+            "1次審査を通過し、2次審査の動画で",
+            "敗者復活戦に進出",
+        ],
+        link: {
+            url: "https://youtu.be/WadouWn22Zk",
+            label: "YouTube で見る",
+            image: "https://i.ytimg.com/vi/WadouWn22Zk/mqdefault.jpg",
+            size: [320, 180],
         },
     },
     {

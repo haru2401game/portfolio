@@ -44,14 +44,14 @@ const update = (file, pattern, makeReplacement) => {
 update("js/i18n.js", /"data\/i18n-en\.js(\?v=[0-9a-f]*)?";/, () => `"data/i18n-en.js?v=${hashOf("data/i18n-en.js")}";`);
 
 // 2. index.html が読み込む CSS・JS（1 で i18n.js が変わっていても、ここで新しい番号になる）
-const TARGET = /(src|href)="((?:js\/[\w-]+\.js)|(?:css\/[\w-]+\.css)|(?:data\/(?:works|timeline)\.js))(\?v=[0-9a-f]*)?"/g;
+const TARGET = /(src|href)="((?:js\/[\w-]+\.js)|(?:css\/[\w-]+\.css)|(?:data\/(?:works|timeline|notice)\.js))(\?v=[0-9a-f]*)?"/g;
 for (const page of ["index.html", "404.html", "classic.html"]) {
     if (!fs.existsSync(path.join(ROOT, page))) continue;
     update(page, TARGET, (whole, attr, file) => (fs.existsSync(path.join(ROOT, file)) ? `${attr}="${file}?v=${hashOf(file)}"` : whole));
 }
 
 // 3. NEW モード（next/index.html）。住所は next/ から見た場所（../js/… は今のサイトと共通のファイル）
-const NEXT_TARGET = /(src|href)="((?:\.\.\/)?(?:js\/[\w-]+\.js|css\/[\w-]+\.css|data\/(?:works|timeline)\.js))(\?v=[0-9a-f]*)?"/g;
+const NEXT_TARGET = /(src|href)="((?:\.\.\/)?(?:js\/[\w-]+\.js|css\/[\w-]+\.css|data\/(?:works|timeline|notice)\.js))(\?v=[0-9a-f]*)?"/g;
 if (fs.existsSync(path.join(ROOT, "next/index.html"))) {
     update("next/index.html", NEXT_TARGET, (whole, attr, file) => {
         const real = path.join("next", file);

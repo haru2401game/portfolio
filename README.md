@@ -393,6 +393,8 @@ Timeline は `data/timeline.js` から自動で作られます。HTML を書く�
         //     image: "記事のサムネイル画像のURL（data/blog.js の thumbnail をコピー）",
         //     size: [1280, 670],
         // },
+        // 動画などのリンクを出すとき（YouTube など。photo・note・link はどれか1つ）
+        // link: { url: "https://youtu.be/…", label: "YouTube で見る", image: "https://i.ytimg.com/vi/<動画ID>/mqdefault.jpg", size: [320, 180] },
         en: { title: "Title in English", text: ["Line 1", "Line 2"] },
     },
 ```
@@ -402,6 +404,15 @@ Timeline は `data/timeline.js` から自動で作られます。HTML を書く�
 - `quest: "now"`（いま挑戦中）は1つだけ。新しい挑戦を始めたら、前の "now" の行を消す
 - "now" はいちばん下に置く。挑戦中に起きた出来事（例：2026.11 の学園祭）は、"now" のすぐ上に書き足す（"now" より下に書くと、まだクリアしていない扱いになる）
 - 書き終えたら `npm test`。書き忘れや写真のファイル名の間違いを教えてくれる
+
+### トップに期間限定のお知らせを出すとき
+
+`data/notice.js` に書くと、クラシック・NEW の両方のトップ（ボタンのすぐ下）に出ます。
+
+- `until` の日時を過ぎると自動で出なくなる（消し忘れても大丈夫）
+- お知らせが無いときは `window.NOTICE = null;`
+- 英語は辞書（data/i18n-en.js）に同じ文を足す
+- 押された回数は分析で「お知らせ: <id>」として数える
 
 ### 作品のプレビュー映像を足すとき
 

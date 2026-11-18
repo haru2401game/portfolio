@@ -874,22 +874,25 @@
                 button.append(img);
                 card.append(button);
             }
-            // 写真の代わりに note 記事：サムネイルと「note で読む」を出し、クリックで記事を開く
-            if (item.note?.url && !item.photo) {
+            // 写真の代わりに note 記事や動画：サムネイルと「note で読む」などを出し、クリックで開く
+            const linkCard = item.photo ? null : item.note ? { label: "note で読む", ...item.note } : item.link;
+            if (linkCard?.url && safeUrl(linkCard.url)) {
                 const link = el("a", "tl-note");
-                link.href = item.note.url;
+                link.href = linkCard.url;
                 link.target = "_blank";
                 link.rel = "noopener";
-                link.setAttribute("aria-label", "note の記事を読む（新しいタブで開く）");
-                if (item.note.image) {
+                link.setAttribute("aria-label", `${linkCard.label || "リンクを開く"}（新しいタブで開く）`);
+                if (linkCard.image) {
+                    const [width, height] = Array.isArray(linkCard.size) && linkCard.size.length === 2 ? linkCard.size : [1280, 670];
                     const img = el("img");
-                    img.src = item.note.image;
+                    img.src = linkCard.image;
                     img.alt = "";
                     img.loading = "lazy";
+                    img.style.aspectRatio = `${width} / ${height}`;
                     img.addEventListener("error", () => img.remove(), { once: true });
                     link.append(img);
                 }
-                link.append(el("span", "tl-note-label", "note で読む"));
+                link.append(el("span", "tl-note-label", linkCard.label || "リンクを開く"));
                 card.append(link);
             }
             if (item.challenge) {

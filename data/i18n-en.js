@@ -878,7 +878,16 @@ window.I18N_EN = {
         "フォトコンテストの運営を担当": "Ran the photo contest",
         "全身青タイツで学校中を歩き回った": "Walked all over campus in a full-body blue suit",
         "note で読む": "Read on note",
-        "note の記事を読む（新しいタブで開く）": "Read the note article (opens in a new tab)"
+        "note で読む（新しいタブで開く）": "Read on note (opens in a new tab)",
+        "YouTube で見る（新しいタブで開く）": "Watch on YouTube (opens in a new tab)",
+        "YouTube で見る": "Watch on YouTube",
+        "ハルコレ2026 敗者復活戦に進出": "HARUCOLLE 2026: advanced to the repechage round",
+        "ガクハマ「ゲーム制作」にはまった！で応募": "Entered with my passion story, \"Hooked on making games!\"",
+        "1次審査を通過し、2次審査の動画で": "Passed the first round, and my second-round video",
+        "敗者復活戦に進出": "made it into the repechage round",
+        "ハルコレ2026 敗者復活戦に挑戦中！": "I'm in the HARUCOLLE 2026 repechage round!",
+        "YouTube の動画への応援コメントが審査の対象です（11/30まで）": "Supportive comments on my YouTube video count toward the result (until Nov 30, JST)",
+        "動画を見て応援する": "Watch & leave a comment"
     },
     "patterns": [
         [
