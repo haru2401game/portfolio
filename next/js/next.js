@@ -392,6 +392,23 @@
             return ok;
         }
     };
+    // Main Works の「この作品のリンクをコピー」：作品ごとのページ（works/○○/）の URL をコピーする
+    $$("[data-share-work]").forEach((button) => {
+        const label = button.textContent;
+        let timer = 0;
+        button.addEventListener("click", async () => {
+            const url = new URL(`${BASE}works/${button.dataset.shareWork}/`, location.href).href;
+            const ok = await copyText(url);
+            button.textContent = ok ? "リンクをコピーしました" : "コピーできませんでした";
+            button.classList.toggle("is-done", ok);
+            if (ok) emit(`作品リンクをコピー: ${button.dataset.shareWork}`);
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                button.textContent = label;
+                button.classList.remove("is-done");
+            }, 2200);
+        });
+    });
     $("[data-copy-mail]")?.addEventListener("click", async (event) => {
         const button = event.currentTarget;
         const ok = await copyText(ADDRESS);

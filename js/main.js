@@ -2610,3 +2610,48 @@ document.querySelectorAll(".summary-jump a[data-jump]").forEach((link) => {
 
     panel.append(card);
 })();
+
+/* ========================================
+   Main Works の「この作品のリンクをコピー」（index.html の [data-share-work]）
+   ・作品ごとのページ（works/○○/）の URL をコピーする。SNS などで共有すると、その作品のページが開く
+   ・コピーできたら数秒だけ「リンクをコピーしました」にして戻す。分析でも数える
+======================================== */
+
+document.querySelectorAll("[data-share-work]").forEach((button) => {
+    const label = button.textContent;
+    let timer = 0;
+    const copy = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch {
+            const area = document.createElement("textarea");
+            area.value = text;
+            area.setAttribute("readonly", "");
+            area.style.position = "fixed";
+            area.style.opacity = "0";
+            document.body.append(area);
+            area.select();
+            let ok = false;
+            try {
+                ok = document.execCommand("copy");
+            } catch {
+                ok = false;
+            }
+            area.remove();
+            return ok;
+        }
+    };
+    button.addEventListener("click", async () => {
+        const url = new URL(`works/${button.dataset.shareWork}/`, location.href.split("#")[0]).href;
+        const ok = await copy(url);
+        button.textContent = ok ? "リンクをコピーしました" : "コピーできませんでした（アドレスバーの URL を使ってください）";
+        button.classList.toggle("is-done", ok);
+        if (ok) emitPlayEvent(`作品リンクをコピー: ${button.dataset.shareWork}`);
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            button.textContent = label;
+            button.classList.remove("is-done");
+        }, 2200);
+    });
+});

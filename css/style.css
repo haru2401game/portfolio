@@ -7631,7 +7631,51 @@ footer.has-peeker {
 
 .featured-actions {
     display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
     margin: 18px 0 4px;
+}
+
+/* Main Works の「この作品のリンクをコピー」（作品ごとのページ works/○○/ の URL） */
+.featured-share {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 2px solid var(--ui-line, #e1e7ef);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 5px 0 var(--ui-line, #e1e7ef);
+    color: var(--ui-ink, #111713);
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .2s ease;
+}
+
+.featured-share::before {
+    content: "🔗";
+}
+
+.featured-share:hover {
+    border-color: #00a3e0;
+    transform: translateY(-2px);
+}
+
+.featured-share:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--ui-line, #e1e7ef);
+}
+
+.featured-share.is-done {
+    border-color: #1f8a4c;
+    color: #14643a;
+}
+
+.featured-share.is-done::before {
+    content: "✓";
 }
 
 .featured-play {
@@ -7639,7 +7683,8 @@ footer.has-peeker {
 }
 
 @media (max-width: 600px) {
-    .featured-play {
+    .featured-play,
+    .featured-share {
         width: 100%;
     }
 }
