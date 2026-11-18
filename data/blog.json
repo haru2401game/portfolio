@@ -1,6 +1,13 @@
 {
-    "articleCount": 278,
+    "articleCount": 279,
     "articles": [
+        {
+            "title": "【ハルコレ2026】敗者復活戦に挑戦中！ゲーム制作に夢中になった私に、あなたの1コメントを貸してください！ はる日記#279",
+            "date": "2026.11.18",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/337500691/rectangle_large_type_2_fbe0872e4d4568edf2d3c330b0dc6b27.png?fit=bounds&quality=85&width=1280",
+            "summary": "突然ですが、皆さんにお願いがあります。 現在、私は「ハルコレ2026」の敗者復活戦に参加しています！ 続きをみる...",
+            "url": "https://note.com/ha_03ru_01/n/n1fb5bd59978f"
+        },
         {
             "title": "「【学園祭】ゲーム展示に企画運営、全身青タイツまで。全力で楽しんだ学園祭を振り返る」 はる日記#278",
             "date": "2026.11.16",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/335108826/rectangle_large_type_2_c2d6d63117490fc1b4372b55bb015c05.png?fit=bounds&quality=85&width=1280",
             "summary": "現在3Dゲーム作品6本目として、Unityで3DアクションRPG「EMBER FALL」を作っています。 前回までに、プレイヤーの移動・攻撃、雑魚敵、レベルアップ、スキルツリー、セーブ機能までを作りま...",
             "url": "https://note.com/ha_03ru_01/n/ne182fb52c96a"
-        },
-        {
-            "title": "「ゲーム制作もWeb制作も、楽しい理由は同じだった」 はる日記#276",
-            "date": "2026.11.10",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/334486708/rectangle_large_type_2_4843a1d8f06f5905c0694d6506f942b1.png?fit=bounds&quality=85&width=1280",
-            "summary": "私はゲームプログラマーを目指して、個人制作やチーム制作、ゲームジャムなどでさまざまなゲームを作ってきました。 そんな私ですが、最近はポートフォリオサイトを作り始めたことをきっかけに、Web制作の楽しさ...",
-            "url": "https://note.com/ha_03ru_01/n/n199a0362e906"
         }
     ]
 }
