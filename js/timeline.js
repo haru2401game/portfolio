@@ -36,7 +36,7 @@
         if (item.quest) row.dataset.quest = item.quest;
         row.append(el("div", "timeline-date", item.date || ""));
 
-        const content = el("div", item.photo ? "timeline-content has-photo" : "timeline-content");
+        const content = el("div", item.photo || item.note ? "timeline-content has-photo" : "timeline-content");
         content.append(el("h3", "", item.title || ""));
 
         // 本文：1行ずつ <br> でつなぐ
@@ -64,6 +64,30 @@
             if (photo.position) image.style.objectPosition = photo.position;
             button.append(image);
             content.append(button);
+        }
+
+        // 写真の代わりに note 記事：サムネイルと「note で読む」を出し、クリックで記事を開く
+        if (item.note && !item.photo) {
+            const note = item.note;
+            const link = el("a", "timeline-note");
+            link.href = note.url || "";
+            link.target = "_blank";
+            link.rel = "noopener";
+            link.setAttribute("aria-label", "note の記事を読む（新しいタブで開く）");
+            if (note.image) {
+                const [width, height] = Array.isArray(note.size) && note.size.length === 2 ? note.size : [1280, 670];
+                const image = el("img");
+                image.loading = "lazy";
+                image.decoding = "async";
+                image.src = note.image;
+                image.alt = "";
+                image.width = width;
+                image.height = height;
+                image.addEventListener("error", () => image.remove(), { once: true }); // 画像が読めなくても、文字のリンクは残す
+                link.append(image);
+            }
+            link.append(el("span", "timeline-note-label", "note で読む"));
+            content.append(link);
         }
 
         if (item.challenge) {

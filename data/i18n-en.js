@@ -872,7 +872,13 @@ window.I18N_EN = {
         "落ち着いて読める NEW モードに切り替えます（いつでも戻せます）": "Switch to NEW mode, a calm layout for reading (you can switch back anytime)",
         "落ち着いて読める": "Calm layout",
         "OPTIONS：設定（表示モード・アニメーション・音量・言語）。NEW モードを追加しました": "OPTIONS: settings (display mode, animation, volume, language). NEW mode added",
-        "新しい項目": "New item"
+        "新しい項目": "New item",
+        "学園祭で展示・運営": "School festival: exhibit & running events",
+        "「ししとう」を展示": "Exhibited SHISHITO",
+        "フォトコンテストの運営を担当": "Ran the photo contest",
+        "全身青タイツで学校中を歩き回った": "Walked all over campus in a full-body blue suit",
+        "note で読む": "Read on note",
+        "note の記事を読む（新しいタブで開く）": "Read the note article (opens in a new tab)"
     },
     "patterns": [
         [

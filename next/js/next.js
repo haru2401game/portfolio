@@ -874,6 +874,24 @@
                 button.append(img);
                 card.append(button);
             }
+            // 写真の代わりに note 記事：サムネイルと「note で読む」を出し、クリックで記事を開く
+            if (item.note?.url && !item.photo) {
+                const link = el("a", "tl-note");
+                link.href = item.note.url;
+                link.target = "_blank";
+                link.rel = "noopener";
+                link.setAttribute("aria-label", "note の記事を読む（新しいタブで開く）");
+                if (item.note.image) {
+                    const img = el("img");
+                    img.src = item.note.image;
+                    img.alt = "";
+                    img.loading = "lazy";
+                    img.addEventListener("error", () => img.remove(), { once: true });
+                    link.append(img);
+                }
+                link.append(el("span", "tl-note-label", "note で読む"));
+                card.append(link);
+            }
             if (item.challenge) {
                 const total = Number(item.challenge.total) || 10;
                 const name = item.challenge.name || "";

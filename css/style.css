@@ -5700,6 +5700,68 @@ footer.has-peeker {
     }
 }
 
+/* 写真の代わりの note 記事（クリックで記事が開く） */
+.timeline-note {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    display: block;
+    overflow: hidden;
+    border: 2px solid var(--ui-line);
+    border-radius: 10px;
+    background: var(--ui-panel);
+    color: var(--ui-ink);
+    text-decoration: none;
+    transition: border-color .25s ease, transform .25s ease;
+}
+
+.timeline-note img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1280 / 670;
+    object-fit: cover;
+}
+
+.timeline-note-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.timeline-note-label::after {
+    content: "↗";
+}
+
+.timeline-note:hover,
+.timeline-note:focus-visible {
+    border-color: var(--quest);
+    transform: translateY(-2px);
+}
+
+.timeline-note:focus-visible {
+    outline: 3px solid var(--quest-ink);
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .timeline-note {
+        grid-column: 1;
+        grid-row: auto;
+        margin-top: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .timeline-note {
+        transition: none;
+    }
+}
+
 /* ========================================
    3D Challenge Progress
 ======================================== */

@@ -11,6 +11,9 @@
      quest      "award" … 受賞（★RARE・トロフィー・受賞作の判定に使う）／ "now" … いま挑戦中（いちばん下の1つだけ）
                 ※ 受賞作にしたい作品は、text に「作品名」とカギかっこ付きで書く（作品カードのタイトルと同じ名前）
      photo      写真 { image: 画像, alt: 説明, size: [横, 縦], caption: 拡大したときの説明, position: "50% 30%"（見せたい位置・なくてもよい） }
+     note       写真の代わりに note 記事を出す（クリックで記事が開く）
+                { url: 記事のURL, title: 記事のタイトル, image: サムネイル画像, size: [横, 縦] }
+                ※ photo と note は、どちらか1つだけ書く
      challenge  進捗バー { name: 表示名, total: 目標の本数, label: 読み上げ用の説明 }（"now" の出来事だけ）
      en         英語 { title: "...", text: ["...", "..."], caption: "...", alt: "..." }（書かない項目は日本語のまま）
 ======================================== */
@@ -148,6 +151,21 @@ window.TIMELINE = [
             alt: "東京ゲームショウ2026のIGDA日本ブースで「ししとう」を展示している様子",
             size: [1280, 960],
             caption: "東京ゲームショウ2026：IGDA日本ブースで「ししとう」を展示",
+        },
+    },
+    {
+        date: "2026.11",
+        title: "学園祭で展示・運営",
+        text: [
+            "「ししとう」を展示",
+            "フォトコンテストの運営を担当",
+            "全身青タイツで学校中を歩き回った",
+        ],
+        note: {
+            url: "https://note.com/ha_03ru_01/n/n1276aa3d04c0",
+            title: "【学園祭】ゲーム展示に企画運営、全身青タイツまで。全力で楽しんだ学園祭を振り返る",
+            image: "https://assets.st-note.com/production/uploads/images/336828559/rectangle_large_type_2_fa8e27aaba6eca31569f9a989a66b4e3.png?fit=bounds&quality=85&width=640",
+            size: [1280, 670],
         },
     },
     {

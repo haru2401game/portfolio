@@ -495,6 +495,13 @@ html:not(.motion-off) .stage-panel.is-enter { animation: panel-in .6s var(--ease
 .tl-card p span { display: block; }
 .tl-photo { display: block; width: 100%; margin-top: 12px; padding: 0; border: 0; background: none; cursor: zoom-in; }
 .tl-photo img { width: 100%; height: 170px; object-fit: cover; }
+/* 写真の代わりの note 記事（クリックで記事が開く） */
+.tl-note { display: block; margin-top: 12px; border: 1px solid var(--gray); color: var(--ink); text-decoration: none; transition: border-color .25s var(--ease); }
+.tl-note img { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 670; object-fit: cover; }
+.tl-note-label { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; font-size: 12px; font-weight: 700; }
+.tl-note-label::after { content: "↗"; color: var(--red); transition: translate .25s var(--ease); }
+.tl-note:hover, .tl-note:focus-visible { border-color: var(--red); }
+.tl-note:hover .tl-note-label::after { translate: 2px -2px; }
 .challenge { margin-top: 12px; }
 .challenge-head { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--ink); }
 .challenge-bar { height: 6px; margin-top: 6px; background: var(--gray); }
