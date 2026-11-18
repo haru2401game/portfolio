@@ -426,6 +426,23 @@ html:not(.motion-off) .stage-panel.is-enter { animation: panel-in .6s var(--ease
 
 /* ---------- 遊べる作品 ＋ Web ---------- */
 
+/* 代表作（ししとう・Falien）をそのまま遊ぶカード */
+.play-main { margin-bottom: 28px; }
+.play-main-label { margin: 0 0 12px; font-size: 12px; font-weight: 700; letter-spacing: .14em; color: var(--red); }
+.play-main-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.play-main-card { display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: center; gap: 6px 20px; padding: 16px; background: #fff; box-shadow: inset 0 0 0 1px var(--gray); color: var(--ink); text-decoration: none; transition: box-shadow .25s var(--ease); }
+.play-main-card img { grid-row: span 2; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.play-main-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.play-main-text small { font-size: 12px; color: var(--muted); }
+.play-main-text b { font-family: var(--display); font-weight: 900; font-size: 24px; line-height: 1.2; }
+.play-main-card i { align-self: start; font-style: normal; font-weight: 700; font-size: 13px; color: var(--red); }
+.play-main-card:hover { box-shadow: inset 0 0 0 2px var(--red); }
+.stage-play { font-style: normal; padding: 4px 10px; box-shadow: inset 0 0 0 1px var(--ink); color: var(--ink); font-size: 12px; font-weight: 700; }
+@media (max-width: 760px) {
+    .play-main-list { grid-template-columns: minmax(0, 1fr); }
+    .play-main-card { grid-template-columns: 128px minmax(0, 1fr); padding: 12px; }
+    .stage-play { display: none; }
+}
 .play-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .play-card { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: start; gap: 6px 18px; padding: 24px; background: var(--gray); text-decoration: none; transition: background-color .25s var(--ease); }
 .play-card img { width: 56px; height: 56px; object-fit: contain; }

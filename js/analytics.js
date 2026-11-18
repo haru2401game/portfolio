@@ -192,7 +192,7 @@
         }
 
         // 作品から「遊ぶ」ボタンを押した（作品の詳しい画面・Main Works）。どの作品が遊ばれたかを数える
-        if (target.matches(".work-viewer-play, .featured-play")) {
+        if (target.matches(".work-viewer-play, .featured-play, .play-main-card")) {
             track("play_click", `${target.dataset.title || "作品"}（作品から）`);
             return;
         }

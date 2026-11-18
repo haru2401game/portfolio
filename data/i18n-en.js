@@ -887,7 +887,12 @@ window.I18N_EN = {
         "敗者復活戦に進出": "made it into the repechage round",
         "ハルコレ2026 敗者復活戦に挑戦中！": "I'm in the HARUCOLLE 2026 repechage round!",
         "YouTube の動画への応援コメントが審査の対象です（11/30まで）": "Supportive comments on my YouTube video count toward the result (until Nov 30, JST)",
-        "動画を見て応援する": "Watch & leave a comment"
+        "動画を見て応援する": "Watch & leave a comment",
+        "▶ ブラウザで遊べる": "▶ Playable in browser",
+        "▶ 代表作をブラウザで遊ぶ": "▶ Play my main works in your browser",
+        "代表作をブラウザで遊ぶ": "Play my main works in your browser",
+        "2D格闘 ／ 東京ゲームショウ2026 出展": "2D fighting / Tokyo Game Show 2026",
+        "2Dアクション ／ IGCC グランプリ": "2D action / IGCC Grand Prix"
     },
     "patterns": [
         [
