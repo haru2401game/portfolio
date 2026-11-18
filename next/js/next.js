@@ -919,7 +919,8 @@
         });
 
         // 経歴も長いので、最初は新しい出来事だけ見せて、それより前は「これまでの歩みを見る」で開く
-        const SHOW_RECENT = 5;
+        // 見せる数はクラシックと同じ（パソコンは3つ、スマホは画面が縦に長くなるので2つ）
+        const SHOW_RECENT = matchMedia("(max-width: 768px)").matches ? 2 : 3;
         const tlItems = $$(".tl-item", track);
         const older = tlItems.slice(0, Math.max(0, tlItems.length - SHOW_RECENT));
         if (older.length) {
