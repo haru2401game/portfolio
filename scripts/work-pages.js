@@ -84,6 +84,7 @@ const MAIN_WORKS = [
         tech: ["Unity", "C#", "GitHub"],
         description: "宇宙人の足を付け替えて研究所から脱出する2Dアクション。6か国・7人の国際チームで約1週間で制作し、IGCCゲームジャムでグランプリを受賞しました。",
         award: "IGCCゲームジャム グランプリ",
+        play: "https://unityroom.com/games/falien",
         main: true,
         movie: { src: "videos/index/Falien.mp4", poster: "images/index/otherworks/Falien.webp", label: "プレイ映像（2分54秒・音声あり）" },
         lead: "ジェネラリスト（総合管理）として、タイトルシーンの制作、各シーンの結合、3言語のローカライズを担当しました。",
