@@ -1544,7 +1544,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 })();
 
 /* ========================================
-   3Dゲーム10本チャレンジの進み具合（Other Works のタイトルから数える）
+   3Dゲーム10本チャレンジの進み具合（Other Works のタイトル「3D CHALLENGE #○○」か、data/works.js の challenge から数える）
 ======================================== */
 
 (() => {
@@ -1554,11 +1554,12 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     const total = Number(progress.dataset.challengeTotal) || 10;
     const numbers = new Set();
     let making = 0; // 制作中（role に「未完成」＝ WIP の印）の作品の番号
-    document.querySelectorAll(".work-card h3").forEach((title) => {
-        const match = title.textContent.match(/3D\s*CHALLENGE\s*#\s*(\d+)/i);
-        if (!match) return;
-        numbers.add(Number(match[1]));
-        if (title.closest(".work-card")?.querySelector(".is-wip")) making = Math.max(making, Number(match[1]));
+    document.querySelectorAll(".work-card").forEach((card) => {
+        const match = (card.dataset.title || card.querySelector("h3")?.textContent || "").match(/3D\s*CHALLENGE\s*#\s*(\d+)/i);
+        const number = Number(card.dataset.challenge) || (match ? Number(match[1]) : 0);
+        if (!number) return;
+        numbers.add(number);
+        if (card.querySelector(".is-wip")) making = Math.max(making, number);
     });
 
     const done = Math.min(numbers.size, total);

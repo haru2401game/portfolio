@@ -21,6 +21,7 @@
       play         ブラウザで遊べる場所の URL（unityroom・itch.io など）。書くと「▶ PLAYABLE」の印と「遊ぶ」ボタンが出て、絞り込みの「▶ 遊べる」に入る
       size         画像の幅と高さ [幅, 高さ]（省略すると 16:9 として扱う）
       preview      プレイ映像（videos/previews/ の8秒動画。省略すると映像なし）
+      challenge    3Dゲーム10本チャレンジの何本目か（数字）。タイトルが「3D CHALLENGE #○○」でない作品も、進捗バーの数に入る
       id           作品ごとのリンク（…/portfolio/#work=○○）の ○○ の部分（英小文字・数字・ハイフン）
                    省略すると英語のタイトル（なければタイトル）から自動で作る（例：HOOK SHIFT → hook-shift）
                    リンクを貼ったあとでタイトルを変えるときは、元の名前を id に書くとリンクが切れない
@@ -37,15 +38,17 @@
 
 window.WORKS = [
     {
-        title: "3D CHALLENGE #06",
+        title: "EMBERFALL",
+        id: "3d-challenge-06",   // タイトルを変える前の作品リンク（…#work=3d-challenge-06・works/3d-challenge-06/）を切らないため
+        challenge: 6,            // 3Dゲーム10本チャレンジの何本目か（進捗バーの数に入る）
         image: "images/index/otherworks/3DGame6.webp",
-        alt: "3Dゲーム6本目「EMBER FALL」のサムネイル",
+        alt: "3Dゲーム6本目「EMBERFALL」のタイトル画面",
         genre: "3DアクションRPG",
         tech: "Unity C# Github",
         period: "2026/10 ~ 11",
         member: 1,
         role: "企画・プログラム(未完成)",
-        description: "3Dゲーム制作10本制作チャレンジ 6作目「EMBER FALL」",
+        description: "3Dゲーム制作10本制作チャレンジ 6作目「EMBERFALL」",
         point: "雑魚とボスでクラスを分け、IDamageable インターフェースでつないだ。ボスのAIは状態ごとに処理を分け、攻撃の進み具合を Animator の再生位置ではなく経過時間で計算することで、連続攻撃が一瞬で終わる不具合を解決した。",
         link: "https://note.com/ha_03ru_01/n/ne182fb52c96a",
         size: [1280, 720],
@@ -117,10 +120,10 @@ private static bool IsValidTarget(IDamageable target)
 }`,
         },
         en: {
-            alt: "Thumbnail of 3D game #6, EMBER FALL",
+            alt: "Title screen of 3D game #6, EMBERFALL",
             genre: "3D action RPG",
             role: "Design & programming (in progress)",
-            description: "3D Game Challenge (10 games) — game 6, EMBER FALL",
+            description: "3D Game Challenge (10 games) — game 6, EMBERFALL",
             point: "Split regular enemies and the boss into separate classes connected through an IDamageable interface. The boss AI handles each state separately, and attack progress is calculated from elapsed time instead of the Animator's playback position, which fixed a bug where combo attacks ended instantly.",
             codeTitle: "Handling regular enemies and the boss through one interface",
             codeText: "The player's weapon deals damage only through IDamageable, without caring whether the target is a regular enemy or the boss. Adding a new kind of enemy or a breakable object only requires implementing this interface. A HashSet records who has already been hit so one swing never hits the same target twice, and the code also checks for destroyed Unity objects, since Unity's \"destroyed equals null\" check doesn't work through an interface-typed variable.",

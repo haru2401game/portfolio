@@ -924,7 +924,8 @@
             if (item.challenge) {
                 const total = Number(item.challenge.total) || 10;
                 const name = item.challenge.name || "";
-                const done = Math.min(total, WORKS.filter((work) => name && String(work.title).startsWith(name)).length);
+                // タイトルが「3D CHALLENGE #○○」か、data/works.js に challenge（何本目か）が書いてある作品を数える
+                const done = Math.min(total, WORKS.filter((work) => Number(work.challenge) > 0 || (name && String(work.title).startsWith(name))).length);
                 const box = el("div", "challenge");
                 const head = el("div", "challenge-head");
                 head.append(el("span", "", name || "CHALLENGE"), el("span", "", `${done} / ${total}`));

@@ -55,6 +55,7 @@
         const card = el("div", "work-card");
         card.dataset.workId = idOf(work);
         card.dataset.title = work.title || ""; // 分析や作品リンクで使う元の名前（ブラウザの翻訳で書き換わらない）
+        if (Number(work.challenge) > 0) card.dataset.challenge = String(Number(work.challenge)); // 3Dゲーム10本チャレンジの何本目か（main.js の進捗バー）
         if (work.preview) card.dataset.preview = work.preview;
         // ブラウザで遊べる場所（https の URL だけ）。カードの印・詳しい画面の「遊ぶ」ボタン・絞り込みで使う（main.js）
         if (/^https:\/\//i.test(String(work.play || "").trim())) card.dataset.play = String(work.play).trim();
