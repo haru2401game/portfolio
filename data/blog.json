@@ -1,6 +1,13 @@
 {
-    "articleCount": 279,
+    "articleCount": 280,
     "articles": [
+        {
+            "title": "ゲーム系専門学生が1年半でゲームを35本作って分かったこと はる日記#280",
+            "date": "2026.11.19",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/337547251/rectangle_large_type_2_63a45dcc8b5bd3d3a99248743816de24.png?fit=bounds&quality=85&width=1280",
+            "summary": "2025年4月に専門学校に入学してから、約1年半でゲームを35本作りました。最初の1本は、C++の関数とマウス入力を学びながら作った『AIM MASTER』という小さなゲームです。いまはUnityで3...",
+            "url": "https://note.com/ha_03ru_01/n/n8b7d73750f8a"
+        },
         {
             "title": "【ハルコレ2026】敗者復活戦に挑戦中！ゲーム制作に夢中になった私に、あなたの1コメントを貸してください！ はる日記#279",
             "date": "2026.11.18",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/336828559/rectangle_large_type_2_fa8e27aaba6eca31569f9a989a66b4e3.png?fit=bounds&quality=85&width=1280",
             "summary": "学園祭で、全身青タイツを着て学校中を歩き回った。 ……いきなり何を言っているんだ、と思われるかもしれない。 続きをみる...",
             "url": "https://note.com/ha_03ru_01/n/n1276aa3d04c0"
-        },
-        {
-            "title": "「【Unity】ボス戦を作ってゲームループを完成させるまで ― アニメーション3つのボスをどう戦わせたか」 はる日記#277",
-            "date": "2026.11.12",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/335108826/rectangle_large_type_2_c2d6d63117490fc1b4372b55bb015c05.png?fit=bounds&quality=85&width=1280",
-            "summary": "現在3Dゲーム作品6本目として、Unityで3DアクションRPG「EMBER FALL」を作っています。 前回までに、プレイヤーの移動・攻撃、雑魚敵、レベルアップ、スキルツリー、セーブ機能までを作りま...",
-            "url": "https://note.com/ha_03ru_01/n/ne182fb52c96a"
         }
     ]
 }
