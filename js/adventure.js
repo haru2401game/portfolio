@@ -19,6 +19,9 @@
 
     const sound = (name) => window.PlaySfx?.(name);
     const still = () => typeof motionOff === "function" && motionOff();
+    // 「採用担当の方」を選んだ人（SELECT MODE。main.js が <html data-mode="recruit"> を付ける）には、
+    // 案内役の会話・LEVEL UP・STAGE CLEAR を出さずに、読むことに集中してもらう（Lv の札と経験値は今までどおり）
+    const quiet = () => document.documentElement.dataset.mode === "recruit";
 
     /* ========================================
        1. レベルと経験値
@@ -151,16 +154,17 @@
         next();
     };
 
-    // レベルアップの演出（画面の真ん中に大きく）
+    // レベルアップの演出（左上の Lv の札のすぐ下に。読んでいる文章の上に重ならないように）
     const levelUp = (level) => {
         emitPlayEvent(`レベルアップ: Lv.${level}`);
-        const banner = make("div", "lv-up");
-        banner.setAttribute("role", "status");
-        banner.append(make("small", "", "LEVEL UP!"), make("b", "", `Lv.${level}`), make("span", "", titleOf(level)));
-        showCenter(banner, still() ? 1800 : 2200, "powerup");
         hud.classList.remove("is-up");
         void hud.offsetWidth;
         hud.classList.add("is-up");
+        if (quiet()) return;
+        const banner = make("div", "lv-up is-corner");
+        banner.setAttribute("role", "status");
+        banner.append(make("small", "", "LEVEL UP!"), make("b", "", `Lv.${level}`), make("span", "", titleOf(level)));
+        showCenter(banner, still() ? 1800 : 2200, "powerup");
     };
 
     // 経験値をもらう（同じ key は1回だけ）
@@ -202,7 +206,7 @@
 
     // お知らせは、ヘッダーの下の1か所（play.js のお知らせ）に順番に出す（ほかの通知と重ならないように）
     const notice = (label, text, tone, sfx) => document.dispatchEvent(new CustomEvent("play:notify", { detail: { label, text, tone, sound: sfx } }));
-    const clearBanner = (section, index) => notice(`STAGE ${String(index + 1).padStart(2, "0")} CLEAR! `, nameOf(section), "stage", "stage");
+    const clearBanner = (section, index) => !quiet() && notice(`STAGE ${String(index + 1).padStart(2, "0")} CLEAR! `, nameOf(section), "stage", "stage");
 
     // そのセクションを画面で見ていた時間（メニューで一気に飛んだときに、通り過ぎただけのステージまでクリアにしないため）
     const seenMs = {};
@@ -372,6 +376,10 @@
         }, 300);
     };
     close.addEventListener("click", hide);
+    // 「採用担当の方」を選んだら、出ている会話もすぐ閉じる
+    document.addEventListener("click", (event) => {
+        if (event.target.closest?.('.mode-card[data-mode="recruit"]')) hide();
+    });
     off.addEventListener("click", () => {
         localData.set(GUIDE_OFF, true);
         hide();
@@ -387,7 +395,7 @@
 
     const say = (key, override) => {
         const entry = override || (state().level >= 5 && LINES_HIGH[key]) || LINES[key];
-        if (!entry || guideOff() || talked.has(key) || document.querySelector("dialog[open]")) return;
+        if (!entry || guideOff() || quiet() || talked.has(key) || document.querySelector("dialog[open]")) return;
         talked.add(key);
         sessionData.set("pa-talked", [...talked]);
         const [file, name, text] = entry;
