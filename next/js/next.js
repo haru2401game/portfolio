@@ -47,6 +47,8 @@
     WORKS.forEach((work) => {
         const en = work.en || {};
         ["title", "alt", "genre", "role", "description", "point"].forEach((field) => addEnglish(work[field], en[field]));
+        addEnglish(work.code?.title, en.codeTitle);
+        addEnglish(work.code?.text, en.codeText);
     });
     TIMELINE.forEach((item) => {
         const en = item.en || {};
@@ -776,6 +778,13 @@
         );
         v("point-box").hidden = !work.point;
         v("point").textContent = work.point || "";
+        // コードの抜粋（data/works.js の code）。開くと読める（最初は閉じておく）
+        v("code-box").hidden = !work.code?.snippet;
+        v("code-box").open = false;
+        v("code-title").textContent = work.code?.title || "";
+        v("code-text").textContent = work.code?.text || "";
+        v("code-file").textContent = work.code?.file || "";
+        v("code").textContent = work.code?.snippet || "";
         const play = safeUrl(work.play);
         v("play").hidden = !play;
         if (play) {

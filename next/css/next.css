@@ -655,6 +655,17 @@ html:not(.motion-off) dialog[open] { animation: dlg-in .35s var(--ease); }
 .viewer-point { padding: 16px 20px; background: var(--gray); }
 .viewer-point p { margin: 6px 0 0; font-size: 14px; }
 .viewer-point[hidden] { display: none; }
+/* コードの抜粋（data/works.js の code）。押すと開く */
+.viewer-code { box-shadow: inset 0 0 0 1px var(--gray); }
+.viewer-code[hidden] { display: none; }
+.viewer-code summary { display: flex; align-items: center; gap: 12px; padding: 14px 20px; cursor: pointer; font-weight: 700; font-size: 14px; list-style: none; }
+.viewer-code summary::-webkit-details-marker { display: none; }
+.viewer-code summary::after { content: "+"; margin-left: auto; color: var(--red); font-size: 18px; line-height: 1; }
+.viewer-code[open] summary::after { content: "−"; }
+.viewer-code > p { margin: 0 20px 8px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+.viewer-code-file { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+.viewer-code pre { max-height: 340px; margin: 0; overflow: auto; padding: 16px 20px; background: var(--ink); color: #eee; font-size: 12px; line-height: 1.6; tab-size: 4; }
+.viewer-code code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre; }
 .viewer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-top: 6px; }
 .viewer-actions .btn { min-height: 50px; padding: 0 22px; font-size: 14px; }
 .viewer-actions [hidden] { display: none; }

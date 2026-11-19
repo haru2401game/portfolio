@@ -2018,6 +2018,12 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
                         <span class="work-viewer-point-label">TECH POINT</span>
                         <p data-wv="point"></p>
                     </div>
+                    <details class="work-viewer-code" data-wv="code-box" hidden>
+                        <summary><span class="work-viewer-code-label">CODE</span><span data-wv="code-title"></span></summary>
+                        <p data-wv="code-text"></p>
+                        <p class="work-viewer-code-file" data-wv="code-file" data-no-translate></p>
+                        <pre data-no-translate><code data-wv="code"></code></pre>
+                    </details>
                     <dl class="work-viewer-stats">
                         <div><dt>DATE</dt><dd data-wv="date"></dd></div>
                         <div><dt>TEAM</dt><dd data-wv="team"></dd></div>
@@ -2163,6 +2169,16 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         const point = textOf(card, ".work-point");
         part("point").textContent = point;
         part("point-box").hidden = !point;
+
+        // コードの抜粋（data/works.js の code）。開くと読める（最初は閉じておく）
+        const code = (window.WORKS || []).find((work) => work.title === card.dataset.title)?.code;
+        const codeBox = part("code-box");
+        codeBox.hidden = !code?.snippet;
+        codeBox.open = false;
+        part("code-title").textContent = code?.title || "";
+        part("code-text").textContent = code?.text || "";
+        part("code-file").textContent = code?.file || "";
+        part("code").textContent = code?.snippet || "";
 
         part("tools").replaceChildren(...textOf(card, ".work-tech").split(/\s+/).filter(Boolean).map((tool) => make("li", "", tool)));
 

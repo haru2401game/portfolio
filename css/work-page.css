@@ -713,6 +713,46 @@ video {
     transform: translateY(-2px);
 }
 
+/* コードの抜粋（data/works.js の code） */
+.wp-code-title {
+    margin: 0 0 6px;
+    font-size: 17px;
+}
+
+.wp-code p {
+    margin: 0 0 8px;
+    font-size: 15px;
+}
+
+.wp-code .wp-code-file {
+    color: #5b6560;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+}
+
+.wp-code pre {
+    max-height: 520px;
+    margin: 0;
+    overflow: auto;
+    padding: 16px 18px;
+    border-radius: 12px;
+    background: #1d2520;
+    color: #e6efe9;
+    font-size: 13px;
+    line-height: 1.6;
+    tab-size: 4;
+}
+
+.wp-code code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    white-space: pre;
+}
+
+html[data-look="new"] .wp-code pre {
+    border-radius: 0;
+    background: #111;
+}
+
 .wp-learned p {
     margin: 0;
     font-size: 15px;

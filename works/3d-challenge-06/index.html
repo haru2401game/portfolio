@@ -33,7 +33,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon.png">
 <script src="../../js/look.js?v=d6efbb20"></script>
-<link rel="stylesheet" href="../../css/work-page.css?v=10b3c456">
+<link rel="stylesheet" href="../../css/work-page.css?v=6a58f374">
 <link rel="stylesheet" href="../../css/work-next.css?v=1016dc98">
 <script type="application/ld+json">
 {
@@ -129,6 +129,74 @@
         </div>
     </article>
 
+    <section class="wp-section wp-code" aria-labelledby="code-title">
+        <h2 class="wp-h2" id="code-title"><span>CODE</span>コードの抜粋</h2>
+        <h3 class="wp-code-title">雑魚とボスを、1つのインターフェースで扱う</h3>
+        <p>プレイヤーの武器は、相手が雑魚かボスかを区別せず、IDamageable だけを通してダメージを与えます。新しい種類の敵や壊せるオブジェクトを足すときは、このインターフェースを実装するだけで済みます。1回の攻撃で同じ相手に何度も当たらないように HashSet で記録し、インターフェース型では Unity の破棄済みの判定が働かない点も確認しています。</p>
+        <p class="wp-code-file">IDamageable.cs ／ PlayerWeaponHitbox.cs（抜粋）</p>
+        <pre><code>// IDamageable.cs：ダメージを受けられるものの共通インターフェース
+public interface IDamageable
+{
+    /// &lt;summary&gt;すでに死亡（破壊）しているか。&lt;/summary&gt;
+    bool IsDead { get; }
+
+    /// &lt;summary&gt;ダメージを受ける。&lt;/summary&gt;
+    void TakeDamage(int damage);
+}
+
+public class EnemyHealth : MonoBehaviour, IDamageable { /* …（省略） */ }
+public class BossHealth : MonoBehaviour, IDamageable { /* …（省略） */ }
+
+// PlayerWeaponHitbox.cs：プレイヤーの武器の当たり判定
+// 1回の攻撃で、すでにダメージを与えた相手を記録する
+private readonly HashSet&lt;IDamageable&gt; hitTargets =
+    new HashSet&lt;IDamageable&gt;();
+
+private void OnTriggerStay(Collider other)
+{
+    // …（攻撃中か・自分自身か の確認は省略）
+
+    // 敵の子オブジェクトに接触しても、親にある
+    // ダメージを受けられるコンポーネント（雑魚・ボスなど）を取得する
+    IDamageable target =
+        other.GetComponentInParent&lt;IDamageable&gt;();
+
+    if (!IsValidTarget(target))
+    {
+        return;
+    }
+
+    // 同じ攻撃で同じ相手に複数回ダメージを与えない
+    if (!hitTargets.Add(target))
+    {
+        return;
+    }
+
+    // …（省略）
+    // 実際のダメージ計算はPlayerCombatに任せる
+    playerCombat.ApplyDamage(target);
+}
+
+/// &lt;summary&gt;
+/// ダメージを与えられる相手か確認する。
+/// インターフェース型の変数では Unity の「破棄済みオブジェクトは null と等しい」
+/// という判定が働かないため、MonoBehaviour として破棄済みかどうかも確認する。
+/// &lt;/summary&gt;
+private static bool IsValidTarget(IDamageable target)
+{
+    if (target == null)
+    {
+        return false;
+    }
+
+    if (target is Object unityObject &amp;&amp; unityObject == null)
+    {
+        return false;
+    }
+
+    return !target.IsDead;
+}</code></pre>
+    </section>
     <nav class="wp-pager" aria-label="ほかの作品">
         <a class="is-prev" href="../falien/"><small>← 前の作品</small><b>Falien</b></a>
         <a class="is-next" href="../3d-challenge-05/"><small>次の作品 →</small><b>3D CHALLENGE #05</b></a>

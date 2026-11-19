@@ -27,8 +27,11 @@
       point        技術のポイント（1〜2文）。作品の詳しい画面と作品ページに「TECH POINT」として出る
                    何を実装したか・何を工夫したか・何を学んだかを、採用担当やゲームを作る仲間に向けて書く
       learned      この作品で学んだこと（1〜3文）。書いた作品だけ、作品ページ（works/）に「LEARNED」の欄が出る
+      code         コードの抜粋。書いた作品だけ、作品の詳しい画面と作品ページに「CODE」の欄が出る
+                   { title: 見出し, text: 何をしているか・なぜそう書いたか（2〜3文）, file: ファイル名, snippet: `コード` }
+                   コードは自分で書いて説明できる部分だけ。省略したところは「// …（省略）」と書く
       en           英語表示用（省略したところは日本語のまま表示される）
-                   { title, alt, genre, role, description, point }
+                   { title, alt, genre, role, description, point, codeTitle, codeText }
    ※ 書き方の詳しい手順は README の「作品を追加するとき」
 ======================================== */
 
@@ -46,12 +49,81 @@ window.WORKS = [
         point: "雑魚とボスでクラスを分け、IDamageable インターフェースでつないだ。ボスのAIは状態ごとに処理を分け、攻撃の進み具合を Animator の再生位置ではなく経過時間で計算することで、連続攻撃が一瞬で終わる不具合を解決した。",
         link: "https://note.com/ha_03ru_01/n/ne182fb52c96a",
         size: [1280, 720],
+        code: {
+            title: "雑魚とボスを、1つのインターフェースで扱う",
+            text: "プレイヤーの武器は、相手が雑魚かボスかを区別せず、IDamageable だけを通してダメージを与えます。新しい種類の敵や壊せるオブジェクトを足すときは、このインターフェースを実装するだけで済みます。1回の攻撃で同じ相手に何度も当たらないように HashSet で記録し、インターフェース型では Unity の破棄済みの判定が働かない点も確認しています。",
+            file: "IDamageable.cs ／ PlayerWeaponHitbox.cs（抜粋）",
+            snippet: `// IDamageable.cs：ダメージを受けられるものの共通インターフェース
+public interface IDamageable
+{
+    /// <summary>すでに死亡（破壊）しているか。</summary>
+    bool IsDead { get; }
+
+    /// <summary>ダメージを受ける。</summary>
+    void TakeDamage(int damage);
+}
+
+public class EnemyHealth : MonoBehaviour, IDamageable { /* …（省略） */ }
+public class BossHealth : MonoBehaviour, IDamageable { /* …（省略） */ }
+
+// PlayerWeaponHitbox.cs：プレイヤーの武器の当たり判定
+// 1回の攻撃で、すでにダメージを与えた相手を記録する
+private readonly HashSet<IDamageable> hitTargets =
+    new HashSet<IDamageable>();
+
+private void OnTriggerStay(Collider other)
+{
+    // …（攻撃中か・自分自身か の確認は省略）
+
+    // 敵の子オブジェクトに接触しても、親にある
+    // ダメージを受けられるコンポーネント（雑魚・ボスなど）を取得する
+    IDamageable target =
+        other.GetComponentInParent<IDamageable>();
+
+    if (!IsValidTarget(target))
+    {
+        return;
+    }
+
+    // 同じ攻撃で同じ相手に複数回ダメージを与えない
+    if (!hitTargets.Add(target))
+    {
+        return;
+    }
+
+    // …（省略）
+    // 実際のダメージ計算はPlayerCombatに任せる
+    playerCombat.ApplyDamage(target);
+}
+
+/// <summary>
+/// ダメージを与えられる相手か確認する。
+/// インターフェース型の変数では Unity の「破棄済みオブジェクトは null と等しい」
+/// という判定が働かないため、MonoBehaviour として破棄済みかどうかも確認する。
+/// </summary>
+private static bool IsValidTarget(IDamageable target)
+{
+    if (target == null)
+    {
+        return false;
+    }
+
+    if (target is Object unityObject && unityObject == null)
+    {
+        return false;
+    }
+
+    return !target.IsDead;
+}`,
+        },
         en: {
             alt: "Thumbnail of 3D game #6, EMBER FALL",
             genre: "3D action RPG",
             role: "Design & programming (in progress)",
             description: "3D Game Challenge (10 games) — game 6, EMBER FALL",
             point: "Split regular enemies and the boss into separate classes connected through an IDamageable interface. The boss AI handles each state separately, and attack progress is calculated from elapsed time instead of the Animator's playback position, which fixed a bug where combo attacks ended instantly.",
+            codeTitle: "Handling regular enemies and the boss through one interface",
+            codeText: "The player's weapon deals damage only through IDamageable, without caring whether the target is a regular enemy or the boss. Adding a new kind of enemy or a breakable object only requires implementing this interface. A HashSet records who has already been hit so one swing never hits the same target twice, and the code also checks for destroyed Unity objects, since Unity's \"destroyed equals null\" check doesn't work through an interface-typed variable.",
         },
     },
     {

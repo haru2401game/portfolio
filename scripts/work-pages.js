@@ -174,6 +174,7 @@ const fromData = (work) => {
         note: /^https:\/\//i.test(String(work.link || "")) ? String(work.link).trim() : "",
         preview: work.preview || "",
         learned: String(work.learned || "").trim(),
+        code: work.code && work.code.snippet ? work.code : null,
     };
 };
 
@@ -264,6 +265,16 @@ ${work.results ? `                <h3 class="wp-h3">RESULTS ／ 成果</h3>\n   
     <section class="wp-section wp-shots" aria-labelledby="shots-title">
         <h2 class="wp-h2" id="shots-title"><span>SCREENSHOTS</span>ゲーム画面</h2>
         <ul class="wp-shot-list">${shots.map((src, i) => `<li><a href="../../${escape(src)}" target="_blank" rel="noopener"><img src="../../${escape(src)}" alt="${escape(work.title)}のゲーム画面 ${i + 1}" loading="lazy"></a></li>`).join("")}</ul>
+    </section>`);
+    }
+    if (work.code) {
+        out.push(`
+    <section class="wp-section wp-code" aria-labelledby="code-title">
+        <h2 class="wp-h2" id="code-title"><span>CODE</span>コードの抜粋</h2>
+        <h3 class="wp-code-title">${escape(work.code.title || "")}</h3>
+        <p>${escape(work.code.text || "")}</p>
+        <p class="wp-code-file">${escape(work.code.file || "")}</p>
+        <pre><code>${escape(work.code.snippet)}</code></pre>
     </section>`);
     }
     if (work.learned) {

@@ -102,6 +102,8 @@
         addEnglish(work.role, en.role);
         addEnglish(work.description, en.description);
         addEnglish(work.point, en.point);
+        addEnglish(work.code?.title, en.codeTitle);
+        addEnglish(work.code?.text, en.codeText);
         addEnglish(`${members}人`, members === 1 ? "Solo" : `${members} people`);
     });
 
