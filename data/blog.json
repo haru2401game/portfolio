@@ -1,6 +1,13 @@
 {
-    "articleCount": 281,
+    "articleCount": 282,
     "articles": [
+        {
+            "title": "noteのフォロワーとスキを毎日記録するツールを、PythonとGitHub Actionsで自作した はる日記#282",
+            "date": "2026.11.23",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/338325952/rectangle_large_type_2_d8906f77ca95b6a067d6559480218edc.png?fit=bounds&quality=85&width=1280",
+            "summary": "noteを書いていて、ずっと知りたかったことがあります。「フォロワーは、毎日どれくらい増えているのか」です。 noteのアナリティクスでは、記事ごとの数字は見られます。でも、フォロワー数が日ごとにどう...",
+            "url": "https://note.com/ha_03ru_01/n/n0c152926b75a"
+        },
         {
             "title": "noteを280本書いて分かった、スキ10の記事とスキ300の記事の違い はる日記#281",
             "date": "2026.11.20",
@@ -14,13 +21,6 @@
             "thumbnail": "https://assets.st-note.com/production/uploads/images/337547251/rectangle_large_type_2_63a45dcc8b5bd3d3a99248743816de24.png?fit=bounds&quality=85&width=1280",
             "summary": "2025年4月に専門学校に入学してから、約1年半でゲームを35本作りました。最初の1本は、C++の関数とマウス入力を学びながら作った『AIM MASTER』という小さなゲームです。いまはUnityで3...",
             "url": "https://note.com/ha_03ru_01/n/n8b7d73750f8a"
-        },
-        {
-            "title": "【ハルコレ2026】敗者復活戦に挑戦中！ゲーム制作に夢中になった私に、あなたの1コメントを貸してください！ はる日記#279",
-            "date": "2026.11.18",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/337500691/rectangle_large_type_2_fbe0872e4d4568edf2d3c330b0dc6b27.png?fit=bounds&quality=85&width=1280",
-            "summary": "突然ですが、皆さんにお願いがあります。 現在、私は「ハルコレ2026」の敗者復活戦に参加しています！ 続きをみる...",
-            "url": "https://note.com/ha_03ru_01/n/n1fb5bd59978f"
         }
     ]
 }
