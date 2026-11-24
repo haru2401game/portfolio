@@ -902,6 +902,10 @@ window.I18N_EN = {
             "{t1} trailer (YouTube)"
         ],
         [
+            "^(.+)の紹介動画$",
+            "{t1} trailer"
+        ],
+        [
             "^(.+)の映像$",
             "{t1} video"
         ],

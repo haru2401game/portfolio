@@ -768,6 +768,23 @@
         frame.referrerPolicy = "strict-origin-when-cross-origin";
         return frame;
     };
+    // サイトの中に置いた動画（videos/○○.mp4）も紹介動画にできる
+    const localVideo = (url) => (/^videos\/[\w./-]+\.mp4$/.test(String(url || "")) ? String(url) : "");
+    const hasVideo = (url) => Boolean(youtubeId(url) || localVideo(url));
+    // 紹介動画の再生プレーヤー（YouTube は iframe、サイトの動画は video。どちらも押されてから読み込む）
+    const videoPlayer = (work, base = "") => {
+        const id = youtubeId(work?.video);
+        if (id) return youtubeFrame(id, work.title);
+        const src = localVideo(work?.video);
+        if (!src) return null;
+        const video = document.createElement("video");
+        video.src = `${base}${src}`;
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.setAttribute("aria-label", `${work.title}の紹介動画`);
+        return video;
+    };
     const stopYoutube = () => {
         viewer?.querySelector(".viewer-ytframe")?.remove();
         if (viewer) v("img").hidden = false;
@@ -779,7 +796,7 @@
         current = index;
         const t = traits(work);
         stopYoutube();
-        v("yt").hidden = !youtubeId(work.video);
+        v("yt").hidden = !hasVideo(work.video);
         v("img").src = asset(work.image);
         v("img").alt = work.alt || work.title;
         v("badges").replaceChildren(...badgesOf(work, t));
@@ -863,12 +880,11 @@
         });
         v("yt").addEventListener("click", () => {
             const work = WORKS[current];
-            const id = youtubeId(work?.video);
-            if (!id) return;
+            const frame = videoPlayer(work, BASE);
+            if (!frame) return;
             stopYoutube();
             v("img").hidden = true;
             v("yt").hidden = true;
-            const frame = youtubeFrame(id, work.title);
             frame.className = "viewer-ytframe";
             v("img").after(frame);
             emit(`紹介動画: ${work.title}`);

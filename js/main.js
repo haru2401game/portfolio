@@ -2140,6 +2140,23 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         frame.referrerPolicy = "strict-origin-when-cross-origin";
         return frame;
     };
+    // サイトの中に置いた動画（videos/○○.mp4）も紹介動画にできる
+    const localVideo = (url) => (/^videos\/[\w./-]+\.mp4$/.test(String(url || "")) ? String(url) : "");
+    const hasVideo = (url) => Boolean(youtubeId(url) || localVideo(url));
+    // 紹介動画の再生プレーヤー（YouTube は iframe、サイトの動画は video。どちらも押されてから読み込む）
+    const videoPlayer = (work, base = "") => {
+        const id = youtubeId(work?.video);
+        if (id) return youtubeFrame(id, work.title);
+        const src = localVideo(work?.video);
+        if (!src) return null;
+        const video = document.createElement("video");
+        video.src = `${base}${src}`;
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.setAttribute("aria-label", `${work.title}の紹介動画`);
+        return video;
+    };
     // 再生中の紹介動画を止めて、画像に戻す
     const stopYoutube = () => {
         viewer.querySelector(".work-viewer-ytframe")?.remove();
@@ -2147,14 +2164,13 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     };
     part("yt").addEventListener("click", () => {
         const work = (window.WORKS || []).find((item) => item.title === current?.dataset.title);
-        const id = youtubeId(work?.video);
-        if (!id) return;
+        const frame = videoPlayer(work);
+        if (!frame) return;
         stopYoutube();
         part("movie").pause();
         part("movie").hidden = true;
         part("image").hidden = true;
         part("yt").hidden = true;
-        const frame = youtubeFrame(id, work.title);
         frame.className = "work-viewer-ytframe";
         part("image").after(frame);
         emitPlayEvent(`紹介動画: ${work.title}`);
@@ -2164,7 +2180,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         current = card;
         showInUrl(card);
         stopYoutube();
-        part("yt").hidden = !youtubeId((window.WORKS || []).find((item) => item.title === card.dataset.title)?.video);
+        part("yt").hidden = !hasVideo((window.WORKS || []).find((item) => item.title === card.dataset.title)?.video);
         const image = card.querySelector("img:not(.card-pop)");
         const stage = textOf(card, ".stage-badges span:not(.is-award):not(.is-team):not(.is-wip):not(.is-play)");
         const shown = visibleCards();

@@ -21,7 +21,8 @@
       play         ブラウザで遊べる場所の URL（unityroom・itch.io など）。書くと「▶ PLAYABLE」の印と「遊ぶ」ボタンが出て、絞り込みの「▶ 遊べる」に入る
       size         画像の幅と高さ [幅, 高さ]（省略すると 16:9 として扱う）
       preview      プレイ映像（videos/previews/ の8秒動画。省略すると映像なし）
-      video        紹介動画（YouTube の URL）。書くと、作品の詳しい画面と作品ページで「▶ 紹介動画を見る」から、サイトの中で再生できる
+      video        紹介動画（YouTube の URL か、サイトに置いた動画 videos/works/○○.mp4）。書くと、作品の詳しい画面と作品ページで「▶ 紹介動画を見る」から、サイトの中で再生できる
+                   サイトに置く動画は 1280×720・数MB に縮める（README の「作品のプレビュー映像を足すとき」）
       challenge    3Dゲーム10本チャレンジの何本目か（数字）。タイトルが「3D CHALLENGE #○○」でない作品も、進捗バーの数に入る
       id           作品ごとのリンク（…/portfolio/#work=○○）の ○○ の部分（英小文字・数字・ハイフン）
                    省略すると英語のタイトル（なければタイトル）から自動で作る（例：HOOK SHIFT → hook-shift）
@@ -48,10 +49,12 @@ window.WORKS = [
         tech: "Unity C# Github",
         period: "2026/10 ~ 11",
         member: 1,
-        role: "企画・プログラム(未完成)",
+        role: "企画・プログラム",
         description: "3Dゲーム制作10本制作チャレンジ 6作目「EMBERFALL」",
         point: "雑魚とボスでクラスを分け、IDamageable インターフェースでつないだ。ボスのAIは状態ごとに処理を分け、攻撃の進み具合を Animator の再生位置ではなく経過時間で計算することで、連続攻撃が一瞬で終わる不具合を解決した。",
         link: "https://note.com/ha_03ru_01/n/ne182fb52c96a",
+        preview: "videos/previews/emberfall.mp4",
+        video: "videos/works/emberfall.mp4",
         size: [1280, 720],
         code: {
             title: "雑魚とボスを、1つのインターフェースで扱う",
@@ -123,7 +126,7 @@ private static bool IsValidTarget(IDamageable target)
         en: {
             alt: "Title screen of 3D game #6, EMBERFALL",
             genre: "3D action RPG",
-            role: "Design & programming (in progress)",
+            role: "Design & programming",
             description: "3D Game Challenge (10 games) — game 6, EMBERFALL",
             point: "Split regular enemies and the boss into separate classes connected through an IDamageable interface. The boss AI handles each state separately, and attack progress is calculated from elapsed time instead of the Animator's playback position, which fixed a bug where combo attacks ended instantly.",
             codeTitle: "Handling regular enemies and the boss through one interface",

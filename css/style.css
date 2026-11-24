@@ -7547,6 +7547,7 @@ footer.has-peeker {
     width: 100%;
     aspect-ratio: 16 / 9;
     border: 0;
+    background: #000;
 }
 
 .work-viewer-media img[hidden] {

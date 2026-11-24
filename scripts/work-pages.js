@@ -173,6 +173,7 @@ const fromData = (work) => {
         play: /^https:\/\//i.test(String(work.play || "")) ? String(work.play).trim() : "",
         note: /^https:\/\//i.test(String(work.link || "")) ? String(work.link).trim() : "",
         preview: work.preview || "",
+        localVideo: /^videos\/[\w./-]+\.mp4$/.test(String(work.video || "")) ? String(work.video) : "",
         youtube: (String(work.video || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/) || [])[1] || "",
         learned: String(work.learned || "").trim(),
         code: work.code && work.code.snippet ? work.code : null,
@@ -228,6 +229,14 @@ const sectionsOf = (work) => {
     <section class="wp-section wp-movie" aria-labelledby="movie-title">
         <h2 class="wp-h2" id="movie-title"><span>MOVIE</span>${escape(work.movie.label)}</h2>
         <video controls preload="none" playsinline poster="../../${escape(work.movie.poster)}" src="../../${escape(work.movie.src)}" aria-label="${escape(work.title)}のプレイ映像"></video>
+    </section>`);
+    }
+    // 紹介動画（サイトに置いた動画）：押すまで読み込まない（preload="none"）
+    if (work.localVideo) {
+        out.push(`
+    <section class="wp-section wp-movie" aria-labelledby="movie-title">
+        <h2 class="wp-h2" id="movie-title"><span>MOVIE</span>紹介動画</h2>
+        <video controls preload="none" playsinline poster="../../${escape(work.image)}" src="../../${escape(work.localVideo)}" aria-label="${escape(work.title)}の紹介動画"></video>
     </section>`);
     }
     // 紹介動画（YouTube）：最初はサムネイルだけ。押すと、その場で再生する（js/work-page.js）
