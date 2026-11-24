@@ -713,6 +713,70 @@ video {
     transform: translateY(-2px);
 }
 
+/* 紹介動画（YouTube）：押すまではサムネイル */
+.wp-yt {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    aspect-ratio: 16 / 9;
+    background: #111;
+    cursor: pointer;
+}
+
+.wp-yt img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .85;
+    transition: opacity .2s ease;
+}
+
+.wp-yt:hover img {
+    opacity: 1;
+}
+
+.wp-yt-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: #fff;
+    color: #111713;
+    font-size: 15px;
+    font-weight: 900;
+    transform: translate(-50%, -50%);
+}
+
+.wp-yt-play b {
+    color: #d6363d;
+}
+
+.wp-yt-frame {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    aspect-ratio: 16 / 9;
+}
+
+html[data-look="new"] .wp-yt,
+html[data-look="new"] .wp-yt-frame {
+    border-radius: 0;
+}
+
+html[data-look="new"] .wp-yt-play {
+    border-radius: 0;
+}
+
 /* コードの抜粋（data/works.js の code） */
 .wp-code-title {
     margin: 0 0 6px;

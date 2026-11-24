@@ -756,11 +756,30 @@
 
     const visibleIndexes = () => cards.filter(({ item }) => !item.classList.contains("is-hidden")).map(({ work }) => WORKS.indexOf(work));
 
+    // 紹介動画（data/works.js の video。YouTube の URL）から動画の ID を取り出す
+    const youtubeId = (url) => (String(url || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/) || [])[1] || "";
+    // 押されてから YouTube を読み込む（開くだけで YouTube の通信が始まらないように）。youtube-nocookie で、見るまで cookie を使わない
+    const youtubeFrame = (id, title) => {
+        const frame = document.createElement("iframe");
+        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
+        frame.title = `${title}の紹介動画（YouTube）`;
+        frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        frame.allowFullscreen = true;
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        return frame;
+    };
+    const stopYoutube = () => {
+        viewer?.querySelector(".viewer-ytframe")?.remove();
+        if (viewer) v("img").hidden = false;
+    };
+
     function fillViewer(index) {
         const work = WORKS[index];
         if (!work || !viewer) return;
         current = index;
         const t = traits(work);
+        stopYoutube();
+        v("yt").hidden = !youtubeId(work.video);
         v("img").src = asset(work.image);
         v("img").alt = work.alt || work.title;
         v("badges").replaceChildren(...badgesOf(work, t));
@@ -842,7 +861,20 @@
             v("copy").textContent = ok ? "コピーしました" : "コピーできませんでした";
             setTimeout(() => (v("copy").textContent = "リンクをコピー"), 1800);
         });
+        v("yt").addEventListener("click", () => {
+            const work = WORKS[current];
+            const id = youtubeId(work?.video);
+            if (!id) return;
+            stopYoutube();
+            v("img").hidden = true;
+            v("yt").hidden = true;
+            const frame = youtubeFrame(id, work.title);
+            frame.className = "viewer-ytframe";
+            v("img").after(frame);
+            emit(`紹介動画: ${work.title}`);
+        });
         viewer.addEventListener("close", () => {
+            stopYoutube();
             if (location.hash.startsWith("#work=")) history.replaceState(history.state, "", `${location.pathname}${location.search}`);
             const card = cards.find(({ work }) => work === WORKS[current]);
             card?.item.querySelector(".work")?.focus({ preventScroll: true });

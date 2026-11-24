@@ -375,6 +375,7 @@ window.I18N_EN = {
         "初めてゲームジャムに参加": "Joined my first game jam",
         "チームでクリエイティブ賞を受賞": "Won the Creative Award with my team",
         "チームの「Machine Translation」がクリエイティブ賞を受賞": "Our team's Machine Translation won the Creative Award",
+        "紹介動画を見る": "Watch the trailer",
         "初オリジナルタイトル": "First original title",
         "「HOOKING BOX」を制作": "in C++ —",
         "初めてのオリジナルタイトル作品": "my first original title",
@@ -896,6 +897,10 @@ window.I18N_EN = {
         "2Dアクション ／ IGCC グランプリ": "2D action / IGCC Grand Prix"
     },
     "patterns": [
+        [
+            "^(.+)の紹介動画（YouTube）$",
+            "{t1} trailer (YouTube)"
+        ],
         [
             "^(.+)の映像$",
             "{t1} video"

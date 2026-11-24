@@ -173,6 +173,7 @@ const fromData = (work) => {
         play: /^https:\/\//i.test(String(work.play || "")) ? String(work.play).trim() : "",
         note: /^https:\/\//i.test(String(work.link || "")) ? String(work.link).trim() : "",
         preview: work.preview || "",
+        youtube: (String(work.video || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/) || [])[1] || "",
         learned: String(work.learned || "").trim(),
         code: work.code && work.code.snippet ? work.code : null,
     };
@@ -227,6 +228,17 @@ const sectionsOf = (work) => {
     <section class="wp-section wp-movie" aria-labelledby="movie-title">
         <h2 class="wp-h2" id="movie-title"><span>MOVIE</span>${escape(work.movie.label)}</h2>
         <video controls preload="none" playsinline poster="../../${escape(work.movie.poster)}" src="../../${escape(work.movie.src)}" aria-label="${escape(work.title)}のプレイ映像"></video>
+    </section>`);
+    }
+    // 紹介動画（YouTube）：最初はサムネイルだけ。押すと、その場で再生する（js/work-page.js）
+    if (work.youtube) {
+        out.push(`
+    <section class="wp-section wp-movie" aria-labelledby="movie-title">
+        <h2 class="wp-h2" id="movie-title"><span>MOVIE</span>紹介動画</h2>
+        <button class="wp-yt" type="button" data-youtube="${escape(work.youtube)}" data-title="${escape(work.title)}" aria-label="${escape(work.title)}の紹介動画を再生（YouTube）">
+            <img src="https://i.ytimg.com/vi/${escape(work.youtube)}/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+            <span class="wp-yt-play"><b aria-hidden="true">▶</b>紹介動画を見る（YouTube）</span>
+        </button>
     </section>`);
     }
     if (work.points) {
@@ -345,7 +357,7 @@ const pageOf = (work, index) => {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' ${ANALYTICS}; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' ${ANALYTICS}; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>${escape(title)}</title>
 <meta name="description" content="${escape(summary)}">

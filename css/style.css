@@ -7505,6 +7505,54 @@ footer.has-peeker {
     object-fit: contain;
 }
 
+/* 紹介動画（YouTube）：押すと画像の場所で再生する */
+.work-viewer-yt {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 18px;
+    border: 3px solid #111713;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 4px 0 #111713;
+    color: #111713;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 900;
+    transform: translateX(-50%);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.work-viewer-yt span {
+    color: #d6363d;
+}
+
+.work-viewer-yt:hover {
+    transform: translate(-50%, -2px);
+    box-shadow: 0 6px 0 #111713;
+}
+
+.work-viewer-yt[hidden] {
+    display: none;
+}
+
+.work-viewer-ytframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+}
+
+.work-viewer-media img[hidden] {
+    display: none;
+}
+
 .work-viewer-badges {
     position: absolute;
     top: 12px;

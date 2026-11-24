@@ -2008,6 +2008,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
                     <img data-wv="image" alt="">
                     <video data-wv="movie" muted loop playsinline preload="none" aria-hidden="true" hidden></video>
                     <div class="work-viewer-badges" data-wv="badges"></div>
+                    <button class="work-viewer-yt" type="button" data-wv="yt" hidden><span aria-hidden="true">▶</span>紹介動画を見る</button>
                 </div>
                 <div class="work-viewer-info">
                     <p class="work-viewer-award" data-wv="award" hidden>
@@ -2127,9 +2128,43 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
         }, 2500);
     });
 
+    // 紹介動画（data/works.js の video。YouTube の URL）から動画の ID を取り出す
+    const youtubeId = (url) => (String(url || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/) || [])[1] || "";
+    // 押されてから YouTube を読み込む（開くだけで YouTube の通信が始まらないように）。youtube-nocookie で、見るまで cookie を使わない
+    const youtubeFrame = (id, title) => {
+        const frame = document.createElement("iframe");
+        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
+        frame.title = `${title}の紹介動画（YouTube）`;
+        frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        frame.allowFullscreen = true;
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        return frame;
+    };
+    // 再生中の紹介動画を止めて、画像に戻す
+    const stopYoutube = () => {
+        viewer.querySelector(".work-viewer-ytframe")?.remove();
+        part("image").hidden = false;
+    };
+    part("yt").addEventListener("click", () => {
+        const work = (window.WORKS || []).find((item) => item.title === current?.dataset.title);
+        const id = youtubeId(work?.video);
+        if (!id) return;
+        stopYoutube();
+        part("movie").pause();
+        part("movie").hidden = true;
+        part("image").hidden = true;
+        part("yt").hidden = true;
+        const frame = youtubeFrame(id, work.title);
+        frame.className = "work-viewer-ytframe";
+        part("image").after(frame);
+        emitPlayEvent(`紹介動画: ${work.title}`);
+    });
+
     const render = (card) => {
         current = card;
         showInUrl(card);
+        stopYoutube();
+        part("yt").hidden = !youtubeId((window.WORKS || []).find((item) => item.title === card.dataset.title)?.video);
         const image = card.querySelector("img:not(.card-pop)");
         const stage = textOf(card, ".stage-badges span:not(.is-award):not(.is-team):not(.is-wip):not(.is-play)");
         const shown = visibleCards();
@@ -2280,6 +2315,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
     // 閉じたら、元のカードが見える位置に戻す
     viewer.addEventListener("close", () => {
+        stopYoutube();
         part("movie").pause();
         restoreUrl();
         if (!current) return;

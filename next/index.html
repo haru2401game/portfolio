@@ -11,7 +11,7 @@
     ・作品・経歴・ブログのデータは、今のサイトと同じ data/ を読み込む（データを1か所で直せば両方に反映）
 -->
 <!-- セキュリティ：読み込んでよい場所を決める（自分のファイル・Google Fonts・noteの画像・アクセス解析だけ） -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://assets.st-note.com https://i.ytimg.com; media-src 'self'; connect-src 'self' https://portfolio-analytics.haru2401game.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://assets.st-note.com https://i.ytimg.com; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://portfolio-analytics.haru2401game.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <!-- 中身はトップ（CLASSIC モード）とほぼ同じなので、検索結果にはトップだけを出す（canonical もトップ） -->
 <meta name="robots" content="noindex, follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -55,7 +55,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 <meta name="pa-design-classic" content="../">
 <script src="../js/design-switch.js?v=9c99a422"></script>
 <link rel="stylesheet" href="../css/design-switch.css?v=b0d8b955">
-<link rel="stylesheet" href="css/next.css?v=8edc83ba">
+<link rel="stylesheet" href="css/next.css?v=4e5ca518">
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -182,7 +182,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
         <div class="status" id="achievements" data-reveal>
             <dl class="status-list">
                 <div><dt>Game Works</dt><dd data-count="works">36</dd></div>
-                <div><dt>Blog Articles</dt><dd data-count="blog">281</dd></div>
+                <div><dt>Blog Articles</dt><dd data-count="blog">282</dd></div>
                 <div><dt>Awards</dt><dd data-count="awards">5</dd></div>
                 <div><dt>Events</dt><dd data-count="events">10</dd></div>
                 <div><dt>Internship</dt><dd data-count="interns">1</dd></div>
@@ -245,7 +245,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
                         <span><b data-count="works">36</b> 作品</span>
                         <span><b data-count="awards">5</b> 受賞</span>
                         <span><b data-count="events">10</b> イベント</span>
-                        <span><b data-count="blog">281</b> ブログ</span>
+                        <span><b data-count="blog">282</b> ブログ</span>
                     </dd>
                 </div>
             </dl>
@@ -533,7 +533,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             <div class="skill-col" data-reveal>
                 <div class="skill-head"><b class="skill-no">03</b><span><b>企画・発信</b><small>ゲームを考え、伝え、届ける</small></span></div>
                 <div class="sk"><b>ゲーム企画</b><p>ゲームのコンセプトやルール、遊びの面白さを考え、実際にゲームとして形にするところまで取り組んでいます。</p><small>例：個人制作の作品は、企画からプログラムまで1人で担当</small><div class="tags"><span>Game Planning</span><span>Game Design</span></div></div>
-                <div class="sk"><b>制作活動の発信</b><p>noteやSNSを通して、ゲーム制作の進捗や学んだこと、制作の裏側などを継続的に発信しています。</p><small>例：note で <span data-count="blog">281</span> 本の記事を公開</small><div class="tags"><span>note</span><span>SNS</span><span>Content Creation</span></div></div>
+                <div class="sk"><b>制作活動の発信</b><p>noteやSNSを通して、ゲーム制作の進捗や学んだこと、制作の裏側などを継続的に発信しています。</p><small>例：note で <span data-count="blog">282</span> 本の記事を公開</small><div class="tags"><span>note</span><span>SNS</span><span>Content Creation</span></div></div>
                 <div class="sk"><b>Web・ポートフォリオ制作</b><p>HTML・CSS・JavaScriptを使用して、自身の制作活動や作品を紹介するポートフォリオサイトを制作・運用しています。</p><small>例：このサイト（設計は自分、実装は生成AIと協力）</small><div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div></div>
             </div>
         </div>
@@ -584,7 +584,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
             <div class="blog-intro" data-reveal>
                 <div class="blog-logo"><img src="../images/index/Blog/icon.webp" width="240" height="240" alt="HARU GAMES ロゴ" loading="lazy"><b>HARU GAMES（note）</b></div>
                 <p>ゲーム制作で学んだ技術や設計、制作の裏側、就職活動などを note で継続して発信しています。</p>
-                <p class="blog-count"><b data-count="blog">281</b><span>Articles</span></p>
+                <p class="blog-count"><b data-count="blog">282</b><span>Articles</span></p>
                 <a class="btn btn-ink btn-wide" href="https://note.com/ha_03ru_01" target="_blank" rel="noopener noreferrer">note を見る ↗</a>
             </div>
             <div class="blog-latest">
@@ -677,6 +677,7 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
     <div class="viewer-media">
         <img data-v="img" src="data:," alt="">
         <div class="viewer-badges" data-v="badges"></div>
+        <button class="viewer-yt" type="button" data-v="yt" hidden><span aria-hidden="true">▶</span> 紹介動画を見る</button>
         <button class="close" type="button" data-close aria-label="閉じる"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
     </div>
     <div class="viewer-body">
@@ -745,14 +746,14 @@ content="ゲームプログラマー志望（2028年卒）長屋晴太のポー�
 
 <div class="toasts" aria-live="polite" data-toasts></div>
 
-<script src="../data/works.js?v=1943e464"></script>
+<script src="../data/works.js?v=9e0e778b"></script>
 <script src="../data/timeline.js?v=be0e796d"></script>
 <script src="../data/blog.js"></script>
 <script src="../data/notice.js?v=3598ea6b"></script>
 <script src="../js/notice.js?v=54797087"></script>
-<script src="js/next.js?v=4d1c45be"></script>
+<script src="js/next.js?v=e66c2a25"></script>
 <script src="../js/analytics.js?v=68c067cc"></script>
-<script src="../js/i18n.js?v=88fcd1f3"></script>
+<script src="../js/i18n.js?v=33c8b26a"></script>
 <script src="../js/gamepad.js?v=365db478"></script>
 <script src="js/motion.js?v=8ee9c4d7"></script>
 </body>

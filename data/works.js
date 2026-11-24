@@ -21,6 +21,7 @@
       play         ブラウザで遊べる場所の URL（unityroom・itch.io など）。書くと「▶ PLAYABLE」の印と「遊ぶ」ボタンが出て、絞り込みの「▶ 遊べる」に入る
       size         画像の幅と高さ [幅, 高さ]（省略すると 16:9 として扱う）
       preview      プレイ映像（videos/previews/ の8秒動画。省略すると映像なし）
+      video        紹介動画（YouTube の URL）。書くと、作品の詳しい画面と作品ページで「▶ 紹介動画を見る」から、サイトの中で再生できる
       challenge    3Dゲーム10本チャレンジの何本目か（数字）。タイトルが「3D CHALLENGE #○○」でない作品も、進捗バーの数に入る
       id           作品ごとのリンク（…/portfolio/#work=○○）の ○○ の部分（英小文字・数字・ハイフン）
                    省略すると英語のタイトル（なければタイトル）から自動で作る（例：HOOK SHIFT → hook-shift）
@@ -748,6 +749,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "歯車を回して、正しい文章を完成させよう！ 歯車にバラバラに付いた英単語を、歯車を回して並べ、文章を完成させるパズルゲーム。",
         point: "プレイシーンの基盤になる、単語が付いた歯車が回るシステムを担当。初めて作るタイプのゲームで、歯車の回転に合わせて単語を正しく動かす仕組みを考えるのに時間をかけた。アメリカの大学生を含む7人のチームで、3日間で制作した。",
         link: "https://note.com/ha_03ru_01/n/n7550ad0bd9cc",
+        video: "https://youtu.be/d73dORMvTZk",
         size: [1280, 720],
         en: {
             alt: "Machine Translation title screen",

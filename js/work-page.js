@@ -29,3 +29,21 @@
         video.hidden = true;
     });
 })();
+
+/* 紹介動画（YouTube）：押されてから読み込む（ページを開くだけでは YouTube の通信をしない）。youtube-nocookie で、見るまで cookie を使わない */
+(() => {
+    document.querySelectorAll(".wp-yt[data-youtube]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const id = button.dataset.youtube;
+            if (!/^[\w-]{11}$/.test(id)) return;
+            const frame = document.createElement("iframe");
+            frame.className = "wp-yt-frame";
+            frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
+            frame.title = `${button.dataset.title || ""}の紹介動画（YouTube）`;
+            frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+            frame.allowFullscreen = true;
+            frame.referrerPolicy = "strict-origin-when-cross-origin";
+            button.replaceWith(frame);
+        });
+    });
+})();
