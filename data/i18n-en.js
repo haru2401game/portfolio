@@ -374,6 +374,7 @@ window.I18N_EN = {
         "初受賞・ゲームジャム": "First award — game jam",
         "初めてゲームジャムに参加": "Joined my first game jam",
         "チームでクリエイティブ賞を受賞": "Won the Creative Award with my team",
+        "チームの「Machine Translation」がクリエイティブ賞を受賞": "Our team's Machine Translation won the Creative Award",
         "初オリジナルタイトル": "First original title",
         "「HOOKING BOX」を制作": "in C++ —",
         "初めてのオリジナルタイトル作品": "my first original title",

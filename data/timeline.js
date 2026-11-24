@@ -42,7 +42,7 @@ window.TIMELINE = [
         title: "初受賞・ゲームジャム",
         text: [
             "初めてゲームジャムに参加",
-            "チームでクリエイティブ賞を受賞",
+            "チームの「Machine Translation」がクリエイティブ賞を受賞",
         ],
     },
     {

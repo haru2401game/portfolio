@@ -596,10 +596,11 @@ loadJson("data/profile.json", {})
     document.querySelectorAll('.timeline-item[data-quest="award"]').forEach((quest) => {
         const title = (quest.querySelector("h3")?.textContent || "").replace(/[\[\]\s]/g, "");
         const body = (quest.querySelector("p")?.textContent || "").replace(/\s+/g, "");
-        const pattern = /[A-Za-z0-9]*グランプリ|クラス内1位|総合1位|[一-龠ァ-ヶーA-Za-z0-9]{1,6}?賞/g;
+        // 賞の名前（「クリエイティブ賞」のように長いものも入るよう8文字まで）。「受賞」「初受賞」は賞の名前ではないので除く
+        const pattern = /[A-Za-z0-9]*グランプリ|クラス内1位|総合1位|[一-龠ァ-ヶーA-Za-z0-9]{1,8}?賞/g;
         const label = [...`${title} ${body}`.matchAll(pattern)]
             .map((match) => match[0])
-            .find((text) => text !== "受賞") || "AWARD";
+            .find((text) => !/受賞$/.test(text)) || "AWARD";
         const date = textOf(quest, ".timeline-date");
 
         for (const [, name] of body.matchAll(/「([^」]+)」/g)) {
