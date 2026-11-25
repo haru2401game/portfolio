@@ -187,7 +187,9 @@
         // 作品カードの「詳細を見る」（note へ直接）も作品クリックとして数える
         const workCard = target.closest(".work-card");
         if (workCard && target.matches("a")) {
-            track("work_click", nameOf(workCard, "h3"));
+            // 作品はリンク名（id。例：3d-challenge-06）で数え、表示名（l）も送る。タイトルを変えても数字が続くように
+            const id = workCard.dataset.workId || "";
+            track("work_click", id || nameOf(workCard, "h3"), id ? { l: workCard.dataset.title || nameOf(workCard, "h3") } : {});
             return;
         }
 
@@ -272,8 +274,11 @@
     });
 
     // 作品の詳細ポップアップを開いた（前後の作品へ移ったときも1作品ずつ数える）
+    // リンク名（id）があれば id で数え、表示名（タイトル）も送る（タイトルを変えても同じ作品として数え続けるため）
     document.addEventListener("work-viewer:open", (event) => {
         const title = event.detail?.title || "";
-        if (title && remember(`work:${title}`)) track("work_click", title);
+        const id = /^[a-z0-9-]{1,60}$/.test(event.detail?.id || "") ? event.detail.id : "";
+        if (!title && !id) return;
+        if (remember(`work:${id || title}`)) track("work_click", id || title, id ? { l: title } : {});
     });
 })();

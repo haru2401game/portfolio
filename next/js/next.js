@@ -838,7 +838,7 @@
         history.replaceState(history.state, "", `#work=${idOf(work)}`);
         v("play").dataset.title = work.title;
         // アクセス解析（analytics.js）が「どの作品が見られたか」を数える
-        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: work.title } }));
+        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: work.title, id: idOf(work) } }));
         opened.add(work.title);
     }
 

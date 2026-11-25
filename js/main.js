@@ -2071,7 +2071,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     });
 
     const announce = (card) => {
-        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: card.dataset.title || textOf(card, "h3") } }));
+        document.dispatchEvent(new CustomEvent("work-viewer:open", { detail: { title: card.dataset.title || textOf(card, "h3"), id: card.dataset.workId || "" } }));
     };
 
     /* ---------- 作品ごとのリンク（…/portfolio/#work=hook-shift） ----------
