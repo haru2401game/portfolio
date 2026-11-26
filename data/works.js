@@ -53,6 +53,7 @@ window.WORKS = [
         description: "3Dゲーム制作10本制作チャレンジ 6作目「EMBERFALL」",
         point: "雑魚とボスでクラスを分け、IDamageable インターフェースでつないだ。ボスのAIは状態ごとに処理を分け、攻撃の進み具合を Animator の再生位置ではなく経過時間で計算することで、連続攻撃が一瞬で終わる不具合を解決した。",
         link: "https://note.com/ha_03ru_01/n/ne182fb52c96a",
+        play: "https://unityroom.com/games/emberfall",
         preview: "videos/previews/emberfall.mp4",
         video: "videos/works/emberfall.mp4",
         size: [1280, 720],
