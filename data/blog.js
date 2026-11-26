@@ -1,6 +1,13 @@
 window.BLOG_DATA = {
-    "articleCount": 283,
+    "articleCount": 284,
     "articles": [
+        {
+            "title": "Unityで3DアクションRPGを約1か月で完成させた｜3Dゲーム10本チャレンジ6本目『EMBER FALL』 はる日記#284",
+            "date": "2026.11.25",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/340052066/rectangle_large_type_2_f609ffdde654ee1ff6c3457c9cd9cd75.png?fit=bounds&quality=85&width=1280",
+            "summary": "10月15日に作り始めた3DアクションRPG『EMBER FALL』が完成しました。タイトル画面からボス撃破、エンディングまで、約10分で遊べます。 私はいま「Unityで3Dゲームを10本作る」チャ...",
+            "url": "https://note.com/ha_03ru_01/n/neb069b0e8834"
+        },
         {
             "title": "学生チームのゲームジャム作品が、東京ゲームショウに出展されるまで｜『ししとう』の4か月 はる日記#283",
             "date": "2026.11.24",
@@ -14,13 +21,6 @@ window.BLOG_DATA = {
             "thumbnail": "https://assets.st-note.com/production/uploads/images/338325952/rectangle_large_type_2_d8906f77ca95b6a067d6559480218edc.png?fit=bounds&quality=85&width=1280",
             "summary": "noteを書いていて、ずっと知りたかったことがあります。「フォロワーは、毎日どれくらい増えているのか」です。 noteのアナリティクスでは、記事ごとの数字は見られます。でも、フォロワー数が日ごとにどう...",
             "url": "https://note.com/ha_03ru_01/n/n0c152926b75a"
-        },
-        {
-            "title": "noteを280本書いて分かった、スキ10の記事とスキ300の記事の違い はる日記#281",
-            "date": "2026.11.20",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/337924947/rectangle_large_type_2_c60d744afe4549e79c9ebc652713ddc6.png?fit=bounds&quality=85&width=1280",
-            "summary": "私のnoteには、スキが10の記事と、スキが322の記事があります。書いたのはどちらも私です。 テーマも、書き方も、文字数も、そこまで大きくは変わらないはずなのに、30倍以上の差がついています。この差...",
-            "url": "https://note.com/ha_03ru_01/n/n411d3de4f7d9"
         }
     ]
 };
