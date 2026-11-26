@@ -563,6 +563,79 @@ html.motion-lite .hero-notice-label::before {
     }
 }
 
+/* トップの「▼ NEXT 30秒でわかる 長屋晴太」：押すと「30秒でわかる」へ（最初の画面で帰る人を減らす） */
+.hero-next {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 12px;
+    width: max-content;
+    max-width: 100%;
+    margin-top: 22px;
+    padding: 8px 22px 8px 8px;
+    border: 3px solid #111713;
+    border-radius: 999px;
+    background: #ffd54a;
+    box-shadow: 0 4px 0 #111713;
+    color: #111713;
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.hero-next:hover,
+.hero-next:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #111713;
+}
+
+.hero-next:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #111713;
+}
+
+.hero-next-arrow {
+    display: grid;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 50%;
+    background: #111713;
+    color: #fff;
+    font-size: 12px;
+    animation: hero-next-bob 1.2s ease-in-out infinite;
+}
+
+@keyframes hero-next-bob {
+    50% { transform: translateY(4px); }
+}
+
+.hero-next-text small {
+    display: block;
+    color: #5b6560;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .16em;
+}
+
+.hero-next-text b {
+    font-size: 15px;
+    font-weight: 900;
+}
+
+html.motion-off .hero-next-arrow,
+html.motion-lite .hero-next-arrow {
+    animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-next,
+    .hero-next-arrow {
+        transition: none;
+        animation: none;
+    }
+}
+
 /* トップの「最近の更新」（js/main.js）：いちばん新しい作品と note の最新記事 */
 .hero-news {
     display: grid;
@@ -12279,8 +12352,8 @@ main:focus {
     .hero-badges { order: 5; }
     .hero-actions { order: 6; }
     .hero-notice { order: 6; }  /* 期間限定のお知らせ：ボタンのすぐ下（映像より上には出さない） */
+    .hero-next { order: 6; }  /* 「▼ 30秒でわかる」：ボタンのすぐ下 */
     .hero-news { order: 7; }
-    .hero-index { order: 8; }
 
     .hero-lead {
         margin-top: 10px;

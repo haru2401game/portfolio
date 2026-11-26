@@ -2531,7 +2531,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
 
 (() => {
     const hero = document.querySelector(".hero-content");
-    const anchor = hero?.querySelector(".hero-index");
+    const anchor = hero?.querySelector(".hero-next");
     if (!hero || !anchor) return;
 
     const items = [];
@@ -2568,7 +2568,7 @@ document.querySelectorAll(".mail-copy").forEach((button) => {
     box.setAttribute("role", "group");
     box.setAttribute("aria-label", "最近の更新");
     box.append(decor(make("span", "hero-news-label", "UPDATE")), ...items);
-    anchor.before(box);
+    anchor.after(box);
 })();
 
 /* ========================================
@@ -2725,3 +2725,9 @@ document.querySelectorAll("[data-share-work]").forEach((button) => {
         }, 2200);
     });
 });
+
+/* ========================================
+   トップの「▼ NEXT 30秒でわかる 長屋晴太」（index.html の .hero-next）：押された数を分析で数える
+======================================== */
+
+document.querySelector(".hero-next")?.addEventListener("click", () => emitPlayEvent("トップ: 30秒でわかるへ"));
