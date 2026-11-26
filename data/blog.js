@@ -1,6 +1,13 @@
 window.BLOG_DATA = {
-    "articleCount": 284,
+    "articleCount": 285,
     "articles": [
+        {
+            "title": "ゲームジャムで最後まで完成できるチームは、何が違うのか｜チーム制作で「統合」を7回担当して分かった5つのこと はる日記#285",
+            "date": "2026.11.26",
+            "thumbnail": "https://assets.st-note.com/production/uploads/images/340853992/rectangle_large_type_2_b5085958b68b359dcfa8f23f667ccc72.png?fit=bounds&quality=85&width=1280",
+            "summary": "IGCCゲームジャムでグランプリを受賞した『Falien』。6か国7人のチームで、約1週間で完成 ゲームジャムで最後までゲームを完成させられるかどうかは、プログラミングの技術よりも「段取り」で決まる。...",
+            "url": "https://note.com/ha_03ru_01/n/nfe37ee09c246"
+        },
         {
             "title": "Unityで3DアクションRPGを約1か月で完成させた｜3Dゲーム10本チャレンジ6本目『EMBER FALL』 はる日記#284",
             "date": "2026.11.25",
@@ -14,13 +21,6 @@ window.BLOG_DATA = {
             "thumbnail": "https://assets.st-note.com/production/uploads/images/338335273/rectangle_large_type_2_99bae08de29e7795ae9d4f7b769b5a17.png?fit=bounds&quality=85&width=1280",
             "summary": "去年、私は東京ゲームショウ（TGS）の会場を、来場者として歩いていました。そのときに思ったのが、「いつか、自分のゲームをここに展示したい」ということです。 その夢は、思っていたよりずっと早く叶いました...",
             "url": "https://note.com/ha_03ru_01/n/n457909d56e63"
-        },
-        {
-            "title": "noteのフォロワーとスキを毎日記録するツールを、PythonとGitHub Actionsで自作した はる日記#282",
-            "date": "2026.11.23",
-            "thumbnail": "https://assets.st-note.com/production/uploads/images/338325952/rectangle_large_type_2_d8906f77ca95b6a067d6559480218edc.png?fit=bounds&quality=85&width=1280",
-            "summary": "noteを書いていて、ずっと知りたかったことがあります。「フォロワーは、毎日どれくらい増えているのか」です。 noteのアナリティクスでは、記事ごとの数字は見られます。でも、フォロワー数が日ごとにどう...",
-            "url": "https://note.com/ha_03ru_01/n/n0c152926b75a"
         }
     ]
 };
