@@ -352,6 +352,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "世界の管理人となりコンソール(コマンド)を用いて世界に干渉していく",
         point: "住人8人の会話をデータ化してランダムに流す仕組み（ENTITY LOG）を実装し、同じ文が続かないように制御。管理クラスが増えて設計が破綻し未完成に終わり、設計の大切さを学んだ作品。",
         link: "https://note.com/ha_03ru_01/n/n58070ab2bba9?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/null_world",
         en: {
             alt: "NULL title screen",
             genre: "2D observation simulation game",
@@ -372,6 +373,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "爆弾を連鎖させ、大量爆破で高得点を狙う爽快2Dアクションゲーム。",
         point: "2日・1人で、タイトルからゲーム、リザルトまでのゲームループと、unityroom の API を使ったスコアランキングを実装した。",
         link: "https://note.com/ha_03ru_01/n/n6a656458dd0b?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/datonator",
         size: [734, 410],
         preview: "videos/previews/datonator.mp4",
         en: {
@@ -394,6 +396,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "弾幕を支配し、敵を殲滅せよ。",
         point: "敵の弾を長押しで捕まえ、離すと跳ね返すパリィを実装。跳ね返した弾は近くの敵を追尾させ、必ず当たるようにした。",
         link: "https://note.com/ha_03ru_01/n/nc176f2e49dfd?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/parryfield",
         en: {
             alt: "PARRY FIELD title screen",
             genre: "2D bullet-hell action game",
@@ -455,6 +458,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "あなたのガーデンを華やかにしていこう！",
         point: "初めてのスマホ対応。画面の大きさや比率の違いで UI が小さく見える問題を、実機で何度も確かめながら操作しやすいレイアウトに直した。",
         link: "https://note.com/ha_03ru_01/n/n80febf736af3?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/pocketgarden",
         size: [445, 262],
         en: {
             alt: "Pocket Garden title screen",
@@ -588,6 +592,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "猫を操作してゴールまで辿り着こう！",
         point: "授業課題として1人・約7日で制作。タイトルからクリアまでのゲームループを完成させた。",
         link: "https://note.com/ha_03ru_01/n/n50c07166d03d?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/nyanjump",
         en: {
             title: "I'm Feline Like Jumping!",
             alt: "Title screen of “I'm Feline Like Jumping!”",
@@ -653,6 +658,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "危険な海を泳いでより深い海を目指せ！",
         point: "ゲームジャム（テーマ「うみ」）で、4人チームの唯一のプログラマーとしてゲーム部分を1人で実装した。",
         link: "https://note.com/ha_03ru_01/n/n63a8a306dfa0?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/aqualeap",
         en: {
             alt: "Aqua Leap title screen",
             genre: "2D side-scrolling action game",
@@ -673,6 +679,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "連打でエネルギーをためて遠くまで走り抜けろ！",
         point: "Unity 1週間ゲームジャムで1人・約5日で制作。連打でためたエネルギーで走り、距離と討伐数をリザルトで表示する。",
         link: "https://note.com/ha_03ru_01/n/n7dbf4a5e937c?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/penoverkill",
         en: {
             title: "Pen Overkill",
             alt: "Pen Overkill title screen",
@@ -694,6 +701,7 @@ private static bool IsValidTarget(IDamageable target)
         description: "敵を倒し、稼ぎ、強くなるローグライク。",
         point: "1人で約1か月、プログラムに加えてゲーム内の絵もすべて自分で描いた2Dアクションローグライク。",
         link: "https://note.com/ha_03ru_01/n/nfeb962afd5e9?magazine_key=md93091202e8f",
+        play: "https://unityroom.com/games/deepdungeon",
         size: [906, 504],
         preview: "videos/previews/deep-dungeon.mp4",
         en: {
